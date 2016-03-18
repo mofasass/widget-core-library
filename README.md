@@ -1,2 +1,3 @@
-# widget-core-library
-Core components for creating widgets in the Kambi Sportsbook using Rivets
+# widget-library
+
+Collection of methods and settings common to all widgets, contains the initial communication with KambiWidgetApi and support for i18n with Rivets.

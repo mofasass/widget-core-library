@@ -1,0 +1,7 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea/
+/.project
+node_modules
+docs
+.awspublish-*
+.sass-cache
