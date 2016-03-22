@@ -3,29 +3,29 @@
 
    var gulp = require('gulp'),
 
-   jshint = require('gulp-jshint'),
+      jshint = require('gulp-jshint'),
 
-   concat = require('gulp-concat'),
+      concat = require('gulp-concat'),
 
-   stripDebug = require('gulp-strip-debug'),
+      stripDebug = require('gulp-strip-debug'),
 
-   awspublish = require('gulp-awspublish'),
+      awspublish = require('gulp-awspublish'),
 
-   uglify = require('gulp-uglify'),
+      uglify = require('gulp-uglify'),
 
-   del = require('del'),
+      del = require('del'),
 
-   rename = require('gulp-rename'),
+      rename = require('gulp-rename'),
 
-   sass = require('gulp-ruby-sass'),
+      sass = require('gulp-ruby-sass'),
 
-   sourcemaps = require('gulp-sourcemaps'),
+      sourcemaps = require('gulp-sourcemaps'),
 
-   cssnano = require('gulp-cssnano'),
+      cssnano = require('gulp-cssnano'),
 
-   runSequence = require('run-sequence'),
+      runSequence = require('run-sequence'),
 
-   latestVersion = require('./package.json').version;
+      latestVersion = require('./package.json').version;
 
    gulp.task('default', ['build-js', 'build-css', 'copy-fonts'], function () {
 
@@ -35,6 +35,7 @@
       return gulp.src('./src/**/*.js')
          .pipe(jshint('.jshintrc'))
          .pipe(jshint.reporter('default'))
+         .pipe(concat('app.js'))
          .pipe(gulp.dest('./dist/js'))
          .pipe(stripDebug())
          .pipe(uglify())
@@ -135,22 +136,18 @@
             includeContent: false,
             sourceRoot: '../css/src/'
          }))
-         .pipe(gulp.dest('./dist/css'));
+         .pipe(gulp.dest('./src/css'));
    });
 
    gulp.task('compile-kambi-widget-scss', function () {
       return gulp.src('src/scss/includes/_kambi-css.scss')
          .pipe(rename('widgets.css'))
-         .pipe(gulp.dest('./dist/css/'));
-   });
-
-   gulp.task('copy-src-scss', function () {
-      return gulp.src('./src/**/*.scss')
-         .pipe(gulp.dest('./dist/css/src/'));
+         .pipe(gulp.dest('./src/css/'));
    });
 
    gulp.task('css-nano', function () {
-      return gulp.src('./dist/css/*.css')
+      return gulp.src('./src/css/*.css')
+         .pipe(gulp.dest('./dist/css'))
          .pipe(cssnano())
          .pipe(rename({
             suffix: '.min'
@@ -168,7 +165,7 @@
    });
 
    gulp.task('build-css', ['clean-css', 'compile-scss'], function ( cb ) {
-      runSequence(['copy-src-scss', 'css-nano'], cb);
+      runSequence(['css-nano'], cb);
    });
 
 }).call(this);

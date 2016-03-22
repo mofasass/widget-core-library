@@ -14,7 +14,8 @@
    "author": "Michael Blom <michael@globalmouth.com>",
    "contributors": [
       "Daniel Hoffmann <daniel.hoffmann@globalmouth.com>",
-      "Andrei Teodorescu <andrei@globalmouth.com>"
+      "Andrei Teodorescu <andrei@globalmouth.com>",
+      "Michael Blom <michael@globalmouth.com>"
    ],
    "private": false,
    "license": "MIT",
