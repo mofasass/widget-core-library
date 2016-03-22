@@ -47,12 +47,10 @@
                includeContent: false,
                sourceRoot: '../css/src/scss'
             }))
-            .pipe(gulp.dest('./' + compiledTemp + '/css'))
-            .pipe(gulp.dest('./src/css')); // so you can point to /src/ instead of compiledTemp
+            .pipe(gulp.dest('./' + compiledTemp + '/css'));
 
          var sourceStream = gulp.src('./src/**/*.scss')
-            .pipe(gulp.dest('./' + compiledTemp + '/css/src/'))
-            .pipe(gulp.dest('./src/css')); // so you can point to /src/ instead of compiledTemp
+            .pipe(gulp.dest('./' + compiledTemp + '/css/src/'));
 
          var mergedStream = merge_stream(scssStream, sourceStream);
 
