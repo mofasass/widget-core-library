@@ -262,7 +262,7 @@ window.CoreLibrary.translationModule = (function () {
          }
          var self = this;
          return new Promise(function ( resolve, reject ) {
-            self.getData('i18n/' + locale + '.json')
+            window.CoreLibrary.getData('i18n/' + locale + '.json')
                .then(function ( response ) {
                   translationModule.i18nStrings = response;
                   resolve();
