@@ -40,15 +40,15 @@ window.CoreLibrary = (function () {
             if ( window.KambiWidget ) {
                // For development purposes we might want to load a widget on it's own so we check if we are in an iframe, if not then load some fake data
                if ( window.self === window.top ) {
-                  console.warn(window.location.host + window.location.pathname + ' is being loaded as stand-alone');
+                  void 0;
                   // Load the mock config data
                   fetch('mockSetupData.json')
                      .then(checkStatus)
                      .then(parseJSON)
                      .then(function ( mockSetupData ) {
                         // Output some debug info that could be helpful
-                        console.debug('Loaded mock setup data');
-                        console.debug(mockSetupData);
+                        void 0;
+                        void 0;
                         // Apply the mock config data to the core
                         this.applySetupData(mockSetupData, setDefaultHeight);
                         if (this.translationModule != null) {
@@ -60,8 +60,8 @@ window.CoreLibrary = (function () {
                         }
                      }.bind(this))
                      .catch(function ( error ) {
-                        console.debug('Request failed');
-                        console.trace(error);
+                        void 0;
+                        void 0;
                         reject();
                      });
                } else {
@@ -93,7 +93,7 @@ window.CoreLibrary = (function () {
                   }.bind(this);
                }
             } else {
-               console.warn('Kambi widget API not loaded');
+               void 0;
                reject();
             }
          }.bind(this));
@@ -118,7 +118,7 @@ window.CoreLibrary = (function () {
          if ( setupData['arguments'] != null && setupData['arguments'].hasOwnProperty('offering') ) {
             this.offeringModule.setOffering(setupData['arguments'].offering);
          } else {
-            console.warn('No offering has been set, API requests will not work. Make sure the offering is set in the widget args in your configuration');
+            void 0;
          }
 
          if ( setDefaultHeight === true ) {
@@ -133,7 +133,7 @@ window.CoreLibrary = (function () {
       },
 
       receiveRespone: function ( response ) {
-         console.debug(response);
+         void 0;
       },
 
       setOddsFormat: function ( oddsFormat ) {
@@ -158,8 +158,8 @@ window.CoreLibrary = (function () {
             .then(checkStatus)
             .then(parseJSON)
             .catch(function ( error ) {
-               console.debug('Error fetching data');
-               console.trace(error);
+               void 0;
+               void 0;
             });
       }
    };
@@ -215,7 +215,7 @@ CoreLibrary.offeringModule = (function () {
       },
       doRequest: function ( requestPath, params, version ) {
          if ( this.config.offering == null ) {
-            console.warn('The offering has not been set, please provide it in the widget arguments');
+            void 0;
          } else {
             var apiUrl = this.config.apiBaseUrl.replace('{apiVersion}', (version != null ? version : this.config.version));
             var requestUrl = apiUrl + this.config.offering + requestPath;
@@ -245,7 +245,7 @@ CoreLibrary.statisticsModule = (function () {
          // Remove trailing slash
          filter = filter.slice(0, -1);
          var baseApiUrl = 'https://api.kambi.com/statistics/api/';
-         console.debug(baseApiUrl + CoreLibrary.config.offering + '/' + type + '/' + filter + '.json');
+         void 0;
          return CoreLibrary.getData(baseApiUrl + CoreLibrary.config.offering + '/' + type + '/' + filter + '.json');
       }
    };
@@ -269,11 +269,11 @@ window.CoreLibrary.translationModule = (function () {
                })
                .catch(function ( error ) {
                   if ( locale !== 'en_GB' ) {
-                     console.debug('Could not load translations for ' + locale + ' falling back to en_GB');
+                     void 0;
                      self.fetchTranslations('en_GB').then(resolve);
                   } else {
-                     console.debug('Could not load translations for en_GB');
-                     console.trace(error);
+                     void 0;
+                     void 0;
                      resolve();
                   }
                });
@@ -349,7 +349,7 @@ CoreLibrary.widgetModule = (function () {
                this.events.emit('CLIENT:CONFIG', response.data);
                break;
             case this.api.USER_LOGGED_IN:
-               console.debug('User logged in', response.data);
+               void 0;
                this.events.emit('USER:LOGGED_IN', response.data);
                break;
             case 'Setup':
@@ -357,8 +357,8 @@ CoreLibrary.widgetModule = (function () {
                break;
             default:
                // Unhandled response
-               console.info('Unhandled response type: ' + response.type);
-               console.info(response);
+               void 0;
+               void 0;
                break;
          }
       },

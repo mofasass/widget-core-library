@@ -1,8 +1,11 @@
-/src/css
-# Created by .ignore support plugin (hsz.mobi)
-.idea/
-/.project
+.idea
 node_modules
-docs
 .awspublish-*
-.sass-cache
+.buildTemp
+.compiledTemp
+.sass-cache/
+docs
+*.map
+bower_components
+/.project
+mockSetupData.json

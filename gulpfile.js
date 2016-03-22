@@ -1,46 +1,80 @@
 (function () {
-   require('./gulpVersionBumper.js');
-
    var gulp = require('gulp'),
 
-      jshint = require('gulp-jshint'),
+   requireDir = require('require-dir'),
 
-      concat = require('gulp-concat'),
+   sass = require('gulp-ruby-sass'),
 
-      stripDebug = require('gulp-strip-debug'),
+   merge_stream = require('merge-stream'),
 
-      awspublish = require('gulp-awspublish'),
+   sourcemaps = require('gulp-sourcemaps'),
 
-      uglify = require('gulp-uglify'),
+   rename = require('gulp-rename'),
 
-      del = require('del'),
+   cssnano = require('gulp-cssnano'),
 
-      rename = require('gulp-rename'),
+   dir = requireDir('./node_modules/widget-build-tools/'),
 
-      sass = require('gulp-ruby-sass'),
+   buildTemp = '.buildTemp',
 
-      sourcemaps = require('gulp-sourcemaps'),
+   compiledTemp = '.compiledTemp';
 
-      cssnano = require('gulp-cssnano'),
-
-      runSequence = require('run-sequence'),
-
-      latestVersion = require('./package.json').version;
-
-   gulp.task('default', ['build-js', 'build-css', 'copy-fonts'], function () {
-
+   // override task from widget-build-tools
+   gulp.task('html-replace', function () {
+      // should not do anything in the core-library
    });
 
-   gulp.task('build-js', [], function () {
-      return gulp.src('./src/**/*.js')
-         .pipe(jshint('.jshintrc'))
-         .pipe(jshint.reporter('default'))
-         .pipe(concat('app.js'))
-         .pipe(gulp.dest('./dist/js'))
-         .pipe(stripDebug())
-         .pipe(uglify())
-         .pipe(rename({ suffix: '.min' }))
-         .pipe(gulp.dest('./dist/js'));
+   // override task from widget-build-tools
+   gulp.task('compile-scss', [], function () {
+      var streams = null;
+
+      var scssFiles = [
+         './src/scss/app-base-all.scss',
+         './src/scss/app-base-icons.scss',
+         './src/scss/app-base-layout.scss',
+         './src/scss/app-base.scss',
+         './src/scss/widgets.scss'
+      ];
+
+      scssFiles.forEach(function (file) {
+         var scssStream = sass(file, {
+               compass: true,
+               style: 'expanded',
+               lineComments: false,
+               sourcemap: true
+            })
+            .pipe(sourcemaps.write('.', {
+               includeContent: false,
+               sourceRoot: '../css/src/scss'
+            }))
+            .pipe(gulp.dest('./' + compiledTemp + '/css'))
+            .pipe(gulp.dest('./src/css')); // so you can point to /src/ instead of compiledTemp
+
+         var sourceStream = gulp.src('./src/**/*.scss')
+            .pipe(gulp.dest('./' + compiledTemp + '/css/src/'))
+            .pipe(gulp.dest('./src/css')); // so you can point to /src/ instead of compiledTemp
+
+         var mergedStream = merge_stream(scssStream, sourceStream);
+
+         if (streams == null) {
+            streams = mergedStream;
+         } else {
+            streams.add(mergedStream);
+         }
+      });
+      return streams;
+   });
+
+   // override task from widget-build-tools
+   gulp.task('css-concat', function () {
+      // same as the widget-build-tools but without the concatenation
+      return gulp.src('./' + compiledTemp + '/css/**/*.css')
+         .pipe(gulp.dest('./dist/css'))
+         .pipe(cssnano())
+         .pipe(rename({
+            suffix: '.min'
+         }))
+         .pipe(gulp.dest('./dist/css'));
    });
 
    gulp.task('publish', ['publish-version'], function () {
@@ -123,49 +157,6 @@
          }))
          .pipe(publisher.cache())
          .pipe(awspublish.reporter());
-   });
-
-   gulp.task('compile-scss', ['compile-kambi-widget-scss'], function () {
-      return sass('./src/scss/*.scss', {
-         compass: true,
-         style: 'expanded',
-         lineComments: false,
-         sourcemap: true
-      })
-         .pipe(sourcemaps.write('.', {
-            includeContent: false,
-            sourceRoot: '../css/src/'
-         }))
-         .pipe(gulp.dest('./src/css'));
-   });
-
-   gulp.task('compile-kambi-widget-scss', function () {
-      return gulp.src('src/scss/includes/_kambi-css.scss')
-         .pipe(rename('widgets.css'))
-         .pipe(gulp.dest('./src/css/'));
-   });
-
-   gulp.task('css-nano', function () {
-      return gulp.src('./src/css/*.css')
-         .pipe(gulp.dest('./dist/css'))
-         .pipe(cssnano())
-         .pipe(rename({
-            suffix: '.min'
-         }))
-         .pipe(gulp.dest('./dist/css'));
-   });
-
-   gulp.task('clean-css', function () {
-      del.sync('./dist/css');
-   });
-
-   gulp.task('copy-fonts', function () {
-      return gulp.src('./src/fonts/*')
-         .pipe(gulp.dest('./dist/fonts/'));
-   });
-
-   gulp.task('build-css', ['clean-css', 'compile-scss'], function ( cb ) {
-      runSequence(['css-nano'], cb);
    });
 
 }).call(this);

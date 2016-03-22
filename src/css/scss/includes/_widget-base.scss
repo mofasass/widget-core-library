@@ -1,0 +1,21 @@
+//Base widget styles.
+//Do not use colors here.
+//Use the theme css file instead
+
+.kw-card {
+}
+
+.kw-header {
+   font-size: 12px;
+   line-height: 36px;
+   overflow: hidden;
+   position: relative;
+   min-height: 37px;
+}
+
+.kw-footer {
+   //@include border-radius(0 0 2px 2px);
+   //@extend .kw-card;
+   text-align: center;
+}
+
