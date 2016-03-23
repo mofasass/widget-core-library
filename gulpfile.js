@@ -19,12 +19,18 @@
 
    compiledTemp = '.compiledTemp';
 
-   // override task from widget-build-tools
+   // overriden task from widget-build-tools
    gulp.task('html-replace', function () {
-      // should not do anything in the core-library
    });
 
-   // override task from widget-build-tools
+   // overriden task from widget-build-tools
+   gulp.task('compile-translations', function () {
+      return gulp.src('./src/i18n/*.json')
+         .pipe(gulp.dest(compiledTemp + '/i18n'))
+         .pipe(gulp.dest('./dist/i18n/'));
+   });
+
+   // overriden task from widget-build-tools
    gulp.task('compile-scss', [], function () {
       var streams = null;
 
@@ -63,7 +69,7 @@
       return streams;
    });
 
-   // override task from widget-build-tools
+   // overriden task from widget-build-tools
    gulp.task('css-concat', function () {
       // same as the widget-build-tools but without the concatenation
       return gulp.src('./' + compiledTemp + '/css/**/*.css')

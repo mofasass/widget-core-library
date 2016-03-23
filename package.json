@@ -18,7 +18,7 @@
       "Michael Blom <michael@globalmouth.com>"
    ],
    "private": false,
-   "license": "ISC",
+   "license": "MIT",
    "homepage": "https://github.com/kambi-sportsbook-widgets/widget-core-library#readme",
    "devDependencies": {
       "changelog": "latest",
