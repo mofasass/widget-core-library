@@ -3,6 +3,8 @@
 
    requireDir = require('require-dir'),
 
+   fs = require('fs'),
+
    sass = require('gulp-ruby-sass'),
 
    merge_stream = require('merge-stream'),
@@ -18,6 +20,15 @@
    buildTemp = '.buildTemp',
 
    compiledTemp = '.compiledTemp';
+
+   // overriden task from widget-build-tools
+   gulp.task('compile', ['compile-babel', 'compile-scss', 'compile-static', 'compile-translations'], function () {
+      // adds a js file with the KambiApi version number
+      var apiVersion = JSON.parse(fs.readFileSync('package.json'))['kambi-widget-api-version'];
+      var script = 'window.coreLibraryApiVersion = \'' + apiVersion + '\';'
+      fs.writeFileSync(compiledTemp + '/js/coreLibraryApiVersion.js', script);
+      return;
+   });
 
    // overriden task from widget-build-tools
    gulp.task('html-replace', function () {

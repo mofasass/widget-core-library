@@ -67,6 +67,9 @@ window.CoreLibrary = (function () {
                } else {
                   window.KambiWidget.apiReady = function ( api ) {
                      this.widgetModule.api = api;
+                     if (api.VERSION !== window.coreLibraryApiVersion) {
+                        console.warn('Wrong Kambi API version loaded expected: ' + window.coreLibraryApiVersion + ' got: ' + api.VERSION);
+                     }
                      // Request the setup info from the widget api
                      this.requestSetup(function ( setupData ) {
                         // Apply the config data to the core
