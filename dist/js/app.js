@@ -25,6 +25,7 @@ window.CoreLibrary = (function () {
    sightglass.root = '.';
 
    return {
+      expectedApiVersion: '1.0.0.9', // this value is replaced with the API version number during the compilation step
       widgetModule: null,
       offeringModule: null,
       statisticsModule: null,
@@ -67,7 +68,7 @@ window.CoreLibrary = (function () {
                } else {
                   window.KambiWidget.apiReady = function ( api ) {
                      this.widgetModule.api = api;
-                     if (api.VERSION !== window.coreLibraryApiVersion) {
+                     if (api.VERSION !== this.expectedApiVersion) {
                         void 0;
                      }
                      // Request the setup info from the widget api
@@ -169,7 +170,6 @@ window.CoreLibrary = (function () {
 
 })();
 
-window.coreLibraryApiVersion = '1.0.0.9';
 CoreLibrary.offeringModule = (function () {
    'use strict';
 

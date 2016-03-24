@@ -15,6 +15,8 @@
 
    cssnano = require('gulp-cssnano'),
 
+   replace = require('gulp-replace'),
+
    dir = requireDir('./node_modules/widget-build-tools/'),
 
    buildTemp = '.buildTemp',
@@ -25,9 +27,9 @@
    gulp.task('compile', ['compile-babel', 'compile-scss', 'compile-static', 'compile-translations'], function () {
       // adds a js file with the KambiApi version number
       var apiVersion = JSON.parse(fs.readFileSync('package.json'))['kambi-widget-api-version'];
-      var script = 'window.coreLibraryApiVersion = \'' + apiVersion + '\';'
-      fs.writeFileSync(compiledTemp + '/js/coreLibraryApiVersion.js', script);
-      return;
+      return gulp.src(compiledTemp + '/js/coreLibrary.js')
+         .pipe(replace(/{{expectedApiVersion}}/g, apiVersion))
+         .pipe(gulp.dest(compiledTemp + '/js'));
    });
 
    // overriden task from widget-build-tools

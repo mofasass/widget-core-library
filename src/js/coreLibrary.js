@@ -25,6 +25,7 @@ window.CoreLibrary = (function () {
    sightglass.root = '.';
 
    return {
+      expectedApiVersion: '{{expectedApiVersion}}', // this value is replaced with the API version number during the compilation step
       widgetModule: null,
       offeringModule: null,
       statisticsModule: null,
@@ -67,9 +68,10 @@ window.CoreLibrary = (function () {
                } else {
                   window.KambiWidget.apiReady = function ( api ) {
                      this.widgetModule.api = api;
-                     if (api.VERSION !== window.coreLibraryApiVersion) {
-                        console.warn('Wrong Kambi API version loaded expected: ' + window.coreLibraryApiVersion + ' got: ' + api.VERSION);
+                     if (api.VERSION !== this.expectedApiVersion) {
+                        console.warn('Wrong Kambi API version loaded, expected: ' + this.expectedApiVersion + ' got: ' + api.VERSION);
                      }
+
                      // Request the setup info from the widget api
                      this.requestSetup(function ( setupData ) {
                         // Apply the config data to the core
