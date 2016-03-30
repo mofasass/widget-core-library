@@ -11,6 +11,12 @@
 
    sourcemaps = require('gulp-sourcemaps'),
 
+   jshint = require('gulp-jshint'),
+
+   jscs = require('gulp-jscs'),
+
+   stripDebug = require('gulp-strip-debug'),
+
    rename = require('gulp-rename'),
 
    cssnano = require('gulp-cssnano'),
@@ -24,12 +30,38 @@
    compiledTemp = '.compiledTemp';
 
    // overriden task from widget-build-tools
-   gulp.task('compile', ['compile-babel', 'compile-scss', 'compile-static', 'compile-translations'], function () {
+   gulp.task('compile-babel', ['compile-babel2'], function () {
       // adds a js file with the KambiApi version number
       var apiVersion = JSON.parse(fs.readFileSync('package.json'))['kambi-widget-api-version'];
       return gulp.src(compiledTemp + '/js/coreLibrary.js')
          .pipe(replace(/{{expectedApiVersion}}/g, apiVersion))
          .pipe(gulp.dest(compiledTemp + '/js'));
+   });
+
+   gulp.task('compile-babel2', [], function () {
+      // TODO add babel compilation step once chrome sourcemap bug gets fixed
+      // https://bugs.chromium.org/p/chromium/issues/detail?id=369797
+      // var babelStream = gulp.src('./src/**/*.js')
+      //    .pipe(jshint('.jshintrc'))
+      //    .pipe(jshint.reporter('default'))
+      //    .pipe(sourcemaps.init())
+      //    .pipe(babel({
+      //       presets: ['es2015'],
+      //       sourceRoot: '../src/'
+      //    }))
+      //    .pipe(concat('app.js'))
+      //    .pipe(sourcemaps.write('.'))
+      //    .pipe(gulp.dest('./'+ compiledTemp +'/js/'));
+      // var sourceStream = gulp.src('./src/**/*.js')
+      //    .pipe(gulp.dest('./'+ compiledTemp +'/js/src/'));
+      // return merge_stream(babelStream, sourceStream);
+
+      return gulp.src('./src/**/*.js')
+         .pipe(jshint('.jshintrc'))
+         .pipe(jshint.reporter('default'))
+         .pipe(jscs())
+         .pipe(jscs.reporter())
+         .pipe(gulp.dest('./' + compiledTemp));
    });
 
    // overriden task from widget-build-tools
