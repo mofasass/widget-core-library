@@ -165,6 +165,7 @@ window.CoreLibrary = (function () {
             .catch(function ( error ) {
                console.debug('Error fetching data');
                console.trace(error);
+               throw error;
             });
       }
    };
