@@ -1,6 +1,57 @@
 window.CoreLibrary = (function () {
 
    'use strict';
+
+   /** Rivets formatters **/
+   rivets.formatters['==='] = function (v1, v2) {
+      return v1 === v2;
+   };
+   rivets.formatters['=='] = function (v1, v2) {
+      return v1 == v2; // jshint ignore:line
+   };
+   rivets.formatters['>='] = function (v1, v2) {
+      return v1 >= v2;
+   };
+   rivets.formatters['>'] = function (v1, v2) {
+      return v1 > v2;
+   };
+   rivets.formatters['<='] = function (v1, v2) {
+      return v1 <= v2;
+   };
+   rivets.formatters['<'] = function (v1, v2) {
+      return v1 < v2;
+   };
+   rivets.formatters['!='] = function (v1, v2) {
+      return v1 != v2; // jshint ignore:line
+   };
+   rivets.formatters['!=='] = function (v1, v2) {
+      return v1 !== v2;
+   };
+   rivets.formatters['and'] = function (v1, v2) {
+      return v1 && v2;
+   };
+   rivets.formatters['or'] = function (v1, v2) {
+      return v1 || v2;
+   };
+   rivets.formatters['not'] = function (v1) {
+      return !v1;
+   };
+   rivets.formatters['-'] = function (v1, v2) {
+      return v1 - v2;
+   };
+   rivets.formatters['+'] = function (v1, v2) {
+      return v1 + v2;
+   };
+   rivets.formatters['*'] = function (v1, v2) {
+      return v1 * v2;
+   };
+   rivets.formatters['/'] = function (v1, v2) {
+      return v1 / v2;
+   };
+   rivets.binders['style-*'] = function (el, value) {
+      el.style.setProperty(this.args[0], value);
+   };
+
    /**
     * Checks the HTTP status of a response
     */
@@ -71,6 +122,7 @@ window.CoreLibrary = (function () {
                      if (api.VERSION !== this.expectedApiVersion) {
                         void 0;
                      }
+
                      // Request the setup info from the widget api
                      this.requestSetup(function ( setupData ) {
                         // Apply the config data to the core
@@ -164,6 +216,7 @@ window.CoreLibrary = (function () {
             .catch(function ( error ) {
                void 0;
                void 0;
+               throw error;
             });
       }
    };
@@ -246,14 +299,19 @@ CoreLibrary.statisticsModule = (function () {
       getStatistics: function ( type, filter ) {
          // Remove url parameters from filter
          filter = filter.match(/[^?]*/)[0];
+
          // Remove trailing slash
-         filter = filter.slice(0, -1);
+         if (filter[filter.length - 1] === '/') {
+            filter = filter.slice(0, -1);
+         }
+
          var baseApiUrl = 'https://api.kambi.com/statistics/api/';
          void 0;
          return CoreLibrary.getData(baseApiUrl + CoreLibrary.config.offering + '/' + type + '/' + filter + '.json');
       }
    };
 })();
+
 window.CoreLibrary.translationModule = (function () {
    'use strict';
 

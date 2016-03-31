@@ -1,6 +1,57 @@
 window.CoreLibrary = (function () {
 
    'use strict';
+
+   /** Rivets formatters **/
+   rivets.formatters['==='] = function (v1, v2) {
+      return v1 === v2;
+   };
+   rivets.formatters['=='] = function (v1, v2) {
+      return v1 == v2; // jshint ignore:line
+   };
+   rivets.formatters['>='] = function (v1, v2) {
+      return v1 >= v2;
+   };
+   rivets.formatters['>'] = function (v1, v2) {
+      return v1 > v2;
+   };
+   rivets.formatters['<='] = function (v1, v2) {
+      return v1 <= v2;
+   };
+   rivets.formatters['<'] = function (v1, v2) {
+      return v1 < v2;
+   };
+   rivets.formatters['!='] = function (v1, v2) {
+      return v1 != v2; // jshint ignore:line
+   };
+   rivets.formatters['!=='] = function (v1, v2) {
+      return v1 !== v2;
+   };
+   rivets.formatters['and'] = function (v1, v2) {
+      return v1 && v2;
+   };
+   rivets.formatters['or'] = function (v1, v2) {
+      return v1 || v2;
+   };
+   rivets.formatters['not'] = function (v1) {
+      return !v1;
+   };
+   rivets.formatters['-'] = function (v1, v2) {
+      return v1 - v2;
+   };
+   rivets.formatters['+'] = function (v1, v2) {
+      return v1 + v2;
+   };
+   rivets.formatters['*'] = function (v1, v2) {
+      return v1 * v2;
+   };
+   rivets.formatters['/'] = function (v1, v2) {
+      return v1 / v2;
+   };
+   rivets.binders['style-*'] = function (el, value) {
+      el.style.setProperty(this.args[0], value);
+   };
+
    /**
     * Checks the HTTP status of a response
     */
