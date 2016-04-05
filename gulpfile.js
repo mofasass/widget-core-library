@@ -15,6 +15,8 @@
 
    jscs = require('gulp-jscs'),
 
+   concat = require('gulp-concat'),
+
    stripDebug = require('gulp-strip-debug'),
 
    rename = require('gulp-rename'),
@@ -56,12 +58,25 @@
       //    .pipe(gulp.dest('./'+ compiledTemp +'/js/src/'));
       // return merge_stream(babelStream, sourceStream);
 
-      return gulp.src('./src/**/*.js')
+      return gulp.src([
+            './src/**/*.js',
+            '!./src/js/thirdpartylibs/*.js'
+         ])
          .pipe(jshint('.jshintrc'))
          .pipe(jshint.reporter('default'))
          .pipe(jscs())
          .pipe(jscs.reporter())
          .pipe(gulp.dest('./' + compiledTemp));
+   });
+
+   // overriden task from widget-build-tools
+   gulp.task('app-concat', function () {
+      return gulp.src([
+            './src/js/thirdpartylibs/*.js',
+            './' + compiledTemp + '/**/*.js'
+         ])
+         .pipe(concat('app.js'))
+         .pipe(gulp.dest('./' + buildTemp + '/js'));
    });
 
    // overriden task from widget-build-tools
@@ -124,88 +139,6 @@
             suffix: '.min'
          }))
          .pipe(gulp.dest('./dist/css'));
-   });
-
-   gulp.task('publish', ['publish-version'], function () {
-      var publisher = awspublish.create({
-         params: {
-            Bucket: 'kambi-widgets'
-         }
-      });
-
-      var headers = {
-         'Cache-Control': 'max-age=300, public'
-      };
-
-      var stream = gulp.src(['./dist/**/*'])
-         .pipe(rename(function ( path ) {
-            path.dirname = '/lib/dist/' + path.dirname;
-         }))
-         .pipe(publisher.publish(headers, {
-            // force: true
-         }))
-         .pipe(publisher.cache())
-         .pipe(awspublish.reporter())
-         .on('finish', function () {
-            setTimeout(function () {
-               process.exit(0);
-            }, 100);
-         });
-      return stream;
-   });
-
-   gulp.task('publish-version', function () {
-      var publisher = awspublish.create({
-         params: {
-            Bucket: 'kambi-widgets'
-         }
-      });
-
-      var headers = {
-         'Cache-Control': 'max-age=315360000, public'
-      };
-
-      var stream = gulp.src(['./dist/**/*'])
-         .pipe(prompt.prompt({
-            type: 'confirm',
-            message: '\033[33mBefore publishing \033[4m\033[1m\033[33mmake sure\033[0m\033[33m you\'ve bumped the version\n\r' +
-            ' \033[4m\033[1m\033[33mAre you sure\033[0m\033[33m you want to continue ?',
-            default: false,
-            name: 'start'
-         }, function ( answer ) {
-            if ( !answer.start ) {
-               process.exit(0);
-            }
-         }))
-         .pipe(rename(function ( path ) {
-            path.dirname = '/lib/dist/' + latestVersion + '/' + path.dirname;
-         }))
-         .pipe(publisher.publish(headers, {
-            // force: true
-         }))
-         .pipe(publisher.cache())
-         .pipe(awspublish.reporter());
-      return stream;
-   });
-
-   gulp.task('publish-src', function () {
-      var publisher = awspublish.create({
-         params: {
-            Bucket: 'kambi-widgets'
-         }
-      });
-
-      var headers = {};
-
-      return gulp.src(['./src/**/*'])
-         .pipe(rename(function ( path ) {
-            path.dirname = '/lib/src/' + path.dirname;
-         }))
-         .pipe(publisher.publish(headers, {
-            // force: true
-         }))
-         .pipe(publisher.cache())
-         .pipe(awspublish.reporter());
    });
 
 }).call(this);
