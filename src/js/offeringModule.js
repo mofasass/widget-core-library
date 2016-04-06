@@ -30,9 +30,6 @@ CoreLibrary.offeringModule = (function () {
             }
          }
       },
-      setOffering: function ( offering ) {
-         this.config.offering = offering;
-      },
       getGroupEvents: function ( groupId ) {
          var requesPath = '/event/group/' + groupId + '.json';
          return this.doRequest(requesPath);
@@ -48,7 +45,7 @@ CoreLibrary.offeringModule = (function () {
       },
       doRequest: function ( requestPath, params, version ) {
          if ( this.config.offering == null ) {
-            console.warn('The offering has not been set, please provide it in the widget arguments');
+            console.warn('The offering has not been set, is the right widget api version loaded?');
          } else {
             var apiUrl = this.config.apiBaseUrl.replace('{apiVersion}', (version != null ? version : this.config.version));
             var requestUrl = apiUrl + this.config.offering + requestPath;
