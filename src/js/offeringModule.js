@@ -10,6 +10,7 @@ CoreLibrary.offeringModule = (function () {
          locale: null,
          market: null,
          offering: null,
+         customer: null,
          clientId: null,
          version: null,
          routeRoot: '',
