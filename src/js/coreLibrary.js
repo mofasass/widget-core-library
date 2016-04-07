@@ -167,6 +167,9 @@ window.CoreLibrary = (function () {
          // Set the configuration in the widget api module
          this.widgetModule.setConfig(setupData.clientConfig);
 
+         // Set the configuration in the widget api module
+         this.statisticsModule.setConfig(setupData.clientConfig);
+
          // Set page info
          this.setPageInfo(setupData.pageInfo);
 
