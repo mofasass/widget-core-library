@@ -1029,7 +1029,7 @@
 		"stakeTooLow": {
 			"text": "Je nám líto, minimální vklad je {0}.",
 			"text1": "Váš tiket bude upraven.",
-			"title": "Příliš nízká sázka"
+			"title": "P��íliš nízká sázka"
 		},
 		"timeout": {
 			"text": "Litujeme, při podávání sázky došlo k chybě. V historii sázek ověřte, zda byla vaše sázka podána."
