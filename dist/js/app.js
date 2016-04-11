@@ -192,13 +192,6 @@ window.CoreLibrary = (function () {
          // Set page info
          this.setPageInfo(setupData.pageInfo);
 
-         // Set the offering in the API service
-         if ( setupData['arguments'] != null && setupData['arguments'].hasOwnProperty('offering') ) {
-            this.offeringModule.setOffering(setupData['arguments'].offering);
-         } else {
-            void 0;
-         }
-
          if ( setDefaultHeight === true ) {
             this.setHeight(setupData.height);
          }
@@ -257,6 +250,7 @@ CoreLibrary.offeringModule = (function () {
          locale: null,
          market: null,
          offering: null,
+         customer: null,
          clientId: null,
          version: null,
          routeRoot: '',
@@ -275,9 +269,6 @@ CoreLibrary.offeringModule = (function () {
                }
             }
          }
-      },
-      setOffering: function ( offering ) {
-         this.config.offering = offering;
       },
       getGroupEvents: function ( groupId ) {
          var requesPath = '/event/group/' + groupId + '.json';

@@ -25,11 +25,67 @@
 
    replace = require('gulp-replace'),
 
+   download = require('gulp-download-stream'),
+
    dir = requireDir('./node_modules/widget-build-tools/'),
+
+   del = require('del'),
 
    buildTemp = '.buildTemp',
 
-   compiledTemp = '.compiledTemp';
+   compiledTemp = '.compiledTemp',
+
+   supportedLanguages = [
+      'cs_CZ',
+      'da_DK',
+      'de_AT',
+      'de_CH',
+      'de_DE',
+      'el_GR',
+      'en_AU',
+      'en_GB',
+      'es_ES',
+      'et_EE',
+      'fi_FI',
+      'fr_BE',
+      'fr_CH',
+      'fr_FR',
+      'hu_HU',
+      'it_IT',
+      'lt_LT',
+      'lv_LV',
+      'nl_BE',
+      'nl_NL',
+      'no_NO',
+      'pl_PL',
+      'pt_BR',
+      'pt_PT',
+      'ro_RO',
+      'ru_RU',
+      'sv_SE',
+      'tr_TR'
+   ];
+
+   /**
+   * Fetches the i18n strings from Kambi into /src/i18n/. Deletes existing locales before fetching
+   */
+   gulp.task('compile-translations', function () {
+      var supportedLanguagesFiles = [];
+      supportedLanguages.forEach(function ( locale ) {
+         supportedLanguagesFiles.push({
+            file: locale + '.json',
+            url: 'https://publictest-static.kambi.com/sb-mobileclient/kambi/1.245.0.0//locale/' + locale + '/locale.js'
+         });
+      });
+
+      del.sync('./src/i18n');
+      return download(supportedLanguagesFiles)
+         .pipe(replace('(function(require, define){\ndefine({', '{\n\t"LOCALE_IMPORT": "---",'))
+         .pipe(replace(');})(_kbc.require, _kbc.define);', ''))
+         .pipe(gulp.dest('./src/i18n/'))
+         .pipe(gulp.dest(compiledTemp + '/i18n'))
+         .pipe(gulp.dest('./dist/i18n/'));
+   });
 
    // overriden task from widget-build-tools
    gulp.task('compile-babel', ['compile-babel2'], function () {
@@ -81,13 +137,6 @@
 
    // overriden task from widget-build-tools
    gulp.task('html-replace', function () {
-   });
-
-   // overriden task from widget-build-tools
-   gulp.task('compile-translations', function () {
-      return gulp.src('./src/i18n/*.json')
-         .pipe(gulp.dest(compiledTemp + '/i18n'))
-         .pipe(gulp.dest('./dist/i18n/'));
    });
 
    // overriden task from widget-build-tools
