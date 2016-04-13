@@ -72,6 +72,17 @@ window.CoreLibrary = (function () {
    };
 
    /**
+    * Cloaking waits for element to bind and then sets it visible
+    * @type {{priority: number, bind: rivets.binders.cloak.bind}}
+    */
+   rivets.binders.cloak = {
+      priority : -1000,
+      bind : function(el) {
+         el.style.opacity = 1;
+      }
+   };
+
+   /**
     * Checks the HTTP status of a response
     */
    function checkStatus ( response ) {
@@ -95,7 +106,7 @@ window.CoreLibrary = (function () {
    sightglass.root = '.';
 
    return {
-      expectedApiVersion: '1.0.0.9', // this value is replaced with the API version number during the compilation step
+      expectedApiVersion: '1.0.0.10', // this value is replaced with the API version number during the compilation step
       widgetModule: null,
       offeringModule: null,
       statisticsModule: null,
@@ -379,10 +390,16 @@ CoreLibrary.widgetModule = (function () {
 
    return {
       api: { // placeholders for when not running inside iframe
-         requestSetup: function () {},
-         request: function () {},
-         set: function () {},
-         remove: function () {}
+         requestSetup: function () {
+         },
+         request: function () {
+         },
+         set: function () {
+         },
+         remove: function () {
+         },
+         createUrl: function () {
+         }
       },
       events: new Module(),
       config: {
@@ -443,6 +460,11 @@ CoreLibrary.widgetModule = (function () {
                break;
          }
       },
+
+      createUrl: function ( path, optionalRoot ) {
+         return this.api.createUrl(path, optionalRoot);
+      },
+
       requestSetup: function ( callback ) {
          this.api.requestSetup(callback);
       },

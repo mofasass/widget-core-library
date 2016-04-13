@@ -54,8 +54,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   display: block;
 }
 
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-  display: none !important;
+[rv-cloak] {
+  opacity: 0;
+  -moz-transition: opacity 0.5s ease-out;
+  -o-transition: opacity 0.5s ease-out;
+  -webkit-transition: opacity 0.5s ease-out;
+  transition: opacity 0.5s ease-out;
 }
 
 * {
@@ -266,6 +270,12 @@ a {
   color: #333;
 }
 
+.kw-header {
+  background-color: #f6f6f6;
+  border-bottom: solid 1px #EAEAEA;
+  color: #999;
+}
+
 .kw-footer {
   border-top: solid 1px #EAEAEA;
 }
@@ -289,8 +299,8 @@ a {
   background-color: #f6f6f6;
 }
 .kw-btn.disabled:hover {
-  cursor: not-allowed;
   background-color: #f6f6f6;
+  cursor: not-allowed;
 }
 
 .kw-btn.selected .kw-event-outcome-odds {

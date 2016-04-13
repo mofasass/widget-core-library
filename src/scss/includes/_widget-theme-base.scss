@@ -17,8 +17,9 @@ a {
 }
 
 .kw-header {
-   //border-bottom: solid 1px $color-4-1-card-border;
-   //color: $color-4-2-card-supportive-text;
+   background-color: $color-4-1-card-background;
+   border-bottom: solid 1px $color-4-1-card-border;
+   color: $color-4-2-card-supportive-text;
 }
 
 .kw-footer {
@@ -45,8 +46,8 @@ a {
    background-color: $color-4-1-card-background;
 
    &:hover {
-      cursor: not-allowed;
       background-color: $color-4-1-card-background;
+      cursor: not-allowed;
    }
 }
 
@@ -77,6 +78,6 @@ a {
 }
 
 // Pagination plugin styles
-.kw-page-link.active, .kw-page-link:hover  {
+.kw-page-link.active, .kw-page-link:hover {
    background-color: $color-4-1-card-background-hover;
 }
