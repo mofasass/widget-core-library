@@ -2,9 +2,10 @@
 //Do not use colors here.
 //Use the theme css file instead
 
-// Angular cloak class
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-   display: none !important;
+// Cloak class
+[rv-cloak] {
+   opacity: 0;
+   @include transition(opacity .5s ease-out);
 }
 
 * {

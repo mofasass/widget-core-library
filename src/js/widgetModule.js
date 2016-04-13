@@ -5,10 +5,16 @@ CoreLibrary.widgetModule = (function () {
 
    return {
       api: { // placeholders for when not running inside iframe
-         requestSetup: function () {},
-         request: function () {},
-         set: function () {},
-         remove: function () {}
+         requestSetup: function () {
+         },
+         request: function () {
+         },
+         set: function () {
+         },
+         remove: function () {
+         },
+         createUrl: function () {
+         }
       },
       events: new Module(),
       config: {
@@ -69,6 +75,11 @@ CoreLibrary.widgetModule = (function () {
                break;
          }
       },
+
+      createUrl: function ( path, optionalRoot ) {
+         return this.api.createUrl(path, optionalRoot);
+      },
+
       requestSetup: function ( callback ) {
          this.api.requestSetup(callback);
       },

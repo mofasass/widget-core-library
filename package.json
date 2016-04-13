@@ -36,5 +36,5 @@
       "widget-build-tools": "git+ssh://git@github.com:kambi-sportsbook-widgets/widget-build-tools.git"
    },
    "dependencies": {},
-   "kambi-widget-api-version": "1.0.0.9"
+   "kambi-widget-api-version": "1.0.0.10"
 }

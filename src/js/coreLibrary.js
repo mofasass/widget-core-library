@@ -53,6 +53,17 @@ window.CoreLibrary = (function () {
    };
 
    /**
+    * Cloaking waits for element to bind and then sets it visible
+    * @type {{priority: number, bind: rivets.binders.cloak.bind}}
+    */
+   rivets.binders.cloak = {
+      priority : -1000,
+      bind : function(el) {
+         el.style.opacity = 1;
+      }
+   };
+
+   /**
     * Checks the HTTP status of a response
     */
    function checkStatus ( response ) {
