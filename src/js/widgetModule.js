@@ -80,6 +80,22 @@ CoreLibrary.widgetModule = (function () {
          return this.api.createUrl(path, optionalRoot);
       },
 
+      getPageType: function () {
+         if ( !CoreLibrary.config.pageInfo.pageType ) {
+            return '';
+         }
+         var pageType = CoreLibrary.config.pageInfo.pageType;
+         switch ( pageType ) {
+            case 'event':
+               return '';
+            case 'event-live':
+               return 'live/';
+            default:
+               console.info('Unknown page type: ' + pageType);
+               break;
+         }
+      },
+
       requestSetup: function ( callback ) {
          this.api.requestSetup(callback);
       },

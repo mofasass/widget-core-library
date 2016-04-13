@@ -294,21 +294,6 @@ CoreLibrary.offeringModule = (function () {
          var requestPath = '/event/live/open.json';
          return this.doRequest(requestPath);
       },
-      getPageType: function () {
-         if ( !CoreLibrary.config.pageInfo.pageType ) {
-            return '';
-         }
-         var pageType = CoreLibrary.config.pageInfo.pageType;
-         switch ( pageType ) {
-            case 'event':
-               return '';
-            case 'event-live':
-               return 'live/';
-            default:
-               void 0;
-               break;
-         }
-      },
       doRequest: function ( requestPath, params, version ) {
          if ( this.config.offering == null ) {
             void 0;
@@ -479,6 +464,22 @@ CoreLibrary.widgetModule = (function () {
 
       createUrl: function ( path, optionalRoot ) {
          return this.api.createUrl(path, optionalRoot);
+      },
+
+      getPageType: function () {
+         if ( !CoreLibrary.config.pageInfo.pageType ) {
+            return '';
+         }
+         var pageType = CoreLibrary.config.pageInfo.pageType;
+         switch ( pageType ) {
+            case 'event':
+               return '';
+            case 'event-live':
+               return 'live/';
+            default:
+               void 0;
+               break;
+         }
       },
 
       requestSetup: function ( callback ) {

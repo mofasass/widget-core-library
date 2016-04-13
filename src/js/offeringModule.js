@@ -42,22 +42,7 @@ CoreLibrary.offeringModule = (function () {
       getLiveEvents: function () {
          var requestPath = '/event/live/open.json';
          return this.doRequest(requestPath);
-      },
-      getPageType: function () {
-         if ( !CoreLibrary.config.pageInfo.pageType ) {
-            return '';
-         }
-         var pageType = CoreLibrary.config.pageInfo.pageType;
-         switch ( pageType ) {
-            case 'event':
-               return '';
-            case 'event-live':
-               return 'live/';
-            default:
-               console.info('Unknown page type: ' + pageType);
-               break;
-         }
-      },
+      }, 
       doRequest: function ( requestPath, params, version ) {
          if ( this.config.offering == null ) {
             console.warn('The offering has not been set, is the right widget api version loaded?');
