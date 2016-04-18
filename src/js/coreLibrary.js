@@ -1,54 +1,53 @@
 window.CoreLibrary = (function () {
-
    'use strict';
 
    /** Rivets formatters **/
-   rivets.formatters['==='] = function (v1, v2) {
+   rivets.formatters['==='] = function ( v1, v2 ) {
       return v1 === v2;
    };
-   rivets.formatters['=='] = function (v1, v2) {
+   rivets.formatters['=='] = function ( v1, v2 ) {
       return v1 == v2; // jshint ignore:line
    };
-   rivets.formatters['>='] = function (v1, v2) {
+   rivets.formatters['>='] = function ( v1, v2 ) {
       return v1 >= v2;
    };
-   rivets.formatters['>'] = function (v1, v2) {
+   rivets.formatters['>'] = function ( v1, v2 ) {
       return v1 > v2;
    };
-   rivets.formatters['<='] = function (v1, v2) {
+   rivets.formatters['<='] = function ( v1, v2 ) {
       return v1 <= v2;
    };
-   rivets.formatters['<'] = function (v1, v2) {
+   rivets.formatters['<'] = function ( v1, v2 ) {
       return v1 < v2;
    };
-   rivets.formatters['!='] = function (v1, v2) {
+   rivets.formatters['!='] = function ( v1, v2 ) {
       return v1 != v2; // jshint ignore:line
    };
-   rivets.formatters['!=='] = function (v1, v2) {
+   rivets.formatters['!=='] = function ( v1, v2 ) {
       return v1 !== v2;
    };
-   rivets.formatters['and'] = function (v1, v2) {
+   rivets.formatters['and'] = function ( v1, v2 ) {
       return v1 && v2;
    };
-   rivets.formatters['or'] = function (v1, v2) {
+   rivets.formatters['or'] = function ( v1, v2 ) {
       return v1 || v2;
    };
-   rivets.formatters['not'] = function (v1) {
+   rivets.formatters['not'] = function ( v1 ) {
       return !v1;
    };
-   rivets.formatters['-'] = function (v1, v2) {
+   rivets.formatters['-'] = function ( v1, v2 ) {
       return v1 - v2;
    };
-   rivets.formatters['+'] = function (v1, v2) {
+   rivets.formatters['+'] = function ( v1, v2 ) {
       return v1 + v2;
    };
-   rivets.formatters['*'] = function (v1, v2) {
+   rivets.formatters['*'] = function ( v1, v2 ) {
       return v1 * v2;
    };
-   rivets.formatters['/'] = function (v1, v2) {
+   rivets.formatters['/'] = function ( v1, v2 ) {
       return v1 / v2;
    };
-   rivets.binders['style-*'] = function (el, value) {
+   rivets.binders['style-*'] = function ( el, value ) {
       el.style.setProperty(this.args[0], value);
    };
 
@@ -58,7 +57,7 @@ window.CoreLibrary = (function () {
     */
    rivets.binders.cloak = {
       priority : -1000,
-      bind : function(el) {
+      bind : function ( el ) {
          el.style.opacity = 1;
       }
    };
@@ -91,6 +90,7 @@ window.CoreLibrary = (function () {
       widgetModule: null,
       offeringModule: null,
       statisticsModule: null,
+      apiReady: false, // this value is set to true once the kambi API has finished loaded
       config: {
          oddsFormat: 'decimal',
          apiVersion: 'v2',
@@ -187,7 +187,7 @@ window.CoreLibrary = (function () {
          if ( setDefaultHeight === true ) {
             this.setHeight(setupData.height);
          }
-
+         this.apiReady = true;
          this.config = setupData;
       },
 
@@ -222,6 +222,16 @@ window.CoreLibrary = (function () {
             .then(parseJSON)
             .catch(function ( error ) {
                console.debug('Error fetching data');
+               console.trace(error);
+               throw error;
+            });
+      },
+
+      getFile: function ( url ) {
+         return fetch(url)
+            .then(checkStatus)
+            .catch(function ( error ) {
+               console.debug('Error fetching file');
                console.trace(error);
                throw error;
             });

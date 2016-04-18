@@ -42,7 +42,7 @@ CoreLibrary.offeringModule = (function () {
       getLiveEvents: function () {
          var requestPath = '/event/live/open.json';
          return this.doRequest(requestPath);
-      }, 
+      },
       doRequest: function ( requestPath, params, version ) {
          if ( this.config.offering == null ) {
             console.warn('The offering has not been set, is the right widget api version loaded?');

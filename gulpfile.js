@@ -66,15 +66,12 @@
       'tr_TR'
    ];
 
-   /**
-   * Fetches the i18n strings from Kambi into /src/i18n/. Deletes existing locales before fetching
-   */
-   gulp.task('compile-translations', function () {
+   gulp.task('fetch-translations', function () {
       var supportedLanguagesFiles = [];
       supportedLanguages.forEach(function ( locale ) {
          supportedLanguagesFiles.push({
             file: locale + '.json',
-            url: 'https://publictest-static.kambi.com/sb-mobileclient/kambi/1.245.0.0//locale/' + locale + '/locale.js'
+            url: 'https://publictest-static.kambi.com/sb-mobileclient/kambi/1.245.0.0/locale/' + locale + '/locale.js'
          });
       });
 
@@ -83,6 +80,13 @@
          .pipe(replace('(function(require, define){\ndefine({', '{\n\t"LOCALE_IMPORT": "---",'))
          .pipe(replace(');})(_kbc.require, _kbc.define);', ''))
          .pipe(gulp.dest('./src/i18n/'))
+   });
+
+   /**
+   * Fetches the i18n strings from Kambi into /src/i18n/. Deletes existing locales before fetching
+   */
+   gulp.task('compile-translations', function () {
+      return gulp.src('./src/i18n/*.json')
          .pipe(gulp.dest(compiledTemp + '/i18n'))
          .pipe(gulp.dest('./dist/i18n/'));
    });
