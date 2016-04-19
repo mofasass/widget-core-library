@@ -3,52 +3,52 @@ window.CoreLibrary = (function () {
    'use strict';
 
    /** Rivets formatters **/
-   rivets.formatters['==='] = function (v1, v2) {
+   rivets.formatters['==='] = function ( v1, v2 ) {
       return v1 === v2;
    };
-   rivets.formatters['=='] = function (v1, v2) {
+   rivets.formatters['=='] = function ( v1, v2 ) {
       return v1 == v2; // jshint ignore:line
    };
-   rivets.formatters['>='] = function (v1, v2) {
+   rivets.formatters['>='] = function ( v1, v2 ) {
       return v1 >= v2;
    };
-   rivets.formatters['>'] = function (v1, v2) {
+   rivets.formatters['>'] = function ( v1, v2 ) {
       return v1 > v2;
    };
-   rivets.formatters['<='] = function (v1, v2) {
+   rivets.formatters['<='] = function ( v1, v2 ) {
       return v1 <= v2;
    };
-   rivets.formatters['<'] = function (v1, v2) {
+   rivets.formatters['<'] = function ( v1, v2 ) {
       return v1 < v2;
    };
-   rivets.formatters['!='] = function (v1, v2) {
+   rivets.formatters['!='] = function ( v1, v2 ) {
       return v1 != v2; // jshint ignore:line
    };
-   rivets.formatters['!=='] = function (v1, v2) {
+   rivets.formatters['!=='] = function ( v1, v2 ) {
       return v1 !== v2;
    };
-   rivets.formatters['and'] = function (v1, v2) {
+   rivets.formatters['and'] = function ( v1, v2 ) {
       return v1 && v2;
    };
-   rivets.formatters['or'] = function (v1, v2) {
+   rivets.formatters['or'] = function ( v1, v2 ) {
       return v1 || v2;
    };
-   rivets.formatters['not'] = function (v1) {
+   rivets.formatters['not'] = function ( v1 ) {
       return !v1;
    };
-   rivets.formatters['-'] = function (v1, v2) {
+   rivets.formatters['-'] = function ( v1, v2 ) {
       return v1 - v2;
    };
-   rivets.formatters['+'] = function (v1, v2) {
+   rivets.formatters['+'] = function ( v1, v2 ) {
       return v1 + v2;
    };
-   rivets.formatters['*'] = function (v1, v2) {
+   rivets.formatters['*'] = function ( v1, v2 ) {
       return v1 * v2;
    };
-   rivets.formatters['/'] = function (v1, v2) {
+   rivets.formatters['/'] = function ( v1, v2 ) {
       return v1 / v2;
    };
-   rivets.binders['style-*'] = function (el, value) {
+   rivets.binders['style-*'] = function ( el, value ) {
       el.style.setProperty(this.args[0], value);
    };
 
@@ -57,10 +57,25 @@ window.CoreLibrary = (function () {
     * @type {{priority: number, bind: rivets.binders.cloak.bind}}
     */
    rivets.binders.cloak = {
-      priority : -1000,
-      bind : function(el) {
+      priority: -1000,
+      bind: function ( el ) {
          el.style.opacity = 1;
       }
+   };
+
+   /**
+    * Binder that adds animation class
+    *
+    * Used in DOM as <div rv-anim-stagger="index"></div>
+    *
+    * @param el
+    * @param index
+    */
+   rivets.binders['anim-stagger'] = function ( el, index ) {
+      el.classList.add('anim-stagger');
+      setTimeout(function () {
+         el.classList.add('anim-enter-active');
+      }, 100 * index);
    };
 
    /**
@@ -114,7 +129,7 @@ window.CoreLibrary = (function () {
                         console.debug(mockSetupData);
                         // Apply the mock config data to the core
                         this.applySetupData(mockSetupData, setDefaultHeight);
-                        if (this.translationModule != null) {
+                        if ( this.translationModule != null ) {
                            this.translationModule.fetchTranslations(mockSetupData.clientConfig.locale).then(function () {
                               resolve(mockSetupData['arguments']);
                            }.bind(this));
@@ -130,7 +145,7 @@ window.CoreLibrary = (function () {
                } else {
                   window.KambiWidget.apiReady = function ( api ) {
                      this.widgetModule.api = api;
-                     if (api.VERSION !== this.expectedApiVersion) {
+                     if ( api.VERSION !== this.expectedApiVersion ) {
                         console.warn('Wrong Kambi API version loaded, expected: ' + this.expectedApiVersion + ' got: ' + api.VERSION);
                      }
 
@@ -145,7 +160,7 @@ window.CoreLibrary = (function () {
                         // Request the odds format that is set in the sportsbook, this also sets up a subscription for future odds format changes
                         this.widgetModule.requestOddsFormat();
 
-                        if (this.translationModule != null) {
+                        if ( this.translationModule != null ) {
                            this.translationModule.fetchTranslations(setupData.clientConfig.locale).then(function () {
                               resolve(setupData['arguments']);
                            }.bind(this));
