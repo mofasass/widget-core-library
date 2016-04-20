@@ -66,6 +66,9 @@
       'tr_TR'
    ];
 
+   /**
+   * Fetches the i18n strings from Kambi into /src/i18n/. Deletes existing locales before fetching
+   */
    gulp.task('fetch-translations', function () {
       var supportedLanguagesFiles = [];
       supportedLanguages.forEach(function ( locale ) {
@@ -82,9 +85,7 @@
          .pipe(gulp.dest('./src/i18n/'))
    });
 
-   /**
-   * Fetches the i18n strings from Kambi into /src/i18n/. Deletes existing locales before fetching
-   */
+   // overriden task from widget-build-tools
    gulp.task('compile-translations', function () {
       return gulp.src('./src/i18n/*.json')
          .pipe(gulp.dest(compiledTemp + '/i18n'))

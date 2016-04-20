@@ -81,6 +81,15 @@
                      Object.keys(widgetArgs).forEach(function ( key ) {
                         this.scope.args[key] = widgetArgs[key];
                      }.bind(this));
+                     v
+                     var baseWidgetCSS = '//c3-static.kambi.com/sb-mobileclient/widget-api/1.0.0.10/resources/css/';
+                     this.scope.widgetCss = '//c3-static.kambi.com/sb-mobileclient/widget-api/'
+                        + this.widgetModule.api.VERSION
+                        + '/resources/css/'
+                        + CoreLibrary.config.clientConfig.customer
+                        + '/'
+                        + CoreLibrary.config.clientConfig.offering
+                        + '/widgets.css';
                      resolve();
                   }.bind(this));
             }.bind(this));
