@@ -63,6 +63,21 @@ window.CoreLibrary = (function () {
    };
 
    /**
+    * Binder that adds animation class
+    *
+    * Used in DOM as <div rv-anim-stagger="index"></div>
+    *
+    * @param el
+    * @param index
+    */
+   rivets.binders['anim-stagger'] = function ( el, index ) {
+      el.classList.add('anim-stagger');
+      setTimeout(function () {
+         el.classList.add('anim-enter-active');
+      }, 100 * index);
+   };
+
+   /**
     * Checks the HTTP status of a response
     */
    function checkStatus ( response ) {
