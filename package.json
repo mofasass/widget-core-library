@@ -38,7 +38,7 @@
       "gulp-concat": "^2.6.0",
       "gulp-strip-debug": "^1.0.2",
       "gulp-replace": "^0.5.4",
-      "widget-build-tools": "git+ssh://git@github.com:kambi-sportsbook-widgets/widget-build-tools.git"
+      "widget-build-tools": "git+ssh://git@github.com:kambi-sportsbook-widgets/widget-build-tools.git#v0.2.0"
    },
    "dependencies": {},
    "kambi-widget-api-version": "1.0.0.10"
