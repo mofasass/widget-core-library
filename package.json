@@ -1,6 +1,6 @@
 {
    "name": "widget-core-library",
-   "version": "0.1.8",
+   "version": "1.0.0",
    "description": "",
    "main": "dist/js/app.js",
    "scripts": {
