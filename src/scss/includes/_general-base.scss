@@ -4,8 +4,8 @@
 
 // Cloak class
 [rv-cloak] {
-   opacity: 0;
    @include transition(opacity .5s ease-out);
+   opacity: 0;
 }
 
 * {

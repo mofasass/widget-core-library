@@ -15,12 +15,12 @@
 @import 'includes/events-base';
 // Widget button styles
 @import 'includes/buttons-base';
-// Widget button styles
-@import 'plugins/icons';
-
 // Default theme classes, expect to be overridden
 @import 'includes/widget-theme-base';
 
 @import 'includes/layout-base';
 // Helper classes for layout:  margins..
 @import 'includes/layout-margins-base';
+
+// Widget custom icons
+@import 'plugins/icons';

@@ -124,10 +124,7 @@
    overflow: hidden;
 }
 
-// Selector for all l-flex-* classes, fixes flex for Firefox
-[class*="l-flex-"] {
-   min-width: 1px; // Firefox needs this
-}
+
 
 // Fix for safari, when flex used
 .kw-event-outcome-odds, .kw-event-outcome-label {

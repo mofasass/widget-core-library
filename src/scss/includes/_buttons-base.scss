@@ -19,7 +19,7 @@
 // Styleguide buttons.kwbtn
 .kw-btn {
    @include border-radius(2px);
-   @include transition(background-color ease-out 0.2s, color ease-out 0.2s);
+   @include transition(background-color ease-out .2s, color ease-out .2s);
    font-size: 12px;
    line-height: 20px;
    margin: 5px 5px 5px 0;

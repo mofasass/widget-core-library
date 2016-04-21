@@ -92,6 +92,11 @@
    @include flex(5);
 }
 
+// Selector for all l-flex-* classes, fixes flex for Firefox
+[class*="l-flex-"] {
+   min-width: 1px; // Firefox needs this
+}
+
 // Expander class helper
 .l-expander {
    height: 100%;
