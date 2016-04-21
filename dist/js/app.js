@@ -101,9 +101,12 @@
                         this.scope.args[key] = widgetArgs[key];
                      }.bind(this));
 
-                     var baseWidgetCSS = '//c3-static.kambi.com/sb-mobileclient/widget-api/1.0.0.10/resources/css/';
+                     var apiVersion = CoreLibrary.widgetModule.api.VERSION;
+                     if (apiVersion == null) {
+                        var apiVersion = '1.0.0.10';
+                     }
                      this.scope.widgetCss = '//c3-static.kambi.com/sb-mobileclient/widget-api/' +
-                        this.widgetModule.api.VERSION +
+                        apiVersion +
                         '/resources/css/' +
                         CoreLibrary.config.clientConfig.customer +
                         '/' +
