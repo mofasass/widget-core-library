@@ -9,6 +9,10 @@
 }
 
 * {
+ -webkit-text-size-adjust: 100%;
+}
+
+* {
    -webkit-tap-highlight-color: transparent;
    -webkit-user-select: none;
    -moz-user-select: none;
@@ -49,5 +53,3 @@ strong {
       font-weight: bolder;
    }
 }
-
-
