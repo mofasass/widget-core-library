@@ -169,12 +169,13 @@ CoreLibrary.PaginationComponent = CoreLibrary.Component.subclass({
       '</span>' +
    '</div>',
 
-   constructor: function (htmlElement, mainComponentScope, scopeKey, pageSize) {
+   constructor: function (htmlElement, mainComponentScope, scopeKey, pageSize, maxVisiblePages) {
       CoreLibrary.Component.apply(this, [{
          rootElement: htmlElement
       }]);
       this.scopeKey = scopeKey;
-      this.pageSize = pageSize;
+      this.pageSize = pageSize ? pageSize : 3;
+      this.maxVisiblePages = maxVisiblePages ? maxVisiblePages : 5;
       this.scope.currentPage = 0;
       this.scope.firstPage = true;
       this.scope.lastPage = false;
@@ -247,16 +248,10 @@ CoreLibrary.PaginationComponent = CoreLibrary.Component.subclass({
       for (var i = startItem; i < endItem; ++i) {
          this.currentPageArray.push(this.originalArray[i]);
       }
-      if (this.getCurrentPage() === 0) {
-         this.scope.firstPage = true;
-      } else {
-         this.scope.firstPage = false;
-      }
-      if (this.getCurrentPage() === this.getNumberOfPages() - 1) {
-         this.scope.lastPage = true;
-      } else {
-         this.scope.lastPage = false;
-      }
+
+      this.scope.firstPage = this.getCurrentPage() === 0;
+      this.scope.lastPage = this.getCurrentPage() === this.getNumberOfPages() - 1;
+
       this.render();
    },
 
@@ -269,13 +264,24 @@ CoreLibrary.PaginationComponent = CoreLibrary.Component.subclass({
     */
    render: function (page) {
       this.scope.pages = [];
-      for (var i = 0; i < this.getNumberOfPages(); i++) {
+      var startPage = this.getCurrentPage() - 2;
+      if (this.getCurrentPage() + 2 >= this.getNumberOfPages()) {
+         var startPage = this.getNumberOfPages() - 5;
+      }
+      if (startPage < 0) {
+         startPage = 0;
+      }
+      var i = startPage;
+      var numberOfPagesVisible = 0;
+      while (i < this.getNumberOfPages() && numberOfPagesVisible < 5) {
          this.scope.pages.push({
             text: (i + 1) + '',
             number: i,
             selected: i === this.getCurrentPage(),
             clickEvent: this.setCurrentPage.bind(this, i) // calls setCurrentPage with i as a parameter
          });
+         ++i;
+         ++numberOfPagesVisible;
       }
    }
 });
