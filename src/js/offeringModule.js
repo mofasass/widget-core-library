@@ -11,7 +11,7 @@ CoreLibrary.offeringModule = (function () {
          market: null,
          offering: null,
          customer: null,
-         clientId: null,
+         clientId: 2,
          version: null,
          routeRoot: '',
          auth: false,
@@ -54,7 +54,10 @@ CoreLibrary.offeringModule = (function () {
                lang: overrideParams.locale || this.config.locale,
                market: overrideParams.market || this.config.market,
                client_id: overrideParams.clientId || this.config.clientId,
-               include: overrideParams.include || null
+               include: overrideParams.include || '',
+               betOffers: overrideParams.betOffers || 'COMBINED',
+               categoryGroup: overrideParams.categoryGroup || 'COMBINED',
+               displayDefault: overrideParams.displayDefault || true
             };
             requestUrl += '?' + Object.keys(requestParams).map(function ( k ) {
                   return encodeURIComponent(k) + '=' + encodeURIComponent(requestParams[k]);
