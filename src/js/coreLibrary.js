@@ -67,14 +67,15 @@ window.CoreLibrary = (function () {
     *
     * Used in DOM as <div rv-anim-stagger="index"></div>
     *
-    * @param el
-    * @param index
+    * @param el DOM element to apply classes
+    * @param index List item index
     */
    rivets.binders['anim-stagger'] = function ( el, index ) {
+      var speed = 70;
       el.classList.add('anim-stagger');
       setTimeout(function () {
          el.classList.add('anim-enter-active');
-      }, 100 * index);
+      }, speed * index);
    };
 
    /**
