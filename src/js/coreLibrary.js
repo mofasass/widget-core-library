@@ -56,8 +56,25 @@ window.CoreLibrary = (function () {
     * @returns {*}
     */
    rivets.formatters.array_at = function ( arr, index, key ) {
-      return arr[index][key];
+      return arr == null ? [] : arr[index][key];
    };
+
+   /**
+    * Returns an array of objects where each objects contains key and value properties based on the passed array
+    * @param {Object} obj The source object
+    * @returns {Array}
+    */
+   rivets.formatters.property_list = function ( obj ) {
+      return (function () {
+         var properties = []
+         for ( var key in obj ) {
+            if ( obj.hasOwnProperty(key) ) {
+               properties.push({ key: key, value: obj[key] });
+            }
+         }
+         return properties;
+      })();
+   }
 
    rivets.binders['style-*'] = function ( el, value ) {
       el.style.setProperty(this.args[0], value);
