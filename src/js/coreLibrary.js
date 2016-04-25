@@ -66,7 +66,7 @@ window.CoreLibrary = (function () {
     */
    rivets.formatters.property_list = function ( obj ) {
       return (function () {
-         var properties = []
+         var properties = [];
          for ( var key in obj ) {
             if ( obj.hasOwnProperty(key) ) {
                properties.push({ key: key, value: obj[key] });
@@ -74,7 +74,7 @@ window.CoreLibrary = (function () {
          }
          return properties;
       })();
-   }
+   };
 
    rivets.binders['style-*'] = function ( el, value ) {
       el.style.setProperty(this.args[0], value);
