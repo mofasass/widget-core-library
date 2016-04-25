@@ -208,6 +208,9 @@ CoreLibrary.PaginationComponent = CoreLibrary.Component.subclass({
    },
 
    setCurrentPage: function (pageNumber) {
+      if (pageNumber === this.getCurrentPage()) {
+         return;
+      }
       if (pageNumber < 0 || pageNumber >= this.getNumberOfPages()) {
          throw new Error('Invalid page number');
       }
@@ -222,7 +225,6 @@ CoreLibrary.PaginationComponent = CoreLibrary.Component.subclass({
    nextPage: function () {
       if (this.getCurrentPage() < this.getNumberOfPages() - 1) {
          this.setCurrentPage(this.getCurrentPage() + 1);
-         this.adaptArray();
       }
       return this.getCurrentPage();
    },
@@ -230,7 +232,6 @@ CoreLibrary.PaginationComponent = CoreLibrary.Component.subclass({
    previousPage: function () {
       if (this.getCurrentPage() > 0) {
          this.setCurrentPage(this.getCurrentPage() - 1);
-         this.adaptArray();
       }
       return this.getCurrentPage();
    },
@@ -337,6 +338,18 @@ window.CoreLibrary = (function () {
    rivets.formatters['/'] = function ( v1, v2 ) {
       return v1 / v2;
    };
+
+   /**
+    * Returns specified object at specified key for specified array index
+    * @param arr The source array
+    * @param index The desired index from given array
+    * @param key The desired key of the object to be returned
+    * @returns {*}
+    */
+   rivets.formatters.array_at = function ( arr, index, key ) {
+      return arr[index][key];
+   };
+
    rivets.binders['style-*'] = function ( el, value ) {
       el.style.setProperty(this.args[0], value);
    };
@@ -346,8 +359,8 @@ window.CoreLibrary = (function () {
     * @type {{priority: number, bind: rivets.binders.cloak.bind}}
     */
    rivets.binders.cloak = {
-      priority : -1000,
-      bind : function ( el ) {
+      priority: -1000,
+      bind: function ( el ) {
          el.style.opacity = 1;
       }
    };
@@ -357,14 +370,16 @@ window.CoreLibrary = (function () {
     *
     * Used in DOM as <div rv-anim-stagger="index"></div>
     *
-    * @param el
-    * @param index
+    * @param el DOM element to apply classes
+    * @param index List item index
     */
    rivets.binders['anim-stagger'] = function ( el, index ) {
+      var speed = 70;
+      el.classList.remove('anim-stagger');
       el.classList.add('anim-stagger');
       setTimeout(function () {
          el.classList.add('anim-enter-active');
-      }, 100 * index);
+      }, speed * index);
    };
 
    /**
@@ -419,7 +434,7 @@ window.CoreLibrary = (function () {
                         void 0;
                         // Apply the mock config data to the core
                         this.applySetupData(mockSetupData, setDefaultHeight);
-                        if (this.translationModule != null) {
+                        if ( this.translationModule != null ) {
                            this.translationModule.fetchTranslations(mockSetupData.clientConfig.locale).then(function () {
                               resolve(mockSetupData['arguments']);
                            }.bind(this));
@@ -435,7 +450,7 @@ window.CoreLibrary = (function () {
                } else {
                   window.KambiWidget.apiReady = function ( api ) {
                      this.widgetModule.api = api;
-                     if (api.VERSION !== this.expectedApiVersion) {
+                     if ( api.VERSION !== this.expectedApiVersion ) {
                         void 0;
                      }
 
@@ -450,7 +465,7 @@ window.CoreLibrary = (function () {
                         // Request the odds format that is set in the sportsbook, this also sets up a subscription for future odds format changes
                         this.widgetModule.requestOddsFormat();
 
-                        if (this.translationModule != null) {
+                        if ( this.translationModule != null ) {
                            this.translationModule.fetchTranslations(setupData.clientConfig.locale).then(function () {
                               resolve(setupData['arguments']);
                            }.bind(this));
@@ -558,7 +573,7 @@ CoreLibrary.offeringModule = (function () {
          market: null,
          offering: null,
          customer: null,
-         clientId: null,
+         clientId: 2,
          version: null,
          routeRoot: '',
          auth: false,
@@ -601,7 +616,10 @@ CoreLibrary.offeringModule = (function () {
                lang: overrideParams.locale || this.config.locale,
                market: overrideParams.market || this.config.market,
                client_id: overrideParams.clientId || this.config.clientId,
-               include: overrideParams.include || null
+               include: overrideParams.include || '',
+               betOffers: overrideParams.betOffers || 'COMBINED',
+               categoryGroup: overrideParams.categoryGroup || 'COMBINED',
+               displayDefault: overrideParams.displayDefault || true
             };
             requestUrl += '?' + Object.keys(requestParams).map(function ( k ) {
                   return encodeURIComponent(k) + '=' + encodeURIComponent(requestParams[k]);

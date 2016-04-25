@@ -265,7 +265,7 @@ a {
   background-color: #f0f0f0;
 }
 
-.kw-page-link.active, .kw-page-link:hover {
+.kw-page-link.kw-active-page, .kw-page-link:hover {
   background-color: #f0f0f0;
 }
 

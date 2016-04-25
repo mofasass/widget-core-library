@@ -57,6 +57,9 @@ CoreLibrary.PaginationComponent = CoreLibrary.Component.subclass({
    },
 
    setCurrentPage: function (pageNumber) {
+      if (pageNumber === this.getCurrentPage()) {
+         return;
+      }
       if (pageNumber < 0 || pageNumber >= this.getNumberOfPages()) {
          throw new Error('Invalid page number');
       }
@@ -71,7 +74,6 @@ CoreLibrary.PaginationComponent = CoreLibrary.Component.subclass({
    nextPage: function () {
       if (this.getCurrentPage() < this.getNumberOfPages() - 1) {
          this.setCurrentPage(this.getCurrentPage() + 1);
-         this.adaptArray();
       }
       return this.getCurrentPage();
    },
@@ -79,7 +81,6 @@ CoreLibrary.PaginationComponent = CoreLibrary.Component.subclass({
    previousPage: function () {
       if (this.getCurrentPage() > 0) {
          this.setCurrentPage(this.getCurrentPage() - 1);
-         this.adaptArray();
       }
       return this.getCurrentPage();
    },
