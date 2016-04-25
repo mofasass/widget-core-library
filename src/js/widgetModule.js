@@ -139,7 +139,7 @@ CoreLibrary.widgetModule = (function () {
       addOutcomeToBetslip: function ( outcomes, stakes, updateMode, source ) {
          var arrOutcomes = [];
          // Check if the outcomes parameter is an array and add it, otherwise add the the single value as an array
-         if ( outcomes.isArray() ) {
+         if ( Array.isArray(outcomes) ) {
             arrOutcomes = outcomes;
          } else {
             arrOutcomes.push(outcomes);
