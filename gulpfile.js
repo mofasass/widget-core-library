@@ -45,6 +45,8 @@ var gulp = require('gulp'),
       'tr_TR'
    ];
 
+require('./gulpVersionBumper.js');
+
 var projectRoot = '.';
 
 var transpileDir = projectRoot + '/src/transpiled/';
