@@ -109,6 +109,24 @@ window.CoreLibrary = (function () {
    };
 
    /**
+    * Binder to toggle a custom class based on the passed property, picks up the class name form the "rv-toggle-class" attribute
+    *
+    * Used in DOM as <div rv-custom-class="myBoolean" rv-toggle-class="myCustomClass" ></div>
+    *
+    * @param el DOM element to apply class to
+    * @param property The property to check
+    */
+   rivets.binders['custom-class'] = function ( el, property ) {
+      var cssClass = el.getAttribute('rv-toggle-class');
+
+      if ( property === true ) {
+         el.classList.add(cssClass);
+      } else {
+         el.classList.remove(cssClass);
+      }
+   };
+
+   /**
     * Checks the HTTP status of a response
     */
    function checkStatus ( response ) {
