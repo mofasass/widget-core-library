@@ -1,5 +1,4 @@
 CoreLibrary.widgetModule = (function () {
-   'use strict';
 
    var Module = Stapes.subclass();
 
@@ -22,6 +21,7 @@ CoreLibrary.widgetModule = (function () {
          auth: false,
          device: null
       },
+      betslipIds: [],
       setConfig: function ( config ) {
          for ( var i in config ) {
             if ( config.hasOwnProperty(i) && this.config.hasOwnProperty(i) ) {
@@ -44,6 +44,34 @@ CoreLibrary.widgetModule = (function () {
                break;
             case this.api.BETSLIP_OUTCOMES:
                // We've received a response with the outcomes currently in the betslip
+
+               var i = 0, len = response.data.outcomes.length;
+               var updateIds = [];
+               // Gather all the ids in the betslip in one array
+               for ( ; i < len; ++i ) {
+                  updateIds.push(response.data.outcomes[i].id);
+               }
+               // Diff against what the coreLibrary already has stored so we know what was added and what was removed
+               var removedIds = CoreLibrary.utilModule.diffArray(this.betslipIds, updateIds);
+               var addedIds = CoreLibrary.utilModule.diffArray(updateIds, this.betslipIds);
+               // Save the updated ids
+               this.betslipIds = updateIds;
+
+               // Emit events for each removed id
+               i = 0;
+               len = removedIds.length;
+               for ( ; i < len; ++i ) {
+                  this.events.emit('OUTCOME:REMOVED:' + removedIds[i]);
+               }
+
+               // Emit events for each added id
+               i = 0;
+               len = addedIds.length;
+               for ( ; i < len; ++i ) {
+                  this.events.emit('OUTCOME:ADDED:' + addedIds[i]);
+               }
+
+               // Emit a generic update in case we want to use that
                this.events.emit('OUTCOMES:UPDATE', response.data);
                break;
             case this.api.WIDGET_ARGS:
@@ -174,7 +202,7 @@ CoreLibrary.widgetModule = (function () {
 
       removeOutcomeFromBetslip: function ( outcomes ) {
          var arrOutcomes = [];
-         if ( outcomes.isArray() ) {
+         if ( Array.isArray(outcomes) ) {
             arrOutcomes = outcomes;
          } else {
             arrOutcomes.push(outcomes);
