@@ -79,6 +79,11 @@ window.CoreLibrary = function () {
       }();
    };
 
+   /**
+    * Custom style binder
+    * @param el
+    * @param value
+    */
    rivets.binders['style-*'] = function (el, value) {
       el.style.setProperty(this.args[0], value);
    };
@@ -103,11 +108,18 @@ window.CoreLibrary = function () {
     * @param index List item index
     */
    rivets.binders['anim-stagger'] = function (el, index) {
+      if (index < 0) {
+         return false;
+      }
       var speed = 70;
       el.classList.remove('anim-stagger');
       el.classList.add('anim-stagger');
       setTimeout(function () {
          el.classList.add('anim-enter-active');
+         setTimeout(function () {
+            el.classList.remove('anim-stagger');
+            el.classList.remove('anim-enter-active');
+         }, 200);
       }, speed * index);
    };
 
