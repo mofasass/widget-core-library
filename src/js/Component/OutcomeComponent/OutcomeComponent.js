@@ -4,7 +4,11 @@
       this.data = attributes;
       this.selected = false;
 
-      Stapes.on('OUTCOME:ADDED:' + this.data.outcomeAttr.id, ( data, event ) => {
+      if ( CoreLibrary.widgetModule.betslipIds.indexOf(this.data.outcomeAttr.id) !== -1 ) {
+         this.selected = true;
+      }
+
+      CoreLibrary.widgetModule.events.on('OUTCOME:ADDED:' + this.data.outcomeAttr.id, ( data, event ) => {
          this.selected = true;
       });
 
@@ -40,6 +44,24 @@
       initialize: function ( el, attributes ) {
          el.classList.add('l-flexbox');
          el.classList.add('l-flex-1');
+         return new OutcomeViewController(attributes);
+      }
+   };
+
+   rivets.components['outcome-component-no-label'] = {
+      template: function () {
+         return '<button rv-on-click="toggleOutcome" rv-disabled="betOffer.suspended | == true"' +
+            'rv-custom-class="selected" rv-toggle-class="KambiWidget-outcome--selected" ' +
+            'type="button" role="button" class="KambiWidget-outcome kw-link l-ml-6">' +
+            '<div class="l-flexbox l-pack-center">' +
+            '<div class="KambiWidget-outcome__odds-wrapper">' +
+            '<span class="KambiWidget-outcome__odds">{data.outcomeAttr.odds | / 1000 }</span>' +
+            '</div>' +
+            '</div>' +
+            '</button>';
+      },
+
+      initialize: function ( el, attributes ) {
          return new OutcomeViewController(attributes);
       }
    };

@@ -163,6 +163,7 @@ window.CoreLibrary = (function () {
 
    return {
       expectedApiVersion: '{{expectedApiVersion}}', // this value is replaced with the API version number during the compilation step
+      utilModule: null,
       widgetModule: null,
       offeringModule: null,
       statisticsModule: null,
