@@ -47,6 +47,9 @@ window.CoreLibrary = (function () {
    rivets.formatters['/'] = function ( v1, v2 ) {
       return v1 / v2;
    };
+   rivets.formatters['?'] = ( v1, v2 ) => {
+      return v1 ? v1 : v2;
+   };
 
    /**
     * Returns specified object at specified key for specified array index
