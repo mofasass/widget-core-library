@@ -42,7 +42,7 @@ CoreLibrary.PaginationComponent = CoreLibrary.Component.subclass({
       sightglass(mainComponentScope, scopeKey, function () {
          this.originalArray = mainComponentScope[scopeKey];
          this.setCurrentPage(0);
-         this.currentPageArray.length = 0; // empties the array
+         this.clearArray();
          this.adaptArray();
       }.bind(this));
 
@@ -50,6 +50,10 @@ CoreLibrary.PaginationComponent = CoreLibrary.Component.subclass({
       this.scope.previousPage = this.previousPage.bind(this);
 
       this.adaptArray();
+   },
+
+   clearArray: function () {
+      this.currentPageArray.splice(0, this.currentPageArray.length);
    },
 
    getCurrentPage: function () {
@@ -89,13 +93,14 @@ CoreLibrary.PaginationComponent = CoreLibrary.Component.subclass({
     * Changes the _scopeKey array to match the current page elements
     */
    adaptArray: function () {
-      this.currentPageArray.length = 0; // empties the array
+      this.clearArray();
       var startItem = this.getCurrentPage() * this.pageSize;
       var endItem = startItem + this.pageSize;
       if (endItem >= this.originalArray.length) {
          endItem = this.originalArray.length;
       }
       for (var i = startItem; i < endItem; ++i) {
+         console.log(this.originalArray[i]);
          this.currentPageArray.push(this.originalArray[i]);
       }
 
