@@ -100,7 +100,6 @@ CoreLibrary.PaginationComponent = CoreLibrary.Component.subclass({
          endItem = this.originalArray.length;
       }
       for (var i = startItem; i < endItem; ++i) {
-         console.log(this.originalArray[i]);
          this.currentPageArray.push(this.originalArray[i]);
       }
 
