@@ -3,18 +3,19 @@
    var OutcomeViewController = function ( attributes ) {
       this.data = attributes;
       this.selected = false;
+      if ( this.data.outcomeAttr != null ) {
+         if ( CoreLibrary.widgetModule.betslipIds.indexOf(this.data.outcomeAttr.id) !== -1 ) {
+            this.selected = true;
+         }
 
-      if ( CoreLibrary.widgetModule.betslipIds.indexOf(this.data.outcomeAttr.id) !== -1 ) {
-         this.selected = true;
+         CoreLibrary.widgetModule.events.on('OUTCOME:ADDED:' + this.data.outcomeAttr.id, ( data, event ) => {
+            this.selected = true;
+         });
+
+         Stapes.on('OUTCOME:REMOVED:' + this.data.outcomeAttr.id, ( data, event ) => {
+            this.selected = false;
+         });
       }
-
-      CoreLibrary.widgetModule.events.on('OUTCOME:ADDED:' + this.data.outcomeAttr.id, ( data, event ) => {
-         this.selected = true;
-      });
-
-      Stapes.on('OUTCOME:REMOVED:' + this.data.outcomeAttr.id, ( data, event ) => {
-         this.selected = false;
-      });
 
       this.toggleOutcome = function ( event, scope ) {
          if ( scope.selected === false ) {
