@@ -26,14 +26,17 @@ window.CoreLibrary.translationModule = (function () {
                   }
                });
          });
+      },
+      getTranslation: function ( key ) {
+         if ( this.i18nStrings[key] != null ) {
+            return this.i18nStrings[key];
+         }
+         return key;
       }
    };
 
    rivets.formatters.translate = function ( value ) {
-      if ( translationModule.i18nStrings[value] != null ) {
-         return translationModule.i18nStrings[value];
-      }
-      return value;
+      return translationModule.getTranslation(value);
    };
 
    return translationModule;
