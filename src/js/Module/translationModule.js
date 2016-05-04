@@ -9,8 +9,12 @@ window.CoreLibrary.translationModule = (function () {
             locale = 'en_GB';
          }
          var self = this;
+         var path = 'i18n/';
+         if (CoreLibrary.development === true) {
+            path = 'transpiled/i18n/';
+         }
          return new Promise(function ( resolve, reject ) {
-            window.CoreLibrary.getData('i18n/' + locale + '.json')
+            window.CoreLibrary.getData(path + locale + '.json')
                .then(function ( response ) {
                   translationModule.i18nStrings = response;
                   resolve();
