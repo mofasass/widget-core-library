@@ -172,12 +172,32 @@ window.CoreLibrary = (function () {
       statisticsModule: null,
       apiReady: false, // this value is set to true once the kambi API has finished loaded
       config: {
+         apiBaseUrl: '',
+         auth: false,
+         channelId: 1,
+         currency: '',
+         customer: '',
+         device: 'desktop',
+         locale: 'en_GB',
+         market: 'GB',
          oddsFormat: 'decimal',
-         apiVersion: 'v2',
-         streamingAllowedForPlayer: false
+         offering: '',
+         routeRoot: '',
+         streamingAllowedForPlayer: true
       },
       height: 450,
-      pageInfo: {},
+      pageInfo: {
+         leaguePaths: [],
+         pageParam: '',
+         pageTrackingPath: '',
+         pageType: ''
+      },
+      apiVersions: {
+         client: '',
+         libs: '',
+         wapi: ''
+      },
+      args: {},
       init: function ( setDefaultHeight ) {
          return new Promise(function ( resolve, reject ) {
             if ( window.KambiWidget ) {
@@ -247,28 +267,54 @@ window.CoreLibrary = (function () {
       },
 
       applySetupData: function ( setupData, setDefaultHeight ) {
-         // Set the odds format
-         if ( setupData.clientConfig.oddsFormat != null ) {
-            this.setOddsFormat(setupData.clientConfig.oddsFormat);
-         }
 
-         // Set the configuration in the offering module
-         this.offeringModule.setConfig(setupData.clientConfig);
-
-         // Set the configuration in the widget api module
-         this.widgetModule.setConfig(setupData.clientConfig);
-
-         // Set the configuration in the widget api module
-         this.statisticsModule.setConfig(setupData.clientConfig);
+         // Set the configuration
+         this.setConfig(setupData.clientConfig);
 
          // Set page info
          this.setPageInfo(setupData.pageInfo);
+
+         this.setVersions(setupData.versions);
 
          if ( setDefaultHeight === true ) {
             this.setHeight(setupData.height);
          }
          this.apiReady = true;
-         this.config = setupData;
+      },
+
+      setConfig: function ( config ) {
+         for ( var i in config ) {
+            if ( config.hasOwnProperty(i) && this.config.hasOwnProperty(i) ) {
+               this.config[i] = config[i];
+            }
+         }
+         // Make sure that the routeRoot is not null or undefined
+         if ( this.config.routeRoot == null ) {
+            this.config.routeRoot = '';
+         } else if ( this.config.routeRoot.length > 0 && this.config.routeRoot.slice(-1) !== '/' ) {
+            // If the routeRoot is not empty we need to make sure it has a trailing slash
+            this.config.routeRoot += '/';
+         }
+      },
+
+      setPageInfo: function ( pageInfo ) {
+         // Check if the last character in the pageParam property is a slash, if not add it so we can use this property in filter requests
+         if ( pageInfo.pageType === 'filter' && pageInfo.pageParam.substr(-1) !== '/' ) {
+            pageInfo.pageParam += '/';
+         }
+         this.pageInfo = pageInfo;
+      },
+
+      setVersions: function ( versions ) {
+         for ( var i in versions ) {
+            if ( versions.hasOwnProperty(i) && this.apiVersions.hasOwnProperty(i) ) {
+               this.apiVersions[i] = versions[i];
+            }
+         }
+      },
+
+      setArgs: function ( args ) {
+         this.args = args;
       },
 
       requestSetup: function ( callback ) {
@@ -286,14 +332,6 @@ window.CoreLibrary = (function () {
       setHeight: function ( height ) {
          this.height = height;
          this.widgetModule.setHeight(height);
-      },
-
-      setPageInfo: function ( pageInfo ) {
-         // Check if the last character in the pageParam property is a slash, if not add it so we can use this property in filter requests
-         if ( pageInfo.pageType === 'filter' && pageInfo.pageParam.substr(-1) !== '/' ) {
-            pageInfo.pageParam += '/';
-         }
-         this.pageInfo = pageInfo;
       },
 
       getData: function ( url ) {

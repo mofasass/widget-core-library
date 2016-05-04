@@ -89,9 +89,9 @@
                      this.scope.widgetCss = '//c3-static.kambi.com/sb-mobileclient/widget-api/' +
                         apiVersion +
                         '/resources/css/' +
-                        CoreLibrary.config.clientConfig.customer +
+                        CoreLibrary.config.customer +
                         '/' +
-                        CoreLibrary.config.clientConfig.offering +
+                        CoreLibrary.config.offering +
                         '/widgets.css';
                      resolve();
                   }.bind(this));
@@ -120,7 +120,7 @@
 
                this.view = rivets.bind(this.rootElement, this.scope);
 
-               this.init(CoreLibrary.config.arguments);
+               this.init(CoreLibrary.args);
             }.bind(this))
          .catch(function ( error ) {
             console.debug('init error');

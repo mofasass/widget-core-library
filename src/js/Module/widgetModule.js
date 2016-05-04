@@ -16,26 +16,7 @@ CoreLibrary.widgetModule = (function () {
          }
       },
       events: new Module(),
-      config: {
-         routeRoot: '',
-         auth: false,
-         device: null
-      },
       betslipIds: [],
-      setConfig: function ( config ) {
-         for ( var i in config ) {
-            if ( config.hasOwnProperty(i) && this.config.hasOwnProperty(i) ) {
-               this.config[i] = config[i];
-            }
-         }
-         // Make sure that the routeRoot is not null or undefined
-         if ( this.config.routeRoot == null ) {
-            this.config.routeRoot = '';
-         } else if ( this.config.routeRoot.length > 0 && this.config.routeRoot.slice(-1) !== '/' ) {
-            // If the routeRoot is not empty we need to make sure it has a trailing slash
-            this.config.routeRoot += '/';
-         }
-      },
       handleResponse: function ( response ) {
          switch ( response.type ) {
             case this.api.WIDGET_HEIGHT:
@@ -76,17 +57,21 @@ CoreLibrary.widgetModule = (function () {
                break;
             case this.api.WIDGET_ARGS:
                // We've received a response with the arguments set in the
+               CoreLibrary.setArgs(response.data);
                this.events.emit('WIDGET:ARGS', response.data);
                break;
             case this.api.PAGE_INFO:
                // Received page info response
+               CoreLibrary.setPageInfo(response.data);
                this.events.emit('PAGE:INFO', response.data);
                break;
             case this.api.CLIENT_ODDS_FORMAT:
                // Received odds format response
+               CoreLibrary.setOddsFormat(response.data)
                this.events.emit('ODDS:FORMAT', response.data);
                break;
             case this.api.CLIENT_CONFIG:
+               CoreLibrary.setConfig(response.data);
                this.events.emit('CLIENT:CONFIG', response.data);
                break;
             case this.api.USER_LOGGED_IN:
@@ -109,10 +94,10 @@ CoreLibrary.widgetModule = (function () {
       },
 
       getPageType: function () {
-         if ( !CoreLibrary.config.pageInfo.pageType ) {
+         if ( !CoreLibrary.pageInfo.pageType ) {
             return '';
          }
-         var pageType = CoreLibrary.config.pageInfo.pageType;
+         var pageType = CoreLibrary.pageInfo.pageType;
          switch ( pageType ) {
             case 'event':
                return '';
@@ -248,9 +233,9 @@ CoreLibrary.widgetModule = (function () {
 
       navigateClient: function ( destination ) {
          if ( typeof destination === 'string' ) {
-            this.api.navigateClient('#' + this.config.routeRoot + destination);
+            this.api.navigateClient('#' + CoreLibrary.config.routeRoot + destination);
          } else if ( destination.isArray() ) {
-            var filter = this.api.createFilterUrl(destination, this.config.routeRoot);
+            var filter = this.api.createFilterUrl(destination, CoreLibrary.config.routeRoot);
             this.api.navigateClient(filter);
          }
       }

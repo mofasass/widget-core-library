@@ -3,7 +3,15 @@
    var OutcomeViewController = function ( attributes ) {
       this.data = attributes;
       this.selected = false;
+      this.label = '';
+
       if ( this.data.outcomeAttr != null ) {
+         if ( this.data.eventAttr != null ) {
+            this.label = CoreLibrary.utilModule.getOutcomeLabel(this.data.outcomeAttr, this.data.eventAttr);
+         } else {
+            this.label = this.data.outcomeAttr.label;
+         }
+
          if ( CoreLibrary.widgetModule.betslipIds.indexOf(this.data.outcomeAttr.id) !== -1 ) {
             this.selected = true;
          }
@@ -32,7 +40,7 @@
             'rv-custom-class="selected" rv-toggle-class="KambiWidget-outcome--selected" >' +
             '<div class="KambiWidget-outcome__flexwrap">' +
             '<div class="KambiWidget-outcome__label-wrapper">' +
-            '<span class="KambiWidget-outcome__label">{data.labelAttr}</span>' +
+            '<span class="KambiWidget-outcome__label">{label}</span>' +
             '<span class="KambiWidget-outcome__line"></span>' +
             '</div>' +
             '<div class="KambiWidget-outcome__odds-wrapper">' +
