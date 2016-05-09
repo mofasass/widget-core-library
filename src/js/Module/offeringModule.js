@@ -22,31 +22,27 @@ CoreLibrary.offeringModule = (function () {
          var filterTerms = filter.split('/');
          filterTerms = filterTerms.slice(0, 3);
 
-         var requestPath = '/event/live/open.json';
+         var requestPath = '/listView/all/all/all/all/in-play/';
 
          var liveEventsPromise = new Promise(( resolve, reject ) => {
-            this.doRequest(requestPath)
+            this.doRequest(requestPath, null, 'v3')
                .then(( response ) => {
                   var result = {
                         events: []
                      },
-                     i = 0, len = response.liveEvents.length;
+                     i = 0, len = response.events.length;
                   for ( ; i < len; ++i ) {
-                     var j = 0, termLen = response.liveEvents[i].event.path.length, addEvent = true;
+                     var j = 0, termLen = response.events[i].event.path.length, addEvent = true;
                      if ( termLen > filterTerms.length ) {
                         termLen = filterTerms.length;
                      }
                      for ( ; j < termLen; ++j ) {
-                        if ( filterTerms[j] !== 'all' && response.liveEvents[i].event.path[j].termKey !== filterTerms[j] ) {
+                        if ( filterTerms[j] !== 'all' && response.events[i].event.path[j].termKey !== filterTerms[j] ) {
                            addEvent = false;
                         }
                      }
                      if ( addEvent ) {
-                        result.events.push({
-                           event: response.liveEvents[i].event,
-                           betOffers: response.liveEvents[i].mainBetOffer != null ? [response.liveEvents[i].mainBetOffer] : [],
-                           liveData: response.liveEvents[i].liveData
-                        });
+                        result.events.push(response.events[i]);
                      }
                   }
                   resolve(result);
