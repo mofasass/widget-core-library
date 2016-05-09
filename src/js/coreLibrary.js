@@ -184,7 +184,8 @@ window.CoreLibrary = (function () {
          oddsFormat: 'decimal',
          offering: '',
          routeRoot: '',
-         streamingAllowedForPlayer: true
+         streamingAllowedForPlayer: true,
+         client_id: 2
       },
       height: 450,
       pageInfo: {

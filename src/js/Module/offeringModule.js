@@ -19,13 +19,14 @@ CoreLibrary.offeringModule = (function () {
          if ( CoreLibrary.config.offering == null ) {
             console.warn('The offering has not been set, is the right widget api version loaded?');
          } else {
-            var apiUrl = CoreLibrary.config.apiBaseUrl.replace('{apiVersion}', (version != null ? version : CoreLibrary.config.version));
+            var apiUrl = CoreLibrary.config.apiBaseUrl.replace('{apiVersion}',
+               (version != null ? version : CoreLibrary.expectedApiVersion));
             var requestUrl = apiUrl + CoreLibrary.config.offering + requestPath;
             var overrideParams = params || {};
             var requestParams = {
                lang: overrideParams.locale || CoreLibrary.config.locale,
                market: overrideParams.market || CoreLibrary.config.market,
-               client_id: overrideParams.clientId || CoreLibrary.config.clientId,
+               client_id: overrideParams.client_id || CoreLibrary.config.client_id,
                include: overrideParams.include || '',
                betOffers: overrideParams.betOffers || 'COMBINED',
                categoryGroup: overrideParams.categoryGroup || 'COMBINED',
