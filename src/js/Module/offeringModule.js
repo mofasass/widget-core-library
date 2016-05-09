@@ -44,7 +44,7 @@ CoreLibrary.offeringModule = (function () {
                      if ( addEvent ) {
                         result.events.push({
                            event: response.liveEvents[i].event,
-                           betOffers: [response.liveEvents[i].mainBetOffer],
+                           betOffers: response.liveEvents[i].mainBetOffer != null ? [response.liveEvents[i].mainBetOffer] : [],
                            liveData: response.liveEvents[i].liveData
                         });
                      }
