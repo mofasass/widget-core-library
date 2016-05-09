@@ -2,11 +2,17 @@
 
 var gulp = require('gulp'),
 
+   download = require('gulp-download-stream'),
+
+   replace = require('gulp-replace'),
+
    del = require('del'),
 
    path = require('path'),
 
    jshint = require('gulp-jshint'),
+
+   fs = require('fs'),
 
    babel = require('gulp-babel'),
 
@@ -51,7 +57,6 @@ var projectRoot = '.';
 
 var transpileDir = projectRoot + '/src/transpiled/';
 
-
 // All file paths used in the gulp file are inside this object
 var paths = {
    js: {
@@ -63,7 +68,7 @@ var paths = {
       source: projectRoot + '/src/scss/',
       transpiled: transpileDir + '/css/',
       sourceRoot: '../../src/scss/'
-   },
+   }
 };
 
 gulp.task('clean-temp', function () {
@@ -111,8 +116,10 @@ gulp.task('fetch-translations', function () {
 gulp.task('compile-babel', [], function () {
    var sourceRootMap = function (file) {
       return '../' + path.relative(file.history[0], paths.js.source) + paths.js.sourceRoot;
-   }
+   };
+   var apiVersion = JSON.parse(fs.readFileSync('package.json'))['kambi-widget-api-version'];
    return gulp.src(paths.js.source + '/**/*.js')
+      .pipe(replace(/\'{{expectedApiVersion}}\'/g, '\'' + apiVersion + '\''))
       .pipe(jshint('.jshintrc'))
       .pipe(jshint.reporter('default'))
       .pipe(jscs())
