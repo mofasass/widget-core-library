@@ -67,7 +67,7 @@ CoreLibrary.widgetModule = (function () {
                break;
             case this.api.CLIENT_ODDS_FORMAT:
                // Received odds format response
-               CoreLibrary.setOddsFormat(response.data)
+               CoreLibrary.setOddsFormat(response.data);
                this.events.emit('ODDS:FORMAT', response.data);
                break;
             case this.api.CLIENT_CONFIG:

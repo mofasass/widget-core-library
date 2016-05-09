@@ -4,6 +4,7 @@
       this.data = attributes;
       this.selected = false;
       this.label = '';
+      this.coreLibraryConfig = CoreLibrary.config;
 
       if ( this.data.outcomeAttr != null ) {
          if ( this.data.eventAttr != null ) {
@@ -20,7 +21,7 @@
             this.selected = true;
          });
 
-         Stapes.on('OUTCOME:REMOVED:' + this.data.outcomeAttr.id, ( data, event ) => {
+         CoreLibrary.widgetModule.events.on('OUTCOME:REMOVED:' + this.data.outcomeAttr.id, ( data, event ) => {
             this.selected = false;
          });
       }
@@ -30,6 +31,17 @@
             CoreLibrary.widgetModule.addOutcomeToBetslip(scope.data.outcomeAttr.id);
          } else {
             CoreLibrary.widgetModule.removeOutcomeFromBetslip(scope.data.outcomeAttr.id);
+         }
+      };
+
+      this.getOddsFormat = function () {
+         switch ( this.coreLibraryConfig.oddsFormat ) {
+            case 'fractional':
+               return this.data.outcomeAttr.oddsFractional;
+            case 'american':
+               return this.data.outcomeAttr.oddsAmerican;
+            default:
+               return this.data.outcomeAttr.odds / 1000;
          }
       };
    };
@@ -44,7 +56,7 @@
             '<span class="KambiWidget-outcome__line"></span>' +
             '</div>' +
             '<div class="KambiWidget-outcome__odds-wrapper">' +
-            '<span class="KambiWidget-outcome__odds">{data.outcomeAttr.odds | / 1000}</span>' +
+            '<span class="KambiWidget-outcome__odds" rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat"></span>' +
             '</div>' +
             '</div>' +
             '</button>';
@@ -64,7 +76,7 @@
             'type="button" role="button" class="KambiWidget-outcome kw-link l-ml-6">' +
             '<div class="l-flexbox l-pack-center">' +
             '<div class="KambiWidget-outcome__odds-wrapper">' +
-            '<span class="KambiWidget-outcome__odds">{data.outcomeAttr.odds | / 1000 }</span>' +
+            '<span class="KambiWidget-outcome__odds" rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat" ></span>' +
             '</div>' +
             '</div>' +
             '</button>';

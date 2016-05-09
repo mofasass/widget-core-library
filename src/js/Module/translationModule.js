@@ -9,8 +9,12 @@ window.CoreLibrary.translationModule = (function () {
             locale = 'en_GB';
          }
          var self = this;
+         var path = 'i18n/';
+         if (CoreLibrary.development === true) {
+            path = 'transpiled/i18n/';
+         }
          return new Promise(function ( resolve, reject ) {
-            window.CoreLibrary.getData('i18n/' + locale + '.json')
+            window.CoreLibrary.getData(path + locale + '.json')
                .then(function ( response ) {
                   translationModule.i18nStrings = response;
                   resolve();
@@ -26,14 +30,17 @@ window.CoreLibrary.translationModule = (function () {
                   }
                });
          });
+      },
+      getTranslation: function ( key ) {
+         if ( this.i18nStrings[key] != null ) {
+            return this.i18nStrings[key];
+         }
+         return key;
       }
    };
 
    rivets.formatters.translate = function ( value ) {
-      if ( translationModule.i18nStrings[value] != null ) {
-         return translationModule.i18nStrings[value];
-      }
-      return value;
+      return translationModule.getTranslation(value);
    };
 
    return translationModule;

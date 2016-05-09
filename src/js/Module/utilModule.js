@@ -23,7 +23,7 @@ window.CoreLibrary.utilModule = (function () {
                return event.homeName;
             case 'OT_CROSS': // Outcome has label X. Applies to Threeway bet offers.
                // Todo: Translation
-               return 'Draw';
+               return CoreLibrary.translationModule.getTranslation('draw');
             case 'OT_TWO': // Outcome has label 2. Applies to Threeway bet offers.
                return event.awayName;
             // Todo: Impelement these responses with translations
