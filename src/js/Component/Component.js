@@ -17,7 +17,7 @@
        */
       htmlTemplateFile: null,
 
-      constructor: function (options) {
+      constructor (options) {
          /** object to be used in the HTML templates for data binding */
          this.scope = {};
 
@@ -37,11 +37,11 @@
          }
          // setting options that can be received in the constructor
          var optionsKeys = ['defaultArgs', 'rootElement'];
-         optionsKeys.forEach(function (key) {
+         optionsKeys.forEach((key) => {
             if (typeof options[key] !== 'undefined') {
                this[key] = options[key];
             }
-         }.bind(this));
+         });
 
          if (typeof this.htmlTemplate === 'string' && typeof this.htmlTemplateFile === 'string') {
             throw new Error('Widget can not have htmlTemplate and htmlTemplateFile set at the same time');
@@ -55,32 +55,32 @@
          var fetchHtmlPromise;
          if (typeof this.htmlTemplateFile === 'string') {
             fetchHtmlPromise = CoreLibrary.getFile(this.htmlTemplateFile)
-               .then(function (response) {
+               .then((response) => {
                   return response.text();
                })
-               .then(function (html) {
+               .then((html) => {
                   this.htmlTemplate = html;
                   return this.htmlTemplate;
-               }.bind(this));
+               });
          } else {
             // just resolve the promise
-            fetchHtmlPromise = new Promise ( function ( resolve ) {
+            fetchHtmlPromise = new Promise ((resolve) => {
                resolve();
             });
          }
 
          var coreLibraryPromise;
          if (CoreLibrary.apiReady === true) {
-            coreLibraryPromise = new Promise(function ( resolve, reject ) {
+            coreLibraryPromise = new Promise((resolve, reject) => {
                resolve();
             });
          } else {
-            coreLibraryPromise = new Promise(function ( resolve, reject ) {
+            coreLibraryPromise = new Promise((resolve, reject) => {
                CoreLibrary.init()
-                  .then(function ( widgetArgs ) {
-                     Object.keys(widgetArgs).forEach(function ( key ) {
+                  .then((widgetArgs) => {
+                     Object.keys(widgetArgs).forEach((key) => {
                         this.scope.args[key] = widgetArgs[key];
-                     }.bind(this));
+                     });
 
                      var apiVersion = CoreLibrary.widgetModule.api.VERSION;
                      if (apiVersion == null) {
@@ -94,14 +94,14 @@
                         CoreLibrary.config.offering +
                         '/widgets.css';
                      resolve();
-                  }.bind(this));
-            }.bind(this));
+                  });
+            });
          }
 
          // fetches the component HTML in parallel with the Kambi API setup request
          // decreasing load time
-         Promise.all([coreLibraryPromise, fetchHtmlPromise])
-            .then(function () {
+         return Promise.all([coreLibraryPromise, fetchHtmlPromise])
+            .then(() => {
                if (typeof this.rootElement === 'string') {
                   this.rootElement = document.querySelector(this.rootElement);
                }
@@ -120,12 +120,8 @@
 
                this.view = rivets.bind(this.rootElement, this.scope);
 
-               this.init(CoreLibrary.args);
-            }.bind(this))
-         .catch(function ( error ) {
-            console.debug('init error');
-            console.trace(error);
-         });
+               this.init();
+            });
       }
    });
 })();
