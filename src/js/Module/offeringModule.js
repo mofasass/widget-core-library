@@ -15,12 +15,52 @@ CoreLibrary.offeringModule = (function () {
          var requestPath = '/event/live/open.json';
          return this.doRequest(requestPath);
       },
+      getLiveEventsByFilter: function ( filter ) {
+         // Todo: implement a filter request when the offering API supports it
+         filter = filter.replace(/\/$/, '');
+
+         var filterTerms = filter.split('/');
+         filterTerms = filterTerms.slice(0, 3);
+
+         var requestPath = '/event/live/open.json';
+
+         var liveEventsPromise = new Promise(( resolve, reject ) => {
+            this.doRequest(requestPath)
+               .then(( response ) => {
+                  var result = {
+                        events: []
+                     },
+                     i = 0, len = response.liveEvents.length;
+                  for ( ; i < len; ++i ) {
+                     var j = 0, termLen = response.liveEvents[i].event.path.length, addEvent = true;
+                     if ( termLen > filterTerms.length ) {
+                        termLen = filterTerms.length;
+                     }
+                     for ( ; j < termLen; ++j ) {
+                        if ( filterTerms[j] !== 'all' && response.liveEvents[i].event.path[j].termKey !== filterTerms[j] ) {
+                           addEvent = false;
+                        }
+                     }
+                     if ( addEvent ) {
+                        result.events.push({
+                           event: response.liveEvents[i].event,
+                           betOffers: response.liveEvents[i].mainBetOffer,
+                           liveData: response.liveEvents[i].mainBetOffer
+                        });
+                     }
+                  }
+                  resolve(result);
+               });
+         });
+
+         return liveEventsPromise;
+      },
       doRequest: function ( requestPath, params, version ) {
          if ( CoreLibrary.config.offering == null ) {
             console.warn('The offering has not been set, is the right widget api version loaded?');
          } else {
             var apiUrl = CoreLibrary.config.apiBaseUrl.replace('{apiVersion}',
-               (version != null ? version : CoreLibrary.expectedApiVersion));
+               (version != null ? version : CoreLibrary.config.version));
             var requestUrl = apiUrl + CoreLibrary.config.offering + requestPath;
             var overrideParams = params || {};
             var requestParams = {
