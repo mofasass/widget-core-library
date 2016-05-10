@@ -35,12 +35,15 @@
 }
 
 // Uses labels from $screens variable.
-// Example: @include device(xss) { ... }
+// Values passed must be enclosed in parentheses
+// Example: @include device( (xs, xss, lg, ..) ) { ... }
 @mixin device($screen-size-label) {
-   $size: get-screen-size($screen-size-label);
-   $min: nth($size, 1);
-   $max: nth($size, 2);
-   @media (min-width: #{$min}) and (max-width: #{$max}) {
-      @content;
+   @each $size in $screen-size-label {
+      $size: get-screen-size($size);
+      $min: nth($size, 1);
+      $max: nth($size, 2);
+      @media (min-width: #{$min}) and (max-width: #{$max}) {
+         @content;
+      }
    }
 }
