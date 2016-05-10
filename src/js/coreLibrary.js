@@ -185,7 +185,8 @@ window.CoreLibrary = (function () {
          offering: '',
          routeRoot: '',
          streamingAllowedForPlayer: true,
-         client_id: 2
+         client_id: 2,
+         version: 'v2'
       },
       height: 450,
       pageInfo: {
