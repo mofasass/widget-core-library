@@ -18,6 +18,14 @@ var gulp = require('gulp'),
 
    sourcemaps = require('gulp-sourcemaps'),
 
+   rename = require('gulp-rename'),
+
+   stripDebug = require('gulp-strip-debug'),
+
+   concat = require('gulp-concat'),
+
+   uglify = require('gulp-uglify'),
+
    jscs = require('gulp-jscs'),
 
    supportedLanguages = [
@@ -57,6 +65,8 @@ var projectRoot = '.';
 
 var transpileDir = projectRoot + '/src/transpiled/';
 
+var buildDir = projectRoot + '/dist/';
+
 // All file paths used in the gulp file are inside this object
 var paths = {
    js: {
@@ -83,7 +93,17 @@ gulp.task('default', ['clean'], function () {
    return gulp.start('build');
 });
 
-gulp.task('build', ['compile']);
+gulp.task('build', ['bundle']);
+
+gulp.task('bundle', ['compile'], function () {
+   gulp.src(paths.js.transpiled + '**/*.js')
+      .pipe(concat('core.js'))
+      .pipe(stripDebug())
+      .pipe(gulp.dest(buildDir))
+      .pipe(uglify())
+      .pipe(rename('core.min.js'))
+      .pipe(gulp.dest(buildDir));
+});
 
 gulp.task('compile', ['compile-babel']);
 
