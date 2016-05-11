@@ -18,13 +18,9 @@ var gulp = require('gulp'),
 
    sourcemaps = require('gulp-sourcemaps'),
 
-   rename = require('gulp-rename'),
-
    stripDebug = require('gulp-strip-debug'),
 
    concat = require('gulp-concat'),
-
-   uglify = require('gulp-uglify'),
 
    jscs = require('gulp-jscs'),
 
@@ -99,9 +95,6 @@ gulp.task('bundle', ['compile'], function () {
    gulp.src(paths.js.transpiled + '**/*.js')
       .pipe(concat('core.js'))
       .pipe(stripDebug())
-      .pipe(gulp.dest(buildDir))
-      .pipe(uglify())
-      .pipe(rename('core.min.js'))
       .pipe(gulp.dest(buildDir));
 });
 
