@@ -121,6 +121,15 @@ CoreLibrary.widgetModule = (function () {
          this.api.set(this.api.WIDGET_HEIGHT, height);
       },
 
+      adaptWidgetHeight: function () {
+         // tries to adapt the widget iframe height to match the content
+         var body = document.body,
+             html = document.documentElement;
+         var height = Math.max( body.scrollHeight, body.offsetHeight,
+                                html.clientHeight, html.scrollHeight, html.offsetHeight );
+         this.api.set(this.api.WIDGET_HEIGHT, height);
+      },
+
       enableWidgetTransition: function ( enableTransition ) {
          if ( enableTransition ) {
             this.api.set(this.api.WIDGET_ENABLE_TRANSITION);

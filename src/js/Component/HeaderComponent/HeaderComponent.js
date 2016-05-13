@@ -3,27 +3,25 @@
       var headerHeight = 36;
       this.title = title;
       this.cssClasses = cssClasses + ' KambiWidget-font kw-header l-flexbox l-align-center l-pl-16';
-      this.collapsed = startCollapsed;
-      if (this.collapsed) {
-         CoreLibrary.widgetModule.enableWidgetTransition(false);
-         CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
-      }
 
       if (collapsable) {
+         this.collapsed = startCollapsed;
+         if (this.collapsed) {
+            CoreLibrary.widgetModule.enableWidgetTransition(false);
+            CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
+            CoreLibrary.widgetModule.enableWidgetTransition(true);
+         }
+
          this.cssClasses += ' KambiWidget-header';
          this.style = 'cursor: pointer;';
-         this.click = (ev, controller) => {
-            var body = document.body,
-                html = document.documentElement;
 
-            var height = Math.max( body.scrollHeight, body.offsetHeight,
-                                   html.clientHeight, html.scrollHeight, html.offsetHeight );
-            var newHeight = headerHeight;
-            if (controller.collapsed) {
-               newHeight = height;
-            }
-            CoreLibrary.widgetModule.setWidgetHeight(newHeight);
+         this.click = (ev, controller) => {
             controller.collapsed = !controller.collapsed;
+            if (controller.collapsed) {
+               CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
+            } else {
+               CoreLibrary.widgetModule.adaptWidgetHeight();
+            }
          };
       }
    };
