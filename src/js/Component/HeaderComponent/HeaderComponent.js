@@ -1,12 +1,12 @@
 (function () {
-   var HeaderController = function (title, cssClasses, collapsable, startCollapsed) {
+   var HeaderController = function (title, cssClasses, scope, collapsable, startCollapsed) {
       var headerHeight = 36;
       this.title = title;
       this.cssClasses = cssClasses + ' KambiWidget-font kw-header l-flexbox l-align-center l-pl-16';
 
       if (collapsable) {
-         this.collapsed = startCollapsed;
-         if (this.collapsed) {
+         scope.collapsed = startCollapsed;
+         if (scope.collapsed) {
             CoreLibrary.widgetModule.enableWidgetTransition(false);
             CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
             CoreLibrary.widgetModule.enableWidgetTransition(true);
@@ -16,8 +16,8 @@
          this.style = 'cursor: pointer;';
 
          this.click = (ev, controller) => {
-            controller.collapsed = !controller.collapsed;
-            if (controller.collapsed) {
+            scope.collapsed = !scope.collapsed;
+            if (scope.collapsed) {
                CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
             } else {
                CoreLibrary.widgetModule.adaptWidgetHeight();
@@ -51,7 +51,7 @@
             startCollapsed = true;
          }
 
-         return new HeaderController(attributes.title, cssClasses, collapsable, startCollapsed);
+         return new HeaderController(attributes.title, cssClasses, this.view.models, collapsable, startCollapsed);
       }
    };
 })();
