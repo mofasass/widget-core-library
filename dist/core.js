@@ -853,6 +853,14 @@ CoreLibrary.widgetModule = function () {
          this.api.set(this.api.WIDGET_HEIGHT, height);
       },
 
+      adaptWidgetHeight: function adaptWidgetHeight() {
+         // tries to adapt the widget iframe height to match the content
+         var body = document.body,
+             html = document.documentElement;
+         var height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+         this.api.set(this.api.WIDGET_HEIGHT, height);
+      },
+
       enableWidgetTransition: function enableWidgetTransition(enableTransition) {
          if (enableTransition) {
             this.api.set(this.api.WIDGET_ENABLE_TRANSITION);
@@ -978,30 +986,29 @@ CoreLibrary.widgetModule = function () {
 'use strict';
 
 (function () {
-   var HeaderController = function HeaderController(title, cssClasses, collapsable, startCollapsed) {
+   var HeaderController = function HeaderController(title, cssClasses, scope, collapsable, startCollapsed) {
       var headerHeight = 36;
       this.title = title;
       this.cssClasses = cssClasses + ' KambiWidget-font kw-header l-flexbox l-align-center l-pl-16';
-      this.collapsed = startCollapsed;
-      if (this.collapsed) {
-         CoreLibrary.widgetModule.enableWidgetTransition(false);
-         CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
-      }
 
       if (collapsable) {
+         scope.collapsed = startCollapsed;
+         if (scope.collapsed) {
+            CoreLibrary.widgetModule.enableWidgetTransition(false);
+            CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
+            CoreLibrary.widgetModule.enableWidgetTransition(true);
+         }
+
          this.cssClasses += ' KambiWidget-header';
          this.style = 'cursor: pointer;';
-         this.click = function (ev, controller) {
-            var body = document.body,
-                html = document.documentElement;
 
-            var height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-            var newHeight = headerHeight;
-            if (controller.collapsed) {
-               newHeight = height;
+         this.click = function (ev, controller) {
+            scope.collapsed = !scope.collapsed;
+            if (scope.collapsed) {
+               CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
+            } else {
+               CoreLibrary.widgetModule.adaptWidgetHeight();
             }
-            CoreLibrary.widgetModule.setWidgetHeight(newHeight);
-            controller.collapsed = !controller.collapsed;
          };
       }
    };
@@ -1029,7 +1036,7 @@ CoreLibrary.widgetModule = function () {
             startCollapsed = true;
          }
 
-         return new HeaderController(attributes.title, cssClasses, collapsable, startCollapsed);
+         return new HeaderController(attributes.title, cssClasses, this.view.models, collapsable, startCollapsed);
       }
    };
 })();
