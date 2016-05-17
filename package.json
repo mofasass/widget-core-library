@@ -1,6 +1,6 @@
 {
    "name": "widget-core-library",
-   "version": "2.1.0",
+   "version": "2.2.1",
    "description": "",
    "main": "dist/js/app.js",
    "scripts": {
@@ -37,5 +37,5 @@
       "gulp-git": "^1.7.0"
    },
    "dependencies": {},
-   "kambi-widget-api-version": "1.0.0.10"
+   "kambi-widget-api-version": "1.0.0.11"
 }

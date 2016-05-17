@@ -853,6 +853,14 @@ CoreLibrary.widgetModule = function () {
          this.api.set(this.api.WIDGET_HEIGHT, height);
       },
 
+      adaptWidgetHeight: function adaptWidgetHeight() {
+         // tries to adapt the widget iframe height to match the content
+         var body = document.body,
+             html = document.documentElement;
+         var height = Math.max(body.offsetHeight, html.scrollHeight, html.offsetHeight);
+         this.api.set(this.api.WIDGET_HEIGHT, height);
+      },
+
       enableWidgetTransition: function enableWidgetTransition(enableTransition) {
          if (enableTransition) {
             this.api.set(this.api.WIDGET_ENABLE_TRANSITION);
@@ -974,6 +982,65 @@ CoreLibrary.widgetModule = function () {
    };
 }();
 //# sourceMappingURL=widgetModule.js.map
+
+'use strict';
+
+(function () {
+   var HeaderController = function HeaderController(title, cssClasses, scope, collapsable, startCollapsed) {
+      var headerHeight = 36;
+      this.title = title;
+      this.cssClasses = cssClasses + ' KambiWidget-font kw-header l-flexbox l-align-center l-pl-16';
+
+      if (collapsable) {
+         scope.collapsed = startCollapsed;
+         if (scope.collapsed) {
+            CoreLibrary.widgetModule.enableWidgetTransition(false);
+            CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
+            CoreLibrary.widgetModule.enableWidgetTransition(true);
+         }
+
+         this.cssClasses += ' KambiWidget-header';
+         this.style = 'cursor: pointer;';
+
+         this.click = function (ev, controller) {
+            scope.collapsed = !scope.collapsed;
+            if (scope.collapsed) {
+               CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
+            } else {
+               CoreLibrary.widgetModule.adaptWidgetHeight();
+            }
+         };
+      }
+   };
+
+   rivets.components['header-component'] = {
+      static: ['collapsable', 'collapsed', 'css-classes'],
+
+      template: function template() {
+         return '\n<header rv-class="cssClasses" rv-style="style" rv-on-click="click">{title | translate}</header>\n         ';
+      },
+
+      initialize: function initialize(el, attributes) {
+         var cssClasses = attributes['css-classes'];
+         if (cssClasses == null) {
+            cssClasses = '';
+         }
+
+         var collapsable = false;
+         if (attributes.collapsable === 'true') {
+            collapsable = true;
+         }
+
+         var startCollapsed = false;
+         if (attributes.collapsed === 'true') {
+            startCollapsed = true;
+         }
+
+         return new HeaderController(attributes.title, cssClasses, this.view.models, collapsable, startCollapsed);
+      }
+   };
+})();
+//# sourceMappingURL=HeaderComponent.js.map
 
 'use strict';
 
