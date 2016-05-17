@@ -62,7 +62,7 @@ window.CoreLibrary = function () {
     * @returns {*}
     */
    rivets.formatters.array_at = function (arr, index, key) {
-      return arr == null ? [] : arr[index][key];
+      return arr == null || arr == undefined || arr.length === 0 ? [] : arr[index][key];
    };
 
    /**
