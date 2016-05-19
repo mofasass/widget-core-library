@@ -51,6 +51,9 @@ CoreLibrary.offeringModule = (function () {
 
          return liveEventsPromise;
       },
+      getEventBetoffers: function ( eventId ) {
+         return this.doRequest('/betoffer/event/' + eventId + '.json');
+      },
       doRequest: function ( requestPath, params, version ) {
          if ( CoreLibrary.config.offering == null ) {
             console.warn('The offering has not been set, is the right widget api version loaded?');
