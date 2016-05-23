@@ -7,12 +7,6 @@
       this.coreLibraryConfig = CoreLibrary.config;
 
       if ( this.data.outcomeAttr != null ) {
-         if ( this.data.eventAttr != null ) {
-            this.label = CoreLibrary.utilModule.getOutcomeLabel(this.data.outcomeAttr, this.data.eventAttr);
-         } else {
-            this.label = this.data.outcomeAttr.label;
-         }
-
          if ( CoreLibrary.widgetModule.betslipIds.indexOf(this.data.outcomeAttr.id) !== -1 ) {
             this.selected = true;
          }
@@ -34,6 +28,16 @@
          }
       };
 
+      this.getLabel = function () {
+         if ( this.data.outcomeAttr != null ) {
+            if ( this.data.eventAttr != null ) {
+               return CoreLibrary.utilModule.getOutcomeLabel(this.data.outcomeAttr, this.data.eventAttr);
+            } else {
+               return this.data.outcomeAttr.label;
+            }
+         }
+      };
+
       this.getOddsFormat = function () {
          switch ( this.coreLibraryConfig.oddsFormat ) {
             case 'fractional':
@@ -48,18 +52,30 @@
 
    rivets.components['outcome-component'] = {
       template: function () {
-         return '<button rv-on-click="toggleOutcome" type="button" role="button" class="KambiWidget-outcome kw-link l-flex-1 l-ml-6" ' +
-            'rv-custom-class="selected" rv-toggle-class="KambiWidget-outcome--selected" >' +
-            '<div class="KambiWidget-outcome__flexwrap">' +
-            '<div class="KambiWidget-outcome__label-wrapper">' +
-            '<span class="KambiWidget-outcome__label">{label}</span>' +
-            '<span class="KambiWidget-outcome__line"></span>' +
-            '</div>' +
-            '<div class="KambiWidget-outcome__odds-wrapper">' +
-            '<span class="KambiWidget-outcome__odds" rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat"></span>' +
-            '</div>' +
-            '</div>' +
-            '</button>';
+         return `
+<button
+      rv-on-click="toggleOutcome"
+      type="button"
+      role="button"
+      class="KambiWidget-outcome kw-link l-flex-1 l-ml-6"
+      rv-custom-class="selected"
+      rv-toggle-class="KambiWidget-outcome--selected" >
+   <div class="KambiWidget-outcome__flexwrap">
+      <div class="KambiWidget-outcome__label-wrapper">
+         <span
+               class="KambiWidget-outcome__label"
+               rv-text="getLabel < data.outcomeAttr.odds data.eventAttr">
+         </span>
+         <span class="KambiWidget-outcome__line"></span>
+      </div>
+   <div class="KambiWidget-outcome__odds-wrapper">
+      <span
+            class="KambiWidget-outcome__odds"
+            rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat">
+      </span>
+   </div>
+</button>
+         `;
       },
 
       initialize: function ( el, attributes ) {
@@ -71,15 +87,22 @@
 
    rivets.components['outcome-component-no-label'] = {
       template: function () {
-         return '<button rv-on-click="toggleOutcome" rv-disabled="betOffer.suspended | == true"' +
-            'rv-custom-class="selected" rv-toggle-class="KambiWidget-outcome--selected" ' +
-            'type="button" role="button" class="KambiWidget-outcome kw-link l-ml-6">' +
-            '<div class="l-flexbox l-pack-center">' +
-            '<div class="KambiWidget-outcome__odds-wrapper">' +
-            '<span class="KambiWidget-outcome__odds" rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat" ></span>' +
-            '</div>' +
-            '</div>' +
-            '</button>';
+         return `
+<button
+      rv-on-click="toggleOutcome"
+      rv-disabled="betOffer.suspended | == true"
+      rv-custom-class="selected"
+      rv-toggle-class="KambiWidget-outcome--selected"
+      type="button"
+      role="button"
+      class="KambiWidget-outcome kw-link l-ml-6">
+   <div class="l-flexbox l-pack-center">
+      <div class="KambiWidget-outcome__odds-wrapper">
+         <span class="KambiWidget-outcome__odds" rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat" ></span>
+      </div>
+   </div>
+</button>
+         `;
       },
 
       initialize: function ( el, attributes ) {

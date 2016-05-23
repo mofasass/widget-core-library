@@ -62,7 +62,7 @@ window.CoreLibrary = function () {
     * @returns {*}
     */
    rivets.formatters.array_at = function (arr, index, key) {
-      return arr == null || arr == undefined || arr.length === 0 ? [] : arr[index][key];
+      return arr == null || arr.length === 0 ? [] : arr[index][key];
    };
 
    /**
@@ -168,7 +168,7 @@ window.CoreLibrary = function () {
    sightglass.root = '.';
 
    return {
-      expectedApiVersion: '1.0.0.10', // this value is replaced with the API version number during the compilation step
+      expectedApiVersion: '1.0.0.11', // this value is replaced with the API version number during the compilation step
       development: false,
       utilModule: null,
       widgetModule: null,
