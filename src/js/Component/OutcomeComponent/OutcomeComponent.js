@@ -79,7 +79,7 @@
       },
 
       initialize: function ( el, attributes ) {
-         if ( !attributes.outcomeAttr ) {
+         if ( attributes.outcomeAttr != null ) {
             return false;
          }
          el.classList.add('l-flexbox');
