@@ -79,6 +79,9 @@
       },
 
       initialize: function ( el, attributes ) {
+         if ( !attributes.outcomeAttr ) {
+            return false;
+         }
          el.classList.add('l-flexbox');
          el.classList.add('l-flex-1');
          return new OutcomeViewController(attributes);
