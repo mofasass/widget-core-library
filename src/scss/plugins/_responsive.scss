@@ -35,15 +35,27 @@
 }
 
 // Uses labels from $screens variable.
-// Values passed must be enclosed in parentheses
+// Screen sizes labels must be enclosed in parentheses
 // Example: @include device( (xs, xss, lg, ..) ) { ... }
-@mixin device($screen-size-label) {
+// Second mixin parameter will return a min/max media query for each screen size if passed
+@mixin device($screen-size-label, $type:'') {
    @each $size in $screen-size-label {
       $size: get-screen-size($size);
       $min: nth($size, 1);
       $max: nth($size, 2);
-      @media (min-width: #{$min}) and (max-width: #{$max}) {
-         @content;
+
+      @if $type == 'min' {
+         @media (min-width: #{$max}) {
+            @content;
+         }
+      } @else if $type == 'max' {
+         @media (max-width: #{$max}) {
+            @content;
+         }
+      } @else {
+         @media (min-width: #{$min}) and (max-width: #{$max - 1}) {
+            @content;
+         }
       }
    }
 }
