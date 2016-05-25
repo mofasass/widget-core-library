@@ -89,13 +89,23 @@ window.CoreLibrary = (function () {
    };
 
    /**
-    * Cloaking waits for element to bind and then sets it visible
+    * Cloaking waits for element to bind and then sets it visible with a slight delay.
+    * Can listen to a value and apply the opacity after that value has changed
+    * Usage: rv-cloak or rv-cloak="value"
+    * In promise resolution, add something like this.scope.loaded = true
     * @type {{priority: number, bind: rivets.binders.cloak.bind}}
     */
    rivets.binders.cloak = {
       priority: -1000,
       bind: function ( el ) {
-         el.style.opacity = 1;
+         el.style.opacity = 0;
+      },
+      routine: function ( el, value ) {
+         if ( value !== undefined && value !== false ) {
+            setTimeout(() => {
+               el.style.opacity = 1;
+            }, 100);
+         }
       }
    };
 
