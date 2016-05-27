@@ -2,7 +2,7 @@ window.CoreLibrary.utilModule = (function () {
    'use strict';
 
    var utilModule = {
-      diffArray: function ( A, B ) {
+      diffArray ( A, B ) {
          var map = {}, C = [];
 
          for ( var i = B.length; i--; ) {
@@ -17,7 +17,16 @@ window.CoreLibrary.utilModule = (function () {
 
          return C;
       },
-      getOutcomeLabel: function ( outcome, event ) {
+      getOddsDecimalValue ( odds ) {
+         if ( odds < 100 ) {
+            return odds.toFixed(2);
+         } else if ( odds < 1000 ) {
+            return odds.toFixed(1);
+         } else {
+            return odds.toFixed(0);
+         }
+      },
+      getOutcomeLabel ( outcome, event ) {
          switch ( outcome.type ) {
             case 'OT_ONE': // Outcome has label 1. Applies to Threeway bet offers.
                return event.homeName;
