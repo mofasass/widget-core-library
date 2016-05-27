@@ -92,13 +92,23 @@ window.CoreLibrary = function () {
    };
 
    /**
-    * Cloaking waits for element to bind and then sets it visible
+    * Cloaking waits for element to bind and then sets it visible with a slight delay.
+    * Can listen to a value and apply the opacity after that value has changed
+    * Usage: rv-cloak or rv-cloak="value"
+    * In promise resolution, add something like this.scope.loaded = true
     * @type {{priority: number, bind: rivets.binders.cloak.bind}}
     */
    rivets.binders.cloak = {
       priority: -1000,
       bind: function bind(el) {
-         el.style.opacity = 1;
+         el.style.opacity = 0;
+      },
+      routine: function routine(el, value) {
+         if (value !== undefined && value !== false) {
+            setTimeout(function () {
+               el.style.opacity = 1;
+            }, 100);
+         }
       }
    };
 
@@ -357,129 +367,6 @@ window.CoreLibrary = function () {
 
 'use strict';
 
-(function () {
-   CoreLibrary.Component = Stapes.subclass({
-      /** object with default values from args if they are not present in
-       * the Kambi API provided ones
-       */
-      defaultArgs: {},
-
-      /**
-       * If string this value is appended to rootElement with the innerHTML DOM call
-       * essentially parsing the the text as HTML
-       */
-      htmlTemplate: null,
-
-      /**
-       * Same as htmlTemplate, but uses this value as a path to fetch an HTML file
-       * Do not use at the same time as htmlTemplate
-       */
-      htmlTemplateFile: null,
-
-      constructor: function constructor(options) {
-         var _this = this;
-
-         /** object to be used in the HTML templates for data binding */
-         this.scope = {};
-
-         /**
-          * Rivets view object, binds this.scope to this.rootElement
-          */
-         this.view = null;
-
-         /**
-          * HTML element to in which rivets.bind will be called,
-          * if string uses document.querySelector to get the element
-          */
-         this.rootElement = null;
-
-         if (options == null) {
-            options = {};
-         }
-         // setting options that can be received in the constructor
-         var optionsKeys = ['defaultArgs', 'rootElement'];
-         optionsKeys.forEach(function (key) {
-            if (typeof options[key] !== 'undefined') {
-               _this[key] = options[key];
-            }
-         });
-
-         if (typeof this.htmlTemplate === 'string' && typeof this.htmlTemplateFile === 'string') {
-            throw new Error('Widget can not have htmlTemplate and htmlTemplateFile set at the same time');
-         }
-         if (this.rootElement == null) {
-            throw new Error('options.rootElement not set, please pass a HTMLElement or a CSS selector');
-         }
-
-         this.scope.args = this.defaultArgs;
-
-         var fetchHtmlPromise;
-         if (typeof this.htmlTemplateFile === 'string') {
-            fetchHtmlPromise = CoreLibrary.getFile(this.htmlTemplateFile).then(function (response) {
-               return response.text();
-            }).then(function (html) {
-               _this.htmlTemplate = html;
-               return _this.htmlTemplate;
-            });
-         } else {
-            // just resolve the promise
-            fetchHtmlPromise = new Promise(function (resolve) {
-               resolve();
-            });
-         }
-
-         var coreLibraryPromise;
-         if (CoreLibrary.apiReady === true) {
-            coreLibraryPromise = new Promise(function (resolve, reject) {
-               resolve();
-            });
-         } else {
-            coreLibraryPromise = new Promise(function (resolve, reject) {
-               CoreLibrary.init().then(function (widgetArgs) {
-                  Object.keys(widgetArgs).forEach(function (key) {
-                     _this.scope.args[key] = widgetArgs[key];
-                  });
-
-                  var apiVersion = CoreLibrary.widgetModule.api.VERSION;
-                  if (apiVersion == null) {
-                     var apiVersion = '1.0.0.10';
-                  }
-                  _this.scope.widgetCss = '//c3-static.kambi.com/sb-mobileclient/widget-api/' + apiVersion + '/resources/css/' + CoreLibrary.config.customer + '/' + CoreLibrary.config.offering + '/widgets.css';
-                  resolve();
-               });
-            });
-         }
-
-         // fetches the component HTML in parallel with the Kambi API setup request
-         // decreasing load time
-         return Promise.all([coreLibraryPromise, fetchHtmlPromise]).then(function () {
-            if (typeof _this.rootElement === 'string') {
-               _this.rootElement = document.querySelector(_this.rootElement);
-            }
-
-            for (var i = 0; i < _this.rootElement.attributes.length; ++i) {
-               var at = _this.rootElement.attributes[i];
-               if (at.name.indexOf('data-') === 0) {
-                  var name = at.name.slice(5); // removes the 'data-' from the string
-                  _this.scope[name] = at.value;
-               }
-            }
-
-            if (typeof _this.htmlTemplate === 'string') {
-               _this.rootElement.innerHTML = _this.htmlTemplate;
-            }
-
-            _this.view = rivets.bind(_this.rootElement, _this.scope);
-
-            _this.init();
-         });
-      }
-   });
-})();
-//# sourceMappingURL=Component.js.map
-
-'use strict';
-
 CoreLibrary.offeringModule = function () {
    'use strict';
 
@@ -536,6 +423,9 @@ CoreLibrary.offeringModule = function () {
          });
 
          return liveEventsPromise;
+      },
+      getEventBetoffers: function getEventBetoffers(eventId) {
+         return this.doRequest('/betoffer/event/' + eventId + '.json');
       },
       doRequest: function doRequest(requestPath, params, version) {
          if (CoreLibrary.config.offering == null) {
@@ -986,6 +876,129 @@ CoreLibrary.widgetModule = function () {
 'use strict';
 
 (function () {
+   CoreLibrary.Component = Stapes.subclass({
+      /** object with default values from args if they are not present in
+       * the Kambi API provided ones
+       */
+      defaultArgs: {},
+
+      /**
+       * If string this value is appended to rootElement with the innerHTML DOM call
+       * essentially parsing the the text as HTML
+       */
+      htmlTemplate: null,
+
+      /**
+       * Same as htmlTemplate, but uses this value as a path to fetch an HTML file
+       * Do not use at the same time as htmlTemplate
+       */
+      htmlTemplateFile: null,
+
+      constructor: function constructor(options) {
+         var _this = this;
+
+         /** object to be used in the HTML templates for data binding */
+         this.scope = {};
+
+         /**
+          * Rivets view object, binds this.scope to this.rootElement
+          */
+         this.view = null;
+
+         /**
+          * HTML element to in which rivets.bind will be called,
+          * if string uses document.querySelector to get the element
+          */
+         this.rootElement = null;
+
+         if (options == null) {
+            options = {};
+         }
+         // setting options that can be received in the constructor
+         var optionsKeys = ['defaultArgs', 'rootElement'];
+         optionsKeys.forEach(function (key) {
+            if (typeof options[key] !== 'undefined') {
+               _this[key] = options[key];
+            }
+         });
+
+         if (typeof this.htmlTemplate === 'string' && typeof this.htmlTemplateFile === 'string') {
+            throw new Error('Widget can not have htmlTemplate and htmlTemplateFile set at the same time');
+         }
+         if (this.rootElement == null) {
+            throw new Error('options.rootElement not set, please pass a HTMLElement or a CSS selector');
+         }
+
+         this.scope.args = this.defaultArgs;
+
+         var fetchHtmlPromise;
+         if (typeof this.htmlTemplateFile === 'string') {
+            fetchHtmlPromise = CoreLibrary.getFile(this.htmlTemplateFile).then(function (response) {
+               return response.text();
+            }).then(function (html) {
+               _this.htmlTemplate = html;
+               return _this.htmlTemplate;
+            });
+         } else {
+            // just resolve the promise
+            fetchHtmlPromise = new Promise(function (resolve) {
+               resolve();
+            });
+         }
+
+         var coreLibraryPromise;
+         if (CoreLibrary.apiReady === true) {
+            coreLibraryPromise = new Promise(function (resolve, reject) {
+               resolve();
+            });
+         } else {
+            coreLibraryPromise = new Promise(function (resolve, reject) {
+               CoreLibrary.init().then(function (widgetArgs) {
+                  Object.keys(widgetArgs).forEach(function (key) {
+                     _this.scope.args[key] = widgetArgs[key];
+                  });
+
+                  var apiVersion = CoreLibrary.widgetModule.api.VERSION;
+                  if (apiVersion == null) {
+                     var apiVersion = '1.0.0.10';
+                  }
+                  _this.scope.widgetCss = '//c3-static.kambi.com/sb-mobileclient/widget-api/' + apiVersion + '/resources/css/' + CoreLibrary.config.customer + '/' + CoreLibrary.config.offering + '/widgets.css';
+                  resolve();
+               });
+            });
+         }
+
+         // fetches the component HTML in parallel with the Kambi API setup request
+         // decreasing load time
+         return Promise.all([coreLibraryPromise, fetchHtmlPromise]).then(function () {
+            if (typeof _this.rootElement === 'string') {
+               _this.rootElement = document.querySelector(_this.rootElement);
+            }
+
+            for (var i = 0; i < _this.rootElement.attributes.length; ++i) {
+               var at = _this.rootElement.attributes[i];
+               if (at.name.indexOf('data-') === 0) {
+                  var name = at.name.slice(5); // removes the 'data-' from the string
+                  _this.scope[name] = at.value;
+               }
+            }
+
+            if (typeof _this.htmlTemplate === 'string') {
+               _this.rootElement.innerHTML = _this.htmlTemplate;
+            }
+
+            _this.view = rivets.bind(_this.rootElement, _this.scope);
+
+            _this.init();
+         });
+      }
+   });
+})();
+//# sourceMappingURL=Component.js.map
+
+'use strict';
+
+(function () {
    var HeaderController = function HeaderController(title, cssClasses, scope, collapsable, startCollapsed) {
       var headerHeight = 36;
       this.title = title;
@@ -1055,12 +1068,6 @@ CoreLibrary.widgetModule = function () {
       this.coreLibraryConfig = CoreLibrary.config;
 
       if (this.data.outcomeAttr != null) {
-         if (this.data.eventAttr != null) {
-            this.label = CoreLibrary.utilModule.getOutcomeLabel(this.data.outcomeAttr, this.data.eventAttr);
-         } else {
-            this.label = this.data.outcomeAttr.label;
-         }
-
          if (CoreLibrary.widgetModule.betslipIds.indexOf(this.data.outcomeAttr.id) !== -1) {
             this.selected = true;
          }
@@ -1082,6 +1089,16 @@ CoreLibrary.widgetModule = function () {
          }
       };
 
+      this.getLabel = function () {
+         if (this.data.outcomeAttr != null) {
+            if (this.data.eventAttr != null) {
+               return CoreLibrary.utilModule.getOutcomeLabel(this.data.outcomeAttr, this.data.eventAttr);
+            } else {
+               return this.data.outcomeAttr.label;
+            }
+         }
+      };
+
       this.getOddsFormat = function () {
          switch (this.coreLibraryConfig.oddsFormat) {
             case 'fractional':
@@ -1096,10 +1113,13 @@ CoreLibrary.widgetModule = function () {
 
    rivets.components['outcome-component'] = {
       template: function template() {
-         return '<button rv-on-click="toggleOutcome" type="button" role="button" class="KambiWidget-outcome kw-link l-flex-1 l-ml-6" ' + 'rv-custom-class="selected" rv-toggle-class="KambiWidget-outcome--selected" >' + '<div class="KambiWidget-outcome__flexwrap">' + '<div class="KambiWidget-outcome__label-wrapper">' + '<span class="KambiWidget-outcome__label">{label}</span>' + '<span class="KambiWidget-outcome__line"></span>' + '</div>' + '<div class="KambiWidget-outcome__odds-wrapper">' + '<span class="KambiWidget-outcome__odds" rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat"></span>' + '</div>' + '</div>' + '</button>';
+         return '\n<button\n      rv-on-click="toggleOutcome"\n      type="button"\n      role="button"\n      class="KambiWidget-outcome kw-link l-flex-1 l-ml-6"\n      rv-custom-class="selected"\n      rv-toggle-class="KambiWidget-outcome--selected" >\n   <div class="KambiWidget-outcome__flexwrap">\n      <div class="KambiWidget-outcome__label-wrapper">\n         <span\n               class="KambiWidget-outcome__label"\n               rv-text="getLabel < data.outcomeAttr.odds data.eventAttr">\n         </span>\n         <span class="KambiWidget-outcome__line"></span>\n      </div>\n   <div class="KambiWidget-outcome__odds-wrapper">\n      <span\n            class="KambiWidget-outcome__odds"\n            rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat">\n      </span>\n   </div>\n</button>\n         ';
       },
 
       initialize: function initialize(el, attributes) {
+         if (attributes.outcomeAttr == null) {
+            return false;
+         }
          el.classList.add('l-flexbox');
          el.classList.add('l-flex-1');
          return new OutcomeViewController(attributes);
@@ -1108,7 +1128,7 @@ CoreLibrary.widgetModule = function () {
 
    rivets.components['outcome-component-no-label'] = {
       template: function template() {
-         return '<button rv-on-click="toggleOutcome" rv-disabled="betOffer.suspended | == true"' + 'rv-custom-class="selected" rv-toggle-class="KambiWidget-outcome--selected" ' + 'type="button" role="button" class="KambiWidget-outcome kw-link l-ml-6">' + '<div class="l-flexbox l-pack-center">' + '<div class="KambiWidget-outcome__odds-wrapper">' + '<span class="KambiWidget-outcome__odds" rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat" ></span>' + '</div>' + '</div>' + '</button>';
+         return '\n<button\n      rv-on-click="toggleOutcome"\n      rv-disabled="betOffer.suspended | == true"\n      rv-custom-class="selected"\n      rv-toggle-class="KambiWidget-outcome--selected"\n      type="button"\n      role="button"\n      class="KambiWidget-outcome kw-link l-ml-6">\n   <div class="l-flexbox l-pack-center">\n      <div class="KambiWidget-outcome__odds-wrapper">\n         <span class="KambiWidget-outcome__odds" rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat" ></span>\n      </div>\n   </div>\n</button>\n         ';
       },
 
       initialize: function initialize(el, attributes) {

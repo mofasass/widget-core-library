@@ -45,7 +45,7 @@
             case 'american':
                return this.data.outcomeAttr.oddsAmerican;
             default:
-               return this.data.outcomeAttr.odds / 1000;
+               return CoreLibrary.utilModule.getOddsDecimalValue(this.data.outcomeAttr.odds / 1000);
          }
       };
    };
