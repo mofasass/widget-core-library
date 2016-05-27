@@ -35,12 +35,11 @@ window.CoreLibrary.utilModule = (function () {
                return CoreLibrary.translationModule.getTranslation('draw');
             case 'OT_TWO': // Outcome has label 2. Applies to Threeway bet offers.
                return event.awayName;
+            case 'OT_OVER': // The “Over” outcome in Over/Under bet offer.
+               return CoreLibrary.translationModule.getTranslation('over') + ' ' + (outcome.line / 1000);
+            case 'OT_UNDER': // The “Under” outcome in Over/Under bet offer.
+               return CoreLibrary.translationModule.getTranslation('under') + ' ' + (outcome.line / 1000);
             // Todo: Impelement these responses with translations
-
-            // case 'OT_OVER': //The “Over” outcome in Over/Under bet offer.
-            // break;
-            // case 'OT_UNDER': //The “Under” outcome in Over/Under bet offer.
-            // break;
             // case 'OT_ODD': //The “Odd” outcome in Odd/Even bet offer.
             // break;
             // case 'OT_EVEN': //The “Even” outcome in Odd/Even bet offer.
