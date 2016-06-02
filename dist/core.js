@@ -446,9 +446,11 @@ window.CoreLibrary = function () {
          } else {
             coreLibraryPromise = new Promise(function (resolve, reject) {
                CoreLibrary.init().then(function (widgetArgs) {
-                  Object.keys(widgetArgs).forEach(function (key) {
-                     _this.scope.args[key] = widgetArgs[key];
-                  });
+                  if (widgetArgs != null) {
+                     Object.keys(widgetArgs).forEach(function (key) {
+                        _this.scope.args[key] = widgetArgs[key];
+                     });
+                  }
 
                   var apiVersion = CoreLibrary.widgetModule.api.VERSION;
                   if (apiVersion == null) {
@@ -686,14 +688,14 @@ window.CoreLibrary.utilModule = function () {
          switch (outcome.type) {
             case 'OT_ONE':
                // Outcome has label 1. Applies to Threeway bet offers.
-               return event.homeName;
+               return event.homeLabelCustom && event.homeLabelCustom !== '' ? event.homeLabelCustom : event.homeName;
             case 'OT_CROSS':
                // Outcome has label X. Applies to Threeway bet offers.
                // Todo: Translation
                return CoreLibrary.translationModule.getTranslation('draw');
             case 'OT_TWO':
                // Outcome has label 2. Applies to Threeway bet offers.
-               return event.awayName;
+               return event.awayLabelCustom && event.awayLabelCustom !== '' ? event.awayLabelCustom : event.awayName;
             case 'OT_OVER':
                // The “Over” outcome in Over/Under bet offer.
                return CoreLibrary.translationModule.getTranslation('over') + ' ' + outcome.line / 1000;
