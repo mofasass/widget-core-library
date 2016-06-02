@@ -17,7 +17,7 @@
        */
       htmlTemplateFile: null,
 
-      constructor (options) {
+      constructor ( options ) {
          /** object to be used in the HTML templates for data binding */
          this.scope = {};
 
@@ -32,58 +32,60 @@
           */
          this.rootElement = null;
 
-         if (options == null) {
+         if ( options == null ) {
             options = {};
          }
          // setting options that can be received in the constructor
          var optionsKeys = ['defaultArgs', 'rootElement'];
-         optionsKeys.forEach((key) => {
-            if (typeof options[key] !== 'undefined') {
+         optionsKeys.forEach(( key ) => {
+            if ( typeof options[key] !== 'undefined' ) {
                this[key] = options[key];
             }
          });
 
-         if (typeof this.htmlTemplate === 'string' && typeof this.htmlTemplateFile === 'string') {
+         if ( typeof this.htmlTemplate === 'string' && typeof this.htmlTemplateFile === 'string' ) {
             throw new Error('Widget can not have htmlTemplate and htmlTemplateFile set at the same time');
          }
-         if (this.rootElement == null) {
+         if ( this.rootElement == null ) {
             throw new Error('options.rootElement not set, please pass a HTMLElement or a CSS selector');
          }
 
          this.scope.args = this.defaultArgs;
 
          var fetchHtmlPromise;
-         if (typeof this.htmlTemplateFile === 'string') {
+         if ( typeof this.htmlTemplateFile === 'string' ) {
             fetchHtmlPromise = CoreLibrary.getFile(this.htmlTemplateFile)
-               .then((response) => {
+               .then(( response ) => {
                   return response.text();
                })
-               .then((html) => {
+               .then(( html ) => {
                   this.htmlTemplate = html;
                   return this.htmlTemplate;
                });
          } else {
             // just resolve the promise
-            fetchHtmlPromise = new Promise ((resolve) => {
+            fetchHtmlPromise = new Promise(( resolve ) => {
                resolve();
             });
          }
 
          var coreLibraryPromise;
-         if (CoreLibrary.apiReady === true) {
-            coreLibraryPromise = new Promise((resolve, reject) => {
+         if ( CoreLibrary.apiReady === true ) {
+            coreLibraryPromise = new Promise(( resolve, reject ) => {
                resolve();
             });
          } else {
-            coreLibraryPromise = new Promise((resolve, reject) => {
+            coreLibraryPromise = new Promise(( resolve, reject ) => {
                CoreLibrary.init()
-                  .then((widgetArgs) => {
-                     Object.keys(widgetArgs).forEach((key) => {
-                        this.scope.args[key] = widgetArgs[key];
-                     });
+                  .then(( widgetArgs ) => {
+                     if ( widgetArgs != null ) {
+                        Object.keys(widgetArgs).forEach(( key ) => {
+                           this.scope.args[key] = widgetArgs[key];
+                        });
+                     }
 
                      var apiVersion = CoreLibrary.widgetModule.api.VERSION;
-                     if (apiVersion == null) {
+                     if ( apiVersion == null ) {
                         var apiVersion = '1.0.0.10';
                      }
                      this.scope.widgetCss = '//c3-static.kambi.com/sb-mobileclient/widget-api/' +
@@ -102,19 +104,19 @@
          // decreasing load time
          return Promise.all([coreLibraryPromise, fetchHtmlPromise])
             .then(() => {
-               if (typeof this.rootElement === 'string') {
+               if ( typeof this.rootElement === 'string' ) {
                   this.rootElement = document.querySelector(this.rootElement);
                }
 
-               for (var i = 0; i < this.rootElement.attributes.length; ++i) {
+               for ( var i = 0; i < this.rootElement.attributes.length; ++i ) {
                   var at = this.rootElement.attributes[i];
-                  if (at.name.indexOf('data-') === 0) {
+                  if ( at.name.indexOf('data-') === 0 ) {
                      var name = at.name.slice(5); // removes the 'data-' from the string
                      this.scope[name] = at.value;
                   }
                }
 
-               if (typeof this.htmlTemplate === 'string') {
+               if ( typeof this.htmlTemplate === 'string' ) {
                   this.rootElement.innerHTML = this.htmlTemplate;
                }
 
