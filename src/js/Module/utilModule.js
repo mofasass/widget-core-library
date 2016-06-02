@@ -31,14 +31,13 @@ window.CoreLibrary.utilModule = (function () {
             case 'OT_ONE': // Outcome has label 1. Applies to Threeway bet offers.
                return event.homeLabelCustom && event.homeLabelCustom !== '' ? event.homeLabelCustom : event.homeName;
             case 'OT_CROSS': // Outcome has label X. Applies to Threeway bet offers.
-               // Todo: Translation
                return CoreLibrary.translationModule.getTranslation('draw');
             case 'OT_TWO': // Outcome has label 2. Applies to Threeway bet offers.
                return event.awayLabelCustom && event.awayLabelCustom !== '' ? event.awayLabelCustom : event.awayName;
             case 'OT_OVER': // The “Over” outcome in Over/Under bet offer.
-               return CoreLibrary.translationModule.getTranslation('over') + ' ' + (outcome.line / 1000);
+               return outcome.label + ' ' + (outcome.line / 1000);
             case 'OT_UNDER': // The “Under” outcome in Over/Under bet offer.
-               return CoreLibrary.translationModule.getTranslation('under') + ' ' + (outcome.line / 1000);
+               return outcome.label + ' ' + (outcome.line / 1000);
             // Todo: Impelement these responses with translations
             // case 'OT_ODD': //The “Odd” outcome in Odd/Even bet offer.
             // break;
