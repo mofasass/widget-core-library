@@ -639,14 +639,19 @@ window.CoreLibrary.translationModule = function () {
       },
       getTranslation: function getTranslation(key) {
          if (this.i18nStrings[key] != null) {
-            return this.i18nStrings[key];
+            var str = this.i18nStrings[key];
+            for (var i = 1; i < arguments.length; i++) {
+               var replacement = arguments[i] || '';
+               str = str.replace('{' + (i - 1) + '}', replacement);
+            }
+            return str;
          }
          return key;
       }
    };
 
    rivets.formatters.translate = function (value) {
-      return translationModule.getTranslation(value);
+      return translationModule.getTranslation.apply(translationModule, arguments);
    };
 
    return translationModule;
