@@ -11,6 +11,36 @@ CoreLibrary.offeringModule = (function () {
          var requestPath = '/listView/' + filter;
          return this.doRequest(requestPath, params, 'v3');
       },
+      adaptV2Events: function (data) {
+         var events = data.liveEvents;
+         data.events = events;
+         delete data.liveEvents;
+         delete data.group;
+         events.forEach(this.adaptV2Event);
+      },
+      adaptV2Event: function (e) {
+         e.betOffers = [];
+         if (e.mainBetOffer != null) {
+            if (e.mainBetOffer.suspended === true) {
+               e.mainBetOffer.open = false;
+            }
+            e.betOffers.push(e.mainBetOffer);
+            delete e.mainBetOffer;
+         }
+
+         if (e.liveData != null && e.liveData.statistics != null) {
+            var statistics = e.liveData.statistics;
+            if (statistics.sets != null) {
+               statistics.setBasedStats = statistics.sets;
+               delete statistics.sets;
+            }
+
+            if (statistics.football != null) {
+               statistics.footballStats = statistics.football;
+               delete statistics.football;
+            }
+         }
+      },
       getLiveEvents: function () {
          var requestPath = '/event/live/open.json';
          return this.doRequest(requestPath);
