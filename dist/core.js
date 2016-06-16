@@ -178,7 +178,7 @@ window.CoreLibrary = function () {
    sightglass.root = '.';
 
    return {
-      expectedApiVersion: '1.0.0.11', // this value is replaced with the API version number during the compilation step
+      expectedApiVersion: '1.0.0.13', // this value is replaced with the API version number during the compilation step
       development: false,
       utilModule: null,
       widgetModule: null,
@@ -213,6 +213,7 @@ window.CoreLibrary = function () {
          libs: '',
          wapi: ''
       },
+      widgetTrackingName: null,
       args: {},
       init: function init(setDefaultHeight) {
          return new Promise(function (resolve, reject) {
@@ -360,6 +361,10 @@ window.CoreLibrary = function () {
             void 0;
             throw error;
          });
+      },
+
+      setWidgetTrackingName: function setWidgetTrackingName(name) {
+         this.widgetTrackingName = name;
       }
    };
 }();
@@ -454,7 +459,7 @@ window.CoreLibrary = function () {
 
                   var apiVersion = CoreLibrary.widgetModule.api.VERSION;
                   if (apiVersion == null) {
-                     var apiVersion = '1.0.0.10';
+                     apiVersion = '1.0.0.13';
                   }
                   _this.scope.widgetCss = '//c3-static.kambi.com/sb-mobileclient/widget-api/' + apiVersion + '/resources/css/' + CoreLibrary.config.customer + '/' + CoreLibrary.config.offering + '/widgets.css';
                   resolve();
@@ -982,6 +987,9 @@ CoreLibrary.widgetModule = function () {
       },
 
       navigateToFilter: function navigateToFilter(filterParams) {
+         if (typeof filterParams === 'string' && filterParams.indexOf('filter/') === -1) {
+            filterParams = 'filter/' + filterParams;
+         }
          this.navigateClient(filterParams);
       },
 
@@ -1021,6 +1029,11 @@ CoreLibrary.widgetModule = function () {
             data.source = source;
          }
 
+         // Add tracking name if it's set
+         if (CoreLibrary.widgetTrackingName != null) {
+            data.name = CoreLibrary.widgetTrackingName;
+         }
+
          // Send the data to the widget this.api
          this.api.set(this.api.BETSLIP_OUTCOMES, data);
       },
@@ -1032,7 +1045,14 @@ CoreLibrary.widgetModule = function () {
          } else {
             arrOutcomes.push(outcomes);
          }
-         this.api.set(this.api.BETSLIP_OUTCOMES_REMOVE, { outcomes: arrOutcomes });
+         var data = { outcomes: arrOutcomes };
+
+         // Add tracking name if it's set
+         if (CoreLibrary.widgetTrackingName != null) {
+            data.name = CoreLibrary.widgetTrackingName;
+         }
+
+         this.api.set(this.api.BETSLIP_OUTCOMES_REMOVE, data);
       },
 
       requestBetslipOutcomes: function requestBetslipOutcomes() {
@@ -1072,11 +1092,17 @@ CoreLibrary.widgetModule = function () {
       },
 
       navigateClient: function navigateClient(destination) {
+         var finalTarget = '';
          if (typeof destination === 'string') {
-            this.api.navigateClient('#' + CoreLibrary.config.routeRoot + destination);
-         } else if (destination.isArray()) {
-            var filter = this.api.createFilterUrl(destination, CoreLibrary.config.routeRoot);
-            this.api.navigateClient(filter);
+            finalTarget = '#' + CoreLibrary.config.routeRoot + destination;
+         } else if (Array.isArray(destination)) {
+            finalTarget = this.api.createFilterUrl(destination, CoreLibrary.config.routeRoot);
+         }
+
+         if (CoreLibrary.widgetTrackingName != null) {
+            this.api.navigateClient(finalTarget, CoreLibrary.widgetTrackingName);
+         } else {
+            this.api.navigateClient(finalTarget);
          }
       }
    };
@@ -1146,6 +1172,25 @@ CoreLibrary.widgetModule = function () {
 
 (function () {
 
+   rivets.binders['outcome-suspended'] = function (el, property) {
+      var cssClass = 'KambiWidget-outcome--suspended';
+      if (property === true) {
+         el.classList.add(cssClass);
+      } else {
+         el.classList.remove(cssClass);
+      }
+   };
+
+   rivets.binders['outcome-selected'] = function (el, property) {
+      var cssClass = 'KambiWidget-outcome--selected';
+
+      if (property === true) {
+         el.classList.add(cssClass);
+      } else {
+         el.classList.remove(cssClass);
+      }
+   };
+
    var OutcomeViewController = function OutcomeViewController(attributes) {
       var _this = this;
 
@@ -1153,6 +1198,14 @@ CoreLibrary.widgetModule = function () {
       this.selected = false;
       this.label = '';
       this.coreLibraryConfig = CoreLibrary.config;
+
+      if (this.data.eventAttr != null && this.data.eventAttr.betOffers != null) {
+         this.betOffer = this.data.eventAttr.betOffers.find(function (betOffer) {
+            if (betOffer.id === _this.data.outcomeAttr.betOfferId) {
+               return true;
+            }
+         });
+      }
 
       if (this.data.outcomeAttr != null) {
          if (CoreLibrary.widgetModule.betslipIds.indexOf(this.data.outcomeAttr.id) !== -1) {
@@ -1200,7 +1253,7 @@ CoreLibrary.widgetModule = function () {
 
    rivets.components['outcome-component'] = {
       template: function template() {
-         return '\n<button\n      rv-on-click="toggleOutcome"\n      type="button"\n      role="button"\n      class="KambiWidget-outcome kw-link l-flex-1 l-ml-6"\n      rv-custom-class="selected"\n      rv-toggle-class="KambiWidget-outcome--selected" >\n   <div class="KambiWidget-outcome__flexwrap">\n      <div class="KambiWidget-outcome__label-wrapper">\n         <span\n               class="KambiWidget-outcome__label"\n               rv-text="getLabel < data.outcomeAttr.odds data.eventAttr">\n         </span>\n         <span class="KambiWidget-outcome__line"></span>\n      </div>\n   <div class="KambiWidget-outcome__odds-wrapper">\n      <span\n            class="KambiWidget-outcome__odds"\n            rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat">\n      </span>\n   </div>\n</button>\n         ';
+         return '\n<button\n      rv-on-click="toggleOutcome"\n      rv-disabled="betOffer.suspended | == true"\n      rv-outcome-selected="selected"\n      rv-outcome-suspended="betOffer.suspended"\n      type="button"\n      role="button"\n      class="KambiWidget-outcome kw-link l-flex-1 l-ml-6">\n   <div class="KambiWidget-outcome__flexwrap">\n      <div class="KambiWidget-outcome__label-wrapper">\n         <span\n               class="KambiWidget-outcome__label"\n               rv-text="getLabel < data.outcomeAttr.odds data.eventAttr">\n         </span>\n         <span class="KambiWidget-outcome__line"></span>\n      </div>\n   <div class="KambiWidget-outcome__odds-wrapper">\n      <span\n            class="KambiWidget-outcome__odds"\n            rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat">\n      </span>\n   </div>\n</button>\n         ';
       },
 
       initialize: function initialize(el, attributes) {
@@ -1215,7 +1268,7 @@ CoreLibrary.widgetModule = function () {
 
    rivets.components['outcome-component-no-label'] = {
       template: function template() {
-         return '\n<button\n      rv-on-click="toggleOutcome"\n      rv-disabled="betOffer.suspended | == true"\n      rv-custom-class="selected"\n      rv-toggle-class="KambiWidget-outcome--selected"\n      type="button"\n      role="button"\n      class="KambiWidget-outcome kw-link l-ml-6">\n   <div class="l-flexbox l-pack-center">\n      <div class="KambiWidget-outcome__odds-wrapper">\n         <span class="KambiWidget-outcome__odds" rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat" ></span>\n      </div>\n   </div>\n</button>\n         ';
+         return '\n<button\n      rv-on-click="toggleOutcome"\n      rv-disabled="betOffer.suspended | == true"\n      rv-outcome-selected="selected"\n      rv-outcome-suspended="betOffer.suspended"\n      type="button"\n      role="button"\n      class="KambiWidget-outcome kw-link l-ml-6">\n   <div class="l-flexbox l-pack-center">\n      <div class="KambiWidget-outcome__odds-wrapper">\n         <span class="KambiWidget-outcome__odds" rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat" ></span>\n      </div>\n   </div>\n</button>\n         ';
       },
 
       initialize: function initialize(el, attributes) {

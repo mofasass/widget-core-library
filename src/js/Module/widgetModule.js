@@ -150,6 +150,10 @@ CoreLibrary.widgetModule = (function () {
       },
 
       navigateToFilter: function ( filterParams ) {
+         if ( typeof filterParams === 'string' &&
+               filterParams.indexOf('filter/') === -1) {
+            filterParams = 'filter/' + filterParams;
+         }
          this.navigateClient(filterParams);
       },
 
@@ -255,7 +259,7 @@ CoreLibrary.widgetModule = (function () {
          var finalTarget = '';
          if ( typeof destination === 'string' ) {
             finalTarget = '#' + CoreLibrary.config.routeRoot + destination;
-         } else if ( destination.isArray() ) {
+         } else if ( Array.isArray(destination) ) {
             finalTarget = this.api.createFilterUrl(destination, CoreLibrary.config.routeRoot);
          }
 
