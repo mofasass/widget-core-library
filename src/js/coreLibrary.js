@@ -210,6 +210,7 @@ window.CoreLibrary = (function () {
          libs: '',
          wapi: ''
       },
+      widgetTrackingName: null,
       args: {},
       init: function ( setDefaultHeight ) {
          return new Promise(function ( resolve, reject ) {
@@ -366,6 +367,10 @@ window.CoreLibrary = (function () {
                console.trace(error);
                throw error;
             });
+      },
+
+      setWidgetTrackingName: function ( name ) {
+         this.widgetTrackingName = name;
       }
    };
 

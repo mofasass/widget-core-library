@@ -124,7 +124,7 @@ CoreLibrary.widgetModule = (function () {
       adaptWidgetHeight: function () {
          // tries to adapt the widget iframe height to match the content
          var body = document.body,
-             html = document.documentElement;
+            html = document.documentElement;
          var height = Math.max(body.offsetHeight, html.scrollHeight, html.offsetHeight);
          this.api.set(this.api.WIDGET_HEIGHT, height);
       },
@@ -189,6 +189,11 @@ CoreLibrary.widgetModule = (function () {
             data.source = source;
          }
 
+         // Add tracking name if it's set
+         if ( CoreLibrary.widgetTrackingName != null ) {
+            data.name = CoreLibrary.widgetTrackingName;
+         }
+
          // Send the data to the widget this.api
          this.api.set(this.api.BETSLIP_OUTCOMES, data);
       },
@@ -200,7 +205,14 @@ CoreLibrary.widgetModule = (function () {
          } else {
             arrOutcomes.push(outcomes);
          }
-         this.api.set(this.api.BETSLIP_OUTCOMES_REMOVE, { outcomes: arrOutcomes });
+         var data = { outcomes: arrOutcomes };
+
+         // Add tracking name if it's set
+         if ( CoreLibrary.widgetTrackingName != null ) {
+            data.name = CoreLibrary.widgetTrackingName;
+         }
+
+         this.api.set(this.api.BETSLIP_OUTCOMES_REMOVE, data);
       },
 
       requestBetslipOutcomes: function () {
@@ -240,11 +252,17 @@ CoreLibrary.widgetModule = (function () {
       },
 
       navigateClient: function ( destination ) {
+         var finalTarget = '';
          if ( typeof destination === 'string' ) {
-            this.api.navigateClient('#' + CoreLibrary.config.routeRoot + destination);
+            finalTarget = '#' + CoreLibrary.config.routeRoot + destination;
          } else if ( destination.isArray() ) {
-            var filter = this.api.createFilterUrl(destination, CoreLibrary.config.routeRoot);
-            this.api.navigateClient(filter);
+            finalTarget = this.api.createFilterUrl(destination, CoreLibrary.config.routeRoot);
+         }
+
+         if ( CoreLibrary.widgetTrackingName != null ) {
+            this.api.navigateClient(finalTarget, CoreLibrary.widgetTrackingName);
+         } else {
+            this.api.navigateClient(finalTarget);
          }
       }
    };

@@ -86,7 +86,7 @@
 
                      var apiVersion = CoreLibrary.widgetModule.api.VERSION;
                      if ( apiVersion == null ) {
-                        var apiVersion = '1.0.0.10';
+                        apiVersion = '1.0.0.13';
                      }
                      this.scope.widgetCss = '//c3-static.kambi.com/sb-mobileclient/widget-api/' +
                         apiVersion +
