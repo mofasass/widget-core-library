@@ -25,7 +25,7 @@
       this.label = '';
       this.coreLibraryConfig = CoreLibrary.config;
 
-      if ( this.data.eventAttr != null ) {
+      if ( this.data.eventAttr != null && this.data.eventAttr.betOffers != null) {
          this.betOffer = this.data.eventAttr.betOffers.find(( betOffer ) => {
             if ( betOffer.id === this.data.outcomeAttr.betOfferId ) {
                return true;
