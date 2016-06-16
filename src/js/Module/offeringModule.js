@@ -2,34 +2,23 @@ CoreLibrary.offeringModule = (function () {
    'use strict';
 
    return {
-      getGroupEvents: function ( groupId ) {
+      getGroupEvents ( groupId ) {
          var requesPath = '/event/group/' + groupId + '.json';
          return this.doRequest(requesPath);
       },
-      getEventsByFilter: function ( filter, params ) {
+      getEventsByFilter ( filter, params ) {
          // Todo: Update this method once documentation is available
          var requestPath = '/listView/' + filter;
          return this.doRequest(requestPath, params, 'v3');
       },
-      adaptV2Events: function (data) {
-         var events = data.liveEvents;
-         data.events = events;
-         delete data.liveEvents;
-         delete data.group;
-         events.forEach(this.adaptV2Event);
-      },
-      adaptV2Event: function (e) {
-         e.betOffers = [];
-         if (e.mainBetOffer != null) {
-            if (e.mainBetOffer.suspended === true) {
-               e.mainBetOffer.open = false;
-            }
-            e.betOffers.push(e.mainBetOffer);
-            delete e.mainBetOffer;
+      adaptV2BetOffer (betOffer) {
+         if (betOffer.suspended === true) {
+            betOffer.open = false;
          }
-
-         if (e.liveData != null && e.liveData.statistics != null) {
-            var statistics = e.liveData.statistics;
+      },
+      adaptV2LiveData (liveData) {
+         if (liveData != null && liveData.statistics != null) {
+            var statistics = liveData.statistics;
             if (statistics.sets != null) {
                statistics.setBasedStats = statistics.sets;
                delete statistics.sets;
@@ -41,11 +30,56 @@ CoreLibrary.offeringModule = (function () {
             }
          }
       },
-      getLiveEvents: function () {
-         var requestPath = '/event/live/open.json';
-         return this.doRequest(requestPath);
+      adaptV2Event (event) {
+         // v3 and v2 event objects are almost the same
+         // only a few attributes we don't are different
       },
-      getLiveEventsByFilter: function ( filter ) {
+      getLiveEventData (eventId) {
+         var requestPath = '/event/' + eventId + '/livedata.json';
+         return this.doRequest(requestPath)
+            .then((res) => {
+               this.adaptV2LiveData(res);
+               return res;
+            });
+      },
+      getLiveEvents () {
+         var requestPath = '/event/live/open.json';
+         return this.doRequest(requestPath)
+            .then((res) => {
+               if ( res.error != null) {
+                  return res;
+               }
+               var events = res.liveEvents;
+               res.events = events;
+               res.events.forEach(this.adaptV2Event);
+               delete res.liveEvents;
+               delete res.group;
+               events.forEach((e) => {
+                  e.betOffers = [];
+                  if (e.mainBetOffer != null) {
+                     this.adaptV2BetOffer(e.mainBetOffer);
+                     e.betOffers.push(e.mainBetOffer);
+                     delete e.mainBetOffer;
+                  }
+                  this.adaptV2LiveData(e.liveData);
+               });
+               return res;
+            });
+      },
+      getLiveEvent (eventId) {
+         var requestPath = '/betoffer/live/event/' + eventId + '.json';
+         return this.doRequest(requestPath)
+            .then((res) => {
+               res.betOffers = res.betoffers;
+               delete res.betoffers;
+               res.betOffers.forEach(this.adaptV2BetOffer);
+               res.event = res.events[0];
+               this.adaptV2Event(res.event);
+               delete res.events;
+               return res;
+            });
+      },
+      getLiveEventsByFilter ( filter ) {
          // Todo: implement a filter request when the offering API supports it
          filter = filter.replace(/\/$/, '');
 
@@ -81,10 +115,14 @@ CoreLibrary.offeringModule = (function () {
 
          return liveEventsPromise;
       },
-      getEventBetoffers: function ( eventId ) {
+      getEvent ( eventId ) {
          return this.doRequest('/betoffer/event/' + eventId + '.json');
       },
-      doRequest: function ( requestPath, params, version ) {
+      getEventBetoffers ( eventId ) {
+         console.warn('getEventBetoffers is deprecated, use getEvent instead');
+         return this.getEvent.apply(this, arguments);
+      },
+      doRequest ( requestPath, params, version ) {
          if ( CoreLibrary.config.offering == null ) {
             console.warn('The offering has not been set, is the right widget api version loaded?');
          } else {

@@ -505,25 +505,14 @@ CoreLibrary.offeringModule = function () {
          var requestPath = '/listView/' + filter;
          return this.doRequest(requestPath, params, 'v3');
       },
-      adaptV2Events: function adaptV2Events(data) {
-         var events = data.liveEvents;
-         data.events = events;
-         delete data.liveEvents;
-         delete data.group;
-         events.forEach(this.adaptV2Event);
-      },
-      adaptV2Event: function adaptV2Event(e) {
-         e.betOffers = [];
-         if (e.mainBetOffer != null) {
-            if (e.mainBetOffer.suspended === true) {
-               e.mainBetOffer.open = false;
-            }
-            e.betOffers.push(e.mainBetOffer);
-            delete e.mainBetOffer;
+      adaptV2BetOffer: function adaptV2BetOffer(betOffer) {
+         if (betOffer.suspended === true) {
+            betOffer.open = false;
          }
-
-         if (e.liveData != null && e.liveData.statistics != null) {
-            var statistics = e.liveData.statistics;
+      },
+      adaptV2LiveData: function adaptV2LiveData(liveData) {
+         if (liveData != null && liveData.statistics != null) {
+            var statistics = liveData.statistics;
             if (statistics.sets != null) {
                statistics.setBasedStats = statistics.sets;
                delete statistics.sets;
@@ -535,12 +524,60 @@ CoreLibrary.offeringModule = function () {
             }
          }
       },
+      adaptV2Event: function adaptV2Event(event) {
+         // v3 and v2 event objects are almost the same
+         // only a few attributes we don't are different
+      },
+      getLiveEventData: function getLiveEventData(eventId) {
+         var _this = this;
+
+         var requestPath = '/event/' + eventId + '/livedata.json';
+         return this.doRequest(requestPath).then(function (res) {
+            _this.adaptV2LiveData(res);
+            return res;
+         });
+      },
       getLiveEvents: function getLiveEvents() {
+         var _this2 = this;
+
          var requestPath = '/event/live/open.json';
-         return this.doRequest(requestPath);
+         return this.doRequest(requestPath).then(function (res) {
+            if (res.error != null) {
+               return res;
+            }
+            var events = res.liveEvents;
+            res.events = events;
+            res.events.forEach(_this2.adaptV2Event);
+            delete res.liveEvents;
+            delete res.group;
+            events.forEach(function (e) {
+               e.betOffers = [];
+               if (e.mainBetOffer != null) {
+                  _this2.adaptV2BetOffer(e.mainBetOffer);
+                  e.betOffers.push(e.mainBetOffer);
+                  delete e.mainBetOffer;
+               }
+               _this2.adaptV2LiveData(e.liveData);
+            });
+            return res;
+         });
+      },
+      getLiveEvent: function getLiveEvent(eventId) {
+         var _this3 = this;
+
+         var requestPath = '/betoffer/live/event/' + eventId + '.json';
+         return this.doRequest(requestPath).then(function (res) {
+            res.betOffers = res.betoffers;
+            delete res.betoffers;
+            res.betOffers.forEach(_this3.adaptV2BetOffer);
+            res.event = res.events[0];
+            _this3.adaptV2Event(res.event);
+            delete res.events;
+            return res;
+         });
       },
       getLiveEventsByFilter: function getLiveEventsByFilter(filter) {
-         var _this = this;
+         var _this4 = this;
 
          // Todo: implement a filter request when the offering API supports it
          filter = filter.replace(/\/$/, '');
@@ -551,7 +588,7 @@ CoreLibrary.offeringModule = function () {
          var requestPath = '/listView/all/all/all/all/in-play/';
 
          var liveEventsPromise = new Promise(function (resolve, reject) {
-            _this.doRequest(requestPath, null, 'v3').then(function (response) {
+            _this4.doRequest(requestPath, null, 'v3').then(function (response) {
                var result = {
                   events: []
                },
@@ -579,8 +616,12 @@ CoreLibrary.offeringModule = function () {
 
          return liveEventsPromise;
       },
-      getEventBetoffers: function getEventBetoffers(eventId) {
+      getEvent: function getEvent(eventId) {
          return this.doRequest('/betoffer/event/' + eventId + '.json');
+      },
+      getEventBetoffers: function getEventBetoffers(eventId) {
+         void 0;
+         return this.getEvent.apply(this, arguments);
       },
       doRequest: function doRequest(requestPath, params, version) {
          if (CoreLibrary.config.offering == null) {
