@@ -1,10 +1,37 @@
 (function () {
 
+   rivets.binders['outcome-suspended'] = function ( el, property ) {
+      var cssClass = 'KambiWidget-outcome--suspended';
+      if ( property === true ) {
+         el.classList.add(cssClass);
+      } else {
+         el.classList.remove(cssClass);
+      }
+   };
+
+   rivets.binders['outcome-selected'] = function ( el, property ) {
+      var cssClass = 'KambiWidget-outcome--selected';
+
+      if ( property === true ) {
+         el.classList.add(cssClass);
+      } else {
+         el.classList.remove(cssClass);
+      }
+   };
+
    var OutcomeViewController = function ( attributes ) {
       this.data = attributes;
       this.selected = false;
       this.label = '';
       this.coreLibraryConfig = CoreLibrary.config;
+
+      if ( this.data.eventAttr != null ) {
+         this.betOffer = this.data.eventAttr.betOffers.find(( betOffer ) => {
+            if ( betOffer.id === this.data.outcomeAttr.betOfferId ) {
+               return true;
+            }
+         });
+      }
 
       if ( this.data.outcomeAttr != null ) {
          if ( CoreLibrary.widgetModule.betslipIds.indexOf(this.data.outcomeAttr.id) !== -1 ) {
@@ -55,11 +82,12 @@
          return `
 <button
       rv-on-click="toggleOutcome"
+      rv-disabled="betOffer.suspended | == true"
+      rv-outcome-selected="selected"
+      rv-outcome-suspended="betOffer.suspended"
       type="button"
       role="button"
-      class="KambiWidget-outcome kw-link l-flex-1 l-ml-6"
-      rv-custom-class="selected"
-      rv-toggle-class="KambiWidget-outcome--selected" >
+      class="KambiWidget-outcome kw-link l-flex-1 l-ml-6">
    <div class="KambiWidget-outcome__flexwrap">
       <div class="KambiWidget-outcome__label-wrapper">
          <span
@@ -94,8 +122,8 @@
 <button
       rv-on-click="toggleOutcome"
       rv-disabled="betOffer.suspended | == true"
-      rv-custom-class="selected"
-      rv-toggle-class="KambiWidget-outcome--selected"
+      rv-outcome-selected="selected"
+      rv-outcome-suspended="betOffer.suspended"
       type="button"
       role="button"
       class="KambiWidget-outcome kw-link l-ml-6">
