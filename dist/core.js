@@ -124,16 +124,34 @@ window.CoreLibrary = function () {
       if (index < 0) {
          return false;
       }
-      var speed = 70;
-      el.classList.remove('anim-stagger');
-      el.classList.add('anim-stagger');
-      setTimeout(function () {
-         el.classList.add('anim-enter-active');
+      var animationDisable = el.getAttribute('data-anim-disable');
+      if (animationDisable === 'true') {
+         return false;
+      } else {
+         var speed = 70;
+         el.classList.remove('anim-stagger');
+         el.classList.add('anim-stagger');
          setTimeout(function () {
-            el.classList.remove('anim-stagger');
-            el.classList.remove('anim-enter-active');
-         }, 200);
-      }, speed * index);
+            el.classList.add('anim-enter-active');
+            setTimeout(function () {
+               el.classList.remove('anim-stagger');
+               el.classList.remove('anim-enter-active');
+            }, 200);
+         }, speed * index);
+      }
+   };
+
+   /**
+    * Binder to temporarily disable the stagger animation
+    *
+    * Used in DOM as <div rv-anim-disable="event.disableAnimation" rv-anim-stagger="index" ></div>
+    * IMPORTANT: The rv-anim-disable attribute has to be placed before the binder that provides the animation for it to take effect in the animation binder
+    *
+    * @param el Dom element to disable the animation on
+    * @param animationDisable 'true' to disable animations
+    */
+   rivets.binders['anim-disable'] = function (el, animationDisable) {
+      el.setAttribute('data-anim-disable', animationDisable);
    };
 
    /**
@@ -537,7 +555,7 @@ CoreLibrary.offeringModule = function () {
          var _this = this;
 
          var requestPath = '/event/' + eventId + '/livedata.json';
-         return this.doRequest(requestPath).then(function (res) {
+         return this.doRequest(requestPath, null, null, true).then(function (res) {
             _this.adaptV2LiveData(res);
             return res;
          });
@@ -546,7 +564,7 @@ CoreLibrary.offeringModule = function () {
          var _this2 = this;
 
          var requestPath = '/event/live/open.json';
-         return this.doRequest(requestPath).then(function (res) {
+         return this.doRequest(requestPath, null, null, true).then(function (res) {
             if (res.error != null) {
                return res;
             }
@@ -571,7 +589,7 @@ CoreLibrary.offeringModule = function () {
          var _this3 = this;
 
          var requestPath = '/betoffer/live/event/' + eventId + '.json';
-         return this.doRequest(requestPath).then(function (res) {
+         return this.doRequest(requestPath, null, null, true).then(function (res) {
             res.betOffers = res.betoffers;
             delete res.betoffers;
             res.betOffers.forEach(_this3.adaptV2BetOffer);
@@ -628,7 +646,7 @@ CoreLibrary.offeringModule = function () {
          void 0;
          return this.getEvent.apply(this, arguments);
       },
-      doRequest: function doRequest(requestPath, params, version) {
+      doRequest: function doRequest(requestPath, params, version, noCache) {
          if (CoreLibrary.config.offering == null) {
             void 0;
          } else {
@@ -644,6 +662,9 @@ CoreLibrary.offeringModule = function () {
                categoryGroup: overrideParams.categoryGroup || 'COMBINED',
                displayDefault: overrideParams.displayDefault || true
             };
+            if (noCache === true) {
+               requestParams.nocache = Date.now();
+            }
             requestUrl += '?' + Object.keys(requestParams).map(function (k) {
                return encodeURIComponent(k) + '=' + encodeURIComponent(requestParams[k]);
             }).join('&');
