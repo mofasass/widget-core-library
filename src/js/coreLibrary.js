@@ -121,16 +121,34 @@ window.CoreLibrary = (function () {
       if ( index < 0 ) {
          return false;
       }
-      var speed = 70;
-      el.classList.remove('anim-stagger');
-      el.classList.add('anim-stagger');
-      setTimeout(function () {
-         el.classList.add('anim-enter-active');
+      var animationDisable = el.getAttribute('data-anim-disable');
+      if ( animationDisable === 'true' ) {
+         return false;
+      } else {
+         var speed = 70;
+         el.classList.remove('anim-stagger');
+         el.classList.add('anim-stagger');
          setTimeout(function () {
-            el.classList.remove('anim-stagger');
-            el.classList.remove('anim-enter-active');
-         }, 200);
-      }, speed * index);
+            el.classList.add('anim-enter-active');
+            setTimeout(function () {
+               el.classList.remove('anim-stagger');
+               el.classList.remove('anim-enter-active');
+            }, 200);
+         }, speed * index);
+      }
+   };
+
+   /**
+    * Binder to temporarily disable the stagger animation
+    *
+    * Used in DOM as <div rv-anim-disable="event.disableAnimation" rv-anim-stagger="index" ></div>
+    * IMPORTANT: The rv-anim-disable attribute has to be placed before the binder that provides the animation for it to take effect in the animation binder
+    *
+    * @param el Dom element to disable the animation on
+    * @param animationDisable 'true' to disable animations
+    */
+   rivets.binders['anim-disable'] = function ( el, animationDisable ) {
+      el.setAttribute('data-anim-disable', animationDisable);
    };
 
    /**
