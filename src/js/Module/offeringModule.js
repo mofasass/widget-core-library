@@ -11,42 +11,42 @@ CoreLibrary.offeringModule = (function () {
          var requestPath = '/listView/' + filter;
          return this.doRequest(requestPath, params, 'v3');
       },
-      adaptV2BetOffer (betOffer) {
-         if (betOffer.suspended === true) {
+      adaptV2BetOffer ( betOffer ) {
+         if ( betOffer.suspended === true ) {
             betOffer.open = false;
          }
       },
-      adaptV2LiveData (liveData) {
-         if (liveData != null && liveData.statistics != null) {
+      adaptV2LiveData ( liveData ) {
+         if ( liveData != null && liveData.statistics != null ) {
             var statistics = liveData.statistics;
-            if (statistics.sets != null) {
+            if ( statistics.sets != null ) {
                statistics.setBasedStats = statistics.sets;
                delete statistics.sets;
             }
 
-            if (statistics.football != null) {
+            if ( statistics.football != null ) {
                statistics.footballStats = statistics.football;
                delete statistics.football;
             }
          }
       },
-      adaptV2Event (event) {
+      adaptV2Event ( event ) {
          // v3 and v2 event objects are almost the same
          // only a few attributes we don't are different
       },
-      getLiveEventData (eventId) {
+      getLiveEventData ( eventId ) {
          var requestPath = '/event/' + eventId + '/livedata.json';
-         return this.doRequest(requestPath)
-            .then((res) => {
+         return this.doRequest(requestPath, null, null, true)
+            .then(( res ) => {
                this.adaptV2LiveData(res);
                return res;
             });
       },
       getLiveEvents () {
          var requestPath = '/event/live/open.json';
-         return this.doRequest(requestPath)
-            .then((res) => {
-               if ( res.error != null) {
+         return this.doRequest(requestPath, null, null, true)
+            .then(( res ) => {
+               if ( res.error != null ) {
                   return res;
                }
                var events = res.liveEvents;
@@ -54,9 +54,9 @@ CoreLibrary.offeringModule = (function () {
                res.events.forEach(this.adaptV2Event);
                delete res.liveEvents;
                delete res.group;
-               events.forEach((e) => {
+               events.forEach(( e ) => {
                   e.betOffers = [];
-                  if (e.mainBetOffer != null) {
+                  if ( e.mainBetOffer != null ) {
                      this.adaptV2BetOffer(e.mainBetOffer);
                      e.betOffers.push(e.mainBetOffer);
                      delete e.mainBetOffer;
@@ -66,10 +66,10 @@ CoreLibrary.offeringModule = (function () {
                return res;
             });
       },
-      getLiveEvent (eventId) {
+      getLiveEvent ( eventId ) {
          var requestPath = '/betoffer/live/event/' + eventId + '.json';
-         return this.doRequest(requestPath)
-            .then((res) => {
+         return this.doRequest(requestPath, null, null, true)
+            .then(( res ) => {
                res.betOffers = res.betoffers;
                delete res.betoffers;
                res.betOffers.forEach(this.adaptV2BetOffer);
@@ -122,7 +122,7 @@ CoreLibrary.offeringModule = (function () {
          console.warn('getEventBetoffers is deprecated, use getEvent instead');
          return this.getEvent.apply(this, arguments);
       },
-      doRequest ( requestPath, params, version ) {
+      doRequest ( requestPath, params, version, noCache ) {
          if ( CoreLibrary.config.offering == null ) {
             console.warn('The offering has not been set, is the right widget api version loaded?');
          } else {
@@ -139,6 +139,9 @@ CoreLibrary.offeringModule = (function () {
                categoryGroup: overrideParams.categoryGroup || 'COMBINED',
                displayDefault: overrideParams.displayDefault || true
             };
+            if ( noCache === true ) {
+               requestParams.nocache = Date.now();
+            }
             requestUrl += '?' + Object.keys(requestParams).map(function ( k ) {
                   return encodeURIComponent(k) + '=' + encodeURIComponent(requestParams[k]);
                }).join('&');
