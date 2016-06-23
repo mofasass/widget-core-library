@@ -26,11 +26,11 @@
       this.coreLibraryConfig = CoreLibrary.config;
 
       if ( this.data.eventAttr != null && this.data.eventAttr.betOffers != null) {
-         this.betOffer = this.data.eventAttr.betOffers.find(( betOffer ) => {
+         this.betOffer = this.data.eventAttr.betOffers.filter(( betOffer ) => {
             if ( betOffer.id === this.data.outcomeAttr.betOfferId ) {
                return true;
             }
-         });
+         })[0];
       }
 
       if ( this.data.outcomeAttr != null ) {

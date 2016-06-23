@@ -1221,11 +1221,11 @@ CoreLibrary.widgetModule = function () {
       this.coreLibraryConfig = CoreLibrary.config;
 
       if (this.data.eventAttr != null && this.data.eventAttr.betOffers != null) {
-         this.betOffer = this.data.eventAttr.betOffers.find(function (betOffer) {
+         this.betOffer = this.data.eventAttr.betOffers.filter(function (betOffer) {
             if (betOffer.id === _this.data.outcomeAttr.betOfferId) {
                return true;
             }
-         });
+         })[0];
       }
 
       if (this.data.outcomeAttr != null) {
