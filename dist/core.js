@@ -1251,6 +1251,10 @@ CoreLibrary.widgetModule = function () {
       };
 
       this.getLabel = function () {
+         if (this.data.customLabel) {
+            return this.data.customLabel;
+         }
+
          if (this.data.outcomeAttr != null) {
             if (this.data.eventAttr != null) {
                return CoreLibrary.utilModule.getOutcomeLabel(this.data.outcomeAttr, this.data.eventAttr);
