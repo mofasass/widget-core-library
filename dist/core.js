@@ -195,7 +195,48 @@ window.CoreLibrary = function () {
    sightglass.adapters = rivets.adapters;
    sightglass.root = '.';
 
+   /* adding classes to body based on browser and browser version,
+   code inspired by the Bowser library:
+   https://github.com/ded/bowser
+   */
+   var ua = window.navigator.userAgent;
+   var getFirstMatch = function getFirstMatch(regex) {
+      var match = ua.match(regex);
+      return match && match.length > 1 && match[1] || '';
+   };
+
+   var browser = null;
+   var browserVersion = null;
+   var versionIdentifier = getFirstMatch(/version\/(\d+(\.\d+)?)/i);
+
+   if (/android/i.test(ua)) {
+      browser = 'android';
+      browserVersion = versionIdentifier;
+   } else if (/(ipod|iphone|ipad)/i.test(ua)) {
+      browser = 'ios';
+      browserVersion = getFirstMatch(/(?:mxios)[\s\/](\d+(?:\.\d+)+)/i);
+   } else if (/msie|trident/i.test(ua)) {
+      browser = 'internet-explorer';
+      browserVersion = getFirstMatch(/(?:msie |rv:)(\d+(\.\d+)?)/i);
+   } else if (/chrome|crios|crmo/i.test(ua)) {
+      browser = 'chrome';
+      browserVersion = getFirstMatch(/(?:chrome|crios|crmo)\/(\d+(\.\d+)?)/i);
+   } else if (/safari|applewebkit/i.test(ua)) {
+      browser = 'safari';
+      browserVersion = versionIdentifier;
+   } else if (/chrome.+? edge/i.test(ua)) {
+      browser = 'microsoft-edge';
+      browserVersion = getFirstMatch(/edge\/(\d+(\.\d+)?)/i);
+   } else if (/firefox|iceweasel|fxios/i.test(ua)) {
+      browser = 'firefox';
+      browserVersion = getFirstMatch(/(?:firefox|iceweasel|fxios)[ \/](\d+(\.\d+)?)/i);
+   }
+
+   document.body.classList.add('kw-' + browser);
+
    return {
+      browser: browser,
+      browserVersion: browserVersion,
       expectedApiVersion: '1.0.0.13', // this value is replaced with the API version number during the compilation step
       development: false,
       utilModule: null,
