@@ -3,53 +3,162 @@
 window.CoreLibrary = function () {
    'use strict';
 
-   /** Rivets formatters **/
+   /**
+    * Rivets "===" formatter
+    * @param v1
+    * @param v2
+    * @returns {boolean}
+    */
 
    rivets.formatters['==='] = function (v1, v2) {
       return v1 === v2;
    };
+
+   /**
+    * Rivets "==" formatter
+    * @param v1
+    * @param v2
+    * @returns {boolean}
+    */
    rivets.formatters['=='] = function (v1, v2) {
       return v1 == v2; // jshint ignore:line
    };
+
+   /**
+    * Rivets ">=" formatter
+    * @param v1
+    * @param v2
+    * @returns {boolean}
+    */
    rivets.formatters['>='] = function (v1, v2) {
       return v1 >= v2;
    };
+
+   /**
+    * Rivets ">" formatter
+    * @param v1
+    * @param v2
+    * @returns {boolean}
+    */
    rivets.formatters['>'] = function (v1, v2) {
       return v1 > v2;
    };
+
+   /**
+    * Rivets "<=" formatter
+    * @param v1
+    * @param v2
+    * @returns {boolean}
+    */
    rivets.formatters['<='] = function (v1, v2) {
       return v1 <= v2;
    };
+
+   /**
+    * Rivets "<" formatter
+    * @param v1
+    * @param v2
+    * @returns {boolean}
+    */
    rivets.formatters['<'] = function (v1, v2) {
       return v1 < v2;
    };
+
+   /**
+    * Rivets "!=" formatter
+    * @param v1
+    * @param v2
+    * @returns {boolean}
+    */
    rivets.formatters['!='] = function (v1, v2) {
       return v1 != v2; // jshint ignore:line
    };
+
+   /**
+    * Rivets "!==" formatter
+    * @param v1
+    * @param v2
+    * @returns {boolean}
+    */
    rivets.formatters['!=='] = function (v1, v2) {
       return v1 !== v2;
    };
+
+   /**
+    * Rivets "and" formatter
+    * @param v1
+    * @param v2
+    * @returns {boolean}
+    */
    rivets.formatters['and'] = function (v1, v2) {
       return v1 && v2;
    };
+
+   /**
+    * Rivets "or" formatter
+    * @param v1
+    * @param v2
+    * @returns {boolean}
+    */
    rivets.formatters['or'] = function (v1, v2) {
       return v1 || v2;
    };
+
+   /**
+    * Rivets "not" formatter
+    * @param v1
+    * @returns {boolean}
+    */
    rivets.formatters['not'] = function (v1) {
       return !v1;
    };
+
+   /**
+    * Rivets "-" formatter
+    * @param v1
+    * @param v2
+    * @returns {Number}
+    */
    rivets.formatters['-'] = function (v1, v2) {
       return v1 - v2;
    };
+
+   /**
+    * Rivets "+" formatter
+    * @param v1
+    * @param v2
+    * @returns {boolean}
+    */
    rivets.formatters['+'] = function (v1, v2) {
       return v1 + v2;
    };
+
+   /**
+    * Rivets "*" formatter
+    * @param v1
+    * @param v2
+    * @returns {Number}
+    */
    rivets.formatters['*'] = function (v1, v2) {
       return v1 * v2;
    };
+
+   /**
+    * Rivets "/" formatter
+    * @param v1
+    * @param v2
+    * @returns {Number}
+    */
    rivets.formatters['/'] = function (v1, v2) {
       return v1 / v2;
    };
+
+   /**
+    * Rivets "?" formatter
+    * @param v1
+    * @param v2
+    * @returns {boolean}
+    */
    rivets.formatters['?'] = function (v1, v2) {
       return v1 ? v1 : v2;
    };
@@ -61,7 +170,7 @@ window.CoreLibrary = function () {
     * @param key The desired key of the object to be returned
     * @returns {*}
     */
-   rivets.formatters.array_at = function (arr, index, key) {
+   rivets.formatters['array_at'] = function (arr, index, key) {
       return arr == null || arr.length === 0 ? [] : arr[index][key];
    };
 
@@ -70,7 +179,7 @@ window.CoreLibrary = function () {
     * @param {Object} obj The source object
     * @returns {Array}
     */
-   rivets.formatters.property_list = function (obj) {
+   rivets.formatters['property_list'] = function (obj) {
       return function () {
          var properties = [];
          for (var key in obj) {
@@ -88,7 +197,7 @@ window.CoreLibrary = function () {
     * @param value
     */
    rivets.binders['style-*'] = function (el, value) {
-      el.style.setProperty(this.args[0], value);
+      el.style.setProperty(undefined.args[0], value);
    };
 
    /**
@@ -98,7 +207,7 @@ window.CoreLibrary = function () {
     * In promise resolution, add something like this.scope.loaded = true
     * @type {{priority: number, bind: rivets.binders.cloak.bind}}
     */
-   rivets.binders.cloak = {
+   rivets.binders['cloak'] = {
       priority: -1000,
       bind: function bind(el) {
          el.style.opacity = 0;
@@ -192,10 +301,62 @@ window.CoreLibrary = function () {
       return response.json();
    }
 
+   /**
+    * Assign adapters
+    */
    sightglass.adapters = rivets.adapters;
+
+   /**
+    * Set Sightglass root adapter
+    * @type {string}
+    */
    sightglass.root = '.';
 
+   /* adding classes to body based on browser and browser version,
+   code inspired by the Bowser library:
+   https://github.com/ded/bowser
+   */
+   var ua = window.navigator.userAgent;
+   var getFirstMatch = function getFirstMatch(regex) {
+      var match = ua.match(regex);
+      return match && match.length > 1 && match[1] || '';
+   };
+
+   var browser = null;
+   var browserVersion = null;
+   var versionIdentifier = getFirstMatch(/version\/(\d+(\.\d+)?)/i);
+
+   if (/android/i.test(ua)) {
+      browser = 'android';
+      browserVersion = versionIdentifier;
+   } else if (/(ipod|iphone|ipad)/i.test(ua)) {
+      browser = 'ios';
+      browserVersion = getFirstMatch(/(?:mxios)[\s\/](\d+(?:\.\d+)+)/i);
+   } else if (/msie|trident/i.test(ua)) {
+      browser = 'internet-explorer';
+      browserVersion = getFirstMatch(/(?:msie |rv:)(\d+(\.\d+)?)/i);
+   } else if (/chrome|crios|crmo/i.test(ua)) {
+      browser = 'chrome';
+      browserVersion = getFirstMatch(/(?:chrome|crios|crmo)\/(\d+(\.\d+)?)/i);
+   } else if (/safari|applewebkit/i.test(ua)) {
+      browser = 'safari';
+      browserVersion = versionIdentifier;
+   } else if (/chrome.+? edge/i.test(ua)) {
+      browser = 'microsoft-edge';
+      browserVersion = getFirstMatch(/edge\/(\d+(\.\d+)?)/i);
+   } else if (/firefox|iceweasel|fxios/i.test(ua)) {
+      browser = 'firefox';
+      browserVersion = getFirstMatch(/(?:firefox|iceweasel|fxios)[ \/](\d+(\.\d+)?)/i);
+   }
+
+   document.body.classList.add('kw-' + browser);
+
    return {
+      /**
+       * Expected api version is replaced with the API version number during the compilation step
+       */
+      browser: browser,
+      browserVersion: browserVersion,
       expectedApiVersion: '1.0.0.13', // this value is replaced with the API version number during the compilation step
       development: false,
       utilModule: null,
@@ -203,6 +364,9 @@ window.CoreLibrary = function () {
       offeringModule: null,
       statisticsModule: null,
       apiReady: false, // this value is set to true once the kambi API has finished loaded
+      /**
+       * config object
+       */
       config: {
          apiBaseUrl: '',
          auth: false,
@@ -219,21 +383,45 @@ window.CoreLibrary = function () {
          client_id: 2,
          version: 'v2'
       },
+      /**
+       * Default height: 450
+       */
       height: 450,
+      /**
+       * Page info
+       */
       pageInfo: {
          leaguePaths: [],
          pageParam: '',
          pageTrackingPath: '',
          pageType: ''
       },
+      /**
+       * api versions object
+       */
       apiVersions: {
          client: '',
          libs: '',
          wapi: ''
       },
+      /**
+       * widget tracking name is null by default
+       */
       widgetTrackingName: null,
+      /**
+       * args object for each component
+       */
       args: {},
+
+      /**
+       * Method that initializes on component construct, sets widget configurations
+       * Can load mock data if not loaded in an iframe.
+       * @param setDefaultHeight
+       * @returns {Promise}
+       */
       init: function init(setDefaultHeight) {
+         var _this = this;
+
          return new Promise(function (resolve, reject) {
             if (window.KambiWidget) {
                // For development purposes we might want to load a widget on it's own so we check if we are in an iframe, if not then load some fake data
@@ -245,58 +433,64 @@ window.CoreLibrary = function () {
                      void 0;
                      void 0;
                      // Apply the mock config data to the core
-                     this.applySetupData(mockSetupData, setDefaultHeight);
-                     if (this.translationModule != null) {
-                        this.translationModule.fetchTranslations(mockSetupData.clientConfig.locale).then(function () {
+                     _this.applySetupData(mockSetupData, setDefaultHeight);
+                     if (_this.translationModule != null) {
+                        _this.translationModule.fetchTranslations(mockSetupData.clientConfig.locale).then(function () {
                            resolve(mockSetupData['arguments']);
-                        }.bind(this));
+                        });
                      } else {
                         resolve(mockSetupData['arguments']);
                      }
-                  }.bind(this)).catch(function (error) {
+                  }).catch(function (error) {
                      void 0;
                      void 0;
                      reject();
                   });
                } else {
                   window.KambiWidget.apiReady = function (api) {
-                     this.widgetModule.api = api;
-                     if (api.VERSION !== this.expectedApiVersion) {
+                     _this.widgetModule.api = api;
+                     if (api.VERSION !== _this.expectedApiVersion) {
                         void 0;
                      }
 
                      // Request the setup info from the widget api
-                     this.requestSetup(function (setupData) {
+                     _this.requestSetup(function (setupData) {
                         // Apply the config data to the core
-                        this.applySetupData(setupData, setDefaultHeight);
+                        _this.applySetupData(setupData, setDefaultHeight);
 
                         // TODO: Move this to widgets so we don't request them when not needed
-                        // Request the outcomes from the betslip so we can update our widget, this will also sets up a subscription for future betslip updates
-                        this.widgetModule.requestBetslipOutcomes();
+                        // Request the outcomes from the betslip so we can update our widget, also sets up a subscription for future betslip updates
+                        _this.widgetModule.requestBetslipOutcomes();
                         // Request the odds format that is set in the sportsbook, this also sets up a subscription for future odds format changes
-                        this.widgetModule.requestOddsFormat();
+                        _this.widgetModule.requestOddsFormat();
 
-                        if (this.translationModule != null) {
-                           this.translationModule.fetchTranslations(setupData.clientConfig.locale).then(function () {
+                        if (_this.translationModule != null) {
+                           _this.translationModule.fetchTranslations(setupData.clientConfig.locale).then(function () {
                               resolve(setupData['arguments']);
-                           }.bind(this));
+                           });
                         } else {
                            resolve(setupData['arguments']);
                         }
-                     }.bind(this));
-                  }.bind(this);
+                     });
+                  };
                   // Setup the response handler for the widget api
                   window.KambiWidget.receiveResponse = function (dataObject) {
-                     this.widgetModule.handleResponse(dataObject);
-                  }.bind(this);
+                     _this.widgetModule.handleResponse(dataObject);
+                  };
                }
             } else {
                void 0;
                reject();
             }
-         }.bind(this));
+         });
       },
 
+
+      /**
+       * Applies setup data to current component
+       * @param setupData
+       * @param setDefaultHeight
+       */
       applySetupData: function applySetupData(setupData, setDefaultHeight) {
 
          // Set the configuration
@@ -305,14 +499,22 @@ window.CoreLibrary = function () {
          // Set page info
          this.setPageInfo(setupData.pageInfo);
 
+         // Set versions
          this.setVersions(setupData.versions);
 
+         // set default height
          if (setDefaultHeight === true) {
             this.setHeight(setupData.height);
          }
+         // flag the api as ready
          this.apiReady = true;
       },
 
+
+      /**
+       * Set config object of CoreLibrary
+       * @param {Object} config
+       */
       setConfig: function setConfig(config) {
          for (var i in config) {
             if (config.hasOwnProperty(i) && this.config.hasOwnProperty(i)) {
@@ -328,6 +530,11 @@ window.CoreLibrary = function () {
          }
       },
 
+
+      /**
+       * Sets page info
+       * @param {Object} pageInfo
+       */
       setPageInfo: function setPageInfo(pageInfo) {
          // Check if the last character in the pageParam property is a slash, if not add it so we can use this property in filter requests
          if (pageInfo.pageType === 'filter' && pageInfo.pageParam.substr(-1) !== '/') {
@@ -336,6 +543,11 @@ window.CoreLibrary = function () {
          this.pageInfo = pageInfo;
       },
 
+
+      /**
+       * Sets versions
+       * @param {Object} versions
+       */
       setVersions: function setVersions(versions) {
          for (var i in versions) {
             if (versions.hasOwnProperty(i) && this.apiVersions.hasOwnProperty(i)) {
@@ -344,27 +556,58 @@ window.CoreLibrary = function () {
          }
       },
 
+
+      /**
+       * Set args object
+       * @param {Object} args
+       */
       setArgs: function setArgs(args) {
          this.args = args;
       },
 
+
+      /**
+       * Requests setup data from widgetModule
+       * @param callback
+       */
       requestSetup: function requestSetup(callback) {
          this.widgetModule.requestSetup(callback);
       },
 
+
+      /**
+       * Logs the response
+       * @param response
+       */
       receiveRespone: function receiveRespone(response) {
          void 0;
       },
 
+
+      /**
+       * Sets odds format
+       * @param oddsFormat
+       */
       setOddsFormat: function setOddsFormat(oddsFormat) {
          this.config.oddsFormat = oddsFormat;
       },
 
+
+      /**
+       * Sets widget height
+       * @param {Number} height
+       */
       setHeight: function setHeight(height) {
          this.height = height;
          this.widgetModule.setHeight(height);
       },
 
+
+      /**
+       * Makes an request using Fetch (polyfill) library
+       * @param {String} url
+       * @returns {Promise}
+       */
       getData: function getData(url) {
          return fetch(url).then(checkStatus).then(parseJSON).catch(function (error) {
             void 0;
@@ -373,6 +616,12 @@ window.CoreLibrary = function () {
          });
       },
 
+
+      /**
+       * Makes an ajax request using Fetch (polyfill) library
+       * @param {String} url
+       * @returns {Promise}
+       */
       getFile: function getFile(url) {
          return fetch(url).then(checkStatus).catch(function (error) {
             void 0;
@@ -381,6 +630,11 @@ window.CoreLibrary = function () {
          });
       },
 
+
+      /**
+       * Sets widget tracking name variable
+       * @param name
+       */
       setWidgetTrackingName: function setWidgetTrackingName(name) {
          this.widgetTrackingName = name;
       }
@@ -760,7 +1014,15 @@ window.CoreLibrary.translationModule = function () {
 window.CoreLibrary.utilModule = function () {
    'use strict';
 
-   var utilModule = {
+   return {
+
+      /**
+       * Util method for return unique items
+       * @param {Array} A
+       * @param {Array} B
+       * @returns {Array}
+       */
+
       diffArray: function diffArray(A, B) {
          var map = {},
              C = [];
@@ -774,9 +1036,15 @@ window.CoreLibrary.utilModule = function () {
                C.push(A[i]);
             }
          }
-
          return C;
       },
+
+
+      /**
+       * get decimal formatted odds
+       * @param odds
+       * @returns {number}
+       */
       getOddsDecimalValue: function getOddsDecimalValue(odds) {
          if (odds < 100) {
             return odds.toFixed(2);
@@ -786,6 +1054,14 @@ window.CoreLibrary.utilModule = function () {
             return odds.toFixed(0);
          }
       },
+
+
+      /**
+       * Returns the outcome label translated
+       * @param outcome
+       * @param event
+       * @returns {string}
+       */
       getOutcomeLabel: function getOutcomeLabel(outcome, event) {
          switch (outcome.type) {
             case 'OT_ONE':
@@ -853,19 +1129,19 @@ window.CoreLibrary.utilModule = function () {
          }
       }
    };
-
-   return utilModule;
 }();
 //# sourceMappingURL=utilModule.js.map
 
 'use strict';
 
 CoreLibrary.widgetModule = function () {
+   'use strict';
 
    var Module = Stapes.subclass();
 
    return {
       api: { // placeholders for when not running inside iframe
+
          requestSetup: function requestSetup() {},
          request: function request() {},
          set: function set() {},
@@ -874,6 +1150,11 @@ CoreLibrary.widgetModule = function () {
       },
       events: new Module(),
       betslipIds: [],
+
+      /**
+       * Handles widget api response
+       * @param response
+       */
       handleResponse: function handleResponse(response) {
          switch (response.type) {
             case this.api.WIDGET_HEIGHT:
@@ -947,10 +1228,22 @@ CoreLibrary.widgetModule = function () {
          }
       },
 
+
+      /**
+       * Creates url from given path and optionalRoot
+       * @param path
+       * @param optionalRoot
+       * @returns {*}
+       */
       createUrl: function createUrl(path, optionalRoot) {
          return this.api.createUrl(path, optionalRoot);
       },
 
+
+      /**
+       * Get page type
+       * @returns {*}
+       */
       getPageType: function getPageType() {
          if (!CoreLibrary.pageInfo.pageType) {
             return '';
@@ -967,18 +1260,36 @@ CoreLibrary.widgetModule = function () {
          }
       },
 
+
+      /**
+       * Makes widget api request for setupdata
+       * @param callback
+       */
       requestSetup: function requestSetup(callback) {
          this.api.requestSetup(callback);
       },
 
+
+      /**
+       * Requests widget height from widget api
+       */
       requestWidgetHeight: function requestWidgetHeight() {
          this.api.request(this.api.WIDGET_HEIGHT);
       },
 
+
+      /**
+       * Set widget api widget height
+       * @param height
+       */
       setWidgetHeight: function setWidgetHeight(height) {
          this.api.set(this.api.WIDGET_HEIGHT, height);
       },
 
+
+      /**
+       * tries to adapt the widget iframe height to match the content
+       */
       adaptWidgetHeight: function adaptWidgetHeight() {
          // tries to adapt the widget iframe height to match the content
          var body = document.body,
@@ -987,6 +1298,11 @@ CoreLibrary.widgetModule = function () {
          this.api.set(this.api.WIDGET_HEIGHT, height);
       },
 
+
+      /**
+       * Sets widget api widget transition state
+       * @param enableTransition
+       */
       enableWidgetTransition: function enableWidgetTransition(enableTransition) {
          if (enableTransition) {
             this.api.set(this.api.WIDGET_ENABLE_TRANSITION);
@@ -995,18 +1311,37 @@ CoreLibrary.widgetModule = function () {
          }
       },
 
+
+      /**
+       * Call api to remove widget
+       */
       removeWidget: function removeWidget() {
          this.api.remove();
       },
 
+
+      /**
+       * Widget api method for navigating to a live event
+       * @param eventId
+       */
       navigateToLiveEvent: function navigateToLiveEvent(eventId) {
          this.navigateClient('event/live/' + eventId);
       },
 
+
+      /**
+       * Widget api method for navigating to a prelive event
+       * @param eventId
+       */
       navigateToEvent: function navigateToEvent(eventId) {
          this.navigateClient('event/' + eventId);
       },
 
+
+      /**
+       * Widget api method for navigating to a filter
+       * @param filterParams
+       */
       navigateToFilter: function navigateToFilter(filterParams) {
          if (typeof filterParams === 'string' && filterParams.indexOf('filter/') === -1) {
             filterParams = 'filter/' + filterParams;
@@ -1014,10 +1349,22 @@ CoreLibrary.widgetModule = function () {
          this.navigateClient(filterParams);
       },
 
+
+      /**
+       * Widget api method for navigating to a live events
+       */
       navigateToLiveEvents: function navigateToLiveEvents() {
          this.navigateClient(['in-play']);
       },
 
+
+      /**
+       * Uses widget api to add outcomes to betslip
+       * @param outcomes
+       * @param stakes
+       * @param updateMode
+       * @param source
+       */
       addOutcomeToBetslip: function addOutcomeToBetslip(outcomes, stakes, updateMode, source) {
          var arrOutcomes = [];
          // Check if the outcomes parameter is an array and add it, otherwise add the the single value as an array
@@ -1059,6 +1406,11 @@ CoreLibrary.widgetModule = function () {
          this.api.set(this.api.BETSLIP_OUTCOMES, data);
       },
 
+
+      /**
+       * Removes outcomes from betslip via widget api
+       * @param outcomes
+       */
       removeOutcomeFromBetslip: function removeOutcomeFromBetslip(outcomes) {
          var arrOutcomes = [];
          if (Array.isArray(outcomes)) {
@@ -1076,42 +1428,83 @@ CoreLibrary.widgetModule = function () {
          this.api.set(this.api.BETSLIP_OUTCOMES_REMOVE, data);
       },
 
+
+      /**
+       * Widget api method for requesting betslip outcome
+       */
       requestBetslipOutcomes: function requestBetslipOutcomes() {
          this.api.request(this.api.BETSLIP_OUTCOMES);
       },
 
+
+      /**
+       * Widget api method for requesting page info
+       */
       requestPageInfo: function requestPageInfo() {
          this.api.request(this.api.PAGE_INFO);
       },
 
+
+      /**
+       * Widget api method for requesting widget args
+       */
       requestWidgetArgs: function requestWidgetArgs() {
          this.api.request(this.api.WIDGET_ARGS);
       },
 
+
+      /**
+       * Widget api method for requesting client config
+       */
       requestClientConfig: function requestClientConfig() {
          this.api.request(this.api.CLIENT_CONFIG);
       },
 
+
+      /**
+       * Widget api method for requesting odds format
+       */
       requestOddsFormat: function requestOddsFormat() {
          this.api.request(this.api.CLIENT_ODDS_FORMAT);
       },
 
+
+      /**
+       * Widget api method for requesting american odds
+       * @param odds
+       * @returns {Promise}
+       */
       requestOddsAsAmerican: function requestOddsAsAmerican(odds) {
+         var _this = this;
+
          return new Promise(function (resolve, reject) {
-            this.api.requestOddsAsAmerican(odds, function (americanOdds) {
+            _this.api.requestOddsAsAmerican(odds, function (americanOdds) {
                resolve(americanOdds);
             });
-         }.bind(this));
+         });
       },
 
+
+      /**
+       * Widget api method for requesting fractional odds
+       * @param odds
+       * @returns {Promise}
+       */
       requestOddsAsFractional: function requestOddsAsFractional(odds) {
+         var _this2 = this;
+
          return new Promise(function (resolve, reject) {
-            this.api.requestOddsAsFractional(odds, function (fractionalOdds) {
+            _this2.api.requestOddsAsFractional(odds, function (fractionalOdds) {
                resolve(fractionalOdds);
             });
          });
       },
 
+
+      /**
+       * Widget api method for navigating client to hash path
+       * @param destination
+       */
       navigateClient: function navigateClient(destination) {
          var finalTarget = '';
          if (typeof destination === 'string') {
