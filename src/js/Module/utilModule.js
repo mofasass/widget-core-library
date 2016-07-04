@@ -1,7 +1,14 @@
-window.CoreLibrary.utilModule = (function () {
+window.CoreLibrary.utilModule = (() => {
    'use strict';
 
-   var utilModule = {
+   return {
+
+      /**
+       * Util method for return unique items
+       * @param {Array} A
+       * @param {Array} B
+       * @returns {Array}
+       */
       diffArray ( A, B ) {
          var map = {}, C = [];
 
@@ -14,9 +21,14 @@ window.CoreLibrary.utilModule = (function () {
                C.push(A[i]);
             }
          }
-
          return C;
       },
+
+      /**
+       * get decimal formatted odds
+       * @param odds
+       * @returns {number}
+       */
       getOddsDecimalValue ( odds ) {
          if ( odds < 100 ) {
             return odds.toFixed(2);
@@ -26,6 +38,13 @@ window.CoreLibrary.utilModule = (function () {
             return odds.toFixed(0);
          }
       },
+
+      /**
+       * Returns the outcome label translated
+       * @param outcome
+       * @param event
+       * @returns {string}
+       */
       getOutcomeLabel ( outcome, event ) {
          switch ( outcome.type ) {
             case 'OT_ONE': // Outcome has label 1. Applies to Threeway bet offers.
@@ -88,6 +107,4 @@ window.CoreLibrary.utilModule = (function () {
          }
       }
    };
-
-   return utilModule;
 })();

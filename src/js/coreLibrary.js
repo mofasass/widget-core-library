@@ -1,52 +1,161 @@
-window.CoreLibrary = (function () {
+window.CoreLibrary = (() => {
    'use strict';
 
-   /** Rivets formatters **/
-   rivets.formatters['==='] = function ( v1, v2 ) {
+   /**
+    * Rivets "===" formatter
+    * @param v1
+    * @param v2
+    * @returns {boolean}
+    */
+   rivets.formatters['==='] = ( v1, v2 ) => {
       return v1 === v2;
    };
-   rivets.formatters['=='] = function ( v1, v2 ) {
+
+   /**
+    * Rivets "==" formatter
+    * @param v1
+    * @param v2
+    * @returns {boolean}
+    */
+   rivets.formatters['=='] = ( v1, v2 ) => {
       return v1 == v2; // jshint ignore:line
    };
-   rivets.formatters['>='] = function ( v1, v2 ) {
+
+   /**
+    * Rivets ">=" formatter
+    * @param v1
+    * @param v2
+    * @returns {boolean}
+    */
+   rivets.formatters['>='] = ( v1, v2 ) => {
       return v1 >= v2;
    };
-   rivets.formatters['>'] = function ( v1, v2 ) {
+
+   /**
+    * Rivets ">" formatter
+    * @param v1
+    * @param v2
+    * @returns {boolean}
+    */
+   rivets.formatters['>'] = ( v1, v2 ) => {
       return v1 > v2;
    };
-   rivets.formatters['<='] = function ( v1, v2 ) {
+
+   /**
+    * Rivets "<=" formatter
+    * @param v1
+    * @param v2
+    * @returns {boolean}
+    */
+   rivets.formatters['<='] = ( v1, v2 ) => {
       return v1 <= v2;
    };
-   rivets.formatters['<'] = function ( v1, v2 ) {
+
+   /**
+    * Rivets "<" formatter
+    * @param v1
+    * @param v2
+    * @returns {boolean}
+    */
+   rivets.formatters['<'] = ( v1, v2 ) => {
       return v1 < v2;
    };
-   rivets.formatters['!='] = function ( v1, v2 ) {
+
+   /**
+    * Rivets "!=" formatter
+    * @param v1
+    * @param v2
+    * @returns {boolean}
+    */
+   rivets.formatters['!='] = ( v1, v2 ) => {
       return v1 != v2; // jshint ignore:line
    };
-   rivets.formatters['!=='] = function ( v1, v2 ) {
+
+   /**
+    * Rivets "!==" formatter
+    * @param v1
+    * @param v2
+    * @returns {boolean}
+    */
+   rivets.formatters['!=='] = ( v1, v2 ) => {
       return v1 !== v2;
    };
-   rivets.formatters['and'] = function ( v1, v2 ) {
+
+   /**
+    * Rivets "and" formatter
+    * @param v1
+    * @param v2
+    * @returns {boolean}
+    */
+   rivets.formatters['and'] = ( v1, v2 ) => {
       return v1 && v2;
    };
-   rivets.formatters['or'] = function ( v1, v2 ) {
+
+   /**
+    * Rivets "or" formatter
+    * @param v1
+    * @param v2
+    * @returns {boolean}
+    */
+   rivets.formatters['or'] = ( v1, v2 ) => {
       return v1 || v2;
    };
-   rivets.formatters['not'] = function ( v1 ) {
+
+   /**
+    * Rivets "not" formatter
+    * @param v1
+    * @returns {boolean}
+    */
+   rivets.formatters['not'] = ( v1 )=> {
       return !v1;
    };
-   rivets.formatters['-'] = function ( v1, v2 ) {
+
+   /**
+    * Rivets "-" formatter
+    * @param v1
+    * @param v2
+    * @returns {Number}
+    */
+   rivets.formatters['-'] = ( v1, v2 ) => {
       return v1 - v2;
    };
-   rivets.formatters['+'] = function ( v1, v2 ) {
+
+   /**
+    * Rivets "+" formatter
+    * @param v1
+    * @param v2
+    * @returns {boolean}
+    */
+   rivets.formatters['+'] = ( v1, v2 ) => {
       return v1 + v2;
    };
-   rivets.formatters['*'] = function ( v1, v2 ) {
+
+   /**
+    * Rivets "*" formatter
+    * @param v1
+    * @param v2
+    * @returns {Number}
+    */
+   rivets.formatters['*'] = ( v1, v2 ) => {
       return v1 * v2;
    };
-   rivets.formatters['/'] = function ( v1, v2 ) {
+
+   /**
+    * Rivets "/" formatter
+    * @param v1
+    * @param v2
+    * @returns {Number}
+    */
+   rivets.formatters['/'] = ( v1, v2 ) => {
       return v1 / v2;
    };
+
+   /**
+    * Rivets "?" formatter
+    * @param v1
+    * @param v2
+    * @returns {boolean}
+    */
    rivets.formatters['?'] = ( v1, v2 ) => {
       return v1 ? v1 : v2;
    };
@@ -58,7 +167,7 @@ window.CoreLibrary = (function () {
     * @param key The desired key of the object to be returned
     * @returns {*}
     */
-   rivets.formatters.array_at = function ( arr, index, key ) {
+   rivets.formatters['array_at'] = ( arr, index, key ) => {
       return arr == null || arr.length === 0 ? [] : arr[index][key];
    };
 
@@ -67,8 +176,8 @@ window.CoreLibrary = (function () {
     * @param {Object} obj The source object
     * @returns {Array}
     */
-   rivets.formatters.property_list = function ( obj ) {
-      return (function () {
+   rivets.formatters['property_list'] = ( obj ) => {
+      return (() => {
          var properties = [];
          for ( var key in obj ) {
             if ( obj.hasOwnProperty(key) ) {
@@ -84,7 +193,7 @@ window.CoreLibrary = (function () {
     * @param el
     * @param value
     */
-   rivets.binders['style-*'] = function ( el, value ) {
+   rivets.binders['style-*'] = ( el, value ) => {
       el.style.setProperty(this.args[0], value);
    };
 
@@ -95,12 +204,12 @@ window.CoreLibrary = (function () {
     * In promise resolution, add something like this.scope.loaded = true
     * @type {{priority: number, bind: rivets.binders.cloak.bind}}
     */
-   rivets.binders.cloak = {
+   rivets.binders['cloak'] = {
       priority: -1000,
-      bind: function ( el ) {
+      bind ( el ) {
          el.style.opacity = 0;
       },
-      routine: function ( el, value ) {
+      routine ( el, value ) {
          if ( value !== undefined && value !== false ) {
             setTimeout(() => {
                el.style.opacity = 1;
@@ -117,7 +226,7 @@ window.CoreLibrary = (function () {
     * @param el DOM element to apply classes
     * @param index List item index
     */
-   rivets.binders['anim-stagger'] = function ( el, index ) {
+   rivets.binders['anim-stagger'] = ( el, index ) => {
       if ( index < 0 ) {
          return false;
       }
@@ -128,9 +237,9 @@ window.CoreLibrary = (function () {
          var speed = 70;
          el.classList.remove('anim-stagger');
          el.classList.add('anim-stagger');
-         setTimeout(function () {
+         setTimeout(() => {
             el.classList.add('anim-enter-active');
-            setTimeout(function () {
+            setTimeout(() => {
                el.classList.remove('anim-stagger');
                el.classList.remove('anim-enter-active');
             }, 200);
@@ -147,7 +256,7 @@ window.CoreLibrary = (function () {
     * @param el Dom element to disable the animation on
     * @param animationDisable 'true' to disable animations
     */
-   rivets.binders['anim-disable'] = function ( el, animationDisable ) {
+   rivets.binders['anim-disable'] = ( el, animationDisable ) => {
       el.setAttribute('data-anim-disable', animationDisable);
    };
 
@@ -159,7 +268,7 @@ window.CoreLibrary = (function () {
     * @param el DOM element to apply class to
     * @param property The property to check
     */
-   rivets.binders['custom-class'] = function ( el, property ) {
+   rivets.binders['custom-class'] = ( el, property ) => {
       var cssClass = el.getAttribute('rv-toggle-class');
 
       if ( property === true ) {
@@ -189,10 +298,21 @@ window.CoreLibrary = (function () {
       return response.json();
    }
 
+   /**
+    * Assign adapters
+    */
    sightglass.adapters = rivets.adapters;
+
+   /**
+    * Set Sightglass root adapter
+    * @type {string}
+    */
    sightglass.root = '.';
 
    return {
+      /**
+       * Expected api version is replaced with the API version number during the compilation step
+       */
       expectedApiVersion: '{{expectedApiVersion}}', // this value is replaced with the API version number during the compilation step
       development: false,
       utilModule: null,
@@ -200,6 +320,9 @@ window.CoreLibrary = (function () {
       offeringModule: null,
       statisticsModule: null,
       apiReady: false, // this value is set to true once the kambi API has finished loaded
+      /**
+       * config object
+       */
       config: {
          apiBaseUrl: '',
          auth: false,
@@ -216,89 +339,120 @@ window.CoreLibrary = (function () {
          client_id: 2,
          version: 'v2'
       },
+      /**
+       * Default height: 450
+       */
       height: 450,
+      /**
+       * Page info
+       */
       pageInfo: {
          leaguePaths: [],
          pageParam: '',
          pageTrackingPath: '',
          pageType: ''
       },
+      /**
+       * api versions object
+       */
       apiVersions: {
          client: '',
          libs: '',
          wapi: ''
       },
+      /**
+       * widget tracking name is null by default
+       */
       widgetTrackingName: null,
+      /**
+       * args object for each component
+       */
       args: {},
-      init: function ( setDefaultHeight ) {
-         return new Promise(function ( resolve, reject ) {
-            if ( window.KambiWidget ) {
-               // For development purposes we might want to load a widget on it's own so we check if we are in an iframe, if not then load some fake data
-               if ( window.self === window.top ) {
-                  console.warn(window.location.host + window.location.pathname + ' is being loaded as stand-alone');
-                  // Load the mock config data
-                  fetch('mockSetupData.json')
-                     .then(checkStatus)
-                     .then(parseJSON)
-                     .then(function ( mockSetupData ) {
-                        // Output some debug info that could be helpful
-                        console.debug('Loaded mock setup data');
-                        console.debug(mockSetupData);
-                        // Apply the mock config data to the core
-                        this.applySetupData(mockSetupData, setDefaultHeight);
-                        if ( this.translationModule != null ) {
-                           this.translationModule.fetchTranslations(mockSetupData.clientConfig.locale).then(function () {
-                              resolve(mockSetupData['arguments']);
-                           }.bind(this));
-                        } else {
-                           resolve(mockSetupData['arguments']);
+
+      /**
+       * Method that initializes on component construct, sets widget configurations
+       * Can load mock data if not loaded in an iframe.
+       * @param setDefaultHeight
+       * @returns {Promise}
+       */
+      init ( setDefaultHeight ) {
+         return new Promise(( resolve, reject ) => {
+               if ( window.KambiWidget ) {
+                  // For development purposes we might want to load a widget on it's own so we check if we are in an iframe, if not then load some fake data
+                  if ( window.self === window.top ) {
+                     console.warn(window.location.host + window.location.pathname + ' is being loaded as stand-alone');
+                     // Load the mock config data
+                     fetch('mockSetupData.json')
+                        .then(checkStatus)
+                        .then(parseJSON)
+                        .then(( mockSetupData ) => {
+                              // Output some debug info that could be helpful
+                              console.debug('Loaded mock setup data');
+                              console.debug(mockSetupData);
+                              // Apply the mock config data to the core
+                              this.applySetupData(mockSetupData, setDefaultHeight);
+                              if ( this.translationModule != null ) {
+                                 this.translationModule.fetchTranslations(mockSetupData.clientConfig.locale).then(() => {
+                                       resolve(mockSetupData['arguments']);
+                                    }
+                                 );
+                              } else {
+                                 resolve(mockSetupData['arguments']);
+                              }
+                           }
+                        )
+                        .catch(( error ) => {
+                           console.debug('Request failed');
+                           console.trace(error);
+                           reject();
+                        });
+                  } else {
+                     window.KambiWidget.apiReady = ( api ) => {
+                        this.widgetModule.api = api;
+                        if ( api.VERSION !== this.expectedApiVersion ) {
+                           console.warn('Wrong Kambi API version loaded, expected: ' + this.expectedApiVersion + ' got: ' + api.VERSION);
                         }
-                     }.bind(this))
-                     .catch(function ( error ) {
-                        console.debug('Request failed');
-                        console.trace(error);
-                        reject();
-                     });
-               } else {
-                  window.KambiWidget.apiReady = function ( api ) {
-                     this.widgetModule.api = api;
-                     if ( api.VERSION !== this.expectedApiVersion ) {
-                        console.warn('Wrong Kambi API version loaded, expected: ' + this.expectedApiVersion + ' got: ' + api.VERSION);
-                     }
 
-                     // Request the setup info from the widget api
-                     this.requestSetup(function ( setupData ) {
-                        // Apply the config data to the core
-                        this.applySetupData(setupData, setDefaultHeight);
+                        // Request the setup info from the widget api
+                        this.requestSetup(( setupData ) => {
+                           // Apply the config data to the core
+                           this.applySetupData(setupData, setDefaultHeight);
 
-                        // TODO: Move this to widgets so we don't request them when not needed
-                        // Request the outcomes from the betslip so we can update our widget, this will also sets up a subscription for future betslip updates
-                        this.widgetModule.requestBetslipOutcomes();
-                        // Request the odds format that is set in the sportsbook, this also sets up a subscription for future odds format changes
-                        this.widgetModule.requestOddsFormat();
+                           // TODO: Move this to widgets so we don't request them when not needed
+                           // Request the outcomes from the betslip so we can update our widget, also sets up a subscription for future betslip updates
+                           this.widgetModule.requestBetslipOutcomes();
+                           // Request the odds format that is set in the sportsbook, this also sets up a subscription for future odds format changes
+                           this.widgetModule.requestOddsFormat();
 
-                        if ( this.translationModule != null ) {
-                           this.translationModule.fetchTranslations(setupData.clientConfig.locale).then(function () {
+                           if ( this.translationModule != null ) {
+                              this.translationModule.fetchTranslations(setupData.clientConfig.locale).then(() => {
+                                    resolve(setupData['arguments']);
+                                 }
+                              );
+                           } else {
                               resolve(setupData['arguments']);
-                           }.bind(this));
-                        } else {
-                           resolve(setupData['arguments']);
-                        }
-                     }.bind(this));
-                  }.bind(this);
-                  // Setup the response handler for the widget api
-                  window.KambiWidget.receiveResponse = function ( dataObject ) {
-                     this.widgetModule.handleResponse(dataObject);
-                  }.bind(this);
+                           }
+                        });
+                     };
+                     // Setup the response handler for the widget api
+                     window.KambiWidget.receiveResponse = ( dataObject ) => {
+                        this.widgetModule.handleResponse(dataObject);
+                     };
+                  }
+               } else {
+                  console.warn('Kambi widget API not loaded');
+                  reject();
                }
-            } else {
-               console.warn('Kambi widget API not loaded');
-               reject();
             }
-         }.bind(this));
+         );
       },
 
-      applySetupData: function ( setupData, setDefaultHeight ) {
+      /**
+       * Applies setup data to current component
+       * @param setupData
+       * @param setDefaultHeight
+       */
+      applySetupData ( setupData, setDefaultHeight ) {
 
          // Set the configuration
          this.setConfig(setupData.clientConfig);
@@ -306,15 +460,22 @@ window.CoreLibrary = (function () {
          // Set page info
          this.setPageInfo(setupData.pageInfo);
 
+         // Set versions
          this.setVersions(setupData.versions);
 
+         // set default height
          if ( setDefaultHeight === true ) {
             this.setHeight(setupData.height);
          }
+         // flag the api as ready
          this.apiReady = true;
       },
 
-      setConfig: function ( config ) {
+      /**
+       * Set config object of CoreLibrary
+       * @param {Object} config
+       */
+      setConfig ( config ) {
          for ( var i in config ) {
             if ( config.hasOwnProperty(i) && this.config.hasOwnProperty(i) ) {
                this.config[i] = config[i];
@@ -329,7 +490,11 @@ window.CoreLibrary = (function () {
          }
       },
 
-      setPageInfo: function ( pageInfo ) {
+      /**
+       * Sets page info
+       * @param {Object} pageInfo
+       */
+      setPageInfo ( pageInfo ) {
          // Check if the last character in the pageParam property is a slash, if not add it so we can use this property in filter requests
          if ( pageInfo.pageType === 'filter' && pageInfo.pageParam.substr(-1) !== '/' ) {
             pageInfo.pageParam += '/';
@@ -337,7 +502,11 @@ window.CoreLibrary = (function () {
          this.pageInfo = pageInfo;
       },
 
-      setVersions: function ( versions ) {
+      /**
+       * Sets versions
+       * @param {Object} versions
+       */
+      setVersions ( versions ) {
          for ( var i in versions ) {
             if ( versions.hasOwnProperty(i) && this.apiVersions.hasOwnProperty(i) ) {
                this.apiVersions[i] = versions[i];
@@ -345,49 +514,83 @@ window.CoreLibrary = (function () {
          }
       },
 
-      setArgs: function ( args ) {
+      /**
+       * Set args object
+       * @param {Object} args
+       */
+      setArgs ( args ) {
          this.args = args;
       },
 
-      requestSetup: function ( callback ) {
+      /**
+       * Requests setup data from widgetModule
+       * @param callback
+       */
+      requestSetup ( callback ) {
          this.widgetModule.requestSetup(callback);
       },
 
-      receiveRespone: function ( response ) {
+      /**
+       * Logs the response
+       * @param response
+       */
+      receiveRespone ( response ) {
          console.debug(response);
       },
 
-      setOddsFormat: function ( oddsFormat ) {
+      /**
+       * Sets odds format
+       * @param oddsFormat
+       */
+      setOddsFormat ( oddsFormat ) {
          this.config.oddsFormat = oddsFormat;
       },
 
-      setHeight: function ( height ) {
+      /**
+       * Sets widget height
+       * @param {Number} height
+       */
+      setHeight ( height ) {
          this.height = height;
          this.widgetModule.setHeight(height);
       },
 
-      getData: function ( url ) {
+      /**
+       * Makes an request using Fetch (polyfill) library
+       * @param {String} url
+       * @returns {Promise}
+       */
+      getData ( url ) {
          return fetch(url)
             .then(checkStatus)
             .then(parseJSON)
-            .catch(function ( error ) {
+            .catch(( error ) => {
                console.debug('Error fetching data');
                console.trace(error);
                throw error;
             });
       },
 
-      getFile: function ( url ) {
+      /**
+       * Makes an ajax request using Fetch (polyfill) library
+       * @param {String} url
+       * @returns {Promise}
+       */
+      getFile ( url ) {
          return fetch(url)
             .then(checkStatus)
-            .catch(function ( error ) {
+            .catch(( error ) => {
                console.debug('Error fetching file');
                console.trace(error);
                throw error;
             });
       },
 
-      setWidgetTrackingName: function ( name ) {
+      /**
+       * Sets widget tracking name variable
+       * @param name
+       */
+      setWidgetTrackingName ( name ) {
          this.widgetTrackingName = name;
       }
    };

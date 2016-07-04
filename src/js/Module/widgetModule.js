@@ -1,23 +1,29 @@
-CoreLibrary.widgetModule = (function () {
+CoreLibrary.widgetModule = (() => {
+   'use strict';
 
    var Module = Stapes.subclass();
 
    return {
       api: { // placeholders for when not running inside iframe
-         requestSetup: function () {
+         requestSetup () {
          },
-         request: function () {
+         request () {
          },
-         set: function () {
+         set () {
          },
-         remove: function () {
+         remove () {
          },
-         createUrl: function () {
+         createUrl () {
          }
       },
       events: new Module(),
       betslipIds: [],
-      handleResponse: function ( response ) {
+
+      /**
+       * Handles widget api response
+       * @param response
+       */
+      handleResponse ( response ) {
          switch ( response.type ) {
             case this.api.WIDGET_HEIGHT:
                // We've received a height response
@@ -89,11 +95,21 @@ CoreLibrary.widgetModule = (function () {
          }
       },
 
-      createUrl: function ( path, optionalRoot ) {
+      /**
+       * Creates url from given path and optionalRoot
+       * @param path
+       * @param optionalRoot
+       * @returns {*}
+       */
+      createUrl ( path, optionalRoot ) {
          return this.api.createUrl(path, optionalRoot);
       },
 
-      getPageType: function () {
+      /**
+       * Get page type
+       * @returns {*}
+       */
+      getPageType () {
          if ( !CoreLibrary.pageInfo.pageType ) {
             return '';
          }
@@ -109,19 +125,33 @@ CoreLibrary.widgetModule = (function () {
          }
       },
 
-      requestSetup: function ( callback ) {
+      /**
+       * Makes widget api request for setupdata
+       * @param callback
+       */
+      requestSetup ( callback ) {
          this.api.requestSetup(callback);
       },
 
-      requestWidgetHeight: function () {
+      /**
+       * Requests widget height from widget api
+       */
+      requestWidgetHeight () {
          this.api.request(this.api.WIDGET_HEIGHT);
       },
 
-      setWidgetHeight: function ( height ) {
+      /**
+       * Set widget api widget height
+       * @param height
+       */
+      setWidgetHeight ( height ) {
          this.api.set(this.api.WIDGET_HEIGHT, height);
       },
 
-      adaptWidgetHeight: function () {
+      /**
+       * tries to adapt the widget iframe height to match the content
+       */
+      adaptWidgetHeight () {
          // tries to adapt the widget iframe height to match the content
          var body = document.body,
             html = document.documentElement;
@@ -129,7 +159,11 @@ CoreLibrary.widgetModule = (function () {
          this.api.set(this.api.WIDGET_HEIGHT, height);
       },
 
-      enableWidgetTransition: function ( enableTransition ) {
+      /**
+       * Sets widget api widget transition state
+       * @param enableTransition
+       */
+      enableWidgetTransition ( enableTransition ) {
          if ( enableTransition ) {
             this.api.set(this.api.WIDGET_ENABLE_TRANSITION);
          } else {
@@ -137,31 +171,56 @@ CoreLibrary.widgetModule = (function () {
          }
       },
 
-      removeWidget: function () {
+      /**
+       * Call api to remove widget
+       */
+      removeWidget () {
          this.api.remove();
       },
 
-      navigateToLiveEvent: function ( eventId ) {
+      /**
+       * Widget api method for navigating to a live event
+       * @param eventId
+       */
+      navigateToLiveEvent ( eventId ) {
          this.navigateClient('event/live/' + eventId);
       },
 
-      navigateToEvent: function ( eventId ) {
+      /**
+       * Widget api method for navigating to a prelive event
+       * @param eventId
+       */
+      navigateToEvent ( eventId ) {
          this.navigateClient('event/' + eventId);
       },
 
-      navigateToFilter: function ( filterParams ) {
+      /**
+       * Widget api method for navigating to a filter
+       * @param filterParams
+       */
+      navigateToFilter ( filterParams ) {
          if ( typeof filterParams === 'string' &&
-               filterParams.indexOf('filter/') === -1) {
+            filterParams.indexOf('filter/') === -1 ) {
             filterParams = 'filter/' + filterParams;
          }
          this.navigateClient(filterParams);
       },
 
-      navigateToLiveEvents: function () {
+      /**
+       * Widget api method for navigating to a live events
+       */
+      navigateToLiveEvents () {
          this.navigateClient(['in-play']);
       },
 
-      addOutcomeToBetslip: function ( outcomes, stakes, updateMode, source ) {
+      /**
+       * Uses widget api to add outcomes to betslip
+       * @param outcomes
+       * @param stakes
+       * @param updateMode
+       * @param source
+       */
+      addOutcomeToBetslip ( outcomes, stakes, updateMode, source ) {
          var arrOutcomes = [];
          // Check if the outcomes parameter is an array and add it, otherwise add the the single value as an array
          if ( Array.isArray(outcomes) ) {
@@ -202,7 +261,11 @@ CoreLibrary.widgetModule = (function () {
          this.api.set(this.api.BETSLIP_OUTCOMES, data);
       },
 
-      removeOutcomeFromBetslip: function ( outcomes ) {
+      /**
+       * Removes outcomes from betslip via widget api
+       * @param outcomes
+       */
+      removeOutcomeFromBetslip ( outcomes ) {
          var arrOutcomes = [];
          if ( Array.isArray(outcomes) ) {
             arrOutcomes = outcomes;
@@ -219,43 +282,72 @@ CoreLibrary.widgetModule = (function () {
          this.api.set(this.api.BETSLIP_OUTCOMES_REMOVE, data);
       },
 
-      requestBetslipOutcomes: function () {
+      /**
+       * Widget api method for requesting betslip outcome
+       */
+      requestBetslipOutcomes () {
          this.api.request(this.api.BETSLIP_OUTCOMES);
       },
 
-      requestPageInfo: function () {
+      /**
+       * Widget api method for requesting page info
+       */
+      requestPageInfo () {
          this.api.request(this.api.PAGE_INFO);
       },
 
-      requestWidgetArgs: function () {
+      /**
+       * Widget api method for requesting widget args
+       */
+      requestWidgetArgs () {
          this.api.request(this.api.WIDGET_ARGS);
       },
 
-      requestClientConfig: function () {
+      /**
+       * Widget api method for requesting client config
+       */
+      requestClientConfig () {
          this.api.request(this.api.CLIENT_CONFIG);
       },
 
-      requestOddsFormat: function () {
+      /**
+       * Widget api method for requesting odds format
+       */
+      requestOddsFormat () {
          this.api.request(this.api.CLIENT_ODDS_FORMAT);
       },
 
-      requestOddsAsAmerican: function ( odds ) {
-         return new Promise(function ( resolve, reject ) {
-            this.api.requestOddsAsAmerican(odds, function ( americanOdds ) {
+      /**
+       * Widget api method for requesting american odds
+       * @param odds
+       * @returns {Promise}
+       */
+      requestOddsAsAmerican ( odds ) {
+         return new Promise(( resolve, reject ) => {
+            this.api.requestOddsAsAmerican(odds, ( americanOdds ) => {
                resolve(americanOdds);
             });
-         }.bind(this));
+         });
       },
 
-      requestOddsAsFractional: function ( odds ) {
-         return new Promise(function ( resolve, reject ) {
-            this.api.requestOddsAsFractional(odds, function ( fractionalOdds ) {
+      /**
+       * Widget api method for requesting fractional odds
+       * @param odds
+       * @returns {Promise}
+       */
+      requestOddsAsFractional ( odds ) {
+         return new Promise(( resolve, reject ) => {
+            this.api.requestOddsAsFractional(odds, ( fractionalOdds ) => {
                resolve(fractionalOdds);
             });
          });
       },
 
-      navigateClient: function ( destination ) {
+      /**
+       * Widget api method for navigating client to hash path
+       * @param destination
+       */
+      navigateClient ( destination ) {
          var finalTarget = '';
          if ( typeof destination === 'string' ) {
             finalTarget = '#' + CoreLibrary.config.routeRoot + destination;
