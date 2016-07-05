@@ -349,7 +349,11 @@ window.CoreLibrary = function () {
       browserVersion = getFirstMatch(/(?:firefox|iceweasel|fxios)[ \/](\d+(\.\d+)?)/i);
    }
 
-   document.body.classList.add('kw-' + browser);
+   if (browser == null) {
+      document.body.classList.add('kw-browser-other');
+   } else {
+      document.body.classList.add('kw-browser-' + browser);
+   }
 
    return {
       /**
@@ -657,12 +661,6 @@ window.CoreLibrary = function () {
        */
       htmlTemplate: null,
 
-      /**
-       * Same as htmlTemplate, but uses this value as a path to fetch an HTML file
-       * Do not use at the same time as htmlTemplate
-       */
-      htmlTemplateFile: null,
-
       constructor: function constructor(options) {
          var _this = this;
 
@@ -691,29 +689,11 @@ window.CoreLibrary = function () {
             }
          });
 
-         if (typeof this.htmlTemplate === 'string' && typeof this.htmlTemplateFile === 'string') {
-            throw new Error('Widget can not have htmlTemplate and htmlTemplateFile set at the same time');
-         }
          if (this.rootElement == null) {
             throw new Error('options.rootElement not set, please pass a HTMLElement or a CSS selector');
          }
 
          this.scope.args = this.defaultArgs;
-
-         var fetchHtmlPromise;
-         if (typeof this.htmlTemplateFile === 'string') {
-            fetchHtmlPromise = CoreLibrary.getFile(this.htmlTemplateFile).then(function (response) {
-               return response.text();
-            }).then(function (html) {
-               _this.htmlTemplate = html;
-               return _this.htmlTemplate;
-            });
-         } else {
-            // just resolve the promise
-            fetchHtmlPromise = new Promise(function (resolve) {
-               resolve();
-            });
-         }
 
          var coreLibraryPromise;
          if (CoreLibrary.apiReady === true) {
@@ -739,9 +719,7 @@ window.CoreLibrary = function () {
             });
          }
 
-         // fetches the component HTML in parallel with the Kambi API setup request
-         // decreasing load time
-         return Promise.all([coreLibraryPromise, fetchHtmlPromise]).then(function () {
+         return coreLibraryPromise.then(function () {
             if (typeof _this.rootElement === 'string') {
                _this.rootElement = document.querySelector(_this.rootElement);
             }
@@ -755,7 +733,11 @@ window.CoreLibrary = function () {
             }
 
             if (typeof _this.htmlTemplate === 'string') {
-               _this.rootElement.innerHTML = _this.htmlTemplate;
+               if (_this.htmlTemplate.length < 100 && window[_this.htmlTemplate] != null) {
+                  _this.rootElement.innerHTML = window[_this.htmlTemplate];
+               } else {
+                  _this.rootElement.innerHTML = _this.htmlTemplate;
+               }
             }
 
             _this.view = rivets.bind(_this.rootElement, _this.scope);

@@ -346,7 +346,11 @@ window.CoreLibrary = (() => {
       browserVersion = getFirstMatch(/(?:firefox|iceweasel|fxios)[ \/](\d+(\.\d+)?)/i);
    }
 
-   document.body.classList.add('kw-' + browser);
+   if ( browser == null ) {
+      document.body.classList.add('kw-browser-other');
+   } else {
+      document.body.classList.add('kw-browser-' + browser);
+   }
 
    return {
       /**
@@ -433,7 +437,8 @@ window.CoreLibrary = (() => {
                         // Apply the mock config data to the core
                         this.applySetupData(mockSetupData, setDefaultHeight);
                         if ( this.translationModule != null ) {
-                           this.translationModule.fetchTranslations(mockSetupData.clientConfig.locale)
+                           this.translationModule
+                              .fetchTranslations(mockSetupData.clientConfig.locale)
                               .then(() => {
                                  resolve(mockSetupData['arguments']);
                               });
@@ -465,9 +470,11 @@ window.CoreLibrary = (() => {
                         this.widgetModule.requestOddsFormat();
 
                         if ( this.translationModule != null ) {
-                           this.translationModule.fetchTranslations(setupData.clientConfig.locale).then(() => {
-                              resolve(setupData['arguments']);
-                           });
+                           this.translationModule
+                              .fetchTranslations(setupData.clientConfig.locale)
+                              .then(() => {
+                                 resolve(setupData['arguments']);
+                              });
                         } else {
                            resolve(setupData['arguments']);
                         }
