@@ -346,7 +346,11 @@ window.CoreLibrary = (() => {
       browserVersion = getFirstMatch(/(?:firefox|iceweasel|fxios)[ \/](\d+(\.\d+)?)/i);
    }
 
-   document.body.classList.add('kw-' + browser);
+   if (browser == null) {
+      document.body.classList.add('kw-browser-other');
+   } else {
+      document.body.classList.add('kw-browser-' + browser);
+   }
 
    return {
       /**
@@ -418,74 +422,74 @@ window.CoreLibrary = (() => {
        */
       init ( setDefaultHeight ) {
          return new Promise(( resolve, reject ) => {
-               if ( window.KambiWidget ) {
-                  // For development purposes we might want to load a widget on it's own so we check if we are in an iframe, if not then load some fake data
-                  if ( window.self === window.top ) {
-                     console.warn(window.location.host + window.location.pathname + ' is being loaded as stand-alone');
-                     // Load the mock config data
-                     fetch('mockSetupData.json')
-                        .then(checkStatus)
-                        .then(parseJSON)
-                        .then(( mockSetupData ) => {
-                              // Output some debug info that could be helpful
-                              console.debug('Loaded mock setup data');
-                              console.debug(mockSetupData);
-                              // Apply the mock config data to the core
-                              this.applySetupData(mockSetupData, setDefaultHeight);
-                              if ( this.translationModule != null ) {
-                                 this.translationModule.fetchTranslations(mockSetupData.clientConfig.locale).then(() => {
-                                       resolve(mockSetupData['arguments']);
-                                    }
-                                 );
-                              } else {
+            if ( window.KambiWidget ) {
+               // For development purposes we might want to load a widget on it's own so we check if we are in an iframe, if not then load some fake data
+               if ( window.self === window.top ) {
+                  console.warn(window.location.host + window.location.pathname + ' is being loaded as stand-alone');
+                  // Load the mock config data
+                  fetch('mockSetupData.json')
+                     .then(checkStatus)
+                     .then(parseJSON)
+                     .then(( mockSetupData ) => {
+                        // Output some debug info that could be helpful
+                        console.debug('Loaded mock setup data');
+                        console.debug(mockSetupData);
+                        // Apply the mock config data to the core
+                        this.applySetupData(mockSetupData, setDefaultHeight);
+                        if ( this.translationModule != null ) {
+                           this.translationModule
+                              .fetchTranslations(mockSetupData.clientConfig.locale)
+                              .then(() => {
                                  resolve(mockSetupData['arguments']);
-                              }
-                           }
-                        )
-                        .catch(( error ) => {
-                           console.debug('Request failed');
-                           console.trace(error);
-                           reject();
-                        });
-                  } else {
-                     window.KambiWidget.apiReady = ( api ) => {
-                        this.widgetModule.api = api;
-                        if ( api.VERSION !== this.expectedApiVersion ) {
-                           console.warn('Wrong Kambi API version loaded, expected: ' + this.expectedApiVersion + ' got: ' + api.VERSION);
+                              });
+                        } else {
+                           resolve(mockSetupData['arguments']);
                         }
-
-                        // Request the setup info from the widget api
-                        this.requestSetup(( setupData ) => {
-                           // Apply the config data to the core
-                           this.applySetupData(setupData, setDefaultHeight);
-
-                           // TODO: Move this to widgets so we don't request them when not needed
-                           // Request the outcomes from the betslip so we can update our widget, also sets up a subscription for future betslip updates
-                           this.widgetModule.requestBetslipOutcomes();
-                           // Request the odds format that is set in the sportsbook, this also sets up a subscription for future odds format changes
-                           this.widgetModule.requestOddsFormat();
-
-                           if ( this.translationModule != null ) {
-                              this.translationModule.fetchTranslations(setupData.clientConfig.locale).then(() => {
-                                    resolve(setupData['arguments']);
-                                 }
-                              );
-                           } else {
-                              resolve(setupData['arguments']);
-                           }
-                        });
-                     };
-                     // Setup the response handler for the widget api
-                     window.KambiWidget.receiveResponse = ( dataObject ) => {
-                        this.widgetModule.handleResponse(dataObject);
-                     };
-                  }
+                     }).catch(( error ) => {
+                        console.debug('Request failed');
+                        console.trace(error);
+                        reject();
+                     });
                } else {
-                  console.warn('Kambi widget API not loaded');
-                  reject();
+                  window.KambiWidget.apiReady = ( api ) => {
+                     this.widgetModule.api = api;
+                     if ( api.VERSION !== this.expectedApiVersion ) {
+                        console.warn('Wrong Kambi API version loaded, expected: ' + this.expectedApiVersion + ' got: ' + api.VERSION);
+                     }
+
+                     // Request the setup info from the widget api
+                     this.requestSetup(( setupData ) => {
+                        // Apply the config data to the core
+                        this.applySetupData(setupData, setDefaultHeight);
+
+                        // TODO: Move this to widgets so we don't request them when not needed
+                        // Request the outcomes from the betslip so we can update our widget, also sets up a subscription for future betslip updates
+                        this.widgetModule.requestBetslipOutcomes();
+                        // Request the odds format that is set in the sportsbook, this also sets up a subscription for future odds format changes
+                        this.widgetModule.requestOddsFormat();
+
+                        if ( this.translationModule != null ) {
+                           this.translationModule
+                              .fetchTranslations(setupData.clientConfig.locale)
+                              .then(() => {
+                                 resolve(setupData['arguments']);
+                              }
+                           );
+                        } else {
+                           resolve(setupData['arguments']);
+                        }
+                     });
+                  };
+                  // Setup the response handler for the widget api
+                  window.KambiWidget.receiveResponse = ( dataObject ) => {
+                     this.widgetModule.handleResponse(dataObject);
+                  };
                }
+            } else {
+               console.warn('Kambi widget API not loaded');
+               reject();
             }
-         );
+         });
       },
 
       /**
