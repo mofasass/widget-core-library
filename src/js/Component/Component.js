@@ -11,12 +11,6 @@
        */
       htmlTemplate: null,
 
-      /**
-       * Same as htmlTemplate, but uses this value as a path to fetch an HTML file
-       * Do not use at the same time as htmlTemplate
-       */
-      htmlTemplateFile: null,
-
       constructor ( options ) {
          /** object to be used in the HTML templates for data binding */
          this.scope = {};
@@ -43,31 +37,11 @@
             }
          });
 
-         if ( typeof this.htmlTemplate === 'string' && typeof this.htmlTemplateFile === 'string' ) {
-            throw new Error('Widget can not have htmlTemplate and htmlTemplateFile set at the same time');
-         }
          if ( this.rootElement == null ) {
             throw new Error('options.rootElement not set, please pass a HTMLElement or a CSS selector');
          }
 
          this.scope.args = this.defaultArgs;
-
-         var fetchHtmlPromise;
-         if ( typeof this.htmlTemplateFile === 'string' ) {
-            fetchHtmlPromise = CoreLibrary.getFile(this.htmlTemplateFile)
-               .then(( response ) => {
-                  return response.text();
-               })
-               .then(( html ) => {
-                  this.htmlTemplate = html;
-                  return this.htmlTemplate;
-               });
-         } else {
-            // just resolve the promise
-            fetchHtmlPromise = new Promise(( resolve ) => {
-               resolve();
-            });
-         }
 
          var coreLibraryPromise;
          if ( CoreLibrary.apiReady === true ) {
@@ -100,9 +74,7 @@
             });
          }
 
-         // fetches the component HTML in parallel with the Kambi API setup request
-         // decreasing load time
-         return Promise.all([coreLibraryPromise, fetchHtmlPromise])
+         return coreLibraryPromise
             .then(() => {
                if ( typeof this.rootElement === 'string' ) {
                   this.rootElement = document.querySelector(this.rootElement);
@@ -117,7 +89,11 @@
                }
 
                if ( typeof this.htmlTemplate === 'string' ) {
-                  this.rootElement.innerHTML = this.htmlTemplate;
+                  if (this.htmlTemplate.length < 100 && window[this.htmlTemplate] != null) {
+                     this.rootElement.innerHTML = window[this.htmlTemplate];
+                  } else {
+                     this.rootElement.innerHTML = this.htmlTemplate;
+                  }
                }
 
                this.view = rivets.bind(this.rootElement, this.scope);
