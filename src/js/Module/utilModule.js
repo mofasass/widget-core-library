@@ -30,7 +30,7 @@ window.CoreLibrary.utilModule = (() => {
 
       /**
        * Get decimal formatted odds.
-       * @param {number} odds
+       * @param {number} odds Odds number
        * @returns {number}
        */
       getOddsDecimalValue ( odds ) {

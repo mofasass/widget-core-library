@@ -8,14 +8,16 @@ window.CoreLibrary.statisticsModule = (() => {
    return {
 
       /**
-       * Configurations
+       * Configuration.
+       * @type {Object} config
+       * @type {String} config.baseApiUrl
        */
       config: {
          baseApiUrl: 'https://api.kambi.com/statistics/api/'
       },
 
       /**
-       * Requests statistics data from api
+       * Requests statistics data from api.
        * @param {String} type
        * @param {string} filter
        * @returns {*|Promise}
