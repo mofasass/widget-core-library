@@ -1,5 +1,5 @@
 /**
- * @module Component 
+ * @module Component
  * @memberOf CoreLibrary
  */
 (() => {

@@ -651,7 +651,7 @@ window.CoreLibrary = (() => {
          this.args = args;
       },
 
-      /** 
+      /**
        * Requests setup data from widgetModule.
        * @memberOf module:CoreLibrary
        * @param {function} callback
