@@ -1,7 +1,6 @@
 /**
  * @module translationModule
  * @memberOf CoreLibrary
- * @type {{i18nStrings, fetchTranslations, getTranslation}}
  */
 window.CoreLibrary.translationModule = (() => {
    'use strict';

@@ -1,7 +1,6 @@
 /**
  * @module utilModule
  * @memberOf CoreLibrary
- * @type {{diffArray, getOddsDecimalValue, getOutcomeLabel}}
  */
 window.CoreLibrary.utilModule = (() => {
    'use strict';

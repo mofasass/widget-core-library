@@ -1,7 +1,6 @@
 /**
  * @module statisticsModule
  * @memberOf CoreLibrary
- * @type {{config, getStatistics}}
  */
 window.CoreLibrary.statisticsModule = (() => {
    'use strict';
