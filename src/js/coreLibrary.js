@@ -1,8 +1,13 @@
+/**
+ * @module CoreLibrary
+ */
+
 window.CoreLibrary = (() => {
    'use strict';
 
    /**
-    * Rivets "===" formatter
+    * Check if v1 and v2 are "strict" equal.
+    * @mixin "==="
     * @param v1
     * @param v2
     * @returns {boolean}
@@ -12,7 +17,8 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Rivets "==" formatter
+    * Check if v1 and v2 are equal.
+    * @mixin "=="
     * @param v1
     * @param v2
     * @returns {boolean}
@@ -22,7 +28,8 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Rivets ">=" formatter
+    * Check if v1 is greater or equal than v2.
+    * @mixin ">="
     * @param v1
     * @param v2
     * @returns {boolean}
@@ -32,7 +39,8 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Rivets ">" formatter
+    * Check if v1 is greater than v2.
+    * @mixin ">"
     * @param v1
     * @param v2
     * @returns {boolean}
@@ -42,7 +50,8 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Rivets "<=" formatter
+    * Check if v1 is less or equal than v2.
+    * @mixin "<="
     * @param v1
     * @param v2
     * @returns {boolean}
@@ -52,7 +61,8 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Rivets "<" formatter
+    * Check if v1 is less than v2.
+    * @mixin "<"
     * @param v1
     * @param v2
     * @returns {boolean}
@@ -62,7 +72,8 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Rivets "!=" formatter
+    * Check if v1 is not equal to v2.
+    * @mixin "!="
     * @param v1
     * @param v2
     * @returns {boolean}
@@ -72,7 +83,8 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Rivets "!==" formatter
+    * Check if v1 is not equal value/type to v2.
+    * @mixin "!=="
     * @param v1
     * @param v2
     * @returns {boolean}
@@ -82,7 +94,8 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Rivets "and" formatter
+    * Check if v1 and v2 are valid.
+    * @mixin "and"
     * @param v1
     * @param v2
     * @returns {boolean}
@@ -92,7 +105,8 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Rivets "or" formatter
+    * Check if v1 or v2 are valid.
+    * @mixin "or"
     * @param v1
     * @param v2
     * @returns {boolean}
@@ -102,7 +116,8 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Rivets "not" formatter
+    * Check if v1 is not false.
+    * @mixin "not"
     * @param v1
     * @returns {boolean}
     */
@@ -111,7 +126,8 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Rivets "-" formatter
+    * Subtract v2 from v1.
+    * @mixin "-"
     * @param v1
     * @param v2
     * @returns {Number}
@@ -121,7 +137,8 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Rivets "+" formatter
+    * Sum v1 and v2.
+    * @mixin "+"
     * @param v1
     * @param v2
     * @returns {boolean}
@@ -131,7 +148,8 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Rivets "*" formatter
+    * Multiply v1 by v2.
+    * @mixin "*"
     * @param v1
     * @param v2
     * @returns {Number}
@@ -141,7 +159,8 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Rivets "/" formatter
+    * Divide v1 by v2.
+    * @mixin "/"
     * @param v1
     * @param v2
     * @returns {Number}
@@ -151,7 +170,8 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Rivets "?" formatter
+    * Check if v1 is valid, otherwise use v2.
+    * @mixin ">"
     * @param v1
     * @param v2
     * @returns {boolean}
@@ -161,7 +181,8 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Returns specified object at specified key for specified array index
+    * Returns specified object at specified key for specified array index.
+    * @mixin "array_at"
     * @param arr The source array
     * @param index The desired index from given array
     * @param key The desired key of the object to be returned
@@ -172,7 +193,8 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Returns an array of objects where each objects contains key and value properties based on the passed array
+    * Returns an array of objects where each objects contains key and value properties based on the passed array.
+    * @mixin "property_list"
     * @param {Object} obj The source object
     * @returns {Array}
     */
@@ -189,7 +211,10 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Custom style binder
+    * Custom style binder.
+    * @example
+    * <div rv-style-opacity="1">
+    * @mixin "style-*"
     * @param el
     * @param value
     */
@@ -199,9 +224,13 @@ window.CoreLibrary = (() => {
 
    /**
     * Cloaking waits for element to bind and then sets it visible with a slight delay.
+    *
     * Can listen to a value and apply the opacity after that value has changed
     * Usage: rv-cloak or rv-cloak="value"
     * In promise resolution, add something like this.scope.loaded = true
+    * @example
+    * <div rv-cloak> or <div rv-cloak="value">
+    * @mixin "cloak"
     * @type {{priority: number, bind: rivets.binders.cloak.bind}}
     */
    rivets.binders['cloak'] = {
@@ -219,10 +248,10 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Binder that adds animation class
+    * Binder that adds animation class.
     *
-    * Used in DOM as <div rv-anim-stagger="index"></div>
-    *
+    * @example <div rv-anim-stagger="index"></div>
+    * @mixin "anim-stagger"
     * @param el DOM element to apply classes
     * @param index List item index
     */
@@ -248,11 +277,11 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Binder to temporarily disable the stagger animation
-    *
-    * Used in DOM as <div rv-anim-disable="event.disableAnimation" rv-anim-stagger="index" ></div>
+    * Binder to temporarily disable the stagger animation.
     * IMPORTANT: The rv-anim-disable attribute has to be placed before the binder that provides the animation for it to take effect in the animation binder
-    *
+    * @example
+    * <div rv-anim-disable="event.disableAnimation" rv-anim-stagger="index">
+    * @mixin "anim-disable"
     * @param el Dom element to disable the animation on
     * @param animationDisable 'true' to disable animations
     */
@@ -261,10 +290,9 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Binder to toggle a custom class based on the passed property, picks up the class name form the "rv-toggle-class" attribute
-    *
-    * Used in DOM as <div rv-custom-class="myBoolean" rv-toggle-class="myCustomClass" ></div>
-    *
+    * @description Binder to toggle a custom class based on the passed property, picks up the class name form the "rv-toggle-class" attribute.
+    * @example <div rv-custom-class="myBoolean" rv-toggle-class="myCustomClass">
+    * @mixin "custom-class"
     * @param el DOM element to apply class to
     * @param property The property to check
     */
@@ -279,7 +307,11 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Checks the HTTP status of a response
+    * Checks the HTTP status of a response.
+    * @memberOf module:CoreLibrary
+    * @private
+    * @param {Object} response
+    * @returns {*}
     */
    function checkStatus ( response ) {
       if ( response.status >= 200 && response.status < 300 ) {
@@ -292,19 +324,23 @@ window.CoreLibrary = (() => {
    }
 
    /**
-    * Parses the response as json
+    * Parses the response as json.
+    * @memberOf module:CoreLibrary
+    * @private
+    * @param response
+    * @returns {*}
     */
    function parseJSON ( response ) {
       return response.json();
    }
 
    /**
-    * Assign adapters
+    * Assign adapters.
     */
    sightglass.adapters = rivets.adapters;
 
    /**
-    * Set Sightglass root adapter
+    * Set Sightglass root adapter.
     * @type {string}
     */
    sightglass.root = '.';
@@ -354,19 +390,51 @@ window.CoreLibrary = (() => {
 
    return {
       /**
-       * Expected api version is replaced with the API version number during the compilation step
+       * Expected api version is replaced with the API version number during the compilation step.
+       * @memberOf module:CoreLibrary
        */
       browser: browser,
+      /**
+       * Browser version.
+       * @memberOf module:CoreLibrary
+       */
       browserVersion: browserVersion,
       expectedApiVersion: '{{expectedApiVersion}}', // this value is replaced with the API version number during the compilation step
-      development: false,
-      utilModule: null,
-      widgetModule: null,
-      offeringModule: null,
-      statisticsModule: null,
-      apiReady: false, // this value is set to true once the kambi API has finished loaded
       /**
-       * config object
+       * Development flag.
+       * @memberOf module:CoreLibrary
+       */
+      development: false,
+      /**
+       * utilModule.
+       * @memberOf module:CoreLibrary
+       */
+      utilModule: null,
+      /**
+       * widgetModule.
+       * @memberOf module:CoreLibrary
+       */
+      widgetModule: null,
+      /**
+       * offeringModule.
+       * @memberOf module:CoreLibrary
+       */
+      offeringModule: null,
+      /**
+       * statisticsModule.
+       * @memberOf module:CoreLibrary
+       */
+      statisticsModule: null,
+      /**
+       * Api ready flag.
+       * This value is set to true once the kambi API has finished loaded
+       * @memberOf module:CoreLibrary
+       */
+      apiReady: false, // this value is set to true once the kambi API has finished loaded
+
+      /**
+       * Config object.
+       * @memberOf module:CoreLibrary
        */
       config: {
          apiBaseUrl: '',
@@ -384,12 +452,16 @@ window.CoreLibrary = (() => {
          client_id: 2,
          version: 'v2'
       },
+
       /**
-       * Default height: 450
+       * Default height: 450.
+       * @memberOf module:CoreLibrary
        */
       height: 450,
+
       /**
-       * Page info
+       * Page info.
+       * @memberOf module:CoreLibrary
        */
       pageInfo: {
          leaguePaths: [],
@@ -397,27 +469,34 @@ window.CoreLibrary = (() => {
          pageTrackingPath: '',
          pageType: ''
       },
+
       /**
-       * api versions object
+       * api versions object.
+       * @memberOf module:CoreLibrary
        */
       apiVersions: {
          client: '',
          libs: '',
          wapi: ''
       },
+
       /**
-       * widget tracking name is null by default
+       * widget tracking name is null by default.
+       * @memberOf module:CoreLibrary
        */
       widgetTrackingName: null,
+
       /**
-       * args object for each component
+       * args object for each component.
+       * @memberOf module:CoreLibrary
        */
       args: {},
 
       /**
-       * Method that initializes on component construct, sets widget configurations
+       * Method that initializes on component construct, sets widget configurations.
        * Can load mock data if not loaded in an iframe.
        * @param setDefaultHeight
+       * @memberOf module:CoreLibrary
        * @returns {Promise}
        */
       init ( setDefaultHeight ) {
@@ -493,9 +572,10 @@ window.CoreLibrary = (() => {
       },
 
       /**
-       * Applies setup data to current component
-       * @param setupData
-       * @param setDefaultHeight
+       * Applies setup data to current component.
+       * @memberOf module:CoreLibrary
+       * @param {Object} setupData Setup data object
+       * @param {boolean} setDefaultHeight Default height value
        */
       applySetupData ( setupData, setDefaultHeight ) {
 
@@ -517,8 +597,9 @@ window.CoreLibrary = (() => {
       },
 
       /**
-       * Set config object of CoreLibrary
-       * @param {Object} config
+       * Set config object of CoreLibrary.
+       * @memberOf module:CoreLibrary
+       * @param {Object} config Config object to be set
        */
       setConfig ( config ) {
          for ( var i in config ) {
@@ -536,8 +617,9 @@ window.CoreLibrary = (() => {
       },
 
       /**
-       * Sets page info
-       * @param {Object} pageInfo
+       * Sets page info.
+       * @memberOf module:CoreLibrary
+       * @param {Object} pageInfo pageinfo object we receive from api
        */
       setPageInfo ( pageInfo ) {
          // Check if the last character in the pageParam property is a slash, if not add it so we can use this property in filter requests
@@ -548,7 +630,8 @@ window.CoreLibrary = (() => {
       },
 
       /**
-       * Sets versions
+       * Sets versions.
+       * @memberOf module:CoreLibrary
        * @param {Object} versions
        */
       setVersions ( versions ) {
@@ -560,39 +643,44 @@ window.CoreLibrary = (() => {
       },
 
       /**
-       * Set args object
+       * Set args object.
+       * @memberOf module:CoreLibrary
        * @param {Object} args
        */
       setArgs ( args ) {
          this.args = args;
       },
 
-      /**
-       * Requests setup data from widgetModule
-       * @param callback
+      /** 
+       * Requests setup data from widgetModule.
+       * @memberOf module:CoreLibrary
+       * @param {function} callback
        */
       requestSetup ( callback ) {
          this.widgetModule.requestSetup(callback);
       },
 
       /**
-       * Logs the response
-       * @param response
+       * Logs the response.
+       * @memberOf module:CoreLibrary
+       * @param {Object} response
        */
       receiveRespone ( response ) {
          console.debug(response);
       },
 
       /**
-       * Sets odds format
-       * @param oddsFormat
+       * Sets odds format.
+       * @memberOf module:CoreLibrary
+       * @param {*} oddsFormat
        */
       setOddsFormat ( oddsFormat ) {
          this.config.oddsFormat = oddsFormat;
       },
 
       /**
-       * Sets widget height
+       * Sets widget height.
+       * @memberOf module:CoreLibrary
        * @param {Number} height
        */
       setHeight ( height ) {
@@ -601,7 +689,8 @@ window.CoreLibrary = (() => {
       },
 
       /**
-       * Makes an request using Fetch (polyfill) library
+       * Makes an request using Fetch (polyfill) library.
+       * @memberOf module:CoreLibrary
        * @param {String} url
        * @returns {Promise}
        */
@@ -617,7 +706,8 @@ window.CoreLibrary = (() => {
       },
 
       /**
-       * Makes an ajax request using Fetch (polyfill) library
+       * Makes an ajax request using Fetch (polyfill) library.
+       * @memberOf module:CoreLibrary
        * @param {String} url
        * @returns {Promise}
        */
@@ -632,8 +722,9 @@ window.CoreLibrary = (() => {
       },
 
       /**
-       * Sets widget tracking name variable
-       * @param name
+       * Sets widget tracking name variable.
+       * @memberOf module:CoreLibrary
+       * @param {String} name Set a tracking name
        */
       setWidgetTrackingName ( name ) {
          this.widgetTrackingName = name;

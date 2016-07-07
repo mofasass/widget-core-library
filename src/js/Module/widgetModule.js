@@ -1,4 +1,9 @@
-CoreLibrary.widgetModule = (() => {
+/**
+ * @module widgetModule
+ * @memberOf CoreLibrary
+ * @type {{api, events, betslipIds, handleResponse, createUrl, getPageType, requestSetup, requestWidgetHeight, setWidgetHeight, adaptWidgetHeight, enableWidgetTransition, removeWidget, navigateToLiveEvent, navigateToEvent, navigateToFilter, navigateToLiveEvents, addOutcomeToBetslip, removeOutcomeFromBetslip, requestBetslipOutcomes, requestPageInfo, requestWidgetArgs, requestClientConfig, requestOddsFormat, requestOddsAsAmerican, requestOddsAsFractional, navigateClient}}
+ */
+window.CoreLibrary.widgetModule = (() => {
    'use strict';
 
    var Module = Stapes.subclass();
@@ -21,7 +26,7 @@ CoreLibrary.widgetModule = (() => {
 
       /**
        * Handles widget api response
-       * @param response
+       * @param {Object} response
        */
       handleResponse ( response ) {
          switch ( response.type ) {
@@ -97,8 +102,8 @@ CoreLibrary.widgetModule = (() => {
 
       /**
        * Creates url from given path and optionalRoot
-       * @param path
-       * @param optionalRoot
+       * @param {String} path
+       * @param {String} optionalRoot
        * @returns {*}
        */
       createUrl ( path, optionalRoot ) {
@@ -127,7 +132,7 @@ CoreLibrary.widgetModule = (() => {
 
       /**
        * Makes widget api request for setupdata
-       * @param callback
+       * @param {fn} callback Callback
        */
       requestSetup ( callback ) {
          this.api.requestSetup(callback);
@@ -142,7 +147,7 @@ CoreLibrary.widgetModule = (() => {
 
       /**
        * Set widget api widget height
-       * @param height
+       * @param {Number} height
        */
       setWidgetHeight ( height ) {
          this.api.set(this.api.WIDGET_HEIGHT, height);
@@ -161,7 +166,7 @@ CoreLibrary.widgetModule = (() => {
 
       /**
        * Sets widget api widget transition state
-       * @param enableTransition
+       * @param {boolean} enableTransition
        */
       enableWidgetTransition ( enableTransition ) {
          if ( enableTransition ) {
@@ -180,7 +185,7 @@ CoreLibrary.widgetModule = (() => {
 
       /**
        * Widget api method for navigating to a live event
-       * @param eventId
+       * @param {number} eventId
        */
       navigateToLiveEvent ( eventId ) {
          this.navigateClient('event/live/' + eventId);
@@ -188,7 +193,7 @@ CoreLibrary.widgetModule = (() => {
 
       /**
        * Widget api method for navigating to a prelive event
-       * @param eventId
+       * @param {number} eventId
        */
       navigateToEvent ( eventId ) {
          this.navigateClient('event/' + eventId);
@@ -196,7 +201,7 @@ CoreLibrary.widgetModule = (() => {
 
       /**
        * Widget api method for navigating to a filter
-       * @param filterParams
+       * @param {String} filterParams
        */
       navigateToFilter ( filterParams ) {
          if ( typeof filterParams === 'string' &&
@@ -215,10 +220,10 @@ CoreLibrary.widgetModule = (() => {
 
       /**
        * Uses widget api to add outcomes to betslip
-       * @param outcomes
-       * @param stakes
-       * @param updateMode
-       * @param source
+       * @param {Array|Object} outcomes
+       * @param {Array|Object} stakes
+       * @param {String} updateMode
+       * @param {String} source
        */
       addOutcomeToBetslip ( outcomes, stakes, updateMode, source ) {
          var arrOutcomes = [];
@@ -263,7 +268,7 @@ CoreLibrary.widgetModule = (() => {
 
       /**
        * Removes outcomes from betslip via widget api
-       * @param outcomes
+       * @param {Array|Object} outcomes
        */
       removeOutcomeFromBetslip ( outcomes ) {
          var arrOutcomes = [];
@@ -345,7 +350,7 @@ CoreLibrary.widgetModule = (() => {
 
       /**
        * Widget api method for navigating client to hash path
-       * @param destination
+       * @param {String|Array} destination
        */
       navigateClient ( destination ) {
          var finalTarget = '';

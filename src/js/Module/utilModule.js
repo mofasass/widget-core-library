@@ -1,3 +1,8 @@
+/**
+ * @module utilModule
+ * @memberOf CoreLibrary
+ * @type {{diffArray, getOddsDecimalValue, getOutcomeLabel}}
+ */
 window.CoreLibrary.utilModule = (() => {
    'use strict';
 
@@ -41,8 +46,8 @@ window.CoreLibrary.utilModule = (() => {
 
       /**
        * Returns the outcome label translated
-       * @param outcome
-       * @param event
+       * @param {Object} outcome
+       * @param {Object} event
        * @returns {string}
        */
       getOutcomeLabel ( outcome, event ) {

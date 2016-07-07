@@ -1,21 +1,49 @@
-CoreLibrary.offeringModule = (function () {
+/**
+ * @module offeringModule
+ * @memberOf CoreLibrary
+ * @type {{getGroupEvents, getEventsByFilter, adaptV2BetOffer, adaptV2LiveData, adaptV2Event, getLiveEventData, getLiveEvents, getLiveEvent, getLiveEventsByFilter, getEvent, getEventBetoffers, doRequest}}
+ */
+window.CoreLibrary.offeringModule = (() => {
    'use strict';
 
    return {
+
+      /**
+       * Get group events
+       * @param groupId
+       * @returns {*|Promise}
+       */
       getGroupEvents ( groupId ) {
          var requesPath = '/event/group/' + groupId + '.json';
          return this.doRequest(requesPath);
       },
+
+      /**
+       * Get events by filter
+       * @param filter
+       * @param params
+       * @returns {Promise}
+       */
       getEventsByFilter ( filter, params ) {
          // Todo: Update this method once documentation is available
          var requestPath = '/listView/' + filter;
          return this.doRequest(requestPath, params, 'v3');
       },
+
+      /**
+       * Normalizes v2 api betoffers
+       * @param betOffer
+       */
       adaptV2BetOffer ( betOffer ) {
          if ( betOffer.suspended === true ) {
             betOffer.open = false;
          }
       },
+
+      /**
+       * Normalizes the v2 api response
+       * @param liveData
+       */
       adaptV2LiveData ( liveData ) {
          if ( liveData != null && liveData.statistics != null ) {
             var statistics = liveData.statistics;
@@ -30,10 +58,17 @@ CoreLibrary.offeringModule = (function () {
             }
          }
       },
+
       adaptV2Event ( event ) {
          // v3 and v2 event objects are almost the same
          // only a few attributes we don't are different
       },
+
+      /**
+       * Get live event data only, eg: match statistics, score, macthClock
+       * @param eventId
+       * @returns {Promise}
+       */
       getLiveEventData ( eventId ) {
          var requestPath = '/event/' + eventId + '/livedata.json';
          return this.doRequest(requestPath, null, null, true)
@@ -42,6 +77,11 @@ CoreLibrary.offeringModule = (function () {
                return res;
             });
       },
+
+      /**
+       * Get all live events
+       * @returns {Promise}
+       */
       getLiveEvents () {
          var requestPath = '/event/live/open.json';
          return this.doRequest(requestPath, null, null, true)
@@ -66,6 +106,12 @@ CoreLibrary.offeringModule = (function () {
                return res;
             });
       },
+
+      /**
+       * Returns a live event
+       * @param eventId
+       * @returns {Promise}
+       */
       getLiveEvent ( eventId ) {
          var requestPath = '/betoffer/live/event/' + eventId + '.json';
          return this.doRequest(requestPath, null, null, true)
@@ -79,6 +125,12 @@ CoreLibrary.offeringModule = (function () {
                return res;
             });
       },
+
+      /**
+       * Get live events by filter
+       * @param filter
+       * @returns {Promise}
+       */
       getLiveEventsByFilter ( filter ) {
          // Todo: implement a filter request when the offering API supports it
          filter = filter.replace(/\/$/, '');
@@ -115,13 +167,34 @@ CoreLibrary.offeringModule = (function () {
 
          return liveEventsPromise;
       },
+
+      /**
+       * Requests and event from api
+       * @param eventId
+       * @returns {Promise}
+       */
       getEvent ( eventId ) {
          return this.doRequest('/betoffer/event/' + eventId + '.json');
       },
+
+      /**
+       * @deprecated
+       * @param eventId
+       * @returns {*}
+       */
       getEventBetoffers ( eventId ) {
          console.warn('getEventBetoffers is deprecated, use getEvent instead');
          return this.getEvent.apply(this, arguments);
       },
+
+      /**
+       * Makes a request to provided path
+       * @param requestPath
+       * @param params
+       * @param version
+       * @param noCache
+       * @returns {Promise}
+       */
       doRequest ( requestPath, params, version, noCache ) {
          if ( CoreLibrary.config.offering == null ) {
             console.warn('The offering has not been set, is the right widget api version loaded?');

@@ -1,11 +1,27 @@
-CoreLibrary.statisticsModule = (function () {
+/**
+ * @module statisticsModule
+ * @memberOf CoreLibrary
+ * @type {{config, getStatistics}}
+ */
+window.CoreLibrary.statisticsModule = (() => {
    'use strict';
 
    return {
+
+      /**
+       * Configurations
+       */
       config: {
          baseApiUrl: 'https://api.kambi.com/statistics/api/'
       },
-      getStatistics: function ( type, filter ) {
+
+      /**
+       * Requests statistics data from api
+       * @param {String} type
+       * @param {string} filter
+       * @returns {*|Promise}
+       */
+      getStatistics ( type, filter ) {
          // Remove url parameters from filter
          filter = filter.match(/[^?]*/)[0];
 

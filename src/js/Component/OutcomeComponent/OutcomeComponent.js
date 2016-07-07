@@ -1,6 +1,16 @@
-(function () {
+/**
+ * @module OutcomeComponent
+ */
+(() => {
+   'use strict';
 
-   rivets.binders['outcome-suspended'] = function ( el, property ) {
+   /**
+    * Outcome suspended binder
+    * @mixin outcome-suspended
+    * @param el
+    * @param property
+    */
+   rivets.binders['outcome-suspended'] = ( el, property ) => {
       var cssClass = 'KambiWidget-outcome--suspended';
       if ( property === true ) {
          el.classList.add(cssClass);
@@ -9,7 +19,13 @@
       }
    };
 
-   rivets.binders['outcome-selected'] = function ( el, property ) {
+   /**
+    * Outcome selected binder
+    * @mixin outcome-selected
+    * @param el
+    * @param property
+    */
+   rivets.binders['outcome-selected'] = ( el, property ) => {
       var cssClass = 'KambiWidget-outcome--selected';
 
       if ( property === true ) {
@@ -19,13 +35,18 @@
       }
    };
 
+   /**
+    * Outcome view controller
+    * @param {object} attributes
+    * @constructor
+    */
    var OutcomeViewController = function ( attributes ) {
       this.data = attributes;
       this.selected = false;
       this.label = '';
       this.coreLibraryConfig = CoreLibrary.config;
 
-      if ( this.data.eventAttr != null && this.data.eventAttr.betOffers != null) {
+      if ( this.data.eventAttr != null && this.data.eventAttr.betOffers != null ) {
          this.betOffer = this.data.eventAttr.betOffers.filter(( betOffer ) => {
             if ( betOffer.id === this.data.outcomeAttr.betOfferId ) {
                return true;
@@ -47,7 +68,12 @@
          });
       }
 
-      this.toggleOutcome = function ( event, scope ) {
+      /**
+       * Toggle outcomes
+       * @param event
+       * @param scope
+       */
+      this.toggleOutcome = ( event, scope ) => {
          if ( scope.selected === false ) {
             CoreLibrary.widgetModule.addOutcomeToBetslip(scope.data.outcomeAttr.id);
          } else {
@@ -55,8 +81,12 @@
          }
       };
 
-      this.getLabel = function () {
-         if (this.data.customLabel) {
+      /**
+       * Returns label
+       * If data contains 'customLabel' it will return that custom value
+       */
+      this.getLabel = () => {
+         if ( this.data.customLabel ) {
             return this.data.customLabel;
          }
 
@@ -69,7 +99,11 @@
          }
       };
 
-      this.getOddsFormat = function () {
+      /**
+       * Returns Odds format
+       * @returns {*}
+       */
+      this.getOddsFormat = () => {
          switch ( this.coreLibraryConfig.oddsFormat ) {
             case 'fractional':
                return this.data.outcomeAttr.oddsFractional;
@@ -81,36 +115,54 @@
       };
    };
 
+   /**
+    * Outcome component
+    * @mixin outcome-component
+    * @type {{template: (function()), initialize: (function(*, *=))}}
+    */
    rivets.components['outcome-component'] = {
-      template: function () {
+
+      /**
+       * Returns the template
+       * @memberOf module:OutcomeComponent#
+       * @returns {string}
+       */
+      template () {
          return `
-<button
-      rv-on-click="toggleOutcome"
-      rv-disabled="betOffer.suspended | == true"
-      rv-outcome-selected="selected"
-      rv-outcome-suspended="betOffer.suspended"
-      type="button"
-      role="button"
-      class="KambiWidget-outcome kw-link l-flex-1 l-ml-6">
-   <div class="KambiWidget-outcome__flexwrap">
-      <div class="KambiWidget-outcome__label-wrapper">
-         <span
-               class="KambiWidget-outcome__label"
-               rv-text="getLabel < data.outcomeAttr.odds data.eventAttr">
-         </span>
-         <span class="KambiWidget-outcome__line"></span>
-      </div>
-   <div class="KambiWidget-outcome__odds-wrapper">
-      <span
-            class="KambiWidget-outcome__odds"
-            rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat">
-      </span>
-   </div>
-</button>
+            <button
+                  rv-on-click="toggleOutcome"
+                  rv-disabled="betOffer.suspended | == true"
+                  rv-outcome-selected="selected"
+                  rv-outcome-suspended="betOffer.suspended"
+                  type="button"
+                  role="button"
+                  class="KambiWidget-outcome kw-link l-flex-1 l-ml-6">
+               <div class="KambiWidget-outcome__flexwrap">
+                  <div class="KambiWidget-outcome__label-wrapper">
+                     <span
+                           class="KambiWidget-outcome__label"
+                           rv-text="getLabel < data.outcomeAttr.odds data.eventAttr">
+                     </span>
+                     <span class="KambiWidget-outcome__line"></span>
+                  </div>
+               <div class="KambiWidget-outcome__odds-wrapper">
+                  <span
+                        class="KambiWidget-outcome__odds"
+                        rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat">
+                  </span>
+               </div>
+            </button>
          `;
       },
 
-      initialize: function ( el, attributes ) {
+      /**
+       * Initialize
+       * @memberOf module:OutcomeComponent#
+       * @param el
+       * @param attributes
+       * @returns {*}
+       */
+      initialize ( el, attributes ) {
          if ( attributes.outcomeAttr == null ) {
             return false;
          }
@@ -120,27 +172,45 @@
       }
    };
 
+   /**
+    * Outcome component without label
+    * @mixin outcome-component-no-label
+    * @type {{template: (function()), initialize: (function(*, *=))}}
+    */
    rivets.components['outcome-component-no-label'] = {
-      template: function () {
+
+      /**
+       * Template outcome-component-no-label
+       * @memberOf module:OutcomeComponent#
+       * @returns {string}
+       */
+      template () {
          return `
-<button
-      rv-on-click="toggleOutcome"
-      rv-disabled="betOffer.suspended | == true"
-      rv-outcome-selected="selected"
-      rv-outcome-suspended="betOffer.suspended"
-      type="button"
-      role="button"
-      class="KambiWidget-outcome kw-link l-ml-6">
-   <div class="l-flexbox l-pack-center">
-      <div class="KambiWidget-outcome__odds-wrapper">
-         <span class="KambiWidget-outcome__odds" rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat" ></span>
-      </div>
-   </div>
-</button>
+            <button
+                  rv-on-click="toggleOutcome"
+                  rv-disabled="betOffer.suspended | == true"
+                  rv-outcome-selected="selected"
+                  rv-outcome-suspended="betOffer.suspended"
+                  type="button"
+                  role="button"
+                  class="KambiWidget-outcome kw-link l-ml-6">
+               <div class="l-flexbox l-pack-center">
+                  <div class="KambiWidget-outcome__odds-wrapper">
+                     <span class="KambiWidget-outcome__odds" rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat" ></span>
+                  </div>
+               </div>
+            </button>
          `;
       },
 
-      initialize: function ( el, attributes ) {
+      /**
+       * Initialize outcome-component-no-label
+       * @memberOf module:OutcomeComponent#
+       * @param el
+       * @param attributes
+       * @returns {OutcomeViewController}
+       */
+      initialize ( el, attributes ) {
          return new OutcomeViewController(attributes);
       }
    };

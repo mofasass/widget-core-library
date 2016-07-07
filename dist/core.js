@@ -1,5 +1,6 @@
 'use strict';
 
+/** @namespace */
 window.CoreLibrary = function () {
    'use strict';
 
@@ -283,6 +284,8 @@ window.CoreLibrary = function () {
 
    /**
     * Checks the HTTP status of a response
+    * @param response
+    * @returns {*}
     */
    function checkStatus(response) {
       if (response.status >= 200 && response.status < 300) {
@@ -296,6 +299,8 @@ window.CoreLibrary = function () {
 
    /**
     * Parses the response as json
+    * @param response
+    * @returns {*}
     */
    function parseJSON(response) {
       return response.json();
@@ -313,9 +318,9 @@ window.CoreLibrary = function () {
    sightglass.root = '.';
 
    /* adding classes to body based on browser and browser version,
-   code inspired by the Bowser library:
-   https://github.com/ded/bowser
-   */
+    code inspired by the Bowser library:
+    https://github.com/ded/bowser
+    */
    var ua = window.navigator.userAgent;
    var getFirstMatch = function getFirstMatch(regex) {
       var match = ua.match(regex);
@@ -649,8 +654,11 @@ window.CoreLibrary = function () {
 'use strict';
 
 (function () {
+   'use strict';
+
    CoreLibrary.Component = Stapes.subclass({
-      /** object with default values from args if they are not present in
+      /**
+       * Object with default values from args if they are not present in
        * the Kambi API provided ones
        */
       defaultArgs: {},
@@ -661,10 +669,18 @@ window.CoreLibrary = function () {
        */
       htmlTemplate: null,
 
+      /**
+       * Construct method
+       * @param options
+       * @returns {Promise}
+       */
       constructor: function constructor(options) {
          var _this = this;
 
-         /** object to be used in the HTML templates for data binding */
+         /**
+          * object to be used in the HTML templates for data binding
+          * @type {Object}
+          */
          this.scope = {};
 
          /**
@@ -681,6 +697,7 @@ window.CoreLibrary = function () {
          if (options == null) {
             options = {};
          }
+
          // setting options that can be received in the constructor
          var optionsKeys = ['defaultArgs', 'rootElement'];
          optionsKeys.forEach(function (key) {
@@ -708,7 +725,6 @@ window.CoreLibrary = function () {
                         _this.scope.args[key] = widgetArgs[key];
                      });
                   }
-
                   var apiVersion = CoreLibrary.widgetModule.api.VERSION;
                   if (apiVersion == null) {
                      apiVersion = '1.0.0.13';
@@ -751,24 +767,55 @@ window.CoreLibrary = function () {
 
 'use strict';
 
-CoreLibrary.offeringModule = function () {
+/**
+ * @module offeringModule
+ * @type {{getGroupEvents, getEventsByFilter, adaptV2BetOffer, adaptV2LiveData, adaptV2Event, getLiveEventData, getLiveEvents, getLiveEvent, getLiveEventsByFilter, getEvent, getEventBetoffers, doRequest}}
+ */
+window.CoreLibrary.offeringModule = function () {
    'use strict';
 
    return {
+
+      /**
+       * Get group events
+       * @param groupId
+       * @returns {*|Promise}
+       */
+
       getGroupEvents: function getGroupEvents(groupId) {
          var requesPath = '/event/group/' + groupId + '.json';
          return this.doRequest(requesPath);
       },
+
+
+      /**
+       * Get events by filter
+       * @param filter
+       * @param params
+       * @returns {Promise}
+       */
       getEventsByFilter: function getEventsByFilter(filter, params) {
          // Todo: Update this method once documentation is available
          var requestPath = '/listView/' + filter;
          return this.doRequest(requestPath, params, 'v3');
       },
+
+
+      /**
+       * Normalizes v2 api betoffers
+       * @param betOffer
+       */
       adaptV2BetOffer: function adaptV2BetOffer(betOffer) {
          if (betOffer.suspended === true) {
             betOffer.open = false;
          }
       },
+
+
+      /**
+       * Normalizes the v2 api response
+       * @param liveData
+       */
       adaptV2LiveData: function adaptV2LiveData(liveData) {
          if (liveData != null && liveData.statistics != null) {
             var statistics = liveData.statistics;
@@ -787,6 +834,13 @@ CoreLibrary.offeringModule = function () {
          // v3 and v2 event objects are almost the same
          // only a few attributes we don't are different
       },
+
+
+      /**
+       * Get live event data only, eg: match statistics, score, macthClock
+       * @param eventId
+       * @returns {Promise}
+       */
       getLiveEventData: function getLiveEventData(eventId) {
          var _this = this;
 
@@ -796,6 +850,12 @@ CoreLibrary.offeringModule = function () {
             return res;
          });
       },
+
+
+      /**
+       * Get all live events
+       * @returns {Promise}
+       */
       getLiveEvents: function getLiveEvents() {
          var _this2 = this;
 
@@ -821,6 +881,13 @@ CoreLibrary.offeringModule = function () {
             return res;
          });
       },
+
+
+      /**
+       * Returns a live event
+       * @param eventId
+       * @returns {Promise}
+       */
       getLiveEvent: function getLiveEvent(eventId) {
          var _this3 = this;
 
@@ -835,6 +902,13 @@ CoreLibrary.offeringModule = function () {
             return res;
          });
       },
+
+
+      /**
+       * Get live events by filter
+       * @param filter
+       * @returns {Promise}
+       */
       getLiveEventsByFilter: function getLiveEventsByFilter(filter) {
          var _this4 = this;
 
@@ -875,13 +949,37 @@ CoreLibrary.offeringModule = function () {
 
          return liveEventsPromise;
       },
+
+
+      /**
+       * Requests and event from api
+       * @param eventId
+       * @returns {Promise}
+       */
       getEvent: function getEvent(eventId) {
          return this.doRequest('/betoffer/event/' + eventId + '.json');
       },
+
+
+      /**
+       * @deprecated
+       * @param eventId
+       * @returns {*}
+       */
       getEventBetoffers: function getEventBetoffers(eventId) {
          void 0;
          return this.getEvent.apply(this, arguments);
       },
+
+
+      /**
+       * Makes a request to provided path
+       * @param requestPath
+       * @param params
+       * @param version
+       * @param noCache
+       * @returns {Promise}
+       */
       doRequest: function doRequest(requestPath, params, version, noCache) {
          if (CoreLibrary.config.offering == null) {
             void 0;
@@ -914,7 +1012,11 @@ CoreLibrary.offeringModule = function () {
 
 'use strict';
 
-CoreLibrary.statisticsModule = function () {
+/**
+ * @module statisticsModule
+ * @type {{config, getStatistics}}
+ */
+window.CoreLibrary.statisticsModule = function () {
    'use strict';
 
    return {
@@ -939,12 +1041,29 @@ CoreLibrary.statisticsModule = function () {
 
 'use strict';
 
+/**
+ * @module translationModule
+ */
 window.CoreLibrary.translationModule = function () {
    'use strict';
 
-   var translationModule = {
+   rivets.formatters.translate = function () {
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+         args[_key] = arguments[_key];
+      }
+
+      return CoreLibrary.translationModule.getTranslation.apply(CoreLibrary.translationModule, args);
+   };
+
+   return {
       i18nStrings: {},
 
+      /**
+       * Makes a request to fetch all locales strings.
+       * The locale json file resides in CoreLibrary/i18n folder; it is populated with locales during build process
+       * @param locale
+       * @returns {Promise}
+       */
       fetchTranslations: function fetchTranslations(locale) {
          if (locale == null) {
             locale = 'en_GB';
@@ -956,7 +1075,7 @@ window.CoreLibrary.translationModule = function () {
          }
          return new Promise(function (resolve, reject) {
             window.CoreLibrary.getData(path + locale + '.json').then(function (response) {
-               translationModule.i18nStrings = response;
+               CoreLibrary.translationModule.i18nStrings = response;
                resolve();
             }).catch(function (error) {
                if (locale !== 'en_GB') {
@@ -970,11 +1089,24 @@ window.CoreLibrary.translationModule = function () {
             });
          });
       },
+
+
+      /**
+       * Returns translated string based of a provided key
+       * @param key
+       * @param args
+       * @returns {*}
+       */
       getTranslation: function getTranslation(key) {
          if (this.i18nStrings[key] != null) {
             var str = this.i18nStrings[key];
-            for (var i = 1; i < arguments.length; i++) {
-               var replacement = arguments[i] || '';
+
+            for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+               args[_key2 - 1] = arguments[_key2];
+            }
+
+            for (var i = 1; i < args.length; i++) {
+               var replacement = args[i] || '';
                str = str.replace('{' + (i - 1) + '}', replacement);
             }
             return str;
@@ -982,17 +1114,15 @@ window.CoreLibrary.translationModule = function () {
          return key;
       }
    };
-
-   rivets.formatters.translate = function (value) {
-      return translationModule.getTranslation.apply(translationModule, arguments);
-   };
-
-   return translationModule;
 }();
 //# sourceMappingURL=translationModule.js.map
 
 'use strict';
 
+/**
+ * @module utilModule
+ * @type {{diffArray, getOddsDecimalValue, getOutcomeLabel}}
+ */
 window.CoreLibrary.utilModule = function () {
    'use strict';
 
@@ -1116,7 +1246,11 @@ window.CoreLibrary.utilModule = function () {
 
 'use strict';
 
-CoreLibrary.widgetModule = function () {
+/**
+ * @module widgetModule
+ * @type {{api, events, betslipIds, handleResponse, createUrl, getPageType, requestSetup, requestWidgetHeight, setWidgetHeight, adaptWidgetHeight, enableWidgetTransition, removeWidget, navigateToLiveEvent, navigateToEvent, navigateToFilter, navigateToLiveEvents, addOutcomeToBetslip, removeOutcomeFromBetslip, requestBetslipOutcomes, requestPageInfo, requestWidgetArgs, requestClientConfig, requestOddsFormat, requestOddsAsAmerican, requestOddsAsFractional, navigateClient}}
+ */
+window.CoreLibrary.widgetModule = function () {
    'use strict';
 
    var Module = Stapes.subclass();
@@ -1508,10 +1642,12 @@ CoreLibrary.widgetModule = function () {
 'use strict';
 
 (function () {
+   'use strict';
+
    var HeaderController = function HeaderController(title, cssClasses, scope, collapsable, startCollapsed) {
       var headerHeight = 36;
-      this.title = title;
-      this.cssClasses = cssClasses + ' KambiWidget-font kw-header l-flexbox l-align-center l-pl-16';
+      undefined.title = title;
+      undefined.cssClasses = cssClasses + ' KambiWidget-font kw-header l-flexbox l-align-center l-pl-16';
 
       if (collapsable) {
          scope.collapsed = startCollapsed;
@@ -1521,10 +1657,10 @@ CoreLibrary.widgetModule = function () {
             CoreLibrary.widgetModule.enableWidgetTransition(true);
          }
 
-         this.cssClasses += ' KambiWidget-header';
-         this.style = 'cursor: pointer;';
+         undefined.cssClasses += ' KambiWidget-header';
+         undefined.style = 'cursor: pointer;';
 
-         this.click = function (ev, controller) {
+         undefined.click = function (ev, controller) {
             scope.collapsed = !scope.collapsed;
             if (scope.collapsed) {
                CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
@@ -1539,9 +1675,8 @@ CoreLibrary.widgetModule = function () {
       static: ['collapsable', 'collapsed', 'css-classes'],
 
       template: function template() {
-         return '\n<header rv-class="cssClasses" rv-style="style" rv-on-click="click">{title | translate}</header>\n         ';
+         return '\n            <header rv-class="cssClasses" rv-style="style" rv-on-click="click">{title | translate}</header>\n         ';
       },
-
       initialize: function initialize(el, attributes) {
          var cssClasses = attributes['css-classes'];
          if (cssClasses == null) {
@@ -1567,6 +1702,13 @@ CoreLibrary.widgetModule = function () {
 'use strict';
 
 (function () {
+   'use strict';
+
+   /**
+    * outcome suspended binder
+    * @param el
+    * @param property
+    */
 
    rivets.binders['outcome-suspended'] = function (el, property) {
       var cssClass = 'KambiWidget-outcome--suspended';
@@ -1577,6 +1719,11 @@ CoreLibrary.widgetModule = function () {
       }
    };
 
+   /**
+    * outcome selected binder
+    * @param el
+    * @param property
+    */
    rivets.binders['outcome-selected'] = function (el, property) {
       var cssClass = 'KambiWidget-outcome--selected';
 
@@ -1587,6 +1734,11 @@ CoreLibrary.widgetModule = function () {
       }
    };
 
+   /**
+    * Outcome view controller
+    * @param {object} attributes
+    * @constructor
+    */
    var OutcomeViewController = function OutcomeViewController(attributes) {
       var _this = this;
 
@@ -1626,36 +1778,38 @@ CoreLibrary.widgetModule = function () {
       };
 
       this.getLabel = function () {
-         if (this.data.customLabel) {
-            return this.data.customLabel;
+         if (_this.data.customLabel) {
+            return _this.data.customLabel;
          }
 
-         if (this.data.outcomeAttr != null) {
-            if (this.data.eventAttr != null) {
-               return CoreLibrary.utilModule.getOutcomeLabel(this.data.outcomeAttr, this.data.eventAttr);
+         if (_this.data.outcomeAttr != null) {
+            if (_this.data.eventAttr != null) {
+               return CoreLibrary.utilModule.getOutcomeLabel(_this.data.outcomeAttr, _this.data.eventAttr);
             } else {
-               return this.data.outcomeAttr.label;
+               return _this.data.outcomeAttr.label;
             }
          }
       };
 
       this.getOddsFormat = function () {
-         switch (this.coreLibraryConfig.oddsFormat) {
+         switch (_this.coreLibraryConfig.oddsFormat) {
             case 'fractional':
-               return this.data.outcomeAttr.oddsFractional;
+               return _this.data.outcomeAttr.oddsFractional;
             case 'american':
-               return this.data.outcomeAttr.oddsAmerican;
+               return _this.data.outcomeAttr.oddsAmerican;
             default:
-               return CoreLibrary.utilModule.getOddsDecimalValue(this.data.outcomeAttr.odds / 1000);
+               return CoreLibrary.utilModule.getOddsDecimalValue(_this.data.outcomeAttr.odds / 1000);
          }
       };
    };
 
+   /**
+    * Outcome component
+    */
    rivets.components['outcome-component'] = {
       template: function template() {
-         return '\n<button\n      rv-on-click="toggleOutcome"\n      rv-disabled="betOffer.suspended | == true"\n      rv-outcome-selected="selected"\n      rv-outcome-suspended="betOffer.suspended"\n      type="button"\n      role="button"\n      class="KambiWidget-outcome kw-link l-flex-1 l-ml-6">\n   <div class="KambiWidget-outcome__flexwrap">\n      <div class="KambiWidget-outcome__label-wrapper">\n         <span\n               class="KambiWidget-outcome__label"\n               rv-text="getLabel < data.outcomeAttr.odds data.eventAttr">\n         </span>\n         <span class="KambiWidget-outcome__line"></span>\n      </div>\n   <div class="KambiWidget-outcome__odds-wrapper">\n      <span\n            class="KambiWidget-outcome__odds"\n            rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat">\n      </span>\n   </div>\n</button>\n         ';
+         return '\n            <button\n                  rv-on-click="toggleOutcome"\n                  rv-disabled="betOffer.suspended | == true"\n                  rv-outcome-selected="selected"\n                  rv-outcome-suspended="betOffer.suspended"\n                  type="button"\n                  role="button"\n                  class="KambiWidget-outcome kw-link l-flex-1 l-ml-6">\n               <div class="KambiWidget-outcome__flexwrap">\n                  <div class="KambiWidget-outcome__label-wrapper">\n                     <span\n                           class="KambiWidget-outcome__label"\n                           rv-text="getLabel < data.outcomeAttr.odds data.eventAttr">\n                     </span>\n                     <span class="KambiWidget-outcome__line"></span>\n                  </div>\n               <div class="KambiWidget-outcome__odds-wrapper">\n                  <span\n                        class="KambiWidget-outcome__odds"\n                        rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat">\n                  </span>\n               </div>\n            </button>\n         ';
       },
-
       initialize: function initialize(el, attributes) {
          if (attributes.outcomeAttr == null) {
             return false;
@@ -1666,11 +1820,13 @@ CoreLibrary.widgetModule = function () {
       }
    };
 
+   /**
+    * Outcome component without label
+    */
    rivets.components['outcome-component-no-label'] = {
       template: function template() {
-         return '\n<button\n      rv-on-click="toggleOutcome"\n      rv-disabled="betOffer.suspended | == true"\n      rv-outcome-selected="selected"\n      rv-outcome-suspended="betOffer.suspended"\n      type="button"\n      role="button"\n      class="KambiWidget-outcome kw-link l-ml-6">\n   <div class="l-flexbox l-pack-center">\n      <div class="KambiWidget-outcome__odds-wrapper">\n         <span class="KambiWidget-outcome__odds" rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat" ></span>\n      </div>\n   </div>\n</button>\n         ';
+         return '\n            <button\n                  rv-on-click="toggleOutcome"\n                  rv-disabled="betOffer.suspended | == true"\n                  rv-outcome-selected="selected"\n                  rv-outcome-suspended="betOffer.suspended"\n                  type="button"\n                  role="button"\n                  class="KambiWidget-outcome kw-link l-ml-6">\n               <div class="l-flexbox l-pack-center">\n                  <div class="KambiWidget-outcome__odds-wrapper">\n                     <span class="KambiWidget-outcome__odds" rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat" ></span>\n                  </div>\n               </div>\n            </button>\n         ';
       },
-
       initialize: function initialize(el, attributes) {
          return new OutcomeViewController(attributes);
       }
@@ -1686,7 +1842,17 @@ CoreLibrary.widgetModule = function () {
    CoreLibrary.PaginationComponent = CoreLibrary.Component.subclass({
       htmlTemplate: '<div class="kw-pagination l-flexbox l-pack-center l-align-center">' + '<span rv-on-click="previousPage" rv-class-disabled="firstPage"' + 'class="kw-page-link kw-pagination-arrow">' + '<i class="icon-angle-left"></i>' + '</span>' + '<span rv-each-page="pages" rv-on-click="page.clickEvent" rv-class-kw-active-page="page.selected"' + 'class="kw-page-link l-pack-center l-align-center" >' + '{page.text}' + '</span>' + '<span rv-on-click="nextPage" rv-class-disabled="lastPage"' + 'class="kw-page-link kw-pagination-arrow">' + '<i class="icon-angle-right"></i>' + '</span>' + '</div>',
 
+      /**
+       * Constructor method
+       * @param htmlElement
+       * @param mainComponentScope
+       * @param scopeKey
+       * @param pageSize
+       * @param maxVisiblePages
+       */
       constructor: function constructor(htmlElement, mainComponentScope, scopeKey, pageSize, maxVisiblePages) {
+         var _this = this;
+
          CoreLibrary.Component.apply(this, [{
             rootElement: htmlElement
          }]);
@@ -1698,21 +1864,21 @@ CoreLibrary.widgetModule = function () {
          this.scope.lastPage = false;
 
          /*
-         creates a new array with name _scopeKey
-         the component should use this array when it wants only the data
-         of the currentPage
-         */
+          creates a new array with name _scopeKey
+          the component should use this array when it wants only the data
+          of the currentPage
+          */
          mainComponentScope['_' + scopeKey] = [];
          this.originalArray = mainComponentScope[scopeKey];
          this.currentPageArray = mainComponentScope['_' + scopeKey];
 
          // watching for changes in the original array
          sightglass(mainComponentScope, scopeKey, function () {
-            this.originalArray = mainComponentScope[scopeKey];
-            this.setCurrentPage(0);
-            this.clearArray();
-            this.adaptArray();
-         }.bind(this));
+            _this.originalArray = mainComponentScope[scopeKey];
+            _this.setCurrentPage(0);
+            _this.clearArray();
+            _this.adaptArray();
+         });
 
          this.scope.nextPage = this.nextPage.bind(this);
          this.scope.previousPage = this.previousPage.bind(this);
@@ -1720,14 +1886,28 @@ CoreLibrary.widgetModule = function () {
          this.adaptArray();
       },
 
+
+      /**
+       * Empties the currentPageArray
+       */
       clearArray: function clearArray() {
          this.currentPageArray.splice(0, this.currentPageArray.length);
       },
 
+
+      /**
+       * Get current page
+       * @returns {*|number}
+       */
       getCurrentPage: function getCurrentPage() {
          return this.scope.currentPage;
       },
 
+
+      /**
+       * Sets currentPage variable
+       * @param pageNumber
+       */
       setCurrentPage: function setCurrentPage(pageNumber) {
          if (pageNumber === this.getCurrentPage()) {
             return;
@@ -1739,10 +1919,20 @@ CoreLibrary.widgetModule = function () {
          this.adaptArray();
       },
 
+
+      /**
+       * Returns the number of pages
+       * @returns {number}
+       */
       getNumberOfPages: function getNumberOfPages() {
          return Math.ceil(this.originalArray.length / this.pageSize);
       },
 
+
+      /**
+       * Method for displaying next page
+       * @returns {*|number}
+       */
       nextPage: function nextPage() {
          if (this.getCurrentPage() < this.getNumberOfPages() - 1) {
             this.setCurrentPage(this.getCurrentPage() + 1);
@@ -1750,12 +1940,18 @@ CoreLibrary.widgetModule = function () {
          return this.getCurrentPage();
       },
 
+
+      /**
+       * Method for displaying previous page
+       * @returns {*|number}
+       */
       previousPage: function previousPage() {
          if (this.getCurrentPage() > 0) {
             this.setCurrentPage(this.getCurrentPage() - 1);
          }
          return this.getCurrentPage();
       },
+
 
       /**
        * Changes the _scopeKey array to match the current page elements
@@ -1777,9 +1973,14 @@ CoreLibrary.widgetModule = function () {
          this.render();
       },
 
+
+      /**
+       * Renders the component
+       */
       init: function init() {
          this.render();
       },
+
 
       /**
        * Updates the scope.pages value which is used to render the page numbers and arrows

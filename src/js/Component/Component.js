@@ -1,6 +1,13 @@
-(function () {
+/**
+ * @module Component 
+ * @memberOf CoreLibrary
+ */
+(() => {
+   'use strict';
+
    CoreLibrary.Component = Stapes.subclass({
-      /** object with default values from args if they are not present in
+      /**
+       * Object with default values from args if they are not present in
        * the Kambi API provided ones
        */
       defaultArgs: {},
@@ -11,8 +18,16 @@
        */
       htmlTemplate: null,
 
+      /**
+       * Construct method
+       * @param options
+       * @returns {Promise}
+       */
       constructor ( options ) {
-         /** object to be used in the HTML templates for data binding */
+         /**
+          * object to be used in the HTML templates for data binding
+          * @type {Object}
+          */
          this.scope = {};
 
          /**
@@ -29,6 +44,7 @@
          if ( options == null ) {
             options = {};
          }
+
          // setting options that can be received in the constructor
          var optionsKeys = ['defaultArgs', 'rootElement'];
          optionsKeys.forEach(( key ) => {
@@ -57,7 +73,6 @@
                            this.scope.args[key] = widgetArgs[key];
                         });
                      }
-
                      var apiVersion = CoreLibrary.widgetModule.api.VERSION;
                      if ( apiVersion == null ) {
                         apiVersion = '1.0.0.13';
@@ -89,7 +104,7 @@
                }
 
                if ( typeof this.htmlTemplate === 'string' ) {
-                  if (this.htmlTemplate.length < 100 && window[this.htmlTemplate] != null) {
+                  if ( this.htmlTemplate.length < 100 && window[this.htmlTemplate] != null ) {
                      this.rootElement.innerHTML = window[this.htmlTemplate];
                   } else {
                      this.rootElement.innerHTML = this.htmlTemplate;
