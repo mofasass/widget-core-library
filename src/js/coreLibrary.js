@@ -1,4 +1,5 @@
 /**
+ * Main module that holds formaters, binders and all widget related configurations
  * @module CoreLibrary
  */
 
@@ -434,6 +435,22 @@ window.CoreLibrary = (() => {
 
       /**
        * Config object.
+       * @type {{
+            apiBaseUrl: string,
+            auth: false,
+            channelId: 1,
+            currency: string,
+            customer: string,
+            device: 'desktop',
+            locale: 'en_GB',
+            market: 'GB',
+            oddsFormat: 'decimal',
+            offering: string,
+            routeRoot: string,
+            streamingAllowedForPlayer: true,
+            client_id: 2,
+            version: 'v2'
+         }}
        * @memberOf module:CoreLibrary
        */
       config: {
@@ -651,7 +668,7 @@ window.CoreLibrary = (() => {
          this.args = args;
       },
 
-      /** 
+      /**
        * Requests setup data from widgetModule.
        * @memberOf module:CoreLibrary
        * @param {function} callback
