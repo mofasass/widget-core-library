@@ -1,7 +1,8 @@
 /**
  * @module offeringModule
  * @memberOf CoreLibrary
- * @type {{getGroupEvents, getEventsByFilter, adaptV2BetOffer, adaptV2LiveData, adaptV2Event, getLiveEventData, getLiveEvents, getLiveEvent, getLiveEventsByFilter, getEvent, getEventBetoffers, doRequest}}
+ * @type {{getGroupEvents, getEventsByFilter, adaptV2BetOffer, adaptV2LiveData, adaptV2Event, getLiveEventData, getLiveEvents, getLiveEvent,
+ * getLiveEventsByFilter, getEvent, getEventBetoffers, doRequest}}
  */
 window.CoreLibrary.offeringModule = (() => {
    'use strict';

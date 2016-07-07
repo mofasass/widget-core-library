@@ -1,7 +1,10 @@
 /**
  * @module widgetModule
  * @memberOf CoreLibrary
- * @type {{api, events, betslipIds, handleResponse, createUrl, getPageType, requestSetup, requestWidgetHeight, setWidgetHeight, adaptWidgetHeight, enableWidgetTransition, removeWidget, navigateToLiveEvent, navigateToEvent, navigateToFilter, navigateToLiveEvents, addOutcomeToBetslip, removeOutcomeFromBetslip, requestBetslipOutcomes, requestPageInfo, requestWidgetArgs, requestClientConfig, requestOddsFormat, requestOddsAsAmerican, requestOddsAsFractional, navigateClient}}
+ * @type {{api, events, betslipIds, handleResponse, createUrl, getPageType, requestSetup, requestWidgetHeight, setWidgetHeight, adaptWidgetHeight,
+ * enableWidgetTransition, removeWidget, navigateToLiveEvent, navigateToEvent, navigateToFilter, navigateToLiveEvents, addOutcomeToBetslip,
+ * removeOutcomeFromBetslip, requestBetslipOutcomes, requestPageInfo, requestWidgetArgs, requestClientConfig, requestOddsFormat, requestOddsAsAmerican,
+ * requestOddsAsFractional, navigateClient}}
  */
 window.CoreLibrary.widgetModule = (() => {
    'use strict';
