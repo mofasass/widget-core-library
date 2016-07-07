@@ -21,12 +21,12 @@
       '</div>',
 
       /**
-       * Constructor method
-       * @param htmlElement
-       * @param mainComponentScope
-       * @param scopeKey
-       * @param pageSize
-       * @param maxVisiblePages
+       * Constructor method.
+       * @param {string} htmlElement
+       * @param {object} mainComponentScope
+       * @param {string} scopeKey
+       * @param {number} pageSize
+       * @param {number} maxVisiblePages
        */
       constructor ( htmlElement, mainComponentScope, scopeKey, pageSize, maxVisiblePages ) {
          CoreLibrary.Component.apply(this, [{
@@ -63,14 +63,14 @@
       },
 
       /**
-       * Empties the currentPageArray
+       * Empties the currentPageArray.
        */
       clearArray () {
          this.currentPageArray.splice(0, this.currentPageArray.length);
       },
 
       /**
-       * Get current page
+       * Get current page.
        * @returns {*|number}
        */
       getCurrentPage () {
@@ -78,8 +78,8 @@
       },
 
       /**
-       * Sets currentPage variable
-       * @param pageNumber
+       * Sets currentPage variable.
+       * @param {number} pageNumber
        */
       setCurrentPage ( pageNumber ) {
          if ( pageNumber === this.getCurrentPage() ) {
@@ -93,7 +93,7 @@
       },
 
       /**
-       * Returns the number of pages
+       * Returns the number of pages.
        * @returns {number}
        */
       getNumberOfPages () {
@@ -101,7 +101,7 @@
       },
 
       /**
-       * Method for displaying next page
+       * Method for displaying next page.
        * @returns {*|number}
        */
       nextPage () {
@@ -112,7 +112,7 @@
       },
 
       /**
-       * Method for displaying previous page
+       * Method for displaying previous page.
        * @returns {*|number}
        */
       previousPage () {
@@ -123,7 +123,7 @@
       },
 
       /**
-       * Changes the _scopeKey array to match the current page elements
+       * Changes the _scopeKey array to match the current page elements.
        */
       adaptArray () {
          this.clearArray();
@@ -143,16 +143,16 @@
       },
 
       /**
-       * Renders the component
+       * Renders the component.
        */
       init () {
          this.render();
       },
 
       /**
-       * Updates the scope.pages value which is used to render the page numbers and arrows
+       * Updates the scope.pages value which is used to render the page numbers and arrows.
        */
-      render ( page ) {
+      render () {
          this.scope.pages = [];
          var startPage = this.getCurrentPage() - 2;
          if ( this.getCurrentPage() + 2 >= this.getNumberOfPages() ) {

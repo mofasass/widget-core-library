@@ -24,7 +24,7 @@ window.CoreLibrary.widgetModule = (() => {
       betslipIds: [],
 
       /**
-       * Handles widget api response
+       * Handles widget api response.
        * @param {Object} response
        */
       handleResponse ( response ) {
@@ -100,18 +100,18 @@ window.CoreLibrary.widgetModule = (() => {
       },
 
       /**
-       * Creates url from given path and optionalRoot
+       * Creates url from given path and optionalRoot.
        * @param {String} path
        * @param {String} optionalRoot
-       * @returns {*}
+       * @returns {String}
        */
       createUrl ( path, optionalRoot ) {
          return this.api.createUrl(path, optionalRoot);
       },
 
       /**
-       * Get page type
-       * @returns {*}
+       * Get page type.
+       * @returns {String}
        */
       getPageType () {
          if ( !CoreLibrary.pageInfo.pageType ) {
@@ -130,7 +130,7 @@ window.CoreLibrary.widgetModule = (() => {
       },
 
       /**
-       * Makes widget api request for setupdata
+       * Makes widget api request for setupdata.
        * @param {fn} callback Callback
        */
       requestSetup ( callback ) {
@@ -138,14 +138,14 @@ window.CoreLibrary.widgetModule = (() => {
       },
 
       /**
-       * Requests widget height from widget api
+       * Requests widget height from widget api.
        */
       requestWidgetHeight () {
          this.api.request(this.api.WIDGET_HEIGHT);
       },
 
       /**
-       * Set widget api widget height
+       * Set widget api widget height.
        * @param {Number} height
        */
       setWidgetHeight ( height ) {
@@ -153,7 +153,7 @@ window.CoreLibrary.widgetModule = (() => {
       },
 
       /**
-       * tries to adapt the widget iframe height to match the content
+       * tries to adapt the widget iframe height to match the content.
        */
       adaptWidgetHeight () {
          // tries to adapt the widget iframe height to match the content
@@ -164,7 +164,7 @@ window.CoreLibrary.widgetModule = (() => {
       },
 
       /**
-       * Sets widget api widget transition state
+       * Sets widget api widget transition state.
        * @param {boolean} enableTransition
        */
       enableWidgetTransition ( enableTransition ) {
@@ -176,14 +176,14 @@ window.CoreLibrary.widgetModule = (() => {
       },
 
       /**
-       * Call api to remove widget
+       * Call api to remove widget.
        */
       removeWidget () {
          this.api.remove();
       },
 
       /**
-       * Widget api method for navigating to a live event
+       * Widget api method for navigating to a live event.
        * @param {number} eventId
        */
       navigateToLiveEvent ( eventId ) {
@@ -191,7 +191,7 @@ window.CoreLibrary.widgetModule = (() => {
       },
 
       /**
-       * Widget api method for navigating to a prelive event
+       * Widget api method for navigating to a prelive event.
        * @param {number} eventId
        */
       navigateToEvent ( eventId ) {
@@ -199,7 +199,7 @@ window.CoreLibrary.widgetModule = (() => {
       },
 
       /**
-       * Widget api method for navigating to a filter
+       * Widget api method for navigating to a filter.
        * @param {String} filterParams
        */
       navigateToFilter ( filterParams ) {
@@ -211,14 +211,14 @@ window.CoreLibrary.widgetModule = (() => {
       },
 
       /**
-       * Widget api method for navigating to a live events
+       * Widget api method for navigating to a live events.
        */
       navigateToLiveEvents () {
          this.navigateClient(['in-play']);
       },
 
       /**
-       * Uses widget api to add outcomes to betslip
+       * Uses widget api to add outcomes to betslip.
        * @param {Array|Object} outcomes
        * @param {Array|Object} stakes
        * @param {String} updateMode
@@ -266,7 +266,7 @@ window.CoreLibrary.widgetModule = (() => {
       },
 
       /**
-       * Removes outcomes from betslip via widget api
+       * Removes outcomes from betslip via widget api.
        * @param {Array|Object} outcomes
        */
       removeOutcomeFromBetslip ( outcomes ) {
@@ -287,43 +287,43 @@ window.CoreLibrary.widgetModule = (() => {
       },
 
       /**
-       * Widget api method for requesting betslip outcome
+       * Widget api method for requesting betslip outcome.
        */
       requestBetslipOutcomes () {
          this.api.request(this.api.BETSLIP_OUTCOMES);
       },
 
       /**
-       * Widget api method for requesting page info
+       * Widget api method for requesting page info.
        */
       requestPageInfo () {
          this.api.request(this.api.PAGE_INFO);
       },
 
       /**
-       * Widget api method for requesting widget args
+       * Widget api method for requesting widget args.
        */
       requestWidgetArgs () {
          this.api.request(this.api.WIDGET_ARGS);
       },
 
       /**
-       * Widget api method for requesting client config
+       * Widget api method for requesting client config.
        */
       requestClientConfig () {
          this.api.request(this.api.CLIENT_CONFIG);
       },
 
       /**
-       * Widget api method for requesting odds format
+       * Widget api method for requesting odds format.
        */
       requestOddsFormat () {
          this.api.request(this.api.CLIENT_ODDS_FORMAT);
       },
 
       /**
-       * Widget api method for requesting american odds
-       * @param odds
+       * Widget api method for requesting american odds.
+       * @param  {Number}odds
        * @returns {Promise}
        */
       requestOddsAsAmerican ( odds ) {
@@ -335,8 +335,8 @@ window.CoreLibrary.widgetModule = (() => {
       },
 
       /**
-       * Widget api method for requesting fractional odds
-       * @param odds
+       * Widget api method for requesting fractional odds.
+       * @param {Number} odds
        * @returns {Promise}
        */
       requestOddsAsFractional ( odds ) {
@@ -348,7 +348,7 @@ window.CoreLibrary.widgetModule = (() => {
       },
 
       /**
-       * Widget api method for navigating client to hash path
+       * Widget api method for navigating client to hash path.
        * @param {String|Array} destination
        */
       navigateClient ( destination ) {

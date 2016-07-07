@@ -5,10 +5,17 @@
    'use strict';
 
    /**
-    * Outcome suspended binder
+    * Outcome suspended binder.
+    * Adds 'KambiWidget-outcome--suspended' class to attached element
+    * @example
+    * <outcome-component
+    *     rv-outcome-suspended="suspended"
+    *     outcome-attr="outcome"
+    *     event-attr="event">
+    * </outcome-component-no-label>
     * @mixin outcome-suspended
-    * @param el
-    * @param property
+    * @param {element} el
+    * @param {boolean} property
     */
    rivets.binders['outcome-suspended'] = ( el, property ) => {
       var cssClass = 'KambiWidget-outcome--suspended';
@@ -20,10 +27,17 @@
    };
 
    /**
-    * Outcome selected binder
+    * Outcome selected binder.
+    * Adds 'KambiWidget-outcome--selected' class to attached element
+    * @example
+    * <outcome-component
+    *     rv-outcome-selected="selected"
+    *     outcome-attr="outcome"
+    *     event-attr="event">
+    * </outcome-component-no-label>
     * @mixin outcome-selected
-    * @param el
-    * @param property
+    * @param {element} el
+    * @param {boolean} property
     */
    rivets.binders['outcome-selected'] = ( el, property ) => {
       var cssClass = 'KambiWidget-outcome--selected';
@@ -36,9 +50,9 @@
    };
 
    /**
-    * Outcome view controller
+    * Outcome view controller.
     * @param {object} attributes
-    * @constructor
+    * @memberOf module:OutcomeComponent#
     */
    var OutcomeViewController = function ( attributes ) {
       this.data = attributes;
@@ -69,7 +83,7 @@
       }
 
       /**
-       * Toggle outcomes
+       * Toggle outcomes.
        * @param event
        * @param scope
        */
@@ -82,7 +96,7 @@
       };
 
       /**
-       * Returns label
+       * Returns label.
        * If data contains 'customLabel' it will return that custom value
        */
       this.getLabel = () => {
@@ -100,7 +114,7 @@
       };
 
       /**
-       * Returns Odds format
+       * Returns Odds format.
        * @returns {*}
        */
       this.getOddsFormat = () => {
@@ -116,15 +130,20 @@
    };
 
    /**
-    * Outcome component
+    * Outcome component.
+    * @example
+    * <outcome-component
+    *    rv-each-outcome="betoffer.outcomes"
+    *    outcome-attr="outcome"
+    *    event-attr="event">
+    * </outcome-component>
     * @mixin outcome-component
     * @type {{template: (function()), initialize: (function(*, *=))}}
     */
    rivets.components['outcome-component'] = {
 
       /**
-       * Returns the template
-       * @memberOf module:OutcomeComponent#
+       * Returns the template.
        * @returns {string}
        */
       template () {
@@ -156,8 +175,7 @@
       },
 
       /**
-       * Initialize
-       * @memberOf module:OutcomeComponent#
+       * Initialize.
        * @param el
        * @param attributes
        * @returns {*}
@@ -173,15 +191,18 @@
    };
 
    /**
-    * Outcome component without label
+    * Outcome component without label.
+    * @example
+    * <outcome-component-no-label
+    *     outcome-attr="outcome" event-attr="event">
+    * </outcome-component-no-label>
     * @mixin outcome-component-no-label
     * @type {{template: (function()), initialize: (function(*, *=))}}
     */
    rivets.components['outcome-component-no-label'] = {
 
       /**
-       * Template outcome-component-no-label
-       * @memberOf module:OutcomeComponent#
+       * Template outcome-component-no-label.
        * @returns {string}
        */
       template () {
@@ -204,8 +225,7 @@
       },
 
       /**
-       * Initialize outcome-component-no-label
-       * @memberOf module:OutcomeComponent#
+       * Initialize outcome-component-no-label.
        * @param el
        * @param attributes
        * @returns {OutcomeViewController}

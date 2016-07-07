@@ -5,11 +5,22 @@
 window.CoreLibrary.translationModule = (() => {
    'use strict';
 
+   /**
+    * Formatter that translates current value in binder.
+    * @example
+    * <span>{'key' | translate}</span>
+    * @mixin translate
+    * @param args
+    * @returns {*|String}
+    */
    rivets.formatters.translate = ( ...args ) => {
       return CoreLibrary.translationModule.getTranslation.apply(CoreLibrary.translationModule, args);
    };
 
    return {
+      /**
+       * @type {object}
+       */
       i18nStrings: {},
 
       /**
@@ -47,10 +58,10 @@ window.CoreLibrary.translationModule = (() => {
       },
 
       /**
-       * Returns translated string based of a provided key
-       * @param {String} key
-       * @param args
-       * @returns {*}
+       * Returns translated string based of a provided key.
+       * @param {String} key Key to fetch translation for
+       * @param {Array} args other arguments that are passed to this method
+       * @returns {String}
        */
       getTranslation: function ( key, ...args ) {
          if ( this.i18nStrings[key] != null ) {

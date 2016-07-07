@@ -8,9 +8,9 @@ window.CoreLibrary.utilModule = (() => {
    return {
 
       /**
-       * Util method for return unique items
-       * @param {Array} A
-       * @param {Array} B
+       * Util method for return unique items.
+       * @param {Array} A First array
+       * @param {Array} B Second array
        * @returns {Array}
        */
       diffArray ( A, B ) {
@@ -29,8 +29,8 @@ window.CoreLibrary.utilModule = (() => {
       },
 
       /**
-       * get decimal formatted odds
-       * @param odds
+       * Get decimal formatted odds.
+       * @param {number} odds
        * @returns {number}
        */
       getOddsDecimalValue ( odds ) {
@@ -44,9 +44,9 @@ window.CoreLibrary.utilModule = (() => {
       },
 
       /**
-       * Returns the outcome label translated
-       * @param {Object} outcome
-       * @param {Object} event
+       * Returns the outcome label translated.
+       * @param {Object} outcome Outcome object
+       * @param {Object} event Event object
        * @returns {string}
        */
       getOutcomeLabel ( outcome, event ) {

@@ -6,32 +6,34 @@
    'use strict';
 
    CoreLibrary.Component = Stapes.subclass({
+
       /**
        * Object with default values from args if they are not present in
-       * the Kambi API provided ones
+       * the Kambi API provided ones.
        */
       defaultArgs: {},
 
       /**
        * If string this value is appended to rootElement with the innerHTML DOM call
-       * essentially parsing the the text as HTML
+       * essentially parsing the the text as HTML.
        */
       htmlTemplate: null,
 
       /**
-       * Construct method
-       * @param options
+       * Construct method.
+       * @param {object} options
        * @returns {Promise}
        */
       constructor ( options ) {
+
          /**
-          * object to be used in the HTML templates for data binding
+          * object to be used in the HTML templates for data binding.
           * @type {Object}
           */
          this.scope = {};
 
          /**
-          * Rivets view object, binds this.scope to this.rootElement
+          * Rivets view object, binds this.scope to this.rootElement.
           */
          this.view = null;
 
