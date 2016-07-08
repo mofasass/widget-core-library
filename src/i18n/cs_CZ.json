@@ -1,4 +1,4 @@
-window._kbc.locale={
+{
 	"N/A": "Závod skončil a již není k dispozici.",
 	"account": {
 		"balance": "Zůstatek:",
@@ -1490,4 +1490,4 @@ window._kbc.locale={
 	"enableTermSearch": true,
 	"instantBettingTitle": "Instant Betting",
 	"enableFootballVisualisation": true
-};
+}

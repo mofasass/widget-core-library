@@ -1,4 +1,4 @@
-window._kbc.locale={
+{
 	"N/A": "Kilpailu on päättynyt eikä enää saatavilla.",
 	"account": {
 		"balance": "Saldo:",
@@ -1490,4 +1490,4 @@ window._kbc.locale={
 	"enableTermSearch": true,
 	"instantBettingTitle": "Instant Betting",
 	"enableFootballVisualisation": true
-};
+}

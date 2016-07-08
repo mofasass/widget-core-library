@@ -119,7 +119,9 @@ gulp.task('fetch-translations', function () {
    del.sync('./src/i18n');
    return download(supportedLanguagesFiles)
       .pipe(replace('(function(require, define){\ndefine({', '{\n\t"LOCALE_IMPORT": "---",'))
+      .pipe(replace('window._kbc.locale=', ''))
       .pipe(replace(');})(_kbc.require, _kbc.define);', ''))
+      .pipe(replace('};', '}'))
       .pipe(gulp.dest('./src/i18n/'));
 });
 

@@ -1,4 +1,4 @@
-window._kbc.locale={
+{
 	"N/A": "A versenyre befejeződött és nem érhető el.",
 	"account": {
 		"balance": "Egyenleg:",
@@ -1490,4 +1490,4 @@ window._kbc.locale={
 	"enableTermSearch": true,
 	"instantBettingTitle": "Instant Betting",
 	"enableFootballVisualisation": true
-};
+}

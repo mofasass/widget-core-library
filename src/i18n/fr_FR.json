@@ -1,4 +1,4 @@
-window._kbc.locale={
+{
 	"N/A": "La course est finie et n'est plus disponible",
 	"account": {
 		"balance": "Solde :",
@@ -1490,4 +1490,4 @@ window._kbc.locale={
 	"enableTermSearch": true,
 	"instantBettingTitle": "Instant Betting",
 	"enableFootballVisualisation": true
-};
+}

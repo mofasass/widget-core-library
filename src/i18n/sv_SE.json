@@ -1,4 +1,4 @@
-window._kbc.locale={
+{
 	"N/A": "Loppet är avslutat och inte längre tillgängligt.",
 	"account": {
 		"balance": "Saldo:",
@@ -1490,4 +1490,4 @@ window._kbc.locale={
 	"enableTermSearch": true,
 	"instantBettingTitle": "Instant Betting",
 	"enableFootballVisualisation": true
-};
+}
