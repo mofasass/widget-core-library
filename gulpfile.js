@@ -112,7 +112,7 @@ gulp.task('fetch-translations', function () {
    supportedLanguages.forEach(function ( locale ) {
       supportedLanguagesFiles.push({
          file: locale + '.json',
-         url: 'https://publictest-static.kambi.com/sb-mobileclient/kambi/1.245.0.0/locale/' + locale + '/locale.js'
+         url: 'https://ctd-static.kambi.com/development/bc/html5-client/gm-develop/kambi/1.280.1.0/locale/' + locale + '/locale.js'
       });
    });
 

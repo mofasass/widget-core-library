@@ -1,5 +1,4 @@
-{
-	"LOCALE_IMPORT": "---",
+window._kbc.locale={
 	"N/A": "Lenktynės baigtos ir nebepasiekiamos.",
 	"account": {
 		"balance": "Balansas:",
@@ -323,7 +322,7 @@
 	},
 	"betslipReceipt": {
 		"awaitingApproval": "{0} laukia patvirtinimo",
-		"closeReceipt": "Uzdaryti",
+		"closeReceipt": "Uždaryti",
 		"receiptPreString": "Kvito Nr.",
 		"retainSelections": "Išlaikyti pasirinkimus",
 		"timePreString": "Šiandien",
@@ -365,31 +364,31 @@
 	},
 	"combination": {
 		"sizeCombination": "Kombinacija",
-		"sizeDouble": "2guba",
-		"sizeDoubles": "2gubos",
-		"sizeEight": "8guba",
-		"sizeEights": "8gubos",
-		"sizeEleven": "11guba",
-		"sizeElevens": "11Gubos",
-		"sizeFive": "5guba",
-		"sizeFives": "5gubos",
-		"sizeFour": "4guba",
-		"sizeFours": "4Gubos",
-		"sizeNine": "9guba",
-		"sizeNines": "9gubos",
-		"sizeSeven": "7guba",
-		"sizeSevens": "7gubos",
-		"sizeSingle": "1guba",
-		"sizeSingles": "1gubos",
-		"sizeSix": "6guba",
-		"sizeSixs": "6gubos",
+		"sizeDouble": "Dviguba",
+		"sizeDoubles": "Dvigubos",
+		"sizeEight": "Aštuonguba",
+		"sizeEights": "Aštuongubos",
+		"sizeEleven": "Vienuolikaguba",
+		"sizeElevens": "Vienuolikagubos",
+		"sizeFive": "Penkiaguba",
+		"sizeFives": "Penkiagubos",
+		"sizeFour": "Keturguba",
+		"sizeFours": "Keturgubos",
+		"sizeNine": "Devynguba",
+		"sizeNines": "Devyngubos",
+		"sizeSeven": "Septynguba",
+		"sizeSevens": "Septyngubos",
+		"sizeSingle": "Vienguba",
+		"sizeSingles": "Viengubos",
+		"sizeSix": "Šešiaguba",
+		"sizeSixs": "Šešiagubos",
 		"sizeSystem": "Sistema",
-		"sizeTen": "10guba",
-		"sizeTens": "10gubos",
-		"sizeTriple": "3guba",
-		"sizeTriples": "3gubos",
-		"sizeTwelve": "12guba",
-		"sizeTwelves": "12Gubos"
+		"sizeTen": "Dešimtguba",
+		"sizeTens": "Dešimtgubos",
+		"sizeTriple": "Triguba",
+		"sizeTriples": "Trigubos",
+		"sizeTwelve": "Dvylikaguba",
+		"sizeTwelves": "Dvylikagubos"
 	},
 	"common": {
 		"bet": "Statymas",
@@ -487,7 +486,7 @@
 				"title": "Techninė klaida."
 			},
 			"text": "Techninė klaida.",
-			"title": "Technin�� klaida."
+			"title": "Techninė klaida."
 		},
 		"103": {
 			"text": "Techninė klaida.",
@@ -644,7 +643,7 @@
 			"allRaces": "Visos varžybos",
 			"alphabetical": "Visi",
 			"browseSport": "Naršyti {0}",
-			"featured": "Pagrindiniai",
+			"featured": "Paryškinta",
 			"liveAndUpcoming": "Dabar ir netrukus",
 			"nextOff": "Kitas startas",
 			"today": "Šiandien",
@@ -654,13 +653,27 @@
 	"events": {
 		"activities": "Įvykiai",
 		"betoffers": "Siūlymai lažintis",
+		"cinematicView": "Kinematografinis vaizdas",
+		"competitions": {
+			"default": "Outrights"
+		},
+		"defaultView": "Įprastas vaizdas",
 		"liveRightNow": "Tiesiogiai dabar",
+		"matches": {
+			"default": "Mačas"
+		},
 		"noBetAndWatchEventsFound": "Jei norite žiūrėti konkrečias lenktynes, už jas turite pastatyti bent £1 (arba atitinkamai kita valiuta) arba daugiau.",
 		"noBetOffersFound": "Pasiūlymų statyti nerasta",
 		"noEventsFound": "Įvykių nerasta",
 		"noLiveEventsFound": "Tiesioginių įvykių nerasta",
 		"startingSoon": "Prasideda netrukus",
-		"streaming": "Transliavimas"
+		"streaming": "Transliavimas",
+		"upcomingLive": "Gyvai – artimiausi",
+		"visualisation": "Vizualizacija"
+	},
+	"eventtypes": {
+		"nocompetitions": "Jokių varžybų dabar nėra.",
+		"nomatches": "Jokių rungtynių dabar nėra."
 	},
 	"footer": {
 		"links": {
@@ -689,10 +702,12 @@
 		"infoLabel": "Informacija",
 		"label": {
 			"freeBet": "Nemokamas statymas",
+			"matchupFreeBet": "Naudoti nemokamą statymą",
 			"profitBoost": "pelno padidinimas"
 		},
 		"labelShort": "fb",
 		"liveOnly": "Tik gyvai",
+		"matchupMaxAmount": "Didžiausia nemokamo statymo suma {0}.",
 		"mobileOnly": "Tik mobiliesiems įrenginiams",
 		"namedSystemBet": "Sisteminiai statymai su pavadinimais (Trixie, Patent, Yankee ir pan.)",
 		"noRestrictions": "Visi statymų tipai",
@@ -721,6 +736,7 @@
 		"statusPlaced": "Atlikta",
 		"statusReserved": "Rezervuota",
 		"statusUsed": "Panaudota",
+		"useButtonLabel": "Naudoti",
 		"validFor": "Galioja"
 	},
 	"grouplistpage": {
@@ -788,17 +804,36 @@
 	},
 	"liveFeedCard": {
 		"type": {
+			"attack": "Puolimas",
+			"ballOutOfPlay": "Ball out of play",
+			"ballSafe": "Kamuolys saugus",
 			"corner": "Kampinis",
+			"dangerousAttack": "Pavojingas puolimas",
 			"freeKick": "Nemokamas spyris",
 			"game": "Geimas",
 			"goal": "Įvartis",
-			"match": "Rungtynės",
-			"penalty": "Bauda",
+			"goalKick": "Smūgis nuo vartų",
+			"goalOpportunity": "Įvarčio galimybė",
+			"halfTimeEnd": "Pusė laiko",
+			"inPossession": "Kamuolio valdymas",
+			"injury": "Trauma",
+			"match": "Mačas",
+			"matchEnd": "Mačo pabaiga",
+			"offside": "Nuošalė",
+			"penalty": "Baudinys",
+			"penaltyAwarded": "Laimėtas baudinys",
+			"penaltyScored": "Įmuštas baudinys",
+			"possibleCorner": "Galimas kampinis",
+			"possibleFreeKick": "Galimas baudos smūgis",
+			"possibleThrowIn": "Galimas sviedimas",
 			"redCard": "Raudona kortelė",
 			"score": "Rezultatas",
 			"set": "Setas",
+			"shot": "Smūgis",
 			"shotOffTarget": "Ne į vartų stačiakampį",
 			"shotOnTarget": "Į vartų stačiakampį",
+			"substitution": "Keitimas",
+			"thowIn": "Įmetimas",
 			"yellowCard": "Geltona kortelė"
 		}
 	},
@@ -812,17 +847,30 @@
 			"title": "Svarbus pranešimas"
 		}
 	},
+	"livestatistics": {
+		"aceswon": "Neatmušti padavimai („Ace“)",
+		"attacks": "Atakos",
+		"dangerousattacks": "Pavojingos atakos",
+		"possession": "Valdymas %",
+		"servicefaults": "Dvigubos klaidos",
+		"shotsofftarget": "Nepataikymai į tikslą",
+		"shotsontarget": "Pataikymai į tikslą",
+		"title": "Statistika gyvai"
+	},
 	"locale": {
 		"freeBets": {
 			"pleaseLogin": "Norėdami pamatyti nemokamų statymų apžvalgą, prisijunkite"
 		},
 		"navigation": {
-			"showAllSports": "Rodyti visas sporto šakas"
+			"showAllSports": "Visas sporto šakas"
 		},
 		"transactions": {
 			"hideTransactions": "Slėpti transakcijas",
 			"showTransactions": "Rodyti transakcijas"
 		}
+	},
+	"maintenance": {
+		"release": "Atliekame svetainės techninės priežiūros darbus. Numatyta įprasto veikimo pradžia: {0}. Atsiprašome už nepatogumus ir dėkojame už kantrybę."
 	},
 	"mostpopular": {
 		"details": {
@@ -841,7 +889,9 @@
 	"navigationMenu": {
 		"betOfferCountPlural": "{0} lažybų pasiūlymai {1}",
 		"betOfferCountSingular": "1 lažybų pasiūlymas {0}",
+		"bonusOffers": "Mano premijos pasiūlymai",
 		"browse": "naršyti",
+		"fewerSports": "Mažiau sporto šakų",
 		"live": "Gyvai",
 		"startLobby": "Paleisti Lobby",
 		"startingSoon": "Prasideda netrukus",
@@ -850,7 +900,8 @@
 		"startsWithinMinutes": "Prasideda per artimiausias {0} min."
 	},
 	"nowAndSoon": {
-		"nextUp": "Kitas pakilimas"
+		"highlighted": "Rekomenduojame",
+		"nextUp": "Toliau"
 	},
 	"occurrence": {
 		"corner": "{0} gavo kampinį",
@@ -976,6 +1027,10 @@
 			"text": "Statymo koeficientas per aukštas. Pataisykite bilietą.",
 			"title": "Koeficientas per aukštas"
 		},
+		"oddsTooLow": {
+			"text": "Deja, negalime priimti viengubų arba kombinuotų statymų, kurių koeficientas yra žemesnis nei {0}. Pataisykite bilietą.",
+			"title": "Koeficientas per žemas"
+		},
 		"oversizedBetSystem": {
 			"text": "Deja, kupone leidžiame ne daugiau kaip 220 statymų, o jūsų kuponas tai viršija. Pataisykite bilietą.",
 			"title": "Netinkamas sisteminis statymas"
@@ -1090,6 +1145,65 @@
 			}
 		}
 	},
+	"rewards": {
+		"betsPlacedTitle": "Atlikti statymai:",
+		"bettingCriterion": {
+			"desktopOnly": "tik staliniams kompiuteriams",
+			"eventClosed": "varžybas, kurios buvo uždarytos",
+			"eventGroupClosed": "įvykių grupę, kuri buvo uždaryta",
+			"liveOnly": "tik tiesioginis",
+			"minCombinationOdds": "minimalų derinio koeficientą",
+			"minOddsPerLeg": "minimalų atkarpos koeficientą",
+			"minStake": "minimalią statomą sumą",
+			"mobileOnly": "tik mobiliesiems įrenginiams",
+			"nonLiveOnly": "tik netiesioginis",
+			"placeBetThatHas": "Atlikti statymą, kuris yra / turi:",
+			"sizeDoublesAndBigger": "dvigubus ir didesnius derinius",
+			"sizeEightsAndBigger": "aštuongubus ir didesnius derinius",
+			"sizeElevensAndBigger": "vienuolikagubus ir didesnius derinius",
+			"sizeFivesAndBigger": "penkiagubus ir didesnius derinius",
+			"sizeFoursAndBigger": "keturgubus ir didesnius derinius",
+			"sizeNinesAndBigger": "devyngubus ir didesnius derinius",
+			"sizeSevensAndBigger": "septyngubus ir didesnius derinius",
+			"sizeSixsAndBigger": "šešiagubus ir didesnius derinius",
+			"sizeTensAndBigger": "dešimtgubus ir didesnius derinius",
+			"sizeTriplesAndBigger": "trigubus ir didesnius derinius",
+			"sizeTwelves": "dvylikagubas"
+		},
+		"pleaseLogin": "Norėdami pamatyti premijų pasiūlymus, prisijunkite",
+		"qualifyingBetsTitle": "Atitinkantys reikalavimus statymai:",
+		"showBonusOffersHeading": "Premijos pasiūlymų apžvalga",
+		"validFor": {
+			"andBiggerCombos": "ir didesnėms kombinacijoms",
+			"desktopOnly": "naudojimas tik kompiuteriu",
+			"eachWay": "bet kuriuo būdu",
+			"eventClosed": "uždarytas renginys",
+			"eventGroupClosed": "uždaryta renginio grupė",
+			"liveOnly": "tik tiesioginė transliacija",
+			"mobileOnly": "tik mobilieji įrenginiai",
+			"namedSystemBet": "pavadintos sistemos statymai (Trixie, Patent, Yankee ir t.t.)",
+			"noRestrictions": "visiems lažybų tipams",
+			"nonEachWay": "jokiu būdu",
+			"nonLiveOnly": "tik netiesioginė transliacija",
+			"nonSystemBet": "vienetai ir kombinacijos",
+			"profitBoost": {
+				"maxExtraWinnings": "papildomų laimėjimų maks.",
+				"maxStake": "maks. statymai"
+			},
+			"sizeDoubles": "dvejetai",
+			"sizeEights": "eightfolds",
+			"sizeElevens": "elevenfolds",
+			"sizeFives": "fivefolds",
+			"sizeFours": "fourfolds",
+			"sizeNines": "ninefolds",
+			"sizeSevens": "sevenfolds",
+			"sizeSixs": "sixfolds",
+			"sizeTens": "tenfolds",
+			"sizeTriples": "trigubinimai",
+			"sizeTwelves": "twelvefolds",
+			"validFor": "Galioja"
+		}
+	},
 	"scoreboard": {
 		"at": "–",
 		"racing": {
@@ -1146,6 +1260,11 @@
 		},
 		"title": "Nuostatos"
 	},
+	"slideInContainer": {
+		"close": "Uždaryti",
+		"maximise": "Padidinti",
+		"minimise": "Sumažinti"
+	},
 	"starred": {
 		"liveEventsTabAll": "Visi",
 		"liveEventsTabStarred": "Pasirinkti"
@@ -1169,7 +1288,9 @@
 		"screens": "Ekranai"
 	},
 	"statistics": {
-		"eventStatsExternalLinkToolTip": "Spustelėkite, jei norite matyti varžybų statistiką"
+		"eventStatsExternalLinkToolTip": "Spustelėkite, jei norite matyti varžybų statistiką",
+		"tabTitle": "Statistika",
+		"title": "Statistika"
 	},
 	"streaming": {
 		"available": {
@@ -1216,7 +1337,8 @@
 	},
 	"termFilter": {
 		"menu": {
-			"streamedOnly": "Šou transliuoja tik renginius"
+			"streamedOnly": "Rodyti tik transliuojamus įvykius",
+			"upcomingLiveOnly": "Rodyti tik artimiausius įvykius, kuriems bus siūlomos Lažybos Gyvai"
 		}
 	},
 	"termSearch": {
@@ -1257,11 +1379,115 @@
 	"vet": {
 		"stake_not_integer2": "Statymas negalioja: dešimtainių dalių būti negali"
 	},
+	"visualisation": {
+		"extraTimeFullTime": "Visas laikas, įskaitant papildomą",
+		"extraTimeHalfTime": "Pusė laiko, įskaitant papildomą",
+		"fullTime": "Visas laikas",
+		"penaltyShootout": "Baudinių serija",
+		"waitingForAction": "Laukiama veiksmo"
+	},
+	"widgetSettings": {
+		"widgets": [
+			{
+				"widgetId": "gm-league-table",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/league-table-widget/v2.0.1/index.html"
+			},
+			{
+				"widgetId": "gm-team-performance",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/team-performance-widget/v1.0.4/index.html"
+			},
+			{
+				"widgetId": "gm-head-to-head",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/head-to-head-widget/v1.1.3/index.html"
+			},
+			{
+				"widgetId": "gm-euro-2016-player-specials",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/player-specials-widget/v1.0.2/index.html",
+				"height": 682
+			},
+			{
+				"widgetId": "gm-euro-2016-overview",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/finals-widget/v1.0.1/index.html",
+				"height": 200
+			},
+			{
+				"widgetId": "gm-euro-2016-lineup",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/lineup-widget/v1.1.0/index.html",
+				"height": 0
+			},
+			{
+				"widgetId": "gm-golden-boot",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/golden-boot-widget/v1.0.0/index.html",
+				"height": 294
+			},
+			{
+				"widgetId": "gm-tournament-winner",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/tournament-winner-widget/v1.0.0/index.html",
+				"height": 338
+			}
+		],
+		"targets": {
+			"landingPageFeed": [
+				{
+					"widgetId": "gm-tournament-winner",
+					"order": 3
+				},
+				{
+					"widgetId": "gm-euro-2016-player-specials",
+					"order": 6
+				},
+				{
+					"widgetId": "gm-golden-boot",
+					"order": 10
+				}
+			],
+			"home": [
+				{
+					"widgetId": "gm-euro-2016-overview",
+					"order": 1
+				}
+			],
+			"eventGroupBottom": [
+				{
+					"widgetId": "gm-league-table",
+					"order": 10,
+					"filter": "^/?filter/football/england/premier_league(/|$|{)",
+					"args": {
+						"headerDefaultTitle": "Premier League 2015/2016"
+					}
+				}
+			],
+			"eventBeforeBetOffers": [
+				{
+					"order": 1,
+					"widgetId": "gm-euro-2016-lineup",
+					"args": {},
+					"filter": "football/euro_2016|football/euro 2016"
+				}
+			],
+			"eventPrematchStats": [
+				{
+					"widgetId": "gm-team-performance",
+					"order": 10
+				},
+				{
+					"widgetId": "gm-head-to-head",
+					"order": 20
+				}
+			]
+		}
+	},
 	"showRacingTodayTab": true,
 	"enablePush": true,
 	"enableMaxStake": true,
 	"disableRacingModeBalanceLink": false,
 	"enableFilterMenu": true,
 	"enableTermSearch": true,
-	"instantBettingTitle": "Instant Betting"
-}
+	"instantBettingTitle": "Instant Betting",
+	"enableFootballVisualisation": true
+};

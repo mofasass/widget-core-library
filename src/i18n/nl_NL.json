@@ -1,5 +1,4 @@
-{
-	"LOCALE_IMPORT": "---",
+window._kbc.locale={
 	"N/A": "De race is afgelopen en niet langer beschikbaar.",
 	"account": {
 		"balance": "Saldo:",
@@ -367,29 +366,29 @@
 		"sizeCombination": "Combinatie",
 		"sizeDouble": "Dubbel",
 		"sizeDoubles": "Dubbel",
-		"sizeEight": "8Voudig",
-		"sizeEights": "8Voudigen",
-		"sizeEleven": "11Voudig",
-		"sizeElevens": "11Voudigen",
-		"sizeFive": "5Voudig",
-		"sizeFives": "5Voudigen",
-		"sizeFour": "4Voudig",
-		"sizeFours": "4Voudigen",
-		"sizeNine": "9Voudig",
-		"sizeNines": "9Voudigen",
-		"sizeSeven": "7Voudig",
-		"sizeSevens": "7Voudigen",
-		"sizeSingle": "1Voudig",
-		"sizeSingles": "1Voudigen",
-		"sizeSix": "6Voudig",
-		"sizeSixs": "6Voudigen",
+		"sizeEight": "Achtvoudig",
+		"sizeEights": "Achtvoudigen",
+		"sizeEleven": "Elfvoudig",
+		"sizeElevens": "Elfvoudigen",
+		"sizeFive": "Vijfvoudig",
+		"sizeFives": "Vijfvoudigen",
+		"sizeFour": "Viervoudig",
+		"sizeFours": "Viervoudigen",
+		"sizeNine": "Negenvoudig",
+		"sizeNines": "Negenvoudigen",
+		"sizeSeven": "Zevenvoudig",
+		"sizeSevens": "Zevenvoudigen",
+		"sizeSingle": "Enkelvoudig",
+		"sizeSingles": "Enkelvoudigen",
+		"sizeSix": "Zesvoudig",
+		"sizeSixs": "Zesvoudigen",
 		"sizeSystem": "Systeem",
-		"sizeTen": "10Voudig",
-		"sizeTens": "10Voudigen",
+		"sizeTen": "Tienvoudig",
+		"sizeTens": "Tienvoudigen",
 		"sizeTriple": "Treble",
 		"sizeTriples": "Trebles",
-		"sizeTwelve": "12Voudig",
-		"sizeTwelves": "12Voudigen"
+		"sizeTwelve": "Twaalfvoudig",
+		"sizeTwelves": "Twaalfvoudigen"
 	},
 	"common": {
 		"bet": "Inzet",
@@ -644,7 +643,7 @@
 			"allRaces": "ALLE RACES",
 			"alphabetical": "Alle",
 			"browseSport": "Bladeren {0}",
-			"featured": "Geselecteerd",
+			"featured": "Uitgelicht",
 			"liveAndUpcoming": "Live en binnenkort",
 			"nextOff": "VOLGENDE RACES",
 			"today": "Vandaag",
@@ -654,13 +653,27 @@
 	"events": {
 		"activities": "Gebeurtenissen",
 		"betoffers": "Wedaanbiedingen",
+		"cinematicView": "Filmische weergave",
+		"competitions": {
+			"default": "Competities"
+		},
+		"defaultView": "Standaard weergave",
 		"liveRightNow": "Nu live",
+		"matches": {
+			"default": "Match"
+		},
 		"noBetAndWatchEventsFound": "Om een race live te kunnen bekijken, moet je een kwalificatieweddenschap hebben afgesloten van ten minste £ 1 (of equivalent in andere valuta) de specifieke race.",
 		"noBetOffersFound": "Geen weddenschappen gevonden",
 		"noEventsFound": "Geen wedstrijden gevonden",
 		"noLiveEventsFound": "Geen live wedstrijden gevonden",
 		"startingSoon": "Start binnenkort",
-		"streaming": "Streaming"
+		"streaming": "Streaming",
+		"upcomingLive": "Aanstaande Live",
+		"visualisation": "Visualisatie"
+	},
+	"eventtypes": {
+		"nocompetitions": "Er zijn op dit moment geen competitie-evenementen beschikbaar.",
+		"nomatches": "Er zijn op dit moment geen wedstrijdevenementen beschikbaar."
 	},
 	"footer": {
 		"links": {
@@ -689,10 +702,12 @@
 		"infoLabel": "Info",
 		"label": {
 			"freeBet": "Gratis weddenschap",
+			"matchupFreeBet": "Match-up gratis inzet",
 			"profitBoost": "winststijging"
 		},
 		"labelShort": "fb",
 		"liveOnly": "Alleen live",
+		"matchupMaxAmount": "Maximale hoeveelheid gratis inzet {0}.",
 		"mobileOnly": "Alleen mobiel",
 		"namedSystemBet": "Vaste systeemweddenschappen (Trixie, Patent, Yankee, enz.)",
 		"noRestrictions": "Alle typen weddenschappen",
@@ -721,6 +736,7 @@
 		"statusPlaced": "Geplaatst",
 		"statusReserved": "Gereserveerd",
 		"statusUsed": "Gebruikt",
+		"useButtonLabel": "Use",
 		"validFor": "Geldig voor"
 	},
 	"grouplistpage": {
@@ -788,17 +804,36 @@
 	},
 	"liveFeedCard": {
 		"type": {
+			"attack": "Attack",
+			"ballOutOfPlay": "Bal buiten het speelveld",
+			"ballSafe": "In balbezit",
 			"corner": "Hoekschop",
+			"dangerousAttack": "Gevaarlijke aanval",
 			"freeKick": "Vrije trap",
 			"game": "Game",
 			"goal": "Doelpunt",
+			"goalKick": "Doeltrap",
+			"goalOpportunity": "Mogelijkheid voor doelpunt",
+			"halfTimeEnd": "Rust",
+			"inPossession": "In balbezit",
+			"injury": "Blessure",
 			"match": "Match",
+			"matchEnd": "Einde wedstrijd",
+			"offside": "Buitenspel",
 			"penalty": "Penalty",
+			"penaltyAwarded": "Strafschop toegekend",
+			"penaltyScored": "Strafschop gescoord",
+			"possibleCorner": "Mogelijke hoekschop",
+			"possibleFreeKick": "Mogelijke vrije trap",
+			"possibleThrowIn": "Mogelijke inworp",
 			"redCard": "Rode kaart",
 			"score": "Score",
 			"set": "Set",
+			"shot": "Schot",
 			"shotOffTarget": "Naast doel",
 			"shotOnTarget": "Op doel",
+			"substitution": "Vervanging",
+			"thowIn": "Inworp",
 			"yellowCard": "Gele kaart"
 		}
 	},
@@ -812,6 +847,16 @@
 			"title": "Belangrijke opmerking"
 		}
 	},
+	"livestatistics": {
+		"aceswon": "Aces",
+		"attacks": "Aanvallen",
+		"dangerousattacks": "Gevaarlijke aanvallen",
+		"possession": "Balbezit %",
+		"servicefaults": "Double Faults",
+		"shotsofftarget": "Schoten naast doel",
+		"shotsontarget": "Schoten op doel",
+		"title": "Live statistieken"
+	},
 	"locale": {
 		"freeBets": {
 			"pleaseLogin": "Je moet inloggen om je overzicht van gratis weddenschappen te bekijken"
@@ -823,6 +868,9 @@
 			"hideTransactions": "Transacties verbergen",
 			"showTransactions": "Transacties weergeven"
 		}
+	},
+	"maintenance": {
+		"release": "We plegen momenteel onderhoud aan de site. We verwachten om {0} weer terug te zijn. Onze excuses voor het ongemak en bedankt voor je geduld."
 	},
 	"mostpopular": {
 		"details": {
@@ -841,7 +889,9 @@
 	"navigationMenu": {
 		"betOfferCountPlural": "{0} weddenschappen in {1}",
 		"betOfferCountSingular": "1 weddenschap in {0}",
+		"bonusOffers": "My Bonus Offers",
 		"browse": "bladeren",
+		"fewerSports": "Minder sporten",
 		"live": "Live",
 		"startLobby": "Start lobby",
 		"startingSoon": "Start binnenkort",
@@ -850,7 +900,8 @@
 		"startsWithinMinutes": "Begin binnen {0} minuten"
 	},
 	"nowAndSoon": {
-		"nextUp": "Volgende wedstrijd"
+		"highlighted": "Uitgelicht",
+		"nextUp": "Straks"
 	},
 	"occurrence": {
 		"corner": "{0} kreeg een hoekschop",
@@ -976,6 +1027,10 @@
 			"text": "De totale noteringen zijn te hoog. Pas je wedcoupon aan.",
 			"title": "Noteringen te hoog"
 		},
+		"oddsTooLow": {
+			"text": "We kunnen weddenschappen op singles of combinaties met noteringen onder {0} helaas niet accepteren. Pas je wedcoupon aan.",
+			"title": "Noteringen te laag"
+		},
 		"oversizedBetSystem": {
 			"text": "Sorry, er is een maximum van 220 bets die je op je coupon kunt plaatsen, en je hebt er op dit moment meer. Pas je betslip aan.",
 			"title": "Ongeldige systeemweddenschap"
@@ -1090,6 +1145,65 @@
 			}
 		}
 	},
+	"rewards": {
+		"betsPlacedTitle": "Geplaatste weddenschappen:",
+		"bettingCriterion": {
+			"desktopOnly": "alleen desktop",
+			"eventClosed": "evenement dat gesloten is",
+			"eventGroupClosed": "evenementgroep die gesloten is",
+			"liveOnly": "alleen live",
+			"minCombinationOdds": "min combinatienoteringen",
+			"minOddsPerLeg": "min noteringen per leg",
+			"minStake": "min inzetbedrag",
+			"mobileOnly": "alleen mobiel",
+			"nonLiveOnly": "alleen niet-live",
+			"placeBetThatHas": "Plaats een dergelijke weddenschap:",
+			"sizeDoublesAndBigger": "dubbele en grotere combinaties",
+			"sizeEightsAndBigger": "dubbele en grotere combinaties",
+			"sizeElevensAndBigger": "dubbele en grotere combinaties",
+			"sizeFivesAndBigger": "vijfvoudige en grotere combinaties",
+			"sizeFoursAndBigger": "viervoudige en grotere combinaties",
+			"sizeNinesAndBigger": "negenvoudige en grotere combinaties",
+			"sizeSevensAndBigger": "negenvoudige en grotere combinaties",
+			"sizeSixsAndBigger": "zesvoudige en grotere combinaties",
+			"sizeTensAndBigger": "tienvoudige en grotere combinaties",
+			"sizeTriplesAndBigger": "drievoudige en grotere combinaties",
+			"sizeTwelves": "twelvefolds"
+		},
+		"pleaseLogin": "Je moet inloggen om je overzicht van bonusaanbiedingen te bekijken",
+		"qualifyingBetsTitle": "Kwalificerende weddenschappen:",
+		"showBonusOffersHeading": "Overzicht bonusaanbiedingen",
+		"validFor": {
+			"andBiggerCombos": "en grotere combinaties",
+			"desktopOnly": "alleen desktop",
+			"eachWay": "geplaatst",
+			"eventClosed": "evenement dat gesloten is",
+			"eventGroupClosed": "evenementgroep die gesloten is",
+			"liveOnly": "alleen live",
+			"mobileOnly": "alleen mobiel",
+			"namedSystemBet": "vaste systeemweddenschappen (Trixie, Patent, Yankee, enz.)",
+			"noRestrictions": "alle typen weddenschappen",
+			"nonEachWay": "niet geplaatst",
+			"nonLiveOnly": "alleen niet-live",
+			"nonSystemBet": "singles en combinaties",
+			"profitBoost": {
+				"maxExtraWinnings": "max. extra winst",
+				"maxStake": "max. inzet"
+			},
+			"sizeDoubles": "dubbele weddenschappen",
+			"sizeEights": "achtvoudig",
+			"sizeElevens": "elfvoudig",
+			"sizeFives": "vijfvoudig",
+			"sizeFours": "viervoudig",
+			"sizeNines": "negenvoudig",
+			"sizeSevens": "zevenvoudig",
+			"sizeSixs": "zesvoudig",
+			"sizeTens": "tienvoudig",
+			"sizeTriples": "drievoudig",
+			"sizeTwelves": "twaalfvoudig",
+			"validFor": "Geldig voor"
+		}
+	},
 	"scoreboard": {
 		"at": "om",
 		"racing": {
@@ -1146,6 +1260,11 @@
 		},
 		"title": "Instellingen"
 	},
+	"slideInContainer": {
+		"close": "Sluiten",
+		"maximise": "Maximaliseren",
+		"minimise": "Minimaliseren"
+	},
 	"starred": {
 		"liveEventsTabAll": "Alle",
 		"liveEventsTabStarred": "Geselecteerde"
@@ -1169,7 +1288,9 @@
 		"screens": "Schermen"
 	},
 	"statistics": {
-		"eventStatsExternalLinkToolTip": "Klik voor statistieken evenement"
+		"eventStatsExternalLinkToolTip": "Klik voor statistieken evenement",
+		"tabTitle": "Statistieken",
+		"title": "Statistieken"
 	},
 	"streaming": {
 		"available": {
@@ -1216,7 +1337,8 @@
 	},
 	"termFilter": {
 		"menu": {
-			"streamedOnly": "Laat alleen gestreamde evenementen zien"
+			"streamedOnly": "Laat alleen gestreamde evenementen zien",
+			"upcomingLiveOnly": "Laat alleen aanstaande live evenementen zien"
 		}
 	},
 	"termSearch": {
@@ -1257,11 +1379,115 @@
 	"vet": {
 		"stake_not_integer2": "Inzet ongeldig, mag geen decimalen bevatten"
 	},
+	"visualisation": {
+		"extraTimeFullTime": "Einde reguliere speeltijd - Verlenging",
+		"extraTimeHalfTime": "Rust - Verlenging",
+		"fullTime": "Einde speeltijd",
+		"penaltyShootout": "Strafschoppenserie",
+		"waitingForAction": "Wacht op actie"
+	},
+	"widgetSettings": {
+		"widgets": [
+			{
+				"widgetId": "gm-league-table",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/league-table-widget/v2.0.1/index.html"
+			},
+			{
+				"widgetId": "gm-team-performance",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/team-performance-widget/v1.0.4/index.html"
+			},
+			{
+				"widgetId": "gm-head-to-head",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/head-to-head-widget/v1.1.3/index.html"
+			},
+			{
+				"widgetId": "gm-euro-2016-player-specials",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/player-specials-widget/v1.0.2/index.html",
+				"height": 682
+			},
+			{
+				"widgetId": "gm-euro-2016-overview",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/finals-widget/v1.0.1/index.html",
+				"height": 200
+			},
+			{
+				"widgetId": "gm-euro-2016-lineup",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/lineup-widget/v1.1.0/index.html",
+				"height": 0
+			},
+			{
+				"widgetId": "gm-golden-boot",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/golden-boot-widget/v1.0.0/index.html",
+				"height": 294
+			},
+			{
+				"widgetId": "gm-tournament-winner",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/tournament-winner-widget/v1.0.0/index.html",
+				"height": 338
+			}
+		],
+		"targets": {
+			"landingPageFeed": [
+				{
+					"widgetId": "gm-tournament-winner",
+					"order": 3
+				},
+				{
+					"widgetId": "gm-euro-2016-player-specials",
+					"order": 6
+				},
+				{
+					"widgetId": "gm-golden-boot",
+					"order": 10
+				}
+			],
+			"home": [
+				{
+					"widgetId": "gm-euro-2016-overview",
+					"order": 1
+				}
+			],
+			"eventGroupBottom": [
+				{
+					"widgetId": "gm-league-table",
+					"order": 10,
+					"filter": "^/?filter/football/england/premier_league(/|$|{)",
+					"args": {
+						"headerDefaultTitle": "Premier League 2015/2016"
+					}
+				}
+			],
+			"eventBeforeBetOffers": [
+				{
+					"order": 1,
+					"widgetId": "gm-euro-2016-lineup",
+					"args": {},
+					"filter": "football/euro_2016|football/euro 2016"
+				}
+			],
+			"eventPrematchStats": [
+				{
+					"widgetId": "gm-team-performance",
+					"order": 10
+				},
+				{
+					"widgetId": "gm-head-to-head",
+					"order": 20
+				}
+			]
+		}
+	},
 	"showRacingTodayTab": true,
 	"enablePush": true,
 	"enableMaxStake": true,
 	"disableRacingModeBalanceLink": false,
 	"enableFilterMenu": true,
 	"enableTermSearch": true,
-	"instantBettingTitle": "Instant Betting"
-}
+	"instantBettingTitle": "Instant Betting",
+	"enableFootballVisualisation": true
+};

@@ -1,5 +1,4 @@
-{
-	"LOCALE_IMPORT": "---",
+window._kbc.locale={
 	"N/A": "Ο αγώνας έχει τελειώσει και δεν είναι πια διαθέσιμος.",
 	"account": {
 		"balance": "Υπόλοιπο:",
@@ -66,7 +65,7 @@
 		},
 		"invalidrequest": "Προέκυψε τεχνικό σφάλμα. Παρακαλούμε δοκιμάστε ξανά και επικοινωνήστε με το τμήμα υποστήριξης αν το πρόβλημα παραμένει.",
 		"loading": "Φορτώνει...",
-		"morebets": "Περισσότερα σ��οιχήματα",
+		"morebets": "Περισσότερα στοιχήματα",
 		"no_search_result": "Δεν υπάρχουν στοιχήματα που να ταιριάζουν με την αναζήτησή σας.",
 		"notavailable": "Παρακαλώ συνδεθείτε για να δείτε το ιστορικό στοιχημάτων",
 		"odds": "Αποδόσεις",
@@ -92,7 +91,7 @@
 		"sizesix": "εξαπλό",
 		"sizeten": "δεκαπλό",
 		"sizetriple": "τριπλό",
-		"sizetwelve": "δωδεκαπλό",
+		"sizetwelve": "Δωδεκαπλό",
 		"status": "Κατάσταση",
 		"statuses": {
 			"cancelled": "Ακυρώθηκε",
@@ -312,7 +311,7 @@
 	},
 	"betslipErrors": {
 		"eachWayChangeApprove": "Αποδέχεστε την αλλαγή των E/W όρων;",
-		"liveBettingNotAvailable": "Live betting δεν είναι διαθέσιμο στην περιοχή σας εξ��ιτίας των κανονισμών που υπάρχουν.",
+		"liveBettingNotAvailable": "Live betting δεν είναι διαθέσιμο στην περιοχή σας εξαιτίας των κανονισμών που υπάρχουν.",
 		"maximumOutcomes": "Στο κουπόνι στοιχημάτων επιτρέπονται έως {0} αποτελέσματα",
 		"mixedPoolCouponsAndOutcomes": "Please note that you are mixing poolbetting coupons with non-poolbetting outcomes. Stake-inputs do not affect poolbetting.",
 		"multiplePoolCoupons": "Please note that poolbetting coupons must be placed one by one.",
@@ -332,7 +331,7 @@
 	"browsernotsupported": "Συγγνώμη αλλά αυτός ο εξυπηρετητής δεν υποστηρίζεται ακόμα. Εργαζόμαστε για να προσθέσουμε υποστήριξη για περισσότερους εξυπηρετητές. Στο μεσοδιάστημα, παρακαλώ χρησιμοποιείστε τον προεπιλεγμένο εξυπηρετητή.",
 	"cashin": {
 		"cashedin": "Εξαργυρώθηκε",
-		"cashingin": "Διεκπεραίωση εξαργύρωσης...",
+		"cashingin": "Διεκπεραίωση εξ��ργύρωσης...",
 		"confirmation": {
 			"confirm": "Επιβεβαίωση",
 			"text": "Επιβεβαιώστε την εξαργύρωση"
@@ -347,7 +346,7 @@
 			},
 			"login_to_cash_in": "Αδυναμία εξαργύρωσης του στοιχήματος καθώς αποσυνδεθήκατε.",
 			"timeout": {
-				"text": "Αδυναμία εξαργύρωσης του στοιχήματος, δοκιμάστε ξανά αν θέλ��τε"
+				"text": "Αδυναμία εξαργύρωσης του στοιχήματος, δοκιμάστε ξανά αν θέλετε"
 			},
 			"title": "Εξαργύρωση",
 			"unknowncouponstatus": {
@@ -367,7 +366,7 @@
 		"sizeCombination": "Συνδυασμός",
 		"sizeDouble": "Διπλό",
 		"sizeDoubles": "Διπλά",
-		"sizeEight": "Οχταπλό",
+		"sizeEight": "Οκταπλό",
 		"sizeEights": "Οκταπλά",
 		"sizeEleven": "Ενδεκαπλό",
 		"sizeElevens": "Ενδεκαπλά",
@@ -427,7 +426,7 @@
 			"title": "Τεχνικό Πρόβλημα."
 		},
 		"6": {
-			"text": "Τεχνικό Πρό��λημα.",
+			"text": "Τεχνικό Πρόβλημα.",
 			"title": "Τεχνικό Πρόβλημα."
 		},
 		"7": {
@@ -531,7 +530,7 @@
 		},
 		"198": {
 			"text": "Τεχνικό Πρόβλημα.",
-			"title": "Τεχνικό Πρόβ��ημα."
+			"title": "Τεχνικό Πρόβλημα."
 		},
 		"199": {
 			"text": "Τεχνικό Πρόβλημα.",
@@ -646,7 +645,7 @@
 			"browseSport": "Περιήγηση {0}",
 			"featured": "Επιλεγμένα",
 			"liveAndUpcoming": "Live & Προσεχή γεγονότα",
-			"nextOff": "Next off",
+			"nextOff": "Επόμενη εκκίνηση",
 			"today": "Σήμερα",
 			"watch": "Watch"
 		}
@@ -654,13 +653,27 @@
 	"events": {
 		"activities": "Δραστηριότητες",
 		"betoffers": "Bet offers",
-		"liveRightNow": "LIVE ΑΜΕΣΩΣ ΤΩΡΑ",
+		"cinematicView": "Προβολή Cinematic",
+		"competitions": {
+			"default": "Διοργάνωση"
+		},
+		"defaultView": "Προβολή Default",
+		"liveRightNow": "LIVE ΤΩΡΑ",
+		"matches": {
+			"default": "Αγώνας"
+		},
 		"noBetAndWatchEventsFound": "Για να παρακολουθήσετε τον αγώνα σε ζωντανή μετάδοση, θα πρέπει πρώτα να τοποθετήσετε ένα στοίχημα τουλάχιστον 1 λίρας (ή αντίστοιχου νομίσματος)  στο συγκεκριμένο αγώνα.",
 		"noBetOffersFound": "Δε βρέθηκαν στοιχήματα",
 		"noEventsFound": "Δε βρέθηκαν γεγονότα",
 		"noLiveEventsFound": "Δε βρέθηκαν live γεγονότα",
 		"startingSoon": "Ξεκινά σύντομα",
-		"streaming": "Μετάδοση"
+		"streaming": "Μετάδοση",
+		"upcomingLive": "Προσεχή Live γεγονότα",
+		"visualisation": "Απεικόνιση"
+	},
+	"eventtypes": {
+		"nocompetitions": "Δεν υπάρχουν γεγονότα διοργανώσεων διαθέσιμα προς το παρόν.",
+		"nomatches": "Δεν υπάρχουν γεγονότα αγώνων διαθέσιμα προς το παρόν."
 	},
 	"footer": {
 		"links": {
@@ -688,13 +701,15 @@
 		"expiresLabel": "Λήγει",
 		"infoLabel": "Πληροφορίες",
 		"label": {
-			"freeBet": "Free bet",
+			"freeBet": "Δωρεάν Στοίχημα",
+			"matchupFreeBet": "Match-up free bet",
 			"profitBoost": "Profit Boost"
 		},
 		"labelShort": "fb",
 		"liveOnly": "Μόνο Live ",
+		"matchupMaxAmount": "Mέγιστο ποσό δωρεάν στοιχήματος {0}.",
 		"mobileOnly": "Μόνο για το κινητό",
-		"namedSystemBet": "Named system bets (Trixie, Patent, Yankee, etc)",
+		"namedSystemBet": "Γνωστά στοιχηματικά συστήματα (Trixie, Patent, Yankee, etc)",
 		"noRestrictions": "Όλα τα είδη στοιχημάτων",
 		"nonEachWay": "Non-Each Way",
 		"nonLiveOnly": "Μόνο Non-Live",
@@ -708,7 +723,7 @@
 		"pleaseLogin": "Παρακαλώ συνδεθείτε για να έχετε πρόσβαση στη σύνοψη δωρεάν στοιχημάτων",
 		"profitBoost": {
 			"maxExtraWinnings": "Mάξιμουμ έξτρα κέρδη",
-			"maxStake": "Max stake"
+			"maxStake": "Μέγιστο Ποντάρισμα"
 		},
 		"selector": {
 			"label": "Δωρεάν Στοιχήματα"
@@ -721,6 +736,7 @@
 		"statusPlaced": "Τοποθετήθηκε",
 		"statusReserved": "Έγινε κράτηση",
 		"statusUsed": "Χρησιμοποιήθηκε",
+		"useButtonLabel": "Χρησιμοποιείστε",
 		"validFor": "Έγκυρο για"
 	},
 	"grouplistpage": {
@@ -759,7 +775,7 @@
 			},
 			"title": {
 				"highlights": "Χάι Λάιτ",
-				"liveRightNowAggregate": "LIVE ΑΜΕΣΩΣ ΤΩΡΑ",
+				"liveRightNowAggregate": "LIVE ΤΩΡΑ",
 				"startingSoon": "Ξεκινά σύντομα",
 				"startingSoonAggregate": "Ξεκινά σύντομα",
 				"trending": "Δημοφιλή"
@@ -788,17 +804,36 @@
 	},
 	"liveFeedCard": {
 		"type": {
+			"attack": "Επίθεση",
+			"ballOutOfPlay": "Μπάλα εκτός παιχνιδιού",
+			"ballSafe": "Κατοχή μπάλας",
 			"corner": "Κόρνερ",
-			"freeKick": "Free kick",
+			"dangerousAttack": "Επικίνδυνη επίθεση",
+			"freeKick": "Χτύπημα φάουλ",
 			"game": "Παιχνίδι",
 			"goal": "Γκολ",
+			"goalKick": "Ελεύθερo χτύπημα",
+			"goalOpportunity": "Eυκαιρία γκολ",
+			"halfTimeEnd": "Hμίχρονο",
+			"inPossession": "Kατοχή μπάλας",
+			"injury": "Τραυματισμός",
 			"match": "Αγώνας",
-			"penalty": "Penalty",
+			"matchEnd": "Τέλος αγώνα",
+			"offside": "Οφσάιντ",
+			"penalty": "Πέναλτι",
+			"penaltyAwarded": "Δόθηκε πέναλτι",
+			"penaltyScored": "Εύστοχο πέναλτι",
+			"possibleCorner": "Πιθανό κόρνερ",
+			"possibleFreeKick": "Πιθανό χτύπημα φάουλ",
+			"possibleThrowIn": "Πιθανό πλάγιο άουτ",
 			"redCard": "Κόκκινη Κάρτα",
 			"score": "Σκορ",
 			"set": "Σετ",
+			"shot": "Σουτ",
 			"shotOffTarget": "Εκτός στόχου",
 			"shotOnTarget": "Εντός στόχου",
+			"substitution": "Αλλαγή",
+			"thowIn": "Πλάγιο Άουτ ",
 			"yellowCard": "Κίτρινη Κάρτα"
 		}
 	},
@@ -812,17 +847,30 @@
 			"title": "Σημαντική σημείωση"
 		}
 	},
+	"livestatistics": {
+		"aceswon": "Aces",
+		"attacks": "Επιθέσεις",
+		"dangerousattacks": "Επικίνδυνες επιθέσεις",
+		"possession": "Κατοχή %",
+		"servicefaults": "Double Faults",
+		"shotsofftarget": "Σουτ εκτός στόχου",
+		"shotsontarget": "Σουτ εντός στόχου",
+		"title": "Στατιστικά Live "
+	},
 	"locale": {
 		"freeBets": {
 			"pleaseLogin": "Παρακαλώ συνδεθείτε για να έχετε πρόσβαση στη σύνοψη δωρεάν στοιχημάτων"
 		},
 		"navigation": {
-			"showAllSports": "Eμφάνιση όλων των Σπορ"
+			"showAllSports": "Όλα τα Σπορ"
 		},
 		"transactions": {
 			"hideTransactions": "Απόκρυψη συναλλαγών",
 			"showTransactions": "Εμφάνιση συναλλαγών"
 		}
+	},
+	"maintenance": {
+		"release": "Πραγματοποιείται συντήρηση του δικτυακού τόπου. Υπολογίζουμε να επιστρέψουμε στις {0} CET. Ζητούμε συγγνώμη για την ταλαιπωρία και ευχαριστούμε για την υπομονή σας."
 	},
 	"mostpopular": {
 		"details": {
@@ -841,7 +889,9 @@
 	"navigationMenu": {
 		"betOfferCountPlural": "{0} στοιχήματα σε {1}",
 		"betOfferCountSingular": "1 στοίχημα σε {0}",
+		"bonusOffers": "My Bonus Offers",
 		"browse": "Περιήγηση",
+		"fewerSports": "Λιγότερα Σπορ",
 		"live": "Live",
 		"startLobby": "Εκκίνηση αρχικής οθόνης",
 		"startingSoon": "Ξεκινά σύντομα",
@@ -850,7 +900,8 @@
 		"startsWithinMinutes": "Ξεκινά σε {0} Λεπτά"
 	},
 	"nowAndSoon": {
-		"nextUp": "Next Up"
+		"highlighted": "Επιλεγμένα",
+		"nextUp": "Σύντομα"
 	},
 	"occurrence": {
 		"corner": "{0} πήρε κόρνερ",
@@ -935,11 +986,11 @@
 			"title": "Τεχνικό σφάλμα"
 		},
 		"mixedLiveAndPrematch": {
-			"text": "Λυπούμαστε, προς το παρόν δεν είναι εφικτός ο συ��δυασμός live και μη live στοιχημάτων.",
+			"text": "Λυπούμαστε, προς το παρόν δεν είναι εφικτός ο συνδυασμός live και μη live στοιχημάτων.",
 			"title": "Ο συνδυασμός δεν επιτρέπεται"
 		},
 		"multipleErrors": {
-			"text": "Λυπούμαστε, δεν μπορούμε να αποδεχτούμε το στοίχημά σας. Προσαρμόστε το κουπόνι στοιχημάτων σας.",
+			"text": "Λυπούμαστε, δεν μπορούμε να αποδεχτούμε το στοίχημά σας. Παρακαλώ τροποποιείστε το κουπόνι σας.",
 			"title": "Πολλαπλά σφάλματα"
 		},
 		"noStake": {
@@ -954,7 +1005,7 @@
 		"notCombinableAny": {
 			"text": "Ένα από τα στοιχήματα που προσθέσατε δε συνδυάζεται με ένα ή περισσότερα από τα υπόλοιπα στοιχήματα.",
 			"text1": "Παρακαλούμε, προσαρμόστε το κουπόνι στοιχημάτων σας ή αλλάξτε σε μονά.",
-			"title": "Δε γίνετα�� συνδυασμός"
+			"title": "Δε γίνεται συνδυασμός"
 		},
 		"notLoggedIn": {
 			"text": "Συνδεθείτε για να τοποθετήσετε το στοίχημα.",
@@ -973,11 +1024,15 @@
 			"title": "Οι αποδόσεις είναι πολύ υψηλές"
 		},
 		"oddsTooHigh": {
-			"text": "Οι συνολικές αποδόσεις είναι πολύ υψηλές. Προσαρμόστε το κουπόνι στοιχημάτων σας.",
+			"text": "Οι συνολικές αποδόσεις είναι πολύ υψηλές. Παρακαλώ τροποποιείστε το κουπόνι σας.",
 			"title": "Οι αποδόσεις είναι πολύ υψηλές"
 		},
+		"oddsTooLow": {
+			"text": "Δυστυχώς, δεν μπορούμε να δεχθούμε στοιχήματα σε μονά ή συνδυασμούς με αποδόσεις λιγότερο από {0}. Παρακαλώ τροποποιείστε το κουπόνι σας.",
+			"title": "Oι αποδόσεις είναι πολύ χαμηλές"
+		},
 		"oversizedBetSystem": {
-			"text": "Υπερβήκατε το μέγιστο αριθμό 220 στοιχημά��ων σε ένα κουπόνι και το στοίχημά σας υπερβαίνει αυτό τον αριθμό. Προσαρμόστε το κουπόνι στοιχημάτων σας.",
+			"text": "Υπερβήκατε το μέγιστο αριθμό 220 στοιχημάτων σε ένα κουπόνι και το στοίχημά σας υπερβαίνει αυτό τον αριθμό. Παρακαλώ τροποποιείστε το κουπόνι σας.",
 			"title": "Μη έγκυρο στοίχημα συστήματος"
 		},
 		"oversizedPoolBet": {
@@ -989,11 +1044,11 @@
 			"title": "Το ποντάρισμα είναι πολύ υψηλό. Θα χρησιμοποιήσετε το δωρεάν στοίχημα;"
 		},
 		"participantScratched": {
-			"text": "One or more participants have been removed. Please adjust your betslip.",
+			"text": "Ένα ή περισσότεροι συμμετέχοντες έχουν αφαιρεθεί. Παρακαλώ τροποποιείστε το κουπόνι σας.",
 			"title": "Non runner"
 		},
 		"pbaNotAllowed": {
-			"text": "Τα ποσά πονταρίσματος είναι πολύ υψηλά και η μη αυτόματη έγκριση δε διατίθεται για ��υτά τα στοιχήματα.",
+			"text": "Τα ποσά πονταρίσματος είναι πολύ υψηλά και η μη αυτόματη έγκριση δε διατίθεται για αυτά τα στοιχήματα.",
 			"text1": "Προσαρμόστε το ποσό πονταρίσματος.",
 			"title": "Το ποσό πονταρίσματος είναι πολύ υψηλό"
 		},
@@ -1004,7 +1059,7 @@
 		"pbtWinningsTooHigh": {
 			"text": "To μέγιστο ποσό πονταρίσματος σε αυτές τις αποδόσεις είναι {0}."
 		},
-		"pleaseAdjust": "Παρακαλούμε, προσαρμόστε το κουπόνι στοιχημάτων σας.",
+		"pleaseAdjust": "Παρακαλούμε τροποποιείστε το κουπόνι σας.",
 		"rejectedOverLimit": {
 			"text": "Το στοίχημα δεν μπορεί να τοποθετηθεί επειδή ένα σχετικό στοίχημα περιμένει έγκριση ή έχει απορριφθεί.",
 			"title": "Υπέρβαση ορίου"
@@ -1014,7 +1069,7 @@
 			"title": "Το στοίχημα δεν τοποθετήθηκε"
 		},
 		"stakeTooHigh": {
-			"text": "Λυπούμαστε, το μέγιστο επιτρεπτό ποσό πονταρίσματος ε��ναι {0}.",
+			"text": "Λυπούμαστε, το μέγιστο επιτρεπτό ποσό πονταρίσματος είναι {0}.",
 			"text1": "Το κουπόνι στοιχημάτων σας θα προσαρμοστεί.",
 			"title": "Το ποσό πονταρίσματος είναι πολύ υψηλό"
 		},
@@ -1090,6 +1145,65 @@
 			}
 		}
 	},
+	"rewards": {
+		"betsPlacedTitle": "To στοίχημα τοποθετήθηκε:",
+		"bettingCriterion": {
+			"desktopOnly": "χρήση desktop μόνο",
+			"eventClosed": "γεγονός που έκλεισε",
+			"eventGroupClosed": "το event group έκλεισε",
+			"liveOnly": "μόνο live ",
+			"minCombinationOdds": "ελάχιστες αποδόσεις συνδυασμών",
+			"minOddsPerLeg": "ελάχιστες αποδόσεις ανά leg",
+			"minStake": "ελάχιστον ποσό πονταρίσματος",
+			"mobileOnly": "μόνο συσκευές κινητού",
+			"nonLiveOnly": "μόνο non-live",
+			"placeBetThatHas": "Τοποθετείστε ένα στοίχημα που είναι/έχει:",
+			"sizeDoublesAndBigger": "διπλά και μεγαλύτεροι συνδυασμοί",
+			"sizeEightsAndBigger": "Οκταπλά και μεγαλύτεροι συνδυασμοί",
+			"sizeElevensAndBigger": "Ενδεκαπλά και μεγαλύτεροι συνδυασμοί",
+			"sizeFivesAndBigger": "Πενταπλά και μεγαλύτεροι συνδυασμοί",
+			"sizeFoursAndBigger": "Τετραπλά και μεγαλύτεροι συνδυασμοί",
+			"sizeNinesAndBigger": "Εννιαπλά και μεγαλύτεροι συνδυασμοί",
+			"sizeSevensAndBigger": "Επταπλά και μεγαλύτεροι συνδυασμοί",
+			"sizeSixsAndBigger": "Εξαπλά και μεγαλύτεροι συνδυασμοί",
+			"sizeTensAndBigger": "Δεκαπλά και μεγαλύτεροι συνδυασμοί",
+			"sizeTriplesAndBigger": "Τριπλά και μεγαλύτεροι συνδυασμοί",
+			"sizeTwelves": "Δωδεκαπλά"
+		},
+		"pleaseLogin": "Παρακαλώ συνδεθείτε για να έχετε πρόσβαση στη σύνοψη με τις μπόνους προσφορές",
+		"qualifyingBetsTitle": "Έγκυρα Στοιχήματα:",
+		"showBonusOffersHeading": "Σύνοψη μπόνους προσφορών",
+		"validFor": {
+			"andBiggerCombos": "και μεγαλύτεροι συνδυασμοί",
+			"desktopOnly": "μόνο χρήση desktop ",
+			"eachWay": "each way",
+			"eventClosed": "το event που έκλεισε",
+			"eventGroupClosed": "το event group που έκλεισε",
+			"liveOnly": "Μόνο Live ",
+			"mobileOnly": "μόνο για φορητές συσκευές",
+			"namedSystemBet": "Γνωστά στοιχηματικά συστήματα (Trixie, Patent, Yankee, etc)",
+			"noRestrictions": "όλα τα είδη στοιχημάτων",
+			"nonEachWay": "non-each way",
+			"nonLiveOnly": "Μόνο Non-Live",
+			"nonSystemBet": "μονά και συνδυασμοί",
+			"profitBoost": {
+				"maxExtraWinnings": "Mάξιμουμ έξτρα κέρδη",
+				"maxStake": "Μέγιστο Ποντάρισμα"
+			},
+			"sizeDoubles": "Διπλά",
+			"sizeEights": "Οκταπλά",
+			"sizeElevens": "Ενδεκαπλά",
+			"sizeFives": "Πενταπλά",
+			"sizeFours": "Τετραπλά",
+			"sizeNines": "Εννιαπλά",
+			"sizeSevens": "Επταπλά",
+			"sizeSixs": "Εξαπλά",
+			"sizeTens": "Δεκαπλά",
+			"sizeTriples": "Τριπλά",
+			"sizeTwelves": "Δωδεκαπλά",
+			"validFor": "Έγκυρο για"
+		}
+	},
 	"scoreboard": {
 		"at": "στις",
 		"racing": {
@@ -1100,7 +1214,7 @@
 		}
 	},
 	"selectedScreens": {
-		"heading": "Eπιλεγ��ένες Οθόνες"
+		"heading": "Eπιλεγμένες Οθόνες"
 	},
 	"settings": {
 		"betslip": "Κουπόνι",
@@ -1146,6 +1260,11 @@
 		},
 		"title": "Ρυθμίσεις"
 	},
+	"slideInContainer": {
+		"close": "Κλείσιμο",
+		"maximise": "Μεγιστοποίηση",
+		"minimise": "Ελαχιστοποίηση"
+	},
 	"starred": {
 		"liveEventsTabAll": "Όλοι οι Αγώνες",
 		"liveEventsTabStarred": "Επιλεγμένα"
@@ -1169,7 +1288,9 @@
 		"screens": "SCREENS"
 	},
 	"statistics": {
-		"eventStatsExternalLinkToolTip": "Κάντε κλικ για να δείτε στατιστικά"
+		"eventStatsExternalLinkToolTip": "Κάντε κλικ για να δείτε στατιστικά",
+		"tabTitle": "Στατιστικά",
+		"title": "Στατιστικά"
 	},
 	"streaming": {
 		"available": {
@@ -1216,7 +1337,8 @@
 	},
 	"termFilter": {
 		"menu": {
-			"streamedOnly": "Show streamed events only"
+			"streamedOnly": "Show streamed events only",
+			"upcomingLiveOnly": "Εμφάνιση μόνο Προσεχών Live γεγονότων"
 		}
 	},
 	"termSearch": {
@@ -1257,11 +1379,115 @@
 	"vet": {
 		"stake_not_integer2": "To στοίχημα δεν είναι έγκυρο, δεν πρέπει να περιέχει δεκαδικά"
 	},
+	"visualisation": {
+		"extraTimeFullTime": "Kανονική Διάρκεια - Καθυστερήσεις",
+		"extraTimeHalfTime": "Ημίχρονο - Καθυστερήσεις",
+		"fullTime": "Συνολική Διάρκεια Αγώνα",
+		"penaltyShootout": "Διαδικασία εκτέλεσης πέναλτι",
+		"waitingForAction": "Περιμένοντας για δράση"
+	},
+	"widgetSettings": {
+		"widgets": [
+			{
+				"widgetId": "gm-league-table",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/league-table-widget/v2.0.1/index.html"
+			},
+			{
+				"widgetId": "gm-team-performance",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/team-performance-widget/v1.0.4/index.html"
+			},
+			{
+				"widgetId": "gm-head-to-head",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/head-to-head-widget/v1.1.3/index.html"
+			},
+			{
+				"widgetId": "gm-euro-2016-player-specials",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/player-specials-widget/v1.0.2/index.html",
+				"height": 682
+			},
+			{
+				"widgetId": "gm-euro-2016-overview",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/finals-widget/v1.0.1/index.html",
+				"height": 200
+			},
+			{
+				"widgetId": "gm-euro-2016-lineup",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/lineup-widget/v1.1.0/index.html",
+				"height": 0
+			},
+			{
+				"widgetId": "gm-golden-boot",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/golden-boot-widget/v1.0.0/index.html",
+				"height": 294
+			},
+			{
+				"widgetId": "gm-tournament-winner",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/tournament-winner-widget/v1.0.0/index.html",
+				"height": 338
+			}
+		],
+		"targets": {
+			"landingPageFeed": [
+				{
+					"widgetId": "gm-tournament-winner",
+					"order": 3
+				},
+				{
+					"widgetId": "gm-euro-2016-player-specials",
+					"order": 6
+				},
+				{
+					"widgetId": "gm-golden-boot",
+					"order": 10
+				}
+			],
+			"home": [
+				{
+					"widgetId": "gm-euro-2016-overview",
+					"order": 1
+				}
+			],
+			"eventGroupBottom": [
+				{
+					"widgetId": "gm-league-table",
+					"order": 10,
+					"filter": "^/?filter/football/england/premier_league(/|$|{)",
+					"args": {
+						"headerDefaultTitle": "Premier League 2015/2016"
+					}
+				}
+			],
+			"eventBeforeBetOffers": [
+				{
+					"order": 1,
+					"widgetId": "gm-euro-2016-lineup",
+					"args": {},
+					"filter": "football/euro_2016|football/euro 2016"
+				}
+			],
+			"eventPrematchStats": [
+				{
+					"widgetId": "gm-team-performance",
+					"order": 10
+				},
+				{
+					"widgetId": "gm-head-to-head",
+					"order": 20
+				}
+			]
+		}
+	},
 	"showRacingTodayTab": true,
 	"enablePush": true,
 	"enableMaxStake": true,
 	"disableRacingModeBalanceLink": false,
 	"enableFilterMenu": true,
 	"enableTermSearch": true,
-	"instantBettingTitle": "Instant Betting"
-}
+	"instantBettingTitle": "Instant Betting",
+	"enableFootballVisualisation": true
+};

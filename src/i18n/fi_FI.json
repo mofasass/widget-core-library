@@ -1,5 +1,4 @@
-{
-	"LOCALE_IMPORT": "---",
+window._kbc.locale={
 	"N/A": "Kilpailu on päättynyt eikä enää saatavilla.",
 	"account": {
 		"balance": "Saldo:",
@@ -367,29 +366,29 @@
 		"sizeCombination": "Yhdistelmä",
 		"sizeDouble": "Tupla",
 		"sizeDoubles": "Tuplat",
-		"sizeEight": "8Yhdistelmä",
-		"sizeEights": "8Yhtymät",
-		"sizeEleven": "11Yhdistelmä",
-		"sizeElevens": "11Yhtymät",
-		"sizeFive": "5Yhdistelmä",
-		"sizeFives": "5Yhtymät",
-		"sizeFour": "4Yhdistelmä",
-		"sizeFours": "4Yhtymät",
-		"sizeNine": "9Yhdistelmä",
-		"sizeNines": "9Yhtymät",
-		"sizeSeven": "7Yhdistelmä",
-		"sizeSevens": "7Yhtymät",
-		"sizeSingle": "Yksittäinen",
+		"sizeEight": "Kahdeksan yhdistelmä",
+		"sizeEights": "Kahdeksan yhdistelmät",
+		"sizeEleven": "Yhdentoista yhdistelmä",
+		"sizeElevens": "Yhdentoista yhdistelmät",
+		"sizeFive": "Viiden yhdistelmä",
+		"sizeFives": "Viiden yhdistelmät",
+		"sizeFour": "Neljän yhdistelmä",
+		"sizeFours": "Neljän yhdistelmät",
+		"sizeNine": "Yhdeksän yhdistelmä",
+		"sizeNines": "Yhdeksän yhdistelmät",
+		"sizeSeven": "Seitsemän yhdistelmä",
+		"sizeSevens": "Seitsemän yhdistelmät",
+		"sizeSingle": "Single",
 		"sizeSingles": "Yksittäiset",
-		"sizeSix": "6Yhdistelmä",
-		"sizeSixs": "6Yhtymät",
+		"sizeSix": "Kuuden yhdistelmä",
+		"sizeSixs": "Kuuden yhdistelmät",
 		"sizeSystem": "Järjestelmä",
-		"sizeTen": "10Yhdistelmä",
-		"sizeTens": "10Yhtymät",
+		"sizeTen": "Kymmenen yhdistelmä",
+		"sizeTens": "Kymmenen yhdistelmät",
 		"sizeTriple": "Tripla",
 		"sizeTriples": "Triplat",
-		"sizeTwelve": "12Yhdistelmä",
-		"sizeTwelves": "12Yhtymät"
+		"sizeTwelve": "Kahdentoista yhdistelmä",
+		"sizeTwelves": "Kahdentoista yhdistelmät"
 	},
 	"common": {
 		"bet": "Veto",
@@ -654,13 +653,27 @@
 	"events": {
 		"activities": "Tapahtumat",
 		"betoffers": "Vetotarjoukset",
+		"cinematicView": "Elokuvanäkymä",
+		"competitions": {
+			"default": "Voittajavedot"
+		},
+		"defaultView": "Oletusnäkymä",
 		"liveRightNow": "Livenä juuri nyt",
+		"matches": {
+			"default": "Match"
+		},
 		"noBetAndWatchEventsFound": "Katsoaksesi kilpailun livenä sinulla täytyy olla asetettuna vähintään 1 £ hyväksytty veto (tai vastaava muussa valuutassa) kyseiseen kilpailuun.",
 		"noBetOffersFound": "Ei vetokohteita",
 		"noEventsFound": "Ei kohteita",
 		"noLiveEventsFound": "Ei live -kohteita",
 		"startingSoon": "Alkaa pian",
-		"streaming": "Suoratoistetaan"
+		"streaming": "Suoratoistetaan",
+		"upcomingLive": "Tulossa oleva live",
+		"visualisation": "Visualisointi"
+	},
+	"eventtypes": {
+		"nocompetitions": "Ei yhtään kilpailutapahtumaa tällä hetkellä.",
+		"nomatches": "Ei yhtään ottelutapahtumaa tällä hetkellä."
 	},
 	"footer": {
 		"links": {
@@ -689,10 +702,12 @@
 		"infoLabel": "Info",
 		"label": {
 			"freeBet": "Ilmainen veto",
+			"matchupFreeBet": "Vastaava ilmaisveto",
 			"profitBoost": "Voittojen korotus"
 		},
 		"labelShort": "fb",
 		"liveOnly": "Vain live",
+		"matchupMaxAmount": "Ilmaisvedon enimmäissumma {0}",
 		"mobileOnly": "Vain mobiililaitteet",
 		"namedSystemBet": "Nimetyt järjestelmävedot (Trixie, Patent, Yankee jne.)",
 		"noRestrictions": "Kaikki vetotyypit",
@@ -721,6 +736,7 @@
 		"statusPlaced": "Asetettu",
 		"statusReserved": "Varattu",
 		"statusUsed": "Käytetty",
+		"useButtonLabel": "Käytä",
 		"validFor": "Voimassa"
 	},
 	"grouplistpage": {
@@ -788,17 +804,36 @@
 	},
 	"liveFeedCard": {
 		"type": {
+			"attack": "Attack",
+			"ballOutOfPlay": "Pallo pois pelistä",
+			"ballSafe": "Ball safe",
 			"corner": "Kulma",
+			"dangerousAttack": "Vaarallinen hyökkäys",
 			"freeKick": "Vapaapotku",
 			"game": "Peli",
 			"goal": "Maali",
+			"goalKick": "Maalipotku",
+			"goalOpportunity": "Maalintekomahdollisuus",
+			"halfTimeEnd": "Puoliaika",
+			"inPossession": "Pallo omalla puoliskolla",
+			"injury": "Loukkaantuminen",
 			"match": "Ottelu",
+			"matchEnd": "Ottelun loppu",
+			"offside": "Paitsio",
 			"penalty": "Rangaistus",
+			"penaltyAwarded": "Annettu rangaistuspotku",
+			"penaltyScored": "Rangaistuspotkumaali",
+			"possibleCorner": "Mahdollinen kulmapotku",
+			"possibleFreeKick": "Mahdollinen vapaapotku",
+			"possibleThrowIn": "Mahdollinen sisäänheitto",
 			"redCard": "Punainen kortti",
 			"score": "Tulos",
 			"set": "Erä",
-			"shotOffTarget": "Ohi menneet",
+			"shot": "Laukaus",
+			"shotOffTarget": "Ohilaukaus",
 			"shotOnTarget": "Kohti menneet",
+			"substitution": "Vaihto",
+			"thowIn": "Sisäänheitto",
 			"yellowCard": "Keltainen kortti"
 		}
 	},
@@ -812,17 +847,30 @@
 			"title": "Tärkeää"
 		}
 	},
+	"livestatistics": {
+		"aceswon": "Ässät",
+		"attacks": "Attacks",
+		"dangerousattacks": "Vaaralliset hyökkäykset",
+		"possession": "Possession %",
+		"servicefaults": "Kaksoisvirheet",
+		"shotsofftarget": "Laukaukset ohi maalin",
+		"shotsontarget": "Shots on target",
+		"title": "Live statistics"
+	},
 	"locale": {
 		"freeBets": {
 			"pleaseLogin": "Kirjaudu sisään nähdäksesi ilmaisten vetojesi tiivistelmä"
 		},
 		"navigation": {
-			"showAllSports": "Näytä kaikki lajit"
+			"showAllSports": "Kaikki lajit"
 		},
 		"transactions": {
 			"hideTransactions": "Piilota tilitapahtumat",
 			"showTransactions": "Näytä tilitapahtumat"
 		}
+	},
+	"maintenance": {
+		"release": "Suoritamme parhaillaan sivuston ylläpitoa. Odotamme sivuston olevan kunnossa kello {0}.  Pahoittelemme ja kiitämme kärsivällisyydestänne."
 	},
 	"mostpopular": {
 		"details": {
@@ -841,7 +889,9 @@
 	"navigationMenu": {
 		"betOfferCountPlural": "{0} vetotarjousta: {1}",
 		"betOfferCountSingular": "1 vetotarjous: {0}",
-		"browse": "selaa",
+		"bonusOffers": "Bonustarjoukseni",
+		"browse": "Selaa",
+		"fewerSports": "Vähemmän urheiluja",
 		"live": "Live",
 		"startLobby": "Aloitussivu",
 		"startingSoon": "Alkaa pian",
@@ -850,7 +900,8 @@
 		"startsWithinMinutes": "Alkaa {0} minuutin kuluessa"
 	},
 	"nowAndSoon": {
-		"nextUp": "Next Up"
+		"highlighted": "Suositellut",
+		"nextUp": "Seuraavaksi"
 	},
 	"occurrence": {
 		"corner": "{0} sai kulmapotkun",
@@ -862,7 +913,7 @@
 		"american": "Amerikkalainen",
 		"decimal": "Desimaali",
 		"fractional": "Murto-osa",
-		"label": "Katso kertoimet muodossa"
+		"label": "Kertoimien esitysmuoto"
 	},
 	"oldbrowsernotsupported": "Pahoittelut. Selaintasi ei tueta (näytä tuetut selaimet).",
 	"outcomes": {
@@ -975,6 +1026,10 @@
 		"oddsTooHigh": {
 			"text": "Kokonaistodennäköisyys on liian korkea. Muokkaa kuponkiasi.",
 			"title": "Liian korkeat kertoimet"
+		},
+		"oddsTooLow": {
+			"text": "Pahoittelut. Emme voi hyväksyä yksittäisiä tai yhdistelmävetoja, joiden kertoimet ovat alle {0}. Muokkaa kuponkiasi.",
+			"title": "Kertoimet liian pienet"
 		},
 		"oversizedBetSystem": {
 			"text": "Valitettavasti hyväksymme korkeintaan 220 vetoa kupongille, ja valintasi ylittää tämän määrän. Ole hyvä ja muuta valintaasi.",
@@ -1090,6 +1145,65 @@
 			}
 		}
 	},
+	"rewards": {
+		"betsPlacedTitle": "Asetetut vedot:",
+		"bettingCriterion": {
+			"desktopOnly": "vain tietokonekäytölle",
+			"eventClosed": "tapahtuma, joka on suljettu",
+			"eventGroupClosed": "tapahtumaryhmä, joka on suljettu",
+			"liveOnly": "vain live",
+			"minCombinationOdds": "min. yhdistelmäkertoimet",
+			"minOddsPerLeg": "min. kertoimet / osa",
+			"minStake": "min. panosmäärä",
+			"mobileOnly": "vain mobiililaitteet",
+			"nonLiveOnly": "vain ei-live",
+			"placeBetThatHas": "Aseta veto joka/jolla on:",
+			"sizeDoublesAndBigger": "tuplat ja suuremmat yhdistelmät",
+			"sizeEightsAndBigger": "kahdeksankertaiset ja suuremmat yhdistelmät",
+			"sizeElevensAndBigger": "yksitoistakertaiset ja suuremmat yhdistelmät",
+			"sizeFivesAndBigger": "viisinkertaiset ja suuremmat yhdistelmät",
+			"sizeFoursAndBigger": "nelinkertaiset ja suuremmat yhdistelmät",
+			"sizeNinesAndBigger": "yhdeksänkertaiset ja suuremmiat yhdistelmät",
+			"sizeSevensAndBigger": "seitsemänkertaiset ja suuremmat yhdistelmät",
+			"sizeSixsAndBigger": "kuusinkertaiset ja suuremmat yhdistelmät",
+			"sizeTensAndBigger": "kymmenkertaiset ja suuremmat yhdistelmät",
+			"sizeTriplesAndBigger": "kolminkertaiset ja suuremmat yhdistelmät",
+			"sizeTwelves": "kaksitoistakertaiset"
+		},
+		"pleaseLogin": "Kirjaudu sisään katsoaksesi bonustarjoustesi katsauksen",
+		"qualifyingBetsTitle": "Voimassa olevat vedot:",
+		"showBonusOffersHeading": "Bonustarjousten katsaus",
+		"validFor": {
+			"andBiggerCombos": "ja suuremmille yhdistelmille",
+			"desktopOnly": "vain tietokonekäytölle",
+			"eachWay": "kumpaankin suuntaan",
+			"eventClosed": "tapahtuma, joka on suljettu",
+			"eventGroupClosed": "tapahtumaryhmä, joka on suljettu",
+			"liveOnly": "vain live",
+			"mobileOnly": "vain mobiililaitteet",
+			"namedSystemBet": "nimetyt järjestelmävedot (Trixie, Patent, Yankee jne.)",
+			"noRestrictions": "kaikille vetotyypeille",
+			"nonEachWay": "ei molempiin suuntiin",
+			"nonLiveOnly": "vain ei-live",
+			"nonSystemBet": "yksittäiset ja yhdistelmät",
+			"profitBoost": {
+				"maxExtraWinnings": "Maks. lisävoitot",
+				"maxStake": "Maks. panos"
+			},
+			"sizeDoubles": "tuplat",
+			"sizeEights": "kahdeksankertaiset",
+			"sizeElevens": "yksitoistakertaiset",
+			"sizeFives": "viisinkertaiset",
+			"sizeFours": "nelinkertaiset",
+			"sizeNines": "yhdeksänkertaiset",
+			"sizeSevens": "seisemänkertaiset",
+			"sizeSixs": "kuusinkertaiset",
+			"sizeTens": "kymmenkertaiset",
+			"sizeTriples": "kolminkertaiset",
+			"sizeTwelves": "kaksitoistakertaiset",
+			"validFor": "Voimassa"
+		}
+	},
 	"scoreboard": {
 		"at": "kohteessa",
 		"racing": {
@@ -1140,11 +1254,16 @@
 			},
 			"showmenu": {
 				"text": "Ottaa käyttöön painikkeen vaihtoehdot",
-				"title": "Hyväksy kertoimet muodossa"
+				"title": "Ota käyttöön kerroinmuutosten asetukset"
 			},
-			"title": "Kertoimet muuttavat käyttäytymistä"
+			"title": "Kerroinmuutosten asetukset"
 		},
 		"title": "Asetukset"
+	},
+	"slideInContainer": {
+		"close": "Sulje",
+		"maximise": "Suurenna",
+		"minimise": "Pienennä"
 	},
 	"starred": {
 		"liveEventsTabAll": "Kaikki",
@@ -1162,14 +1281,16 @@
 	},
 	"startpage": {
 		"atoz": "Laji",
-		"popular": "Suosikit",
+		"popular": "Suositut",
 		"racingModeHideSports": "Piilota lajit",
 		"racingModeShowSports": "Näytä lajit",
 		"racingSports": "Racing",
 		"screens": "Naytot!"
 	},
 	"statistics": {
-		"eventStatsExternalLinkToolTip": "Klikkaa tästä nähdäksesi tapahtuman statistiikat"
+		"eventStatsExternalLinkToolTip": "Klikkaa tästä nähdäksesi tapahtuman statistiikat",
+		"tabTitle": "Tilastotiedot",
+		"title": "Tilastotiedot"
 	},
 	"streaming": {
 		"available": {
@@ -1216,12 +1337,13 @@
 	},
 	"termFilter": {
 		"menu": {
-			"streamedOnly": "Nöytä vain suoratoistotapahtumat"
+			"streamedOnly": "Näytä vain Live-stream tapahtumat",
+			"upcomingLiveOnly": "Näytä vain tulossa olevat Live-tapahtumat"
 		}
 	},
 	"termSearch": {
 		"heading": {
-			"popular": "Suosittu / Trenditys",
+			"popular": "Suositut",
 			"previous": "Äskettäin haetut",
 			"search": {
 				"groups": "Urheilulajit, alueet ja liigat",
@@ -1230,7 +1352,7 @@
 		},
 		"minimumCharacters": "Haku edellyttää vähintään {0} merkkiä",
 		"noSearchResults": "Hakutuloksia ei löytynyt \"{0}\" haulle",
-		"placeholder": "Etsi urheiluja, liigat tai joukkueet"
+		"placeholder": "Etsi urheilulajeja, liigoja tai joukkueita"
 	},
 	"todaysRacing": {
 		"header": "Kisat tänään",
@@ -1257,11 +1379,115 @@
 	"vet": {
 		"stake_not_integer2": "Panos ei kelpaa, ei voi sisältää desimaaleja"
 	},
+	"visualisation": {
+		"extraTimeFullTime": "Full Time - Extra Time",
+		"extraTimeHalfTime": "Half Time - Extra Time",
+		"fullTime": "Täysi aika",
+		"penaltyShootout": "Rangaistuslaukauskilpailu",
+		"waitingForAction": "Odottaa toimintaa"
+	},
+	"widgetSettings": {
+		"widgets": [
+			{
+				"widgetId": "gm-league-table",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/league-table-widget/v2.0.1/index.html"
+			},
+			{
+				"widgetId": "gm-team-performance",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/team-performance-widget/v1.0.4/index.html"
+			},
+			{
+				"widgetId": "gm-head-to-head",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/head-to-head-widget/v1.1.3/index.html"
+			},
+			{
+				"widgetId": "gm-euro-2016-player-specials",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/player-specials-widget/v1.0.2/index.html",
+				"height": 682
+			},
+			{
+				"widgetId": "gm-euro-2016-overview",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/finals-widget/v1.0.1/index.html",
+				"height": 200
+			},
+			{
+				"widgetId": "gm-euro-2016-lineup",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/lineup-widget/v1.1.0/index.html",
+				"height": 0
+			},
+			{
+				"widgetId": "gm-golden-boot",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/golden-boot-widget/v1.0.0/index.html",
+				"height": 294
+			},
+			{
+				"widgetId": "gm-tournament-winner",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/tournament-winner-widget/v1.0.0/index.html",
+				"height": 338
+			}
+		],
+		"targets": {
+			"landingPageFeed": [
+				{
+					"widgetId": "gm-tournament-winner",
+					"order": 3
+				},
+				{
+					"widgetId": "gm-euro-2016-player-specials",
+					"order": 6
+				},
+				{
+					"widgetId": "gm-golden-boot",
+					"order": 10
+				}
+			],
+			"home": [
+				{
+					"widgetId": "gm-euro-2016-overview",
+					"order": 1
+				}
+			],
+			"eventGroupBottom": [
+				{
+					"widgetId": "gm-league-table",
+					"order": 10,
+					"filter": "^/?filter/football/england/premier_league(/|$|{)",
+					"args": {
+						"headerDefaultTitle": "Premier League 2015/2016"
+					}
+				}
+			],
+			"eventBeforeBetOffers": [
+				{
+					"order": 1,
+					"widgetId": "gm-euro-2016-lineup",
+					"args": {},
+					"filter": "football/euro_2016|football/euro 2016"
+				}
+			],
+			"eventPrematchStats": [
+				{
+					"widgetId": "gm-team-performance",
+					"order": 10
+				},
+				{
+					"widgetId": "gm-head-to-head",
+					"order": 20
+				}
+			]
+		}
+	},
 	"showRacingTodayTab": true,
 	"enablePush": true,
 	"enableMaxStake": true,
 	"disableRacingModeBalanceLink": false,
 	"enableFilterMenu": true,
 	"enableTermSearch": true,
-	"instantBettingTitle": "Instant Betting"
-}
+	"instantBettingTitle": "Instant Betting",
+	"enableFootballVisualisation": true
+};

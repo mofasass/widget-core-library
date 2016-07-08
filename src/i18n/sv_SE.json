@@ -1,5 +1,4 @@
-{
-	"LOCALE_IMPORT": "---",
+window._kbc.locale={
 	"N/A": "Loppet är avslutat och inte längre tillgängligt.",
 	"account": {
 		"balance": "Saldo:",
@@ -654,13 +653,27 @@
 	"events": {
 		"activities": "Händelser",
 		"betoffers": "Odds",
+		"cinematicView": "Biografvy",
+		"competitions": {
+			"default": "Vinnarspel"
+		},
+		"defaultView": "Standardvy",
 		"liveRightNow": "Live just nu",
+		"matches": {
+			"default": "Match"
+		},
 		"noBetAndWatchEventsFound": "För att se ett lopp live måste du placera ett spel på minst £1 (eller motsvarande i din valuta) på det berörda loppet.",
 		"noBetOffersFound": "Inga spel hittades",
 		"noEventsFound": "Inga matcher hittades",
 		"noLiveEventsFound": "Inga live-matcher hittades",
 		"startingSoon": "Börjar snart",
-		"streaming": "Streaming"
+		"streaming": "Streaming",
+		"upcomingLive": "Kommande live",
+		"visualisation": "Visualisering"
+	},
+	"eventtypes": {
+		"nocompetitions": "Det finns för tillfället inga tävlingsevenemang tillgängliga.",
+		"nomatches": "Det finns för tillfället inga matchevenemang tillgängliga."
 	},
 	"footer": {
 		"links": {
@@ -689,10 +702,12 @@
 		"infoLabel": "Info",
 		"label": {
 			"freeBet": "Gratisspel",
+			"matchupFreeBet": "Matchning gratisspel",
 			"profitBoost": "Vinstökning"
 		},
 		"labelShort": "fb",
 		"liveOnly": "Endast live",
+		"matchupMaxAmount": "Max belopp för gratisspel är {0}.",
 		"mobileOnly": "Endast mobil",
 		"namedSystemBet": "Speciella systemspel (Trixie, Patent, etc)",
 		"noRestrictions": "Alla spel",
@@ -721,6 +736,7 @@
 		"statusPlaced": "Lagt",
 		"statusReserved": "Reserverat",
 		"statusUsed": "Använt",
+		"useButtonLabel": "Använd",
 		"validFor": "Giltigt för"
 	},
 	"grouplistpage": {
@@ -788,17 +804,36 @@
 	},
 	"liveFeedCard": {
 		"type": {
+			"attack": "Anfall",
+			"ballOutOfPlay": "Bollen ur spel",
+			"ballSafe": "Bollinnehav",
 			"corner": "Hörna",
+			"dangerousAttack": "Farligt anfall",
 			"freeKick": "Frispark",
 			"game": "Game",
 			"goal": "Mål",
+			"goalKick": "Inspark",
+			"goalOpportunity": "Målchans",
+			"halfTimeEnd": "Halvtid",
+			"inPossession": "Bollinnehav",
+			"injury": "Skada",
 			"match": "Match",
+			"matchEnd": "Slutsignal",
+			"offside": "Offside",
 			"penalty": "Straff",
+			"penaltyAwarded": "Straff",
+			"penaltyScored": "Mål",
+			"possibleCorner": "Möjlig hörna",
+			"possibleFreeKick": "Möjlig frispark",
+			"possibleThrowIn": "Möjligt inkast",
 			"redCard": "Rött kort",
-			"score": "Mål",
+			"score": "Ställning",
 			"set": "Set",
-			"shotOffTarget": "Missar målet",
-			"shotOnTarget": "Träffar målet",
+			"shot": "Skott",
+			"shotOffTarget": "Utanför",
+			"shotOnTarget": "På mål",
+			"substitution": "Spelarbyte",
+			"thowIn": "Inkast",
 			"yellowCard": "Gult kort"
 		}
 	},
@@ -812,17 +847,30 @@
 			"title": "OBS!"
 		}
 	},
+	"livestatistics": {
+		"aceswon": "Äss",
+		"attacks": "Anfall",
+		"dangerousattacks": "Farliga anfall",
+		"possession": "Innehav, %",
+		"servicefaults": "Dubbelfel",
+		"shotsofftarget": "Skott utanför",
+		"shotsontarget": "Skott på mål",
+		"title": "Live statistik"
+	},
 	"locale": {
 		"freeBets": {
 			"pleaseLogin": "Please login to access your free bets overview"
 		},
 		"navigation": {
-			"showAllSports": "Visa alla sporter"
+			"showAllSports": "Alla sporter"
 		},
 		"transactions": {
 			"hideTransactions": "Dölj transaktioner",
 			"showTransactions": "Visa transaktioner"
 		}
+	},
+	"maintenance": {
+		"release": "Vi utför servicearbete på webbplatsen. Vi räknar med att vara igång igen {0}. Vi er om ursäkt för olägenheten och tackar för ditt tålamod."
 	},
 	"mostpopular": {
 		"details": {
@@ -841,7 +889,9 @@
 	"navigationMenu": {
 		"betOfferCountPlural": "{0} spel i {1}",
 		"betOfferCountSingular": "1 spel i {0}",
+		"bonusOffers": "Mina bonuserbjudanden",
 		"browse": "Utforska ",
+		"fewerSports": "Färre sporter",
 		"live": "Live",
 		"startLobby": "Start Lobby",
 		"startingSoon": "Börjar snart",
@@ -850,7 +900,8 @@
 		"startsWithinMinutes": "Inom {0} minuter"
 	},
 	"nowAndSoon": {
-		"nextUp": "Nästa"
+		"highlighted": "Utvalda",
+		"nextUp": "Snart"
 	},
 	"occurrence": {
 		"corner": "{0} got a corner",
@@ -976,6 +1027,10 @@
 			"text": "Totaloddset är för högt, vänligen ändra din kupong.",
 			"title": "För höga odds"
 		},
+		"oddsTooLow": {
+			"text": "Tyvärr kan vi inte acceptera spel på singlar eller kombinationer med odds under {0}. Justera din kupong.",
+			"title": "För låga odds"
+		},
 		"oversizedBetSystem": {
 			"text": "Vi beklagar, vi tillåter endast 220 spel att placeras på en kupong och dina spel överstiger detta antal. Var vänlig och justera din kupong.",
 			"title": "Ogilitigt systemspel"
@@ -1090,6 +1145,65 @@
 			}
 		}
 	},
+	"rewards": {
+		"betsPlacedTitle": "Spelet har lagts:",
+		"bettingCriterion": {
+			"desktopOnly": "Gäller enbart spel från dator ",
+			"eventClosed": "händelse som har stängts",
+			"eventGroupClosed": "händelsegrupp som har stängts",
+			"liveOnly": "enbart live",
+			"minCombinationOdds": "lägsta kombinationsodds",
+			"minOddsPerLeg": "lägsta odds per del",
+			"minStake": "lägsta insats",
+			"mobileOnly": "enbart mobila enheter",
+			"nonLiveOnly": "Gäller ej Live-spel",
+			"placeBetThatHas": "Lägg ett spel som är/har:",
+			"sizeDoublesAndBigger": "dubblar och större kombinationer",
+			"sizeEightsAndBigger": "åttlingar och större kombinationer",
+			"sizeElevensAndBigger": "elvlingar och större kombinationer",
+			"sizeFivesAndBigger": "femlingar och större kombinationer",
+			"sizeFoursAndBigger": "fyrlingar och större kombinationer",
+			"sizeNinesAndBigger": "niolingar och större kombinationer",
+			"sizeSevensAndBigger": "sjulingar och större kombinationer",
+			"sizeSixsAndBigger": "sexlingar och större kombinationer",
+			"sizeTensAndBigger": "tiolingar och större kombinationer",
+			"sizeTriplesAndBigger": "tripplar och större kombinationer",
+			"sizeTwelves": "tolvlingar"
+		},
+		"pleaseLogin": "Logga in för att se översikten över dina bonuserbjudanden",
+		"qualifyingBetsTitle": "Kvalificeringsspel:",
+		"showBonusOffersHeading": "Översikt över bonuserbjudanden",
+		"validFor": {
+			"andBiggerCombos": "och större kombinationer",
+			"desktopOnly": "Gäller enbart spel från dator ",
+			"eachWay": "each way",
+			"eventClosed": "händelse som har stängts",
+			"eventGroupClosed": "händelsegrupp som har stängts",
+			"liveOnly": "enbart live",
+			"mobileOnly": "enbart mobila enheter",
+			"namedSystemBet": "namngivna systemspel (Trixie, Patent, Yankee, etc)",
+			"noRestrictions": "alla typer av spel",
+			"nonEachWay": "icke-each way",
+			"nonLiveOnly": "Gäller ej Live-spel",
+			"nonSystemBet": "singlar och kombinationer",
+			"profitBoost": {
+				"maxExtraWinnings": "max extra vinster",
+				"maxStake": "max insats"
+			},
+			"sizeDoubles": "dubblar",
+			"sizeEights": "åttling",
+			"sizeElevens": "elvlingar",
+			"sizeFives": "femlingar",
+			"sizeFours": "fyrlingar",
+			"sizeNines": "niolingar",
+			"sizeSevens": "sjulingar",
+			"sizeSixs": "sexlingar",
+			"sizeTens": "tiolingar",
+			"sizeTriples": "tripplar",
+			"sizeTwelves": "tolvlingar",
+			"validFor": "Gäller för"
+		}
+	},
 	"scoreboard": {
 		"at": " ",
 		"racing": {
@@ -1146,6 +1260,11 @@
 		},
 		"title": "Inställningar"
 	},
+	"slideInContainer": {
+		"close": "Stäng",
+		"maximise": "Maximera",
+		"minimise": "Minimera"
+	},
 	"starred": {
 		"liveEventsTabAll": "Alla",
 		"liveEventsTabStarred": "Valda"
@@ -1169,7 +1288,9 @@
 		"screens": "Bilder"
 	},
 	"statistics": {
-		"eventStatsExternalLinkToolTip": "Klicka för statistik"
+		"eventStatsExternalLinkToolTip": "Klicka för statistik",
+		"tabTitle": "Statistik",
+		"title": "Statistik"
 	},
 	"streaming": {
 		"available": {
@@ -1216,7 +1337,8 @@
 	},
 	"termFilter": {
 		"menu": {
-			"streamedOnly": "Visa enbart evenemang som streamas"
+			"streamedOnly": "Visa enbart evenemang som streamas",
+			"upcomingLiveOnly": "Visa enbart kommande live-evenemang"
 		}
 	},
 	"termSearch": {
@@ -1257,11 +1379,115 @@
 	"vet": {
 		"stake_not_integer2": "Insats är ogiltlig. Kan ej innehålla decimaler"
 	},
+	"visualisation": {
+		"extraTimeFullTime": "Ordinarie tid - Förlängning",
+		"extraTimeHalfTime": "Halvtid - Förlängning",
+		"fullTime": "Full tid",
+		"penaltyShootout": "Straffavgörande",
+		"waitingForAction": "Väntar på händelser"
+	},
+	"widgetSettings": {
+		"widgets": [
+			{
+				"widgetId": "gm-league-table",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/league-table-widget/v2.0.1/index.html"
+			},
+			{
+				"widgetId": "gm-team-performance",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/team-performance-widget/v1.0.4/index.html"
+			},
+			{
+				"widgetId": "gm-head-to-head",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/head-to-head-widget/v1.1.3/index.html"
+			},
+			{
+				"widgetId": "gm-euro-2016-player-specials",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/player-specials-widget/v1.0.2/index.html",
+				"height": 682
+			},
+			{
+				"widgetId": "gm-euro-2016-overview",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/finals-widget/v1.0.1/index.html",
+				"height": 200
+			},
+			{
+				"widgetId": "gm-euro-2016-lineup",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/lineup-widget/v1.1.0/index.html",
+				"height": 0
+			},
+			{
+				"widgetId": "gm-golden-boot",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/golden-boot-widget/v1.0.0/index.html",
+				"height": 294
+			},
+			{
+				"widgetId": "gm-tournament-winner",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/tournament-winner-widget/v1.0.0/index.html",
+				"height": 338
+			}
+		],
+		"targets": {
+			"landingPageFeed": [
+				{
+					"widgetId": "gm-tournament-winner",
+					"order": 3
+				},
+				{
+					"widgetId": "gm-euro-2016-player-specials",
+					"order": 6
+				},
+				{
+					"widgetId": "gm-golden-boot",
+					"order": 10
+				}
+			],
+			"home": [
+				{
+					"widgetId": "gm-euro-2016-overview",
+					"order": 1
+				}
+			],
+			"eventGroupBottom": [
+				{
+					"widgetId": "gm-league-table",
+					"order": 10,
+					"filter": "^/?filter/football/england/premier_league(/|$|{)",
+					"args": {
+						"headerDefaultTitle": "Premier League 2015/2016"
+					}
+				}
+			],
+			"eventBeforeBetOffers": [
+				{
+					"order": 1,
+					"widgetId": "gm-euro-2016-lineup",
+					"args": {},
+					"filter": "football/euro_2016|football/euro 2016"
+				}
+			],
+			"eventPrematchStats": [
+				{
+					"widgetId": "gm-team-performance",
+					"order": 10
+				},
+				{
+					"widgetId": "gm-head-to-head",
+					"order": 20
+				}
+			]
+		}
+	},
 	"showRacingTodayTab": true,
 	"enablePush": true,
 	"enableMaxStake": true,
 	"disableRacingModeBalanceLink": false,
 	"enableFilterMenu": true,
 	"enableTermSearch": true,
-	"instantBettingTitle": "Instant Betting"
-}
+	"instantBettingTitle": "Instant Betting",
+	"enableFootballVisualisation": true
+};

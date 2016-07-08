@@ -1,5 +1,4 @@
-{
-	"LOCALE_IMPORT": "---",
+window._kbc.locale={
 	"N/A": "Das Rennen ist zu Ende und nicht mehr verfügbar.",
 	"account": {
 		"balance": "Guthaben:",
@@ -43,7 +42,7 @@
 		"betLabel": {
 			"draw": "Unentschieden",
 			"drawOrAway": "Unentschieden oder Auswärts",
-			"homeOrAway": "Heim oder Ausw��rts",
+			"homeOrAway": "Heim oder Auswärts",
 			"homeOrDraw": "Heim oder Unentschieden"
 		},
 		"betdetails": "Wettdetails",
@@ -323,7 +322,7 @@
 	},
 	"betslipReceipt": {
 		"awaitingApproval": "{0} wartet auf Genehmigung",
-		"closeReceipt": "SCHLIESSEN",
+		"closeReceipt": "Schließen",
 		"receiptPreString": "Beleg Nr.",
 		"retainSelections": "Auswahlen speichern",
 		"timePreString": "Heute",
@@ -654,13 +653,27 @@
 	"events": {
 		"activities": "Vorkommnisse",
 		"betoffers": "Wettangebote",
+		"cinematicView": "Kinoansicht",
+		"competitions": {
+			"default": "Outright-Wetten"
+		},
+		"defaultView": "Standardansicht",
 		"liveRightNow": "Im Augenblick live",
+		"matches": {
+			"default": "Match"
+		},
 		"noBetAndWatchEventsFound": "Um ein Live-Rennen zu sehen, musst Du eine gültige Wette von mindestens £1 (oder Währungsäquivalent) platzieren von der spezifischen Rennen.",
 		"noBetOffersFound": "Keine Wettangebote gefunden",
 		"noEventsFound": "Keine Ereignisse gefunden",
 		"noLiveEventsFound": "Keine Live-Ereignisse gefunden",
 		"startingSoon": "Beginnt in Kürze",
-		"streaming": "Streaming"
+		"streaming": "Streaming",
+		"upcomingLive": "Bevorstehende Live-Events",
+		"visualisation": "Visualisierung"
+	},
+	"eventtypes": {
+		"nocompetitions": "Derzeit gibt es keine Wettbewerbsveranstaltungen.",
+		"nomatches": "Derzeit gibt es keine Match-Veranstaltungen."
 	},
 	"footer": {
 		"links": {
@@ -689,10 +702,12 @@
 		"infoLabel": "Info",
 		"label": {
 			"freeBet": "Kostenlose Wette",
+			"matchupFreeBet": "Kostenlose Match-up-Wette",
 			"profitBoost": "Gewinn-Boost"
 		},
 		"labelShort": "fb",
 		"liveOnly": "Nur Live-Wetten",
+		"matchupMaxAmount": "Maximaler Betrag der kostenlose Wette {0}.",
 		"mobileOnly": "Nur Mobilgeräte",
 		"namedSystemBet": "Systemwetten mit Namen (Trixie, Patent, Yankee usw.)",
 		"noRestrictions": "Alle Arten von Wetten",
@@ -721,6 +736,7 @@
 		"statusPlaced": "Gesetzt",
 		"statusReserved": "Reserviert",
 		"statusUsed": "Verwendet",
+		"useButtonLabel": "Verwenden",
 		"validFor": "Gültig für"
 	},
 	"grouplistpage": {
@@ -788,17 +804,36 @@
 	},
 	"liveFeedCard": {
 		"type": {
+			"attack": "Angriff",
+			"ballOutOfPlay": "Ball im Aus",
+			"ballSafe": "Ballbesitz in eigener Hälfte",
 			"corner": "Ecke",
+			"dangerousAttack": "Gefährlicher Angriff",
 			"freeKick": "Freistoß",
 			"game": "Spiel",
 			"goal": "Tor",
+			"goalKick": "Abstoß",
+			"goalOpportunity": "Torchance",
+			"halfTimeEnd": "Halbzeit",
+			"inPossession": "In Ballbesitz",
+			"injury": "Verletzung",
 			"match": "Match",
-			"penalty": "Strafe",
+			"matchEnd": "Match-Ende",
+			"offside": "Abseits",
+			"penalty": "Elfmeter",
+			"penaltyAwarded": "Elfmeter gegeben",
+			"penaltyScored": "Elfmeter verwandelt",
+			"possibleCorner": "Mögliche Ecke",
+			"possibleFreeKick": "Möglicher Freistoß",
+			"possibleThrowIn": "Möglicher Einwurf",
 			"redCard": "Rote Karte",
 			"score": "Treffer",
 			"set": "Satz",
-			"shotOffTarget": "Schüsse am Tor vorbei",
-			"shotOnTarget": "Schüsse aufs Tor",
+			"shot": "Schuss",
+			"shotOffTarget": "Schuss am Tor vorbei",
+			"shotOnTarget": "Schuss aufs Tor",
+			"substitution": "Wechsel",
+			"thowIn": "Einwurf",
 			"yellowCard": "Gelbe Karte"
 		}
 	},
@@ -812,17 +847,30 @@
 			"title": "Wichtiger Hinweis"
 		}
 	},
+	"livestatistics": {
+		"aceswon": "Asse",
+		"attacks": "Angriffe",
+		"dangerousattacks": "Gefährliche Angriffe",
+		"possession": "Ballbesitz in %",
+		"servicefaults": "Doppelfehler",
+		"shotsofftarget": "Schüsse am Tor vorbei",
+		"shotsontarget": "Schüsse aufs Tor",
+		"title": "Live-Statistik"
+	},
 	"locale": {
 		"freeBets": {
 			"pleaseLogin": "Bitte logge dich ein, um zur Übersicht deiner kostenlosen Wetten zu gelangen"
 		},
 		"navigation": {
-			"showAllSports": "Alle Sportarten anzeigen"
+			"showAllSports": "Alle Sportarten "
 		},
 		"transactions": {
 			"hideTransactions": "Transaktionen ausblenden",
 			"showTransactions": "Transaktionen anzeigen"
 		}
+	},
+	"maintenance": {
+		"release": "Wir führen momentan Wartungsarbeiten an unserer Webseite durch. Wir sind voraussichtlich wieder um {0} zurück. Wir bitten um Ihr Verständnis und bedanken uns für Ihre Geduld."
 	},
 	"mostpopular": {
 		"details": {
@@ -841,7 +889,9 @@
 	"navigationMenu": {
 		"betOfferCountPlural": "{0} Wettangebote in {1}",
 		"betOfferCountSingular": "1 Wettangebot in {0}",
+		"bonusOffers": "Meine Bonus-Angebote",
 		"browse": "Durchsuchen",
+		"fewerSports": "Weniger Sportarten",
 		"live": "Live",
 		"startLobby": "Start-Lobby",
 		"startingSoon": "Beginnt in Kürze",
@@ -850,6 +900,7 @@
 		"startsWithinMinutes": "Beginnt innerhalb {0} Minuten"
 	},
 	"nowAndSoon": {
+		"highlighted": "Hervorgehoben",
 		"nextUp": "Als nächstes"
 	},
 	"occurrence": {
@@ -976,6 +1027,10 @@
 			"text": "Der Gesamteinsatz ist zu hoch. Bitte passe deinen Wettschein an.",
 			"title": "Quoten zu hoch"
 		},
+		"oddsTooLow": {
+			"text": "Leider können wir keine Einzel- oder Kombinationswetten mit einer Quote unter {0} annehmen. Bitte passe deinen Wettschein an.",
+			"title": "Quote zu niedrig"
+		},
 		"oversizedBetSystem": {
 			"text": "Eine Systemwette kann aus maximal 220 Wetten bestehen, und der Wettschein besteht aus mehr als 220 Wetten. Bitte berichtigen Sie das, damit Sie die Systemwette platzieren können.",
 			"title": "Ungültige Systemwette"
@@ -1090,6 +1145,65 @@
 			}
 		}
 	},
+	"rewards": {
+		"betsPlacedTitle": "Platzierte Wetten:",
+		"bettingCriterion": {
+			"desktopOnly": "nur PC-Nutzung",
+			"eventClosed": "geschlossener Event",
+			"eventGroupClosed": "geschlossene Event-Gruppe",
+			"liveOnly": "nur Live-Wetten",
+			"minCombinationOdds": "Mindestquote für Kombinationswette",
+			"minOddsPerLeg": "Mindestquote pro Durchgang",
+			"minStake": "Mindesteinsatz",
+			"mobileOnly": "nur Mobilgeräte",
+			"nonLiveOnly": "keine Live-Wetten",
+			"placeBetThatHas": "Platziere eine Wette, die ... ist/hat:",
+			"sizeDoublesAndBigger": "Doppelwetten und höhere Kombinationswetten",
+			"sizeEightsAndBigger": "Achtfachwetten und höhere Kombinationswetten",
+			"sizeElevensAndBigger": "Elffachwetten und höhere Kombinationswetten",
+			"sizeFivesAndBigger": "Fünffachwetten und höhere Kombinationswetten",
+			"sizeFoursAndBigger": "Vierfachwetten und höhere Kombinationswetten",
+			"sizeNinesAndBigger": "Neunfachwetten und höhere Kombinationswetten",
+			"sizeSevensAndBigger": "Siebenfachwetten und höhere Kombinationswetten",
+			"sizeSixsAndBigger": "Sechsfachwetten und höhere Kombinationswetten",
+			"sizeTensAndBigger": "Zehnfachwetten und höhere Kombinationswetten",
+			"sizeTriplesAndBigger": "Dreifachwetten und höhere Kombinationswetten",
+			"sizeTwelves": "Zwölffachwetten"
+		},
+		"pleaseLogin": "Bitte logge dich ein, um zur Übersicht deiner Bonusangebote zu gelangen",
+		"qualifyingBetsTitle": "Gültige Wetten:",
+		"showBonusOffersHeading": "Übersicht der Bonusangebote",
+		"validFor": {
+			"andBiggerCombos": "und größere Kombinationswetten",
+			"desktopOnly": "nur PC-Nutzung",
+			"eachWay": "Each-Way-Wetten",
+			"eventClosed": "Event, der geschlossen wurde",
+			"eventGroupClosed": "Event-Gruppe, die geschlossen wurde",
+			"liveOnly": "nur Live-Wetten",
+			"mobileOnly": "nur Mobilgeräte",
+			"namedSystemBet": "Systemwetten mit Namen (Trixie, Patent, Yankee usw.)",
+			"noRestrictions": "alle Arten von Wetten",
+			"nonEachWay": "Keine Each-Way-Wetten",
+			"nonLiveOnly": "Keine Live-Wetten",
+			"nonSystemBet": "Einzel- und Kombinationswetten",
+			"profitBoost": {
+				"maxExtraWinnings": "maximale Extragewinne",
+				"maxStake": "maximaler Einsatz"
+			},
+			"sizeDoubles": "Doppelwetten",
+			"sizeEights": "achtfach",
+			"sizeElevens": "elffach",
+			"sizeFives": "fünffach",
+			"sizeFours": "vierfach",
+			"sizeNines": "neunfach",
+			"sizeSevens": "siebenfach",
+			"sizeSixs": "sechsfach",
+			"sizeTens": "zehnfach",
+			"sizeTriples": "Dreifachwetten",
+			"sizeTwelves": "zwölffach",
+			"validFor": "Gültig für"
+		}
+	},
 	"scoreboard": {
 		"at": "um",
 		"racing": {
@@ -1146,6 +1260,11 @@
 		},
 		"title": "Einstellungen"
 	},
+	"slideInContainer": {
+		"close": "Schließen",
+		"maximise": "Maximieren",
+		"minimise": "Minimieren"
+	},
 	"starred": {
 		"liveEventsTabAll": "Alle",
 		"liveEventsTabStarred": "Ausgewählten"
@@ -1169,7 +1288,9 @@
 		"screens": "Bildschirme"
 	},
 	"statistics": {
-		"eventStatsExternalLinkToolTip": "Klicken Sie hier für die Event-Statistiken"
+		"eventStatsExternalLinkToolTip": "Klicken Sie hier für die Event-Statistiken",
+		"tabTitle": "Statistiken",
+		"title": "Statistik"
 	},
 	"streaming": {
 		"available": {
@@ -1216,7 +1337,8 @@
 	},
 	"termFilter": {
 		"menu": {
-			"streamedOnly": "Nur gestreamte Events anzeigen"
+			"streamedOnly": "Nur gestreamte Events anzeigen",
+			"upcomingLiveOnly": "Nur bevorstehende Live-Events anzeigen"
 		}
 	},
 	"termSearch": {
@@ -1257,11 +1379,115 @@
 	"vet": {
 		"stake_not_integer2": "Einsatz ist ungültig, er darf keine Dezimalzahlen enthalten"
 	},
+	"visualisation": {
+		"extraTimeFullTime": "2. Hälfte - Nachspielzeit",
+		"extraTimeHalfTime": "1. Hälfte - Nachspielzeit",
+		"fullTime": "Reguläre Spielzeit",
+		"penaltyShootout": "Elfmeterschießen",
+		"waitingForAction": "Aktion wird ausgeführt"
+	},
+	"widgetSettings": {
+		"widgets": [
+			{
+				"widgetId": "gm-league-table",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/league-table-widget/v2.0.1/index.html"
+			},
+			{
+				"widgetId": "gm-team-performance",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/team-performance-widget/v1.0.4/index.html"
+			},
+			{
+				"widgetId": "gm-head-to-head",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/head-to-head-widget/v1.1.3/index.html"
+			},
+			{
+				"widgetId": "gm-euro-2016-player-specials",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/player-specials-widget/v1.0.2/index.html",
+				"height": 682
+			},
+			{
+				"widgetId": "gm-euro-2016-overview",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/finals-widget/v1.0.1/index.html",
+				"height": 200
+			},
+			{
+				"widgetId": "gm-euro-2016-lineup",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/lineup-widget/v1.1.0/index.html",
+				"height": 0
+			},
+			{
+				"widgetId": "gm-golden-boot",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/golden-boot-widget/v1.0.0/index.html",
+				"height": 294
+			},
+			{
+				"widgetId": "gm-tournament-winner",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/tournament-winner-widget/v1.0.0/index.html",
+				"height": 338
+			}
+		],
+		"targets": {
+			"landingPageFeed": [
+				{
+					"widgetId": "gm-tournament-winner",
+					"order": 3
+				},
+				{
+					"widgetId": "gm-euro-2016-player-specials",
+					"order": 6
+				},
+				{
+					"widgetId": "gm-golden-boot",
+					"order": 10
+				}
+			],
+			"home": [
+				{
+					"widgetId": "gm-euro-2016-overview",
+					"order": 1
+				}
+			],
+			"eventGroupBottom": [
+				{
+					"widgetId": "gm-league-table",
+					"order": 10,
+					"filter": "^/?filter/football/england/premier_league(/|$|{)",
+					"args": {
+						"headerDefaultTitle": "Premier League 2015/2016"
+					}
+				}
+			],
+			"eventBeforeBetOffers": [
+				{
+					"order": 1,
+					"widgetId": "gm-euro-2016-lineup",
+					"args": {},
+					"filter": "football/euro_2016|football/euro 2016"
+				}
+			],
+			"eventPrematchStats": [
+				{
+					"widgetId": "gm-team-performance",
+					"order": 10
+				},
+				{
+					"widgetId": "gm-head-to-head",
+					"order": 20
+				}
+			]
+		}
+	},
 	"showRacingTodayTab": true,
 	"enablePush": true,
 	"enableMaxStake": true,
 	"disableRacingModeBalanceLink": false,
 	"enableFilterMenu": true,
 	"enableTermSearch": true,
-	"instantBettingTitle": "Instant Betting"
-}
+	"instantBettingTitle": "Instant Betting",
+	"enableFootballVisualisation": true
+};

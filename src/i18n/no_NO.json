@@ -1,5 +1,4 @@
-{
-	"LOCALE_IMPORT": "---",
+window._kbc.locale={
 	"N/A": "Racet er fullført og ikke lenger tilgjengelig.",
 	"account": {
 		"balance": "Saldo:",
@@ -83,16 +82,16 @@
 		"partialvoided": "{0} av {1} ugyldig",
 		"potentialPayoutNotAvailable": "N/A",
 		"sizedouble": "Dobbel",
-		"sizeeight": "Åttedobbel",
-		"sizeeleven": "Ellevedobbel",
-		"sizefive": "Femling",
-		"sizefour": "Firling",
-		"sizenine": "Nidobbel",
-		"sizeseven": "Syvlinger",
-		"sizesix": "Seksling",
-		"sizeten": "tidobbel",
+		"sizeeight": "8Ling",
+		"sizeeleven": "11Ling",
+		"sizefive": "5Ling",
+		"sizefour": "4Ling",
+		"sizenine": "9Ling",
+		"sizeseven": "7Ling",
+		"sizesix": "6Ling",
+		"sizeten": "10Ling",
 		"sizetriple": "Trippel",
-		"sizetwelve": "Tolvdobbel",
+		"sizetwelve": "12Ling",
 		"status": "Status",
 		"statuses": {
 			"cancelled": "Kansellert",
@@ -103,7 +102,7 @@
 			"open": "Åpen",
 			"partialsettled": "{0} av {1} avgjort",
 			"pending": "Venter",
-			"placed": "Andre plass",
+			"placed": "Plassert",
 			"rejected": "Avvist",
 			"rejectedByAAMS": "Avvist av AAMS",
 			"rejectedLiveBet": "Avvist live spill",
@@ -210,8 +209,8 @@
 		},
 		"type": {
 			"asian": "Asian",
-			"asianoverunder": "Asiatisk Over/Under",
-			"doublechance": "Dobbel sjanse",
+			"asianoverunder": "Asian Over/Under",
+			"doublechance": "Dobbelsjanse",
 			"goalscorer": "Målscorer",
 			"handicap": "Handicap",
 			"head": "Head to Head",
@@ -323,7 +322,7 @@
 	},
 	"betslipReceipt": {
 		"awaitingApproval": "{0} venter på godkjenning",
-		"closeReceipt": "Steng",
+		"closeReceipt": "Lukk",
 		"receiptPreString": "Kvittering #",
 		"retainSelections": "Behold valg",
 		"timePreString": "I dag",
@@ -367,36 +366,36 @@
 		"sizeCombination": "Kombinasjon",
 		"sizeDouble": "Dobbel",
 		"sizeDoubles": "Doble",
-		"sizeEight": "Åttedobbel",
-		"sizeEights": "Åttedoble",
-		"sizeEleven": "Ellevedobbel",
-		"sizeElevens": "11doble",
-		"sizeFive": "Femdobbel",
-		"sizeFives": "Femdoble",
-		"sizeFour": "Firedobbel",
-		"sizeFours": "4doble",
-		"sizeNine": "Nidobbel",
-		"sizeNines": "Nidoble",
-		"sizeSeven": "Sjudobbel",
-		"sizeSevens": "Sjudoble",
+		"sizeEight": "8Ling",
+		"sizeEights": "8Linger",
+		"sizeEleven": "11Ling",
+		"sizeElevens": "11Linger",
+		"sizeFive": "5Ling",
+		"sizeFives": "5Linger",
+		"sizeFour": "4Ling",
+		"sizeFours": "4Linger",
+		"sizeNine": "9Ling",
+		"sizeNines": "9Linger",
+		"sizeSeven": "7Ling",
+		"sizeSevens": "7Linger",
 		"sizeSingle": "Singel",
-		"sizeSingles": "Single",
-		"sizeSix": "Seksdobbel",
-		"sizeSixs": "Seksdoble",
+		"sizeSingles": "Singler",
+		"sizeSix": "6Ling",
+		"sizeSixs": "6Linger",
 		"sizeSystem": "System",
-		"sizeTen": "Tidobbel",
-		"sizeTens": "Tidoble",
+		"sizeTen": "10Ling",
+		"sizeTens": "10Linger",
 		"sizeTriple": "Trippel",
-		"sizeTriples": "Trippel",
-		"sizeTwelve": "Tolvdobbel",
-		"sizeTwelves": "12doble"
+		"sizeTriples": "Tripler",
+		"sizeTwelve": "12Ling",
+		"sizeTwelves": "12Linger"
 	},
 	"common": {
 		"bet": "Spill",
 		"cashin": "Cash-In",
 		"moresports": "Mer sport",
 		"showmore": "Vis mer",
-		"stake": "Stake",
+		"stake": "Innsats",
 		"startingPrice": "SP"
 	},
 	"currency": {
@@ -654,13 +653,27 @@
 	"events": {
 		"activities": "Events ",
 		"betoffers": "Spilltilbud",
+		"cinematicView": "Kinovisning",
+		"competitions": {
+			"default": "Vinnerspill"
+		},
+		"defaultView": "Standardvisning",
 		"liveRightNow": "Live akkurat nå",
+		"matches": {
+			"default": "Match"
+		},
 		"noBetAndWatchEventsFound": "For å se et løp live må du ha plassert en kvalifisert spill på minst £1 (eller tilsvarende verdi i annen valuta) på den spesifikke rase.",
 		"noBetOffersFound": "Ingen spill funnet",
 		"noEventsFound": "Ingen evenementer funnet",
 		"noLiveEventsFound": "Ingen live evenementer funnet",
 		"startingSoon": "Starter snart",
-		"streaming": "Streaming"
+		"streaming": "Streaming",
+		"upcomingLive": "Kommende live",
+		"visualisation": "Visualisering"
+	},
+	"eventtypes": {
+		"nocompetitions": "Det er i øyeblikket ingen konkurransebegivenheter tilgjengelig.",
+		"nomatches": "Det er i øyeblikket ingen kamper tilgjengelig."
 	},
 	"footer": {
 		"links": {
@@ -689,10 +702,12 @@
 		"infoLabel": "Info",
 		"label": {
 			"freeBet": "Gratis spill",
+			"matchupFreeBet": "Match-up-gratisspill",
 			"profitBoost": "profittøkning"
 		},
 		"labelShort": "fb",
 		"liveOnly": "Kun live",
+		"matchupMaxAmount": "Maksimalt gratisspillbeløp {0}.",
 		"mobileOnly": "Kun mobile enheter",
 		"namedSystemBet": "Navngitte systemspill (Trixie, Patent, Yankee, osv.)",
 		"noRestrictions": "Alle typer spill",
@@ -718,9 +733,10 @@
 		"statusCancelled": "Kansellert",
 		"statusExpired": "Utløpt",
 		"statusPending": "Venter",
-		"statusPlaced": "Andre plass",
+		"statusPlaced": "Plassert",
 		"statusReserved": "Reservert",
 		"statusUsed": "Brukt",
+		"useButtonLabel": "Bruk",
 		"validFor": "Gyldig for"
 	},
 	"grouplistpage": {
@@ -788,17 +804,36 @@
 	},
 	"liveFeedCard": {
 		"type": {
+			"attack": "Angrep",
+			"ballOutOfPlay": "Ball ute av spill",
+			"ballSafe": "Ballinnehav",
 			"corner": "Hjørnespark",
+			"dangerousAttack": "Farlig angrep",
 			"freeKick": "Frispark",
-			"game": "Kamp",
+			"game": "Game",
 			"goal": "Mål",
+			"goalKick": "Utspill",
+			"goalOpportunity": "Målsjanse",
+			"halfTimeEnd": "Pause",
+			"inPossession": "Ballbesittelse",
+			"injury": "Skade",
 			"match": "Kamp",
-			"penalty": "Straff",
+			"matchEnd": "Kamp ferdigspilt",
+			"offside": "Offside",
+			"penalty": "Straffe",
+			"penaltyAwarded": "Straffespark",
+			"penaltyScored": "Mål",
+			"possibleCorner": "Mulig hjørnespark",
+			"possibleFreeKick": "Mulig frispark",
+			"possibleThrowIn": "Mulig innkast",
 			"redCard": "Rødt kort",
 			"score": "Stilling",
 			"set": "Sett",
+			"shot": "Skudd",
 			"shotOffTarget": "Utenfor mål",
 			"shotOnTarget": "På mål",
+			"substitution": "Innbytte",
+			"thowIn": "Innkast",
 			"yellowCard": "Gult kort"
 		}
 	},
@@ -812,17 +847,30 @@
 			"title": "Viktig merknad"
 		}
 	},
+	"livestatistics": {
+		"aceswon": "Aces",
+		"attacks": "Angrep",
+		"dangerousattacks": "Farlige angrep",
+		"possession": "Ballbesittelse %",
+		"servicefaults": "Double Faults",
+		"shotsofftarget": "Skudd som ikke treffer målet",
+		"shotsontarget": "Skudd på mål",
+		"title": "Live-statistikk"
+	},
 	"locale": {
 		"freeBets": {
 			"pleaseLogin": "Logg inn for å få oversikt over dine gratisspill"
 		},
 		"navigation": {
-			"showAllSports": "Vis alle sporter"
+			"showAllSports": "All sport"
 		},
 		"transactions": {
 			"hideTransactions": "Skjul transaksjoner",
 			"showTransactions": "Vis transaksjoner"
 		}
+	},
+	"maintenance": {
+		"release": "For øyeblikket holder vi på med vedlikehold av siden. Vi forventer at alt er normalt kl. {0}. Vi beklager ulempen dette medfører og setter stor pris på tålmodigheten din."
 	},
 	"mostpopular": {
 		"details": {
@@ -841,7 +889,9 @@
 	"navigationMenu": {
 		"betOfferCountPlural": "{0} spilltilbud om {1}",
 		"betOfferCountSingular": "1 spilltilbud om {0}",
+		"bonusOffers": "My Bonus Offers",
 		"browse": "bla gjennom",
+		"fewerSports": "Færre sporter",
 		"live": "Live",
 		"startLobby": "Start Lobby",
 		"startingSoon": "Starter snart",
@@ -850,7 +900,8 @@
 		"startsWithinMinutes": "Starter innen {0} minutter"
 	},
 	"nowAndSoon": {
-		"nextUp": "Neste"
+		"highlighted": "Utvalgte",
+		"nextUp": "Neste kamp"
 	},
 	"occurrence": {
 		"corner": "{0} fikk et hjørnespark",
@@ -976,6 +1027,10 @@
 			"text": "Den samlede oddsen er for høy. Vennligst juster kupongen din.",
 			"title": "Odds for høye"
 		},
+		"oddsTooLow": {
+			"text": "Beklager, vi kan ikke godta spill på single eller kombinasjoner med oddsen nedenfor {0}. Vennligst juster kupongen din.",
+			"title": "Odds for lav."
+		},
 		"oversizedBetSystem": {
 			"text": "Beklager, vi tillater maksimalt 220 plasserte spill på én kupong, og du overskrider dette. Vennligst juster kupongen din.",
 			"title": "Ugyldig systemspill"
@@ -1090,6 +1145,65 @@
 			}
 		}
 	},
+	"rewards": {
+		"betsPlacedTitle": "Spill plassert:",
+		"bettingCriterion": {
+			"desktopOnly": "kun stasjonær bruk",
+			"eventClosed": "hendelse som har blitt stengt",
+			"eventGroupClosed": "hendelsegruppe som har blitt stengt",
+			"liveOnly": "kun live",
+			"minCombinationOdds": "min. kombinasjonsodds",
+			"minOddsPerLeg": "min. odds per etappe",
+			"minStake": "min. innsatsbeløp",
+			"mobileOnly": "kun mobile enheter",
+			"nonLiveOnly": "kun ikke live",
+			"placeBetThatHas": "Plasser et spill som er/har:",
+			"sizeDoublesAndBigger": "doble og større kombinasjoner",
+			"sizeEightsAndBigger": "8Linger og større kombinasjoner",
+			"sizeElevensAndBigger": "11Linger og større kombinasjoner",
+			"sizeFivesAndBigger": "5Linger og større kombinasjoner",
+			"sizeFoursAndBigger": "4Linger og større kombinasjoner",
+			"sizeNinesAndBigger": "9Linger og større kombinasjoner",
+			"sizeSevensAndBigger": "7Linger og større kombinasjoner",
+			"sizeSixsAndBigger": "6Linger og større kombinasjoner",
+			"sizeTensAndBigger": "10Linger og større kombinasjoner",
+			"sizeTriplesAndBigger": "tripler og større kombinasjoner",
+			"sizeTwelves": "12Linger"
+		},
+		"pleaseLogin": "Logg på for å få tilgang til oversikten med bonustilbud",
+		"qualifyingBetsTitle": "Kvalifiserte spill:",
+		"showBonusOffersHeading": "Oversikt over bonustilbud",
+		"validFor": {
+			"andBiggerCombos": "og større kombinasjoner",
+			"desktopOnly": "kun stasjonær bruk",
+			"eachWay": "each way",
+			"eventClosed": "hendelse som har blitt stengt",
+			"eventGroupClosed": "hendelsegruppe som har blitt stengt",
+			"liveOnly": "kun live",
+			"mobileOnly": "kun mobile enheter",
+			"namedSystemBet": "navngitt systemspill (Trixie, Patent, Yankee osv.)",
+			"noRestrictions": "alle typer spill",
+			"nonEachWay": "ikke each way",
+			"nonLiveOnly": "kun ikke live",
+			"nonSystemBet": "single og kombinasjoner",
+			"profitBoost": {
+				"maxExtraWinnings": "maksimal ekstra gevinst",
+				"maxStake": "maksimal innsats"
+			},
+			"sizeDoubles": "doble",
+			"sizeEights": "8Linger",
+			"sizeElevens": "11Linger",
+			"sizeFives": "5Ling",
+			"sizeFours": "4Ling",
+			"sizeNines": "9Linger",
+			"sizeSevens": "7Linger",
+			"sizeSixs": "6Linger",
+			"sizeTens": "10Linger",
+			"sizeTriples": "tripler",
+			"sizeTwelves": "12Linger",
+			"validFor": "Gyldig for"
+		}
+	},
 	"scoreboard": {
 		"at": "ved",
 		"racing": {
@@ -1146,6 +1260,11 @@
 		},
 		"title": "Innstillinger"
 	},
+	"slideInContainer": {
+		"close": "Lukk",
+		"maximise": "Maksimer",
+		"minimise": "Minimer"
+	},
 	"starred": {
 		"liveEventsTabAll": "Alle",
 		"liveEventsTabStarred": "Valgte"
@@ -1162,14 +1281,16 @@
 	},
 	"startpage": {
 		"atoz": "Sport",
-		"popular": "Populær",
+		"popular": "Populært",
 		"racingModeHideSports": "Skjul Sport",
 		"racingModeShowSports": "Vis Sport",
 		"racingSports": "Veddeløp",
 		"screens": "Skjermer"
 	},
 	"statistics": {
-		"eventStatsExternalLinkToolTip": "Klikk her for hendelsesstatistikk"
+		"eventStatsExternalLinkToolTip": "Klikk her for hendelsesstatistikk",
+		"tabTitle": "Statistikker",
+		"title": "Statistikk"
 	},
 	"streaming": {
 		"available": {
@@ -1216,12 +1337,13 @@
 	},
 	"termFilter": {
 		"menu": {
-			"streamedOnly": "Vis kun hendelse som strømmes"
+			"streamedOnly": "Vis kun hendelse som strømmes",
+			"upcomingLiveOnly": "Vis kun kommende livearrangementer"
 		}
 	},
 	"termSearch": {
 		"heading": {
-			"popular": "Populær/trender",
+			"popular": "Populært/trender",
 			"previous": "Nylig søkt på",
 			"search": {
 				"groups": "Sport, regioner og ligaer",
@@ -1257,11 +1379,115 @@
 	"vet": {
 		"stake_not_integer2": "Innsatsen er ikke gyldig, kan ikke inneholde desimaler"
 	},
+	"visualisation": {
+		"extraTimeFullTime": "Fulltid - Ekstra tid",
+		"extraTimeHalfTime": "Halvtid - Ekstra tid",
+		"fullTime": "Fulltid",
+		"penaltyShootout": "Straffekonkurranse",
+		"waitingForAction": "Venter på handling"
+	},
+	"widgetSettings": {
+		"widgets": [
+			{
+				"widgetId": "gm-league-table",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/league-table-widget/v2.0.1/index.html"
+			},
+			{
+				"widgetId": "gm-team-performance",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/team-performance-widget/v1.0.4/index.html"
+			},
+			{
+				"widgetId": "gm-head-to-head",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/head-to-head-widget/v1.1.3/index.html"
+			},
+			{
+				"widgetId": "gm-euro-2016-player-specials",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/player-specials-widget/v1.0.2/index.html",
+				"height": 682
+			},
+			{
+				"widgetId": "gm-euro-2016-overview",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/finals-widget/v1.0.1/index.html",
+				"height": 200
+			},
+			{
+				"widgetId": "gm-euro-2016-lineup",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/lineup-widget/v1.1.0/index.html",
+				"height": 0
+			},
+			{
+				"widgetId": "gm-golden-boot",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/golden-boot-widget/v1.0.0/index.html",
+				"height": 294
+			},
+			{
+				"widgetId": "gm-tournament-winner",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/tournament-winner-widget/v1.0.0/index.html",
+				"height": 338
+			}
+		],
+		"targets": {
+			"landingPageFeed": [
+				{
+					"widgetId": "gm-tournament-winner",
+					"order": 3
+				},
+				{
+					"widgetId": "gm-euro-2016-player-specials",
+					"order": 6
+				},
+				{
+					"widgetId": "gm-golden-boot",
+					"order": 10
+				}
+			],
+			"home": [
+				{
+					"widgetId": "gm-euro-2016-overview",
+					"order": 1
+				}
+			],
+			"eventGroupBottom": [
+				{
+					"widgetId": "gm-league-table",
+					"order": 10,
+					"filter": "^/?filter/football/england/premier_league(/|$|{)",
+					"args": {
+						"headerDefaultTitle": "Premier League 2015/2016"
+					}
+				}
+			],
+			"eventBeforeBetOffers": [
+				{
+					"order": 1,
+					"widgetId": "gm-euro-2016-lineup",
+					"args": {},
+					"filter": "football/euro_2016|football/euro 2016"
+				}
+			],
+			"eventPrematchStats": [
+				{
+					"widgetId": "gm-team-performance",
+					"order": 10
+				},
+				{
+					"widgetId": "gm-head-to-head",
+					"order": 20
+				}
+			]
+		}
+	},
 	"showRacingTodayTab": true,
 	"enablePush": true,
 	"enableMaxStake": true,
 	"disableRacingModeBalanceLink": false,
 	"enableFilterMenu": true,
 	"enableTermSearch": true,
-	"instantBettingTitle": "Instant Betting"
-}
+	"instantBettingTitle": "Instant Betting",
+	"enableFootballVisualisation": true
+};

@@ -1,5 +1,4 @@
-{
-	"LOCALE_IMPORT": "---",
+window._kbc.locale={
 	"N/A": "Sacīkstes ir pabeigtas un vairs nav pieejamas.",
 	"account": {
 		"balance": "Bilance:",
@@ -654,13 +653,27 @@
 	"events": {
 		"activities": "Aktivitātes",
 		"betoffers": "Likmju piedāvājumi",
+		"cinematicView": "Cinematic View",
+		"competitions": {
+			"default": "Outrights"
+		},
+		"defaultView": "Default View",
 		"liveRightNow": "Live ŠOBRĪD",
+		"matches": {
+			"default": "Match"
+		},
 		"noBetAndWatchEventsFound": "Lai skatītos sacīkšu tiešraidi, Jums ir jāveic kvalifikācijas likme vismaz 1 mārciņu (vai cita valūtas ekvivalenta) apmērā par konkrēto sacensību.",
 		"noBetOffersFound": "Nav atrasti likmju piedāvājumi",
 		"noEventsFound": "Nav atrasti pasākumi",
 		"noLiveEventsFound": "Nav atrasti Live pasākumi",
 		"startingSoon": "Sāksies drīzumā",
-		"streaming": "Straumēšana"
+		"streaming": "Straumēšana",
+		"upcomingLive": "Upcoming Live",
+		"visualisation": "Visualisation"
+	},
+	"eventtypes": {
+		"nocompetitions": "There are currently no competition events available.",
+		"nomatches": "There are currently no match events available."
 	},
 	"footer": {
 		"links": {
@@ -689,10 +702,12 @@
 		"infoLabel": "Informācija",
 		"label": {
 			"freeBet": "Bezmaksas likme",
+			"matchupFreeBet": "Match-up free bet",
 			"profitBoost": "Peļņas pieaugums"
 		},
 		"labelShort": "fb",
 		"liveOnly": "Tikai Live",
+		"matchupMaxAmount": "Maximum free bet amount {0}.",
 		"mobileOnly": "Tikai mobilās ierīces",
 		"namedSystemBet": "Norādītās sistēmas likmes (Trixie, Patent, Yankee utt.)",
 		"noRestrictions": "Visu veidu likmes",
@@ -721,6 +736,7 @@
 		"statusPlaced": "Likme veikta",
 		"statusReserved": "Rezervēta",
 		"statusUsed": "Izmantota",
+		"useButtonLabel": "Use",
 		"validFor": "Derīgs priekš"
 	},
 	"grouplistpage": {
@@ -788,17 +804,36 @@
 	},
 	"liveFeedCard": {
 		"type": {
+			"attack": "Attack",
+			"ballOutOfPlay": "Ball out of play",
+			"ballSafe": "Ball safe",
 			"corner": "Stūra sitiens",
+			"dangerousAttack": "Dangerous attack",
 			"freeKick": "Free kick",
 			"game": "Spēle",
 			"goal": "Trāpījums",
+			"goalKick": "Goal kick",
+			"goalOpportunity": "Goal opportunity",
+			"halfTimeEnd": "Half time",
+			"inPossession": "In possession",
+			"injury": "Injury",
 			"match": "Mačs",
+			"matchEnd": "Match end",
+			"offside": "Offside",
 			"penalty": "Penalty",
+			"penaltyAwarded": "Penalty awarded",
+			"penaltyScored": "Penalty scored",
+			"possibleCorner": "Possible corner",
+			"possibleFreeKick": "Possible free kick",
+			"possibleThrowIn": "Possible throw in",
 			"redCard": "Sarkanā kartīte",
 			"score": "Rezultāts",
 			"set": "Sets",
+			"shot": "Shot",
 			"shotOffTarget": "Off target",
 			"shotOnTarget": "On target",
+			"substitution": "Substitution",
+			"thowIn": "Throw in",
 			"yellowCard": "Dzeltenā kartīte"
 		}
 	},
@@ -812,6 +847,16 @@
 			"title": "Svarīgs paziņojums"
 		}
 	},
+	"livestatistics": {
+		"aceswon": "Aces",
+		"attacks": "Attacks",
+		"dangerousattacks": "Dangerous attacks",
+		"possession": "Possession %",
+		"servicefaults": "Double Faults",
+		"shotsofftarget": "Shots off target",
+		"shotsontarget": "Shots on target",
+		"title": "Live statistics"
+	},
 	"locale": {
 		"freeBets": {
 			"pleaseLogin": "Lūdzu, piesakieties sistēmā, lai piekļūtu savam bezmaksas likmju pārskatam"
@@ -823,6 +868,9 @@
 			"hideTransactions": "Paslēpt transakcijas",
 			"showTransactions": "Parādīt transakcijas"
 		}
+	},
+	"maintenance": {
+		"release": "We are currently performing site maintenance. We expect to be back at {0}. We apologize for the inconvenience and appreciate your patience."
 	},
 	"mostpopular": {
 		"details": {
@@ -841,7 +889,9 @@
 	"navigationMenu": {
 		"betOfferCountPlural": "{0} likmju piedāvājumi {1}",
 		"betOfferCountSingular": "1 likmes piedāvājums {0}",
+		"bonusOffers": "My Bonus Offers",
 		"browse": "pārlūkot",
+		"fewerSports": "Fewer Sports",
 		"live": "Tiešraide",
 		"startLobby": "Sākuma lobijs",
 		"startingSoon": "Sāksies drīzumā",
@@ -850,6 +900,7 @@
 		"startsWithinMinutes": "Sākas {0} minūšu laikā"
 	},
 	"nowAndSoon": {
+		"highlighted": "Featured",
 		"nextUp": "Nākamais"
 	},
 	"occurrence": {
@@ -976,6 +1027,10 @@
 			"text": "Koeficientu kopsumma ir pārāk augsta. Lūdzu, izlabojiet savu likmju kuponu.",
 			"title": "Koeficienti pārāk lieli"
 		},
+		"oddsTooLow": {
+			"text": "Sorry, we are unable to accept bets on singles or combinations with odds below {0}. Please adjust your betslip.",
+			"title": "Odds too low"
+		},
 		"oversizedBetSystem": {
 			"text": "Vienā kuponā var iekļaut maksimāli 220 likmes, un tavs kupons šo skaitu pārsniedz. Lūdzu, veic izmaiņas likmju kuponā.",
 			"title": "Nederīga sistēmas likme"
@@ -1090,6 +1145,65 @@
 			}
 		}
 	},
+	"rewards": {
+		"betsPlacedTitle": "Bets placed:",
+		"bettingCriterion": {
+			"desktopOnly": "desktop usage only",
+			"eventClosed": "event that has been closed",
+			"eventGroupClosed": "event group that has been closed",
+			"liveOnly": "live only",
+			"minCombinationOdds": "min combination odds",
+			"minOddsPerLeg": "min odds per leg",
+			"minStake": "min stake amount",
+			"mobileOnly": "mobile devices only",
+			"nonLiveOnly": "non-live only",
+			"placeBetThatHas": "Place a bet that is/has:",
+			"sizeDoublesAndBigger": "doubles and bigger combinations",
+			"sizeEightsAndBigger": "eightfolds and bigger combinations",
+			"sizeElevensAndBigger": "elevenfolds and bigger combinations",
+			"sizeFivesAndBigger": "fivefolds and bigger combinations",
+			"sizeFoursAndBigger": "fourfolds and bigger combinations",
+			"sizeNinesAndBigger": "ninefolds and bigger combinations",
+			"sizeSevensAndBigger": "sevenfolds and bigger combinations",
+			"sizeSixsAndBigger": "sixfolds and bigger combinations",
+			"sizeTensAndBigger": "tenfolds and bigger combinations",
+			"sizeTriplesAndBigger": "trebles and bigger combinations",
+			"sizeTwelves": "twelvefolds"
+		},
+		"pleaseLogin": "Please login to access your bonus offers overview",
+		"qualifyingBetsTitle": "Qualifying bets:",
+		"showBonusOffersHeading": "Bonus Offers Overview",
+		"validFor": {
+			"andBiggerCombos": "and bigger combinations",
+			"desktopOnly": "desktop usage only",
+			"eachWay": "each way",
+			"eventClosed": "event that has been closed",
+			"eventGroupClosed": "event group that has been closed",
+			"liveOnly": "live only",
+			"mobileOnly": "mobile devices only",
+			"namedSystemBet": "named system bets (Trixie, Patent, Yankee, etc)",
+			"noRestrictions": "all types of bets",
+			"nonEachWay": "non-each way",
+			"nonLiveOnly": "non-live only",
+			"nonSystemBet": "singles and combinations",
+			"profitBoost": {
+				"maxExtraWinnings": "max extra winnings",
+				"maxStake": "max stake"
+			},
+			"sizeDoubles": "doubles",
+			"sizeEights": "eightfolds",
+			"sizeElevens": "elevenfolds",
+			"sizeFives": "fivefolds",
+			"sizeFours": "fourfolds",
+			"sizeNines": "ninefolds",
+			"sizeSevens": "sevenfolds",
+			"sizeSixs": "sixfolds",
+			"sizeTens": "tenfolds",
+			"sizeTriples": "trebles",
+			"sizeTwelves": "twelvefolds",
+			"validFor": "Valid for"
+		}
+	},
 	"scoreboard": {
 		"at": "pl.",
 		"racing": {
@@ -1146,6 +1260,11 @@
 		},
 		"title": "Iestatījumi"
 	},
+	"slideInContainer": {
+		"close": "Close",
+		"maximise": "Maximise",
+		"minimise": "Minimise"
+	},
 	"starred": {
 		"liveEventsTabAll": "Visi notikumi",
 		"liveEventsTabStarred": "Atzīmētie"
@@ -1169,7 +1288,9 @@
 		"screens": "EKRĀNI"
 	},
 	"statistics": {
-		"eventStatsExternalLinkToolTip": "Klikšķini, lai uzzinātu pasākuma statistiku"
+		"eventStatsExternalLinkToolTip": "Klikšķini, lai uzzinātu pasākuma statistiku",
+		"tabTitle": "Statistics",
+		"title": "Statistics"
 	},
 	"streaming": {
 		"available": {
@@ -1216,7 +1337,8 @@
 	},
 	"termFilter": {
 		"menu": {
-			"streamedOnly": "Show streamed events only"
+			"streamedOnly": "Show streamed events only",
+			"upcomingLiveOnly": "Show Upcoming Live events only"
 		}
 	},
 	"termSearch": {
@@ -1257,11 +1379,115 @@
 	"vet": {
 		"stake_not_integer2": "Likmes summa nav derīga: tā nedrīkst saturēt decimālskaitļus."
 	},
+	"visualisation": {
+		"extraTimeFullTime": "Full Time - Extra Time",
+		"extraTimeHalfTime": "Half Time - Extra Time",
+		"fullTime": "Full Time",
+		"penaltyShootout": "Penalty Shootout",
+		"waitingForAction": "Waiting for action"
+	},
+	"widgetSettings": {
+		"widgets": [
+			{
+				"widgetId": "gm-league-table",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/league-table-widget/v2.0.1/index.html"
+			},
+			{
+				"widgetId": "gm-team-performance",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/team-performance-widget/v1.0.4/index.html"
+			},
+			{
+				"widgetId": "gm-head-to-head",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/head-to-head-widget/v1.1.3/index.html"
+			},
+			{
+				"widgetId": "gm-euro-2016-player-specials",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/player-specials-widget/v1.0.2/index.html",
+				"height": 682
+			},
+			{
+				"widgetId": "gm-euro-2016-overview",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/finals-widget/v1.0.1/index.html",
+				"height": 200
+			},
+			{
+				"widgetId": "gm-euro-2016-lineup",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/lineup-widget/v1.1.0/index.html",
+				"height": 0
+			},
+			{
+				"widgetId": "gm-golden-boot",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/golden-boot-widget/v1.0.0/index.html",
+				"height": 294
+			},
+			{
+				"widgetId": "gm-tournament-winner",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/tournament-winner-widget/v1.0.0/index.html",
+				"height": 338
+			}
+		],
+		"targets": {
+			"landingPageFeed": [
+				{
+					"widgetId": "gm-tournament-winner",
+					"order": 3
+				},
+				{
+					"widgetId": "gm-euro-2016-player-specials",
+					"order": 6
+				},
+				{
+					"widgetId": "gm-golden-boot",
+					"order": 10
+				}
+			],
+			"home": [
+				{
+					"widgetId": "gm-euro-2016-overview",
+					"order": 1
+				}
+			],
+			"eventGroupBottom": [
+				{
+					"widgetId": "gm-league-table",
+					"order": 10,
+					"filter": "^/?filter/football/england/premier_league(/|$|{)",
+					"args": {
+						"headerDefaultTitle": "Premier League 2015/2016"
+					}
+				}
+			],
+			"eventBeforeBetOffers": [
+				{
+					"order": 1,
+					"widgetId": "gm-euro-2016-lineup",
+					"args": {},
+					"filter": "football/euro_2016|football/euro 2016"
+				}
+			],
+			"eventPrematchStats": [
+				{
+					"widgetId": "gm-team-performance",
+					"order": 10
+				},
+				{
+					"widgetId": "gm-head-to-head",
+					"order": 20
+				}
+			]
+		}
+	},
 	"showRacingTodayTab": true,
 	"enablePush": true,
 	"enableMaxStake": true,
 	"disableRacingModeBalanceLink": false,
 	"enableFilterMenu": true,
 	"enableTermSearch": true,
-	"instantBettingTitle": "Instant Betting"
-}
+	"instantBettingTitle": "Instant Betting",
+	"enableFootballVisualisation": true
+};

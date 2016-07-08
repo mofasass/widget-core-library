@@ -1,5 +1,4 @@
-{
-	"LOCALE_IMPORT": "---",
+window._kbc.locale={
 	"N/A": "Wyścig został zakończony i nie jest już dostępny",
 	"account": {
 		"balance": "Saldo:",
@@ -365,31 +364,31 @@
 	},
 	"combination": {
 		"sizeCombination": "Kombinacja",
-		"sizeDouble": "2krotne",
-		"sizeDoubles": "2krotnie",
-		"sizeEight": "8krotnie",
+		"sizeDouble": "2krotny",
+		"sizeDoubles": "2krotne",
+		"sizeEight": "8krotny",
 		"sizeEights": "8krotne",
-		"sizeEleven": "11krotnie",
+		"sizeEleven": "11krotny",
 		"sizeElevens": "11Krotne",
-		"sizeFive": "5krotnie",
+		"sizeFive": "5krotny",
 		"sizeFives": "5krotne",
-		"sizeFour": "4krotnie",
+		"sizeFour": "4krotny",
 		"sizeFours": "4krotne",
-		"sizeNine": "9krotnie",
+		"sizeNine": "9krotny",
 		"sizeNines": "9krotne",
-		"sizeSeven": "7krotnie",
+		"sizeSeven": "7krotny",
 		"sizeSevens": "7krotne",
-		"sizeSingle": "1 pojedynczy",
+		"sizeSingle": "Pojedynczy",
 		"sizeSingles": "Pojedyncze",
-		"sizeSix": "6krotnie",
+		"sizeSix": "6krotny",
 		"sizeSixs": "6krotne",
 		"sizeSystem": "Systemy",
-		"sizeTen": "10krotnie",
+		"sizeTen": "10krotny",
 		"sizeTens": "10krotne",
-		"sizeTriple": "3krotnie",
+		"sizeTriple": "3krotny",
 		"sizeTriples": "3krotne",
-		"sizeTwelve": "12krotnie",
-		"sizeTwelves": "12Krotne"
+		"sizeTwelve": "12krotny",
+		"sizeTwelves": "12krotne"
 	},
 	"common": {
 		"bet": "Zakład",
@@ -644,7 +643,7 @@
 			"allRaces": "Wszystkie wyścigi",
 			"alphabetical": "Wszystkie",
 			"browseSport": "Przeglądaj {0}",
-			"featured": "Wybrane",
+			"featured": "Wyróżnione",
 			"liveAndUpcoming": "Na żywo i nadchodzące",
 			"nextOff": "Następny",
 			"today": "Dzisiaj",
@@ -654,13 +653,27 @@
 	"events": {
 		"activities": "Zdarzenia",
 		"betoffers": "Oferty zakładów",
+		"cinematicView": "Widok panoramiczny",
+		"competitions": {
+			"default": "Outrights"
+		},
+		"defaultView": "Widok domyślny",
 		"liveRightNow": "Teraz na żywo",
+		"matches": {
+			"default": "Match"
+		},
 		"noBetAndWatchEventsFound": "Aby oglądać wyścig na żywo, musisz wnieść odpowiedni zakład o wysokości co najmniej 1 GBP (lub odpowiednik w innej walucie) od konkretnego wyścigu.",
 		"noBetOffersFound": "Brak zakładów",
 		"noEventsFound": "Brak zdarzeń",
 		"noLiveEventsFound": "Brak zdarzeń na żywo",
 		"startingSoon": "Już wkrótce",
-		"streaming": "Streaming"
+		"streaming": "Streaming",
+		"upcomingLive": "Nadchodzące wydarzenia na żywo",
+		"visualisation": "Wizualizacja"
+	},
+	"eventtypes": {
+		"nocompetitions": "Obecnie nie ma żadnych turniejów.",
+		"nomatches": "Obecnie nie ma żadnych meczów."
 	},
 	"footer": {
 		"links": {
@@ -689,10 +702,12 @@
 		"infoLabel": "Informacje",
 		"label": {
 			"freeBet": "Darmowy zakład",
+			"matchupFreeBet": "Darmowy zakład na mecze rozgrzewkowe",
 			"profitBoost": "zwiększenia zysku"
 		},
 		"labelShort": "fb",
 		"liveOnly": "Tylko zakłady na żywo",
+		"matchupMaxAmount": "Maks. wartość darmowego zakładu to {0}.",
 		"mobileOnly": "Tylko z urządzeń przenośnych",
 		"namedSystemBet": "Wymienione zakłady systemowe (Trixie, Patent, Yankee itp.)",
 		"noRestrictions": "Wszystkie rodzaje zakładów",
@@ -721,6 +736,7 @@
 		"statusPlaced": "Wniesione",
 		"statusReserved": "Zarezerwowane",
 		"statusUsed": "Wykorzystane",
+		"useButtonLabel": "Użyj",
 		"validFor": "Ważne dla"
 	},
 	"grouplistpage": {
@@ -788,17 +804,36 @@
 	},
 	"liveFeedCard": {
 		"type": {
+			"attack": "Atak",
+			"ballOutOfPlay": "Piłka poza polem gry",
+			"ballSafe": "W posiadaniu piłki",
 			"corner": "Rzut rożny",
+			"dangerousAttack": "Niebezpieczny atak",
 			"freeKick": "Rzut wolny",
 			"game": "Gem",
 			"goal": "Gol",
+			"goalKick": "Wybicie z pola bramkowego",
+			"goalOpportunity": "Szansa na gola",
+			"halfTimeEnd": "Połowa",
+			"inPossession": "W posiadaniu piłki",
+			"injury": "Kontuzja",
 			"match": "Mecz",
-			"penalty": "Kara",
+			"matchEnd": "Koniec meczu",
+			"offside": "Spalony",
+			"penalty": "Rzut karny",
+			"penaltyAwarded": "Przyznany rzut karny",
+			"penaltyScored": "Strzelony rzut karny",
+			"possibleCorner": "Możliwy rzut rożny",
+			"possibleFreeKick": "Możliwy rzut wolny",
+			"possibleThrowIn": "Możliwy wrzut z autu",
 			"redCard": "Czerwona kartka",
-			"score": "Punkt",
+			"score": "Wynik",
 			"set": "Set",
+			"shot": "Strzał",
 			"shotOffTarget": "Poza światło bramki",
 			"shotOnTarget": "W światło bramki",
+			"substitution": "Zmiana",
+			"thowIn": "Wrzut z autu",
 			"yellowCard": "Żółta kartka"
 		}
 	},
@@ -812,6 +847,16 @@
 			"title": "Ważna informacja"
 		}
 	},
+	"livestatistics": {
+		"aceswon": "Asy",
+		"attacks": "Ataki",
+		"dangerousattacks": "Niebezpieczne ataki",
+		"possession": "Posiadanie %",
+		"servicefaults": "Podwójne błędy",
+		"shotsofftarget": "Strzały poza światło bramki",
+		"shotsontarget": "Strzały w światło bramki",
+		"title": "Statystyki na żywo"
+	},
 	"locale": {
 		"freeBets": {
 			"pleaseLogin": "Zaloguj się, aby uzyskać dostęp do Przeglądu darmowych zakładów"
@@ -823,6 +868,9 @@
 			"hideTransactions": "Ukryj transakcje",
 			"showTransactions": "Pokaż transakcje"
 		}
+	},
+	"maintenance": {
+		"release": "Na stronie trwają obecnie prace konserwacyjne. Spodziewamy się, że będzie ona ponownie dostępna o {0}. Przepraszamy za wszelkie niedogodności i dziękujemy za cierpliwość."
 	},
 	"mostpopular": {
 		"details": {
@@ -841,7 +889,9 @@
 	"navigationMenu": {
 		"betOfferCountPlural": "{0} ofert zakładów w {1}",
 		"betOfferCountSingular": "1 oferta zakładu w {0}",
+		"bonusOffers": "Moje oferty premiowe",
 		"browse": "przeglądaj",
+		"fewerSports": "Mniej sportów",
 		"live": "Na żywo",
 		"startLobby": "Lobby startowe",
 		"startingSoon": "Już wkrótce",
@@ -850,7 +900,8 @@
 		"startsWithinMinutes": "Zaczyna się w ciągu {0} minut"
 	},
 	"nowAndSoon": {
-		"nextUp": "Następne"
+		"highlighted": "Wyróżnione",
+		"nextUp": "Wkrótce"
 	},
 	"occurrence": {
 		"corner": "{0} wykonał rzut rożny",
@@ -976,6 +1027,10 @@
 			"text": "Kursy łączne są zbyt wysokie. Dostosuj kupon zakładów.",
 			"title": "Kursy zbyt wysokie"
 		},
+		"oddsTooLow": {
+			"text": "Przepraszamy, nie możemy przyjąć zakładów na single lub kombinacje poniżej {0}. Dostosuj kupon zakładów.",
+			"title": "Kursy są zbyt niskie"
+		},
 		"oversizedBetSystem": {
 			"text": "Przepraszamy, ale dopuszczamy maximum 220 zakładów na kuponie, a Twój kupon przekracza tę liczbę. Proszę o dostosowanie kuponu.",
 			"title": "Nieprawidłowy zakład systemowy"
@@ -1090,6 +1145,65 @@
 			}
 		}
 	},
+	"rewards": {
+		"betsPlacedTitle": "Zakłady wniesione:",
+		"bettingCriterion": {
+			"desktopOnly": "tylko na komputerach stacjonarnych",
+			"eventClosed": "wydarzenie, które zostało zamknięte",
+			"eventGroupClosed": "grupa wydarzeń, która została zamknięta",
+			"liveOnly": "tylko na żywo",
+			"minCombinationOdds": "min. kursy na kombinacje",
+			"minOddsPerLeg": "min. kursy na etap",
+			"minStake": "min. wartość stawki",
+			"mobileOnly": "tylko na urządzeniach przenośnych",
+			"nonLiveOnly": "tylko nie na żywo",
+			"placeBetThatHas": "Wnieś zakład, który jest/ma:",
+			"sizeDoublesAndBigger": "podwójne i większe kombinacje",
+			"sizeEightsAndBigger": "ośmiokrotne i większe kombinacje",
+			"sizeElevensAndBigger": "jedenastokrotne i większe kombinacje",
+			"sizeFivesAndBigger": "pięciokrotne i większe kombinacje",
+			"sizeFoursAndBigger": "czterokrotne i większe kombinacje",
+			"sizeNinesAndBigger": "dziewięciokrotne i większe kombinacje",
+			"sizeSevensAndBigger": "siedmiokrotne i większe kombinacje",
+			"sizeSixsAndBigger": "sześciokrotne i większe kombinacje",
+			"sizeTensAndBigger": "dziesięciokrotne i większe kombinacje",
+			"sizeTriplesAndBigger": "trzykrotne i większe kombinacje",
+			"sizeTwelves": "dwunastokrotnie"
+		},
+		"pleaseLogin": "Zaloguj się, aby uzyskać dostęp do przeglądu ofert premiowych",
+		"qualifyingBetsTitle": "Odpowiednie zakłady:",
+		"showBonusOffersHeading": "Przegląd ofert premiowych",
+		"validFor": {
+			"andBiggerCombos": "i większych kombinacji zakładów",
+			"desktopOnly": "tylko na komputerach stacjonarnych",
+			"eachWay": "each way",
+			"eventClosed": "wydarzenie, które zostało zamknięte",
+			"eventGroupClosed": "grupa wydarzeń, która została zamknięta",
+			"liveOnly": "tylko na żywo",
+			"mobileOnly": "tylko na urządzeniach przenośnych",
+			"namedSystemBet": "wymienione zakłady systemowe (Trixie, Patent, Yankee itp.)",
+			"noRestrictions": "wszystkich rodzajów zakładów",
+			"nonEachWay": "zakład inny niż each way",
+			"nonLiveOnly": "tylko nie na żywo",
+			"nonSystemBet": "pojedyncze i kombinacje",
+			"profitBoost": {
+				"maxExtraWinnings": "maks. dodatkowe wygrane",
+				"maxStake": "maksymalna stawka"
+			},
+			"sizeDoubles": "podwójne",
+			"sizeEights": "ośmiokrotnie",
+			"sizeElevens": "jedenastokrotnie",
+			"sizeFives": "pięciokrotne",
+			"sizeFours": "czterokrotnie",
+			"sizeNines": "dziewięciokrotne",
+			"sizeSevens": "siedmiokrotne",
+			"sizeSixs": "sześciokrotne",
+			"sizeTens": "dziesięciokrotne",
+			"sizeTriples": "potrójne",
+			"sizeTwelves": "dwunastokrotnie",
+			"validFor": "Dotyczy"
+		}
+	},
 	"scoreboard": {
 		"at": "o",
 		"racing": {
@@ -1146,6 +1260,11 @@
 		},
 		"title": "Ustawienia"
 	},
+	"slideInContainer": {
+		"close": "Zamknij",
+		"maximise": "Maksymalizuj",
+		"minimise": "Minimalizuj"
+	},
 	"starred": {
 		"liveEventsTabAll": "Wszystkie",
 		"liveEventsTabStarred": "Wybrane"
@@ -1169,7 +1288,9 @@
 		"screens": "Ekrany"
 	},
 	"statistics": {
-		"eventStatsExternalLinkToolTip": "Wyświetl statystyki wydarzenia"
+		"eventStatsExternalLinkToolTip": "Wyświetl statystyki wydarzenia",
+		"tabTitle": "Statystyki",
+		"title": "Statystyki"
 	},
 	"streaming": {
 		"available": {
@@ -1216,7 +1337,8 @@
 	},
 	"termFilter": {
 		"menu": {
-			"streamedOnly": "Pokazuj tylko wydarzenia przesyłane strumieniowo"
+			"streamedOnly": "Pokazuj tylko wydarzenia przesyłane strumieniowo",
+			"upcomingLiveOnly": "Pokaż tylko nadchodzące wydarzenia na żywo"
 		}
 	},
 	"termSearch": {
@@ -1257,11 +1379,115 @@
 	"vet": {
 		"stake_not_integer2": "Stawka jest nieprawidłowa, nie może zawierać ułamków dziesiętnych."
 	},
+	"visualisation": {
+		"extraTimeFullTime": "Całe spotkanie — doliczony czas",
+		"extraTimeHalfTime": "Połowa — doliczony czas",
+		"fullTime": "Regulaminowy czas gry",
+		"penaltyShootout": "Seria rzutów karnych",
+		"waitingForAction": "Oczekiwanie na działanie"
+	},
+	"widgetSettings": {
+		"widgets": [
+			{
+				"widgetId": "gm-league-table",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/league-table-widget/v2.0.1/index.html"
+			},
+			{
+				"widgetId": "gm-team-performance",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/team-performance-widget/v1.0.4/index.html"
+			},
+			{
+				"widgetId": "gm-head-to-head",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/head-to-head-widget/v1.1.3/index.html"
+			},
+			{
+				"widgetId": "gm-euro-2016-player-specials",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/player-specials-widget/v1.0.2/index.html",
+				"height": 682
+			},
+			{
+				"widgetId": "gm-euro-2016-overview",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/finals-widget/v1.0.1/index.html",
+				"height": 200
+			},
+			{
+				"widgetId": "gm-euro-2016-lineup",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/lineup-widget/v1.1.0/index.html",
+				"height": 0
+			},
+			{
+				"widgetId": "gm-golden-boot",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/golden-boot-widget/v1.0.0/index.html",
+				"height": 294
+			},
+			{
+				"widgetId": "gm-tournament-winner",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/tournament-winner-widget/v1.0.0/index.html",
+				"height": 338
+			}
+		],
+		"targets": {
+			"landingPageFeed": [
+				{
+					"widgetId": "gm-tournament-winner",
+					"order": 3
+				},
+				{
+					"widgetId": "gm-euro-2016-player-specials",
+					"order": 6
+				},
+				{
+					"widgetId": "gm-golden-boot",
+					"order": 10
+				}
+			],
+			"home": [
+				{
+					"widgetId": "gm-euro-2016-overview",
+					"order": 1
+				}
+			],
+			"eventGroupBottom": [
+				{
+					"widgetId": "gm-league-table",
+					"order": 10,
+					"filter": "^/?filter/football/england/premier_league(/|$|{)",
+					"args": {
+						"headerDefaultTitle": "Premier League 2015/2016"
+					}
+				}
+			],
+			"eventBeforeBetOffers": [
+				{
+					"order": 1,
+					"widgetId": "gm-euro-2016-lineup",
+					"args": {},
+					"filter": "football/euro_2016|football/euro 2016"
+				}
+			],
+			"eventPrematchStats": [
+				{
+					"widgetId": "gm-team-performance",
+					"order": 10
+				},
+				{
+					"widgetId": "gm-head-to-head",
+					"order": 20
+				}
+			]
+		}
+	},
 	"showRacingTodayTab": true,
 	"enablePush": true,
 	"enableMaxStake": true,
 	"disableRacingModeBalanceLink": false,
 	"enableFilterMenu": true,
 	"enableTermSearch": true,
-	"instantBettingTitle": "Instant Betting"
-}
+	"instantBettingTitle": "Instant Betting",
+	"enableFootballVisualisation": true
+};

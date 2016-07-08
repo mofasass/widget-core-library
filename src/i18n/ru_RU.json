@@ -1,5 +1,4 @@
-{
-	"LOCALE_IMPORT": "---",
+window._kbc.locale={
 	"N/A": "Гонка закончена и более недоступна.",
 	"account": {
 		"balance": "Баланс:",
@@ -67,7 +66,7 @@
 		"invalidrequest": "Произошла техническая ошибка. Повторите попытку или свяжитесь со службой поддержки в случае повторного возникновения ошибки.",
 		"loading": "Загружается...",
 		"morebets": "Дополнительные ставки",
-		"no_search_result": "Ставок в соответствии с выбранным крит��рием не найдено.",
+		"no_search_result": "Ставок в соответствии с выбранным критерием не найдено.",
 		"notavailable": "Пожалуйста, подключитесь к своей учетной записи, чтобы просмотреть историю своих ставок!",
 		"odds": "Коэффициенты",
 		"outcome": {
@@ -129,7 +128,7 @@
 				"PAYOUT_SETTLED_BET_DEPOSIT": "Выплата",
 				"PBA_CORRECTION_PARTIALLY_APPROVED_DEPOSIT": "Возврат PBA ",
 				"PBA_CORRECTION_REJECTED_DEPOSIT": "Возврат PBA ",
-				"SETTLEMENT_CORRECTION_DEPOSIT": "Ставка рассчитан��",
+				"SETTLEMENT_CORRECTION_DEPOSIT": "Ставка рассчитана",
 				"SETTLEMENT_CORRECTION_WITHDRAWAL": "Ставка не рассчитана",
 				"SMS_NOTIFICATION_FEE_WITHDRAWAL": "Плата за SMS-оповещение",
 				"STAKE_TRANSACTION_APPROVED_BET": "Купон размещен",
@@ -312,7 +311,7 @@
 	},
 	"betslipErrors": {
 		"eachWayChangeApprove": "Подтверждаете изменение условий ставки на победу/место?",
-		"liveBettingNotAvailable": "Функция размещения ставок Лайв недоступна для вашего региона в связи с действующи��и нормами.",
+		"liveBettingNotAvailable": "Функция размещения ставок Лайв недоступна для вашего региона в связи с действующими нормами.",
 		"maximumOutcomes": "В купоне допускается не более {0} результатов",
 		"mixedPoolCouponsAndOutcomes": "Обратите внимание на то, что вы смешиваете купоны на заключение пари по совокупности ставок с результатами другой категории ставок. Взносы по ставкам не влияют на заключение пари по совокупности ставок.",
 		"multiplePoolCoupons": "Обратите внимание на то, что ставки с помощью купонов на заключение пари по совокупности ставок следует делать по очереди (одну за другой).",
@@ -323,7 +322,7 @@
 	},
 	"betslipReceipt": {
 		"awaitingApproval": "{0} ожидает подтверждения",
-		"closeReceipt": "закрыть",
+		"closeReceipt": "Закрыть",
 		"receiptPreString": "Чек #",
 		"retainSelections": "Сохранить выбор",
 		"timePreString": "Сегодня",
@@ -345,7 +344,7 @@
 			"generic": {
 				"text": "Cash-In ошибка, пожалуйста повторить запрос."
 			},
-			"login_to_cash_in": "Ваш запрос Cash-In не может быть обр��ботан, так как вы вышли из системы.",
+			"login_to_cash_in": "Ваш запрос Cash-In не может быть обработан, так как вы вышли из системы.",
 			"timeout": {
 				"text": "Cash-In ошибка, пожалуйста повторить запрос."
 			},
@@ -367,29 +366,29 @@
 		"sizeCombination": "Комбинация",
 		"sizeDouble": "двойной",
 		"sizeDoubles": "двойные",
-		"sizeEight": "8кратный",
-		"sizeEights": "8кратные",
-		"sizeEleven": "11кратный",
-		"sizeElevens": "11Cкладки",
-		"sizeFive": "5кратный",
-		"sizeFives": "5кратные",
-		"sizeFour": "4кратный",
-		"sizeFours": "4Kратные",
-		"sizeNine": "9кратный",
-		"sizeNines": "9кратные",
-		"sizeSeven": "7кратный",
-		"sizeSevens": "7кратные",
-		"sizeSingle": "1кратный",
-		"sizeSingles": "1кратные",
-		"sizeSix": "6кратный",
-		"sizeSixs": "6кратные",
+		"sizeEight": "8-кратный",
+		"sizeEights": "8-кратные",
+		"sizeEleven": "11-кратный",
+		"sizeElevens": "11-кратные",
+		"sizeFive": "5-кратный",
+		"sizeFives": "5-кратные",
+		"sizeFour": "4-кратный",
+		"sizeFours": "4-кратные",
+		"sizeNine": "9-кратный",
+		"sizeNines": "9-кратные",
+		"sizeSeven": "7-кратный",
+		"sizeSevens": "7-кратные",
+		"sizeSingle": "Одиночный",
+		"sizeSingles": "Одиночные",
+		"sizeSix": "6-кратный",
+		"sizeSixs": "6-кратные",
 		"sizeSystem": "Система",
-		"sizeTen": "10кратный",
-		"sizeTens": "10кратные",
+		"sizeTen": "10-кратный",
+		"sizeTens": "10-кратные",
 		"sizeTriple": "тройной",
 		"sizeTriples": "тройные",
-		"sizeTwelve": "12кратный",
-		"sizeTwelves": "12Kратные"
+		"sizeTwelve": "12-кратный",
+		"sizeTwelves": "12-кратные"
 	},
 	"common": {
 		"bet": "Ставка",
@@ -522,7 +521,7 @@
 			"title": "Техническая ошибка."
 		},
 		"111": {
-			"text": "Т��хническая ошибка.",
+			"text": "Техническая ошибка.",
 			"title": "Техническая ошибка."
 		},
 		"112": {
@@ -644,7 +643,7 @@
 			"allRaces": "Все гонки",
 			"alphabetical": "Все",
 			"browseSport": "просмотр {0}",
-			"featured": "Популярные",
+			"featured": "Освещен",
 			"liveAndUpcoming": "Лайв и Ближайшие",
 			"nextOff": "Последующие",
 			"today": "Сегодня",
@@ -654,13 +653,27 @@
 	"events": {
 		"activities": "События матча",
 		"betoffers": "Предложения ставок",
+		"cinematicView": "Широкоэкранный вид",
+		"competitions": {
+			"default": "Соревнования"
+		},
+		"defaultView": "Вид по умолчанию",
 		"liveRightNow": "Live-события сейчас",
+		"matches": {
+			"default": "Match"
+		},
 		"noBetAndWatchEventsFound": "Чтобы посмотреть прямую трансляцию гонки или забега, необходимо сделать ставку на сумму не менее £1 (или эквивалентную в другой валюте) на конкретную гонку.",
 		"noBetOffersFound": "Предложений ставок не найдено",
 		"noEventsFound": "Событий не найдено",
 		"noLiveEventsFound": "Событий LIVE не найдено",
 		"startingSoon": "Скоро начнутся",
-		"streaming": "Трансляция"
+		"streaming": "Трансляция",
+		"upcomingLive": "Предстоящие события Live",
+		"visualisation": "Визуальное представление"
+	},
+	"eventtypes": {
+		"nocompetitions": "В настоящий момент соревнования недоступны.",
+		"nomatches": "В настоящий момент матчи недоступны."
 	},
 	"footer": {
 		"links": {
@@ -689,10 +702,12 @@
 		"infoLabel": "Информация",
 		"label": {
 			"freeBet": "Нефиксированная ставка",
+			"matchupFreeBet": "Бесплатная ставка на участников матча",
 			"profitBoost": "повышения цен"
 		},
 		"labelShort": "fb",
 		"liveOnly": "Только ставки лайв",
+		"matchupMaxAmount": "Максимальный размер бесплатной ставки: {0}.",
 		"mobileOnly": "Только для мобильных устройств",
 		"namedSystemBet": "Названные системные ставки (трикси, патент, янки и т. д.)",
 		"noRestrictions": "Все типы ставок",
@@ -721,13 +736,14 @@
 		"statusPlaced": "Размещено",
 		"statusReserved": "Зарезервировано",
 		"statusUsed": "Использовано",
+		"useButtonLabel": "Использовать",
 		"validFor": "Действительны для"
 	},
 	"grouplistpage": {
 		"liveLabel": "Live",
 		"nowLabel": "Сейчас"
 	},
-	"home": "Глав��ая",
+	"home": "Главная",
 	"htft": {
 		"outcome": {
 			"away": "2",
@@ -788,17 +804,36 @@
 	},
 	"liveFeedCard": {
 		"type": {
+			"attack": "Атака",
+			"ballOutOfPlay": "Мяч вне игры",
+			"ballSafe": "Владение мячом",
 			"corner": "Угловой удар",
+			"dangerousAttack": "Опасная атака",
 			"freeKick": "Штрафной удар",
-			"game": "Игра",
+			"game": "Гейм",
 			"goal": "Гол",
+			"goalKick": "Удар от ворот",
+			"goalOpportunity": "Голевой момент",
+			"halfTimeEnd": "Полупериод",
+			"inPossession": "Владение мячом",
+			"injury": "Добавочное время",
 			"match": "Матч",
+			"matchEnd": "Конец матча",
+			"offside": "Офсайд",
 			"penalty": "Пенальти",
+			"penaltyAwarded": "Назначен пенальти",
+			"penaltyScored": "Забит пенальти",
+			"possibleCorner": "Возможен угловой",
+			"possibleFreeKick": "Возможен штрафной",
+			"possibleThrowIn": "Возможно вбрасывание",
 			"redCard": "Красная карточка",
 			"score": "Счет",
 			"set": "Сет",
-			"shotOffTarget": "Удары мимо ворот",
-			"shotOnTarget": "Удары, попавшие в ворота",
+			"shot": "Удар",
+			"shotOffTarget": "Удар мимо ворот",
+			"shotOnTarget": "Удар в створ ворот",
+			"substitution": "Замена",
+			"thowIn": "Вбрасывание",
 			"yellowCard": "Желтая карточка"
 		}
 	},
@@ -812,17 +847,30 @@
 			"title": "Внимание!"
 		}
 	},
+	"livestatistics": {
+		"aceswon": "Эйсы",
+		"attacks": "Число атак",
+		"dangerousattacks": "Число опасных атак",
+		"possession": "Уровень владения мячом, %",
+		"servicefaults": "Двойные ошибки",
+		"shotsofftarget": "Число ударов мимо ворот",
+		"shotsontarget": "Число ударов по воротам",
+		"title": "Статистика ставок Лайв"
+	},
 	"locale": {
 		"freeBets": {
-			"pleaseLogin": "Войдите в систему, чтобы перейти к обз��ру бесплатных ставок"
+			"pleaseLogin": "Войдите в систему, чтобы перейти к обзору бесплатных ставок"
 		},
 		"navigation": {
-			"showAllSports": "Показать все виды спорта"
+			"showAllSports": "все виды спорта"
 		},
 		"transactions": {
 			"hideTransactions": "Скрыть транзакции",
 			"showTransactions": "Показать транзакции"
 		}
+	},
+	"maintenance": {
+		"release": "На сайте выполняются технические работы. Работа сайта должна быть возобновлена в {0}. Мы приносим извинения за неудобство и благодарим за понимание."
 	},
 	"mostpopular": {
 		"details": {
@@ -841,7 +889,9 @@
 	"navigationMenu": {
 		"betOfferCountPlural": "{0} предложенных ставок в {1}",
 		"betOfferCountSingular": "1 предложенная ставка в {0}",
+		"bonusOffers": "Мои бонусные предложения",
 		"browse": "просмотр",
+		"fewerSports": "Меньшее количество видов спорта",
 		"live": "Лайв",
 		"startLobby": "Перейти на стартовую страницу",
 		"startingSoon": "Скоро начнутся",
@@ -850,7 +900,8 @@
 		"startsWithinMinutes": "Начало через {0} минут"
 	},
 	"nowAndSoon": {
-		"nextUp": "Следующий"
+		"highlighted": "Освещен",
+		"nextUp": "Далее"
 	},
 	"occurrence": {
 		"corner": "{0} заработал угловой",
@@ -907,7 +958,7 @@
 		},
 		"eachWayTermsChanged": {
 			"text": "Внимание: условия одной или нескольких ставок на победу/место изменились после добавления их в купон",
-			"title": "Усл��вия ставки на победу/место изменены"
+			"title": "Условия ставки на победу/место изменены"
 		},
 		"ewBetIncompatibleReward": {
 			"text": "Обратите внимание на то, что выбранное вознаграждение не может использоваться для ставки на победу/место",
@@ -969,12 +1020,16 @@
 			"title": "Предложенная ставка закрыта"
 		},
 		"oddsToHighFreeBet": {
-			"text": "Общий коэффициент слишком велик для ��ефиксированной ставки. Измените свой игровой купон.",
+			"text": "Общий коэффициент слишком велик для нефиксированной ставки. Измените свой игровой купон.",
 			"title": "Коэффициенты слишком велики"
 		},
 		"oddsTooHigh": {
 			"text": "оэффициент слишком велик. Измените свой игровой купон.",
 			"title": "Размер коэффициентов слишком велик"
+		},
+		"oddsTooLow": {
+			"text": "Мы не принимаем ставки на одиночные события и комбинации с коэффициентом ниже {0}. Измените свой игровой купон.",
+			"title": "Слишком низкие коэффициенты"
 		},
 		"oversizedBetSystem": {
 			"text": "К сожалению, мы позволяем максимум 220 ставок, которые будут содержаться в купоне и Ваша ставка превышает это число. Пожалуйста, внесите изменения в Ваш купон.",
@@ -985,7 +1040,7 @@
 			"title": "Неверное пари по совокупности ставок"
 		},
 		"partialFreeBet": {
-			"text": "Размер бонусной ставки превышает максимально допустимый размер {0}. Вы все еще може��е использовать вашу бесплатную ставку, чтобы разместить ставку, но только {0} будет использовано, оставшаяся часть бесплатной ставки будет аннулирована.",
+			"text": "Размер бонусной ставки превышает максимально допустимый размер {0}. Вы все еще можете использовать вашу бесплатную ставку, чтобы разместить ставку, но только {0} будет использовано, оставшаяся часть бесплатной ставки будет аннулирована.",
 			"title": "Величина ставки слишком высока. Использовать бесплатную ставку?"
 		},
 		"participantScratched": {
@@ -1086,8 +1141,67 @@
 		"errorCode": {
 			"noFunds": {
 				"text": "Для размещения ставок необходимо внести деньги.",
-				"title": "��ет доступных средств"
+				"title": "Нет доступных средств"
 			}
+		}
+	},
+	"rewards": {
+		"betsPlacedTitle": "Размещенные ставки:",
+		"bettingCriterion": {
+			"desktopOnly": "только для настольных компьютеров",
+			"eventClosed": "событие, которое было закрыто",
+			"eventGroupClosed": "группа событий, которая была закрыта",
+			"liveOnly": "только ставки в прямом эфире",
+			"minCombinationOdds": "коэффициенты минимальной комбинации",
+			"minOddsPerLeg": "минимальные коэффициенты в эстафете",
+			"minStake": "минимальная сумма ставки",
+			"mobileOnly": "только для мобильных устройств",
+			"nonLiveOnly": "только не ставки в прямом эфире",
+			"placeBetThatHas": "Размещайте ставку, которая является/имеет:",
+			"sizeDoublesAndBigger": "двойных и больших комбинаций",
+			"sizeEightsAndBigger": "8-кратных и больших комбинаций",
+			"sizeElevensAndBigger": "11-кратных и больших комбинаций",
+			"sizeFivesAndBigger": "5-кратных и больших комбинаций",
+			"sizeFoursAndBigger": "4-кратных и больших комбинаций",
+			"sizeNinesAndBigger": "9-кратных и больших комбинаций",
+			"sizeSevensAndBigger": "7-кратных и больших комбинаций",
+			"sizeSixsAndBigger": "6-кратных и больших комбинаций",
+			"sizeTensAndBigger": "10-кратных и больших комбинаций",
+			"sizeTriplesAndBigger": "тройных и больших комбинаций",
+			"sizeTwelves": "12-кратные"
+		},
+		"pleaseLogin": "Войдите в систему, чтобы перейти к обзору бонусных предложений",
+		"qualifyingBetsTitle": "Допустимые ставки:",
+		"showBonusOffersHeading": "Обзор бонусных предложений",
+		"validFor": {
+			"andBiggerCombos": "и больших комбинаций",
+			"desktopOnly": "только для настольных компьютеров",
+			"eachWay": "победа/место",
+			"eventClosed": "событие, которое было закрыто",
+			"eventGroupClosed": "группа событий, которая была закрыта",
+			"liveOnly": "только ставки в прямом эфире",
+			"mobileOnly": "только для мобильных устройств",
+			"namedSystemBet": "именованные системные ставки (трикси, патент, янки и т. д.)",
+			"noRestrictions": "всех типов ставок",
+			"nonEachWay": "не на победу/место",
+			"nonLiveOnly": "только не ставки в прямом эфире",
+			"nonSystemBet": "одиночные ставки и комбинации",
+			"profitBoost": {
+				"maxExtraWinnings": "максимальное количество дополнительных выигрышей",
+				"maxStake": "максимальная ставка"
+			},
+			"sizeDoubles": "двойные ставки",
+			"sizeEights": "8-кратные",
+			"sizeElevens": "11-кратные",
+			"sizeFives": "5-кратные",
+			"sizeFours": "4-кратные",
+			"sizeNines": "9-кратные",
+			"sizeSevens": "7-кратные",
+			"sizeSixs": "6-кратные",
+			"sizeTens": "10-кратные",
+			"sizeTriples": "тройные ставки",
+			"sizeTwelves": "12-кратные",
+			"validFor": "Действительны для"
 		}
 	},
 	"scoreboard": {
@@ -1140,11 +1254,16 @@
 			},
 			"showmenu": {
 				"text": "Включает опции на кнопке",
-				"title": "Изменение Ко��ффициентов"
+				"title": "Изменение Коэффициентов"
 			},
 			"title": "Поведение при изменении коэффициентов"
 		},
 		"title": "Настройки"
+	},
+	"slideInContainer": {
+		"close": "Закрыть",
+		"maximise": "Развернуть",
+		"minimise": "Свернуть"
 	},
 	"starred": {
 		"liveEventsTabAll": "Все события",
@@ -1169,7 +1288,9 @@
 		"screens": "экраны"
 	},
 	"statistics": {
-		"eventStatsExternalLinkToolTip": "Просмотреть статистику события"
+		"eventStatsExternalLinkToolTip": "Просмотреть статистику события",
+		"tabTitle": "Статистика",
+		"title": "Статистика"
 	},
 	"streaming": {
 		"available": {
@@ -1216,7 +1337,8 @@
 	},
 	"termFilter": {
 		"menu": {
-			"streamedOnly": "Показать только мероприятия с трансляцией"
+			"streamedOnly": "Показать только мероприятия с трансляцией",
+			"upcomingLiveOnly": "Показать только предстоящие события Live"
 		}
 	},
 	"termSearch": {
@@ -1257,11 +1379,115 @@
 	"vet": {
 		"stake_not_integer2": "Ставка недействительна, так как не может содержать знаков после запятой."
 	},
+	"visualisation": {
+		"extraTimeFullTime": "Полное время – дополнительное время",
+		"extraTimeHalfTime": "Перерыв – дополнительное время",
+		"fullTime": "Матч",
+		"penaltyShootout": "Послематчевые пенальти",
+		"waitingForAction": "Пожалуйста, подождите"
+	},
+	"widgetSettings": {
+		"widgets": [
+			{
+				"widgetId": "gm-league-table",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/league-table-widget/v2.0.1/index.html"
+			},
+			{
+				"widgetId": "gm-team-performance",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/team-performance-widget/v1.0.4/index.html"
+			},
+			{
+				"widgetId": "gm-head-to-head",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/head-to-head-widget/v1.1.3/index.html"
+			},
+			{
+				"widgetId": "gm-euro-2016-player-specials",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/player-specials-widget/v1.0.2/index.html",
+				"height": 682
+			},
+			{
+				"widgetId": "gm-euro-2016-overview",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/finals-widget/v1.0.1/index.html",
+				"height": 200
+			},
+			{
+				"widgetId": "gm-euro-2016-lineup",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/lineup-widget/v1.1.0/index.html",
+				"height": 0
+			},
+			{
+				"widgetId": "gm-golden-boot",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/golden-boot-widget/v1.0.0/index.html",
+				"height": 294
+			},
+			{
+				"widgetId": "gm-tournament-winner",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/tournament-winner-widget/v1.0.0/index.html",
+				"height": 338
+			}
+		],
+		"targets": {
+			"landingPageFeed": [
+				{
+					"widgetId": "gm-tournament-winner",
+					"order": 3
+				},
+				{
+					"widgetId": "gm-euro-2016-player-specials",
+					"order": 6
+				},
+				{
+					"widgetId": "gm-golden-boot",
+					"order": 10
+				}
+			],
+			"home": [
+				{
+					"widgetId": "gm-euro-2016-overview",
+					"order": 1
+				}
+			],
+			"eventGroupBottom": [
+				{
+					"widgetId": "gm-league-table",
+					"order": 10,
+					"filter": "^/?filter/football/england/premier_league(/|$|{)",
+					"args": {
+						"headerDefaultTitle": "Premier League 2015/2016"
+					}
+				}
+			],
+			"eventBeforeBetOffers": [
+				{
+					"order": 1,
+					"widgetId": "gm-euro-2016-lineup",
+					"args": {},
+					"filter": "football/euro_2016|football/euro 2016"
+				}
+			],
+			"eventPrematchStats": [
+				{
+					"widgetId": "gm-team-performance",
+					"order": 10
+				},
+				{
+					"widgetId": "gm-head-to-head",
+					"order": 20
+				}
+			]
+		}
+	},
 	"showRacingTodayTab": true,
 	"enablePush": true,
 	"enableMaxStake": true,
 	"disableRacingModeBalanceLink": false,
 	"enableFilterMenu": true,
 	"enableTermSearch": true,
-	"instantBettingTitle": "Instant Betting"
-}
+	"instantBettingTitle": "Instant Betting",
+	"enableFootballVisualisation": true
+};

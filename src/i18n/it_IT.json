@@ -1,5 +1,4 @@
-{
-	"LOCALE_IMPORT": "---",
+window._kbc.locale={
 	"N/A": "La gara è finita e non è più disponibile.",
 	"account": {
 		"balance": "Bilancio:",
@@ -15,7 +14,7 @@
 				"skipAnimation": true
 			},
 			"freebetsview": {
-				"label": "Le mie scommesse gratuite"
+				"label": "Le mie Free bet"
 			},
 			"settings": {
 				"label": "Impostazioni",
@@ -42,8 +41,8 @@
 	"bethistory": {
 		"betLabel": {
 			"draw": "Pareggio",
-			"drawOrAway": "Pareggio o in transferta",
-			"homeOrAway": "Casa o in transferta",
+			"drawOrAway": "Pareggio o Ospite",
+			"homeOrAway": "Casa o Ospite",
 			"homeOrDraw": "Casa o pareggio"
 		},
 		"betdetails": "Dettagli scommessa",
@@ -91,7 +90,7 @@
 		"sizeseven": "Multipla a 7",
 		"sizesix": "Sestupla",
 		"sizeten": "Multipla a 10",
-		"sizetriple": "Tripletta",
+		"sizetriple": "tripla",
 		"sizetwelve": "Multipla a 12",
 		"status": "Stato",
 		"statuses": {
@@ -123,8 +122,8 @@
 				"CANCEL_UNFUNDED_COUPON": "Rimborso: scommessa nulla",
 				"CLOSE_LOST_BET": "Scommessa persa",
 				"DELETED_COUPON_DEPOSIT": "Rimborso: scommessa nulla",
-				"FREE_BET": "Scommessa gratuita piazzata",
-				"NON_APPROVED_LIVE_BET_DEPOSIT": "Scommessa gratuita piazzata",
+				"FREE_BET": "Free bet piazzata",
+				"NON_APPROVED_LIVE_BET_DEPOSIT": "Free bet piazzata",
 				"PAYOUT_CASH_IN_DEPOSIT": "Cash-in",
 				"PAYOUT_SETTLED_BET_DEPOSIT": "Pagamento",
 				"PBA_CORRECTION_PARTIALLY_APPROVED_DEPOSIT": "Rimborso PBA",
@@ -386,8 +385,8 @@
 		"sizeSystem": "Sistema",
 		"sizeTen": "Multipla a 10",
 		"sizeTens": "Multiple a 10",
-		"sizeTriple": "Tripletta",
-		"sizeTriples": "Triplette",
+		"sizeTriple": "Tripla",
+		"sizeTriples": "Tripla",
 		"sizeTwelve": "Multipla a 12",
 		"sizeTwelves": "Multiple a 12"
 	},
@@ -600,11 +599,11 @@
 	},
 	"date": {
 		"days": {
-			"0": "Lunedì",
-			"1": "Martedì",
-			"2": "Mercoledì",
-			"3": "Giovedì",
-			"4": "Venerdì",
+			"0": "Lunedi",
+			"1": "Martedi",
+			"2": "Mercoledi",
+			"3": "Giovedi",
+			"4": "Venerdi",
 			"5": "Sabato",
 			"6": "Domenica"
 		},
@@ -626,7 +625,7 @@
 		"tomorrow": "Domani"
 	},
 	"drillDown": {
-		"allLeagues": "All leagues"
+		"allLeagues": "Tutti i campionati"
 	},
 	"eachWay": {
 		"labelShort": "E/W"
@@ -653,14 +652,28 @@
 	},
 	"events": {
 		"activities": "Eventi",
-		"betoffers": "Bet offers",
+		"betoffers": "Offerte di puntata",
+		"cinematicView": "Vista cinematica",
+		"competitions": {
+			"default": "Competizioni"
+		},
+		"defaultView": "Vista predefinita",
 		"liveRightNow": "Ora in tempo reale",
+		"matches": {
+			"default": "Partita"
+		},
 		"noBetAndWatchEventsFound": "Per visualizzare la corsa dal vivo devi prima effettuare una scommessa di qualificazione di almeno £ 1 (o equivalente in valuta) sulla gara specifica.",
 		"noBetOffersFound": "Non risultano scommesse",
 		"noEventsFound": "Non risultano eventi",
 		"noLiveEventsFound": "Non risultano eventi Live",
 		"startingSoon": "Inizia a breve",
-		"streaming": "Streaming"
+		"streaming": "Streaming",
+		"upcomingLive": "Prossimi eventi dal vivo",
+		"visualisation": "Visualizzazione"
+	},
+	"eventtypes": {
+		"nocompetitions": "Al momento non ci sono competizioni disponibili.",
+		"nomatches": "Al momento non ci sono incontri disponibili."
 	},
 	"footer": {
 		"links": {
@@ -672,9 +685,9 @@
 	"freeBets": {
 		"addedLabel": "Aggiunto",
 		"andBiggerCombos": "e combinazioni grandi",
-		"betSelected": "Scommessa gratuita selezionata",
+		"betSelected": "Free bet selezionata",
 		"betStatusLabel": "Stato di scommessa",
-		"betsAvailable": "Puntate gratuite disponibili",
+		"betsAvailable": "Free bet",
 		"bonusOffers": {
 			"selector": {
 				"label": "Offerte bonus"
@@ -689,10 +702,12 @@
 		"infoLabel": "Info",
 		"label": {
 			"freeBet": "Free bet",
+			"matchupFreeBet": "Free bet \"match-up\"",
 			"profitBoost": "Profit Boost"
 		},
 		"labelShort": "fb",
 		"liveOnly": "Solo Live",
+		"matchupMaxAmount": "Importo massimo puntata gratuita {0}.",
 		"mobileOnly": "Solo dispositivi mobili",
 		"namedSystemBet": "Named system bets (Trixie, Patent, Yankee, etc)",
 		"noRestrictions": "Tutti i tipi di scommesse",
@@ -711,9 +726,9 @@
 			"maxStake": "Max stake"
 		},
 		"selector": {
-			"label": "Puntate gratuite"
+			"label": "Free bet"
 		},
-		"showFreeBetsHeading": "Panoramica di scommesse gratis",
+		"showFreeBetsHeading": "Panoramica di Free bet",
 		"statusAvailable": "Disponibile",
 		"statusCancelled": "Annullato",
 		"statusExpired": "Scaduto",
@@ -721,6 +736,7 @@
 		"statusPlaced": "Collocato",
 		"statusReserved": "Riservato",
 		"statusUsed": "Usato",
+		"useButtonLabel": "Usa",
 		"validFor": "Valido per"
 	},
 	"grouplistpage": {
@@ -730,9 +746,9 @@
 	"home": "Home",
 	"htft": {
 		"outcome": {
-			"away": "F",
-			"draw": "P",
-			"home": "C"
+			"away": "Ospite",
+			"draw": "Pareggio",
+			"home": "Casa"
 		}
 	},
 	"landingPageFeed": {
@@ -744,18 +760,18 @@
 			"shocker": {
 				"attention": "In corso:",
 				"overtime": "nei minuti di recupero.",
-				"participantToWin": "{0} per vincere?",
-				"score": "Risultato provvisorio è {0} - {1} a {2},",
-				"scoreTied": "Risultato provvisorio è {0} - {1},",
+				"participantToWin": "Vittoria {0}?",
+				"score": "Il risultato parziale è {0} - {1} a {2},",
+				"scoreTied": "Il risultato parziale è {0} - {1},",
 				"situation": {
 					"card": "Cartellino rosso! {0} sono un giocatore rimasto a terra contro {1}",
 					"cards": "Cartellino rosso! {0} sono {1} giocatori giù contro {2}.",
 					"cardsAlternative": "Cartellino rosso! {0} sono fino a {1} giocatori contro {2}.",
 					"cardsBoth": "Red card! {0} are down to {1}. {2} are down to {3}.",
-					"lead": "{0} are leading against {1}.",
+					"lead": "{0} è in vantaggio contro {1}.  ",
 					"time": "{0} - {1} is still tied."
 				},
-				"timeRemaining": "{0} minuti rimanenti."
+				"timeRemaining": "{0} minuti rimasti."
 			},
 			"title": {
 				"highlights": "Highlights",
@@ -788,17 +804,36 @@
 	},
 	"liveFeedCard": {
 		"type": {
+			"attack": "Attacco",
+			"ballOutOfPlay": "Rimessa",
+			"ballSafe": "Possesso palla",
 			"corner": "Calcio d'angolo",
+			"dangerousAttack": "Attacco pericoloso",
 			"freeKick": "Punizione",
 			"game": "Gioco",
 			"goal": "Gol",
+			"goalKick": "Rinvio dal fondo ",
+			"goalOpportunity": "Occasione da Gol",
+			"halfTimeEnd": "Primo tempo",
+			"inPossession": "Possesso palla",
+			"injury": "Fallo",
 			"match": "Partita",
+			"matchEnd": "Fine dell'incontro",
+			"offside": "Fuorigioco",
 			"penalty": "Rigore",
+			"penaltyAwarded": "Rigore assegnato",
+			"penaltyScored": "Rigore segnato",
+			"possibleCorner": "Possibile angolo",
+			"possibleFreeKick": "Possibile punizione",
+			"possibleThrowIn": "Possibile rimessa",
 			"redCard": "Cartellino rosso",
 			"score": "Punteggio",
 			"set": "Set",
-			"shotOffTarget": "Fuori porta",
-			"shotOnTarget": "In porta",
+			"shot": "Tiro",
+			"shotOffTarget": "Tiro fuori",
+			"shotOnTarget": "Tiro in porta",
+			"substitution": "Sostituzione",
+			"thowIn": "Rimessa",
 			"yellowCard": "Cartellino giallo"
 		}
 	},
@@ -812,17 +847,30 @@
 			"title": "Νota importante"
 		}
 	},
+	"livestatistics": {
+		"aceswon": "Ace",
+		"attacks": "Attacchi",
+		"dangerousattacks": "Attacchi pericolosi",
+		"possession": "Possesso %",
+		"servicefaults": "Doppi falli",
+		"shotsofftarget": "Tiri fuori porta",
+		"shotsontarget": "Tiri in Porta",
+		"title": "Statistiche live"
+	},
 	"locale": {
 		"freeBets": {
 			"pleaseLogin": "Effettua il login per accedere alla tua visione scommesse gratuito"
 		},
 		"navigation": {
-			"showAllSports": "Mostra tutti gli sport"
+			"showAllSports": "Tutti gli sport"
 		},
 		"transactions": {
 			"hideTransactions": "Nascondi le transazioni",
 			"showTransactions": "Mostra le transazioni"
 		}
+	},
+	"maintenance": {
+		"release": "Il sito è attualmente in manutenzione. Prevediamo di tornare attivi alle {0}. Ci scusiamo per il disagio e apprezziamo la sua pazienza."
 	},
 	"mostpopular": {
 		"details": {
@@ -832,7 +880,7 @@
 		},
 		"nobetoffersfound": "Nessuna offerta di scommessa rinvenuta",
 		"outcomeLabel": {
-			"away": "In transferta",
+			"away": "Ospite",
 			"draw": "Pareggio",
 			"home": "Casa"
 		},
@@ -841,7 +889,9 @@
 	"navigationMenu": {
 		"betOfferCountPlural": "{0} scommesse in {1}",
 		"betOfferCountSingular": "1 scommessa in {0}",
+		"bonusOffers": "Le mie offerte bonus",
 		"browse": "Navigare",
+		"fewerSports": "Meno sport",
 		"live": "Live",
 		"startLobby": "Avviare schermata iniziale",
 		"startingSoon": "Inizia a breve",
@@ -850,7 +900,8 @@
 		"startsWithinMinutes": "Inizia entro {0} minuti"
 	},
 	"nowAndSoon": {
-		"nextUp": "Next Up"
+		"highlighted": "Primo piano",
+		"nextUp": "Inizia a breve"
 	},
 	"occurrence": {
 		"corner": "{0} ottiene un angolo",
@@ -862,14 +913,14 @@
 		"american": "Americane",
 		"decimal": "Decimali",
 		"fractional": "Frazionali",
-		"label": "Formato quote"
+		"label": "Formato Quote"
 	},
 	"oldbrowsernotsupported": "Spiacenti, il tuo browser non è supportato (verifica i browser supportati).",
 	"outcomes": {
-		"awayOrDraw": "Pareggio o in transferta",
+		"awayOrDraw": "Pareggio o Ospite",
 		"closed": "Chiuso",
 		"draw": "Pareggio",
-		"homeOrAway": "Casa o in transferta",
+		"homeOrAway": "Casa o Ospite",
 		"homeOrDraw": "Casa o pareggio",
 		"live": "Live - in corso",
 		"no": "No",
@@ -918,7 +969,7 @@
 			"title": "Errore nel piazzamento della scommessa"
 		},
 		"generic": {
-			"text": "Puntata non valida, non può contenere importi decimali.",
+			"text": "Controllate il riepilogo delle scommesse e verificate se la scommessa è stata piazzata\r\nScusa, c' è stato un errore di communicazione durante il piazzamento della scommessa e non possiamo determinare se la scommessa è stata piazzata",
 			"title": "Errore di comunicazione"
 		},
 		"invalidBet": {
@@ -976,6 +1027,10 @@
 			"text": "Il totale quote è troppo alto. Si prega di modificare la schedina.",
 			"title": "Quote troppo alte"
 		},
+		"oddsTooLow": {
+			"text": "Siamo spiacenti di non poter accettare scommesse su singoli o combinazioni che presentino quotazioni inferiori a {0}. Modifica la tua schedina.",
+			"title": "Quotazioni troppo basse"
+		},
 		"oversizedBetSystem": {
 			"text": "Ci scusiamo, ma consentiamo che siano piazzate un massimo di 220 scommesse per coupon e la tua scommessa eccede questo numero. Per favore cambia la tua schedina scommesse.",
 			"title": "Sistema di scommessa non valido"
@@ -986,10 +1041,10 @@
 		},
 		"partialFreeBet": {
 			"text": "L'importo della puntata gratuita supera quello della puntata massima consentita {0}. Puoi utilizzare la puntata gratuita, ma verrà utilizzata solo la somma di {0}, il resto dell'importo verrà annullato.",
-			"title": "Puntata troppo alta. Utilizzare la puntata gratuita?"
+			"title": "Puntata troppo alta. Utilizzare Free bet?"
 		},
 		"participantScratched": {
-			"text": "Uno o pi�� partecipanti sono stati rimossi. Si prega di sistemare la schedina.",
+			"text": "Uno o più partecipanti sono stati rimossi. Si prega di sistemare la schedina.",
 			"title": "Non runner"
 		},
 		"pbaNotAllowed": {
@@ -1010,7 +1065,7 @@
 			"title": "Limite superato"
 		},
 		"stakeNotInteger": {
-			"text": "La puntata non è valida in quanto non può contenere cifre decimali",
+			"text": "Puntata non valida, non puó contenere importi decimali",
 			"title": "Puntata non piazzata"
 		},
 		"stakeTooHigh": {
@@ -1032,7 +1087,7 @@
 			"title": "Puntata troppo bassa"
 		},
 		"timeout": {
-			"text": "Puntata non valida, non può contenere importi decimali."
+			"text": "Controllate il riepilogo delle scommesse e verificate se la scommessa è stata piazzata\r\nScusa, c' è stato un errore di communicazione durante il piazzamento della scommessa e non possiamo determinare se la scommessa è stata piazzata"
 		},
 		"tooManyOutcomes": {
 			"text": "Ci scusiamo, non è possibile piazzare più di 12 selezioni nella sua schedina.",
@@ -1088,6 +1143,65 @@
 				"text": "Ti preghiamo di inserire i soldi per la scommessa.",
 				"title": "Non ci sono fondi disponibili"
 			}
+		}
+	},
+	"rewards": {
+		"betsPlacedTitle": "Puntate piazzate:",
+		"bettingCriterion": {
+			"desktopOnly": "solo per utilizzo su desktop",
+			"eventClosed": "evento chiuso",
+			"eventGroupClosed": "gruppo di eventi chiuso",
+			"liveOnly": "solo live",
+			"minCombinationOdds": "quotazioni combinazioni min.",
+			"minOddsPerLeg": "quotazioni min. per gara",
+			"minStake": "importo scommessa min.",
+			"mobileOnly": "solo dispositivi mobili",
+			"nonLiveOnly": "solo non live",
+			"placeBetThatHas": "Piazza una puntata che sia/abbia:",
+			"sizeDoublesAndBigger": "doppie e combinazioni più grandi",
+			"sizeEightsAndBigger": "otto volte e combinazioni più grandi",
+			"sizeElevensAndBigger": "undici volte e combinazioni più grandi",
+			"sizeFivesAndBigger": "cinque volte e combinazioni più grandi",
+			"sizeFoursAndBigger": "quattro volte e combinazioni più grandi",
+			"sizeNinesAndBigger": "nove volte e combinazioni più grandi",
+			"sizeSevensAndBigger": "sette volte e combinazioni più grandi",
+			"sizeSixsAndBigger": "sei volte e combinazioni più grandi",
+			"sizeTensAndBigger": "dieci volte e combinazioni più grandi",
+			"sizeTriplesAndBigger": "triple e combinazioni più grandi",
+			"sizeTwelves": "dodici volte"
+		},
+		"pleaseLogin": "Accedi per visualizzare la panoramica con le tue offerte bonus",
+		"qualifyingBetsTitle": "Puntate qualificazione:",
+		"showBonusOffersHeading": "Panoramica offerte bonus",
+		"validFor": {
+			"andBiggerCombos": "e combinazioni più grandi",
+			"desktopOnly": "solo per utilizzo su desktop",
+			"eachWay": "each way",
+			"eventClosed": "evento chiuso",
+			"eventGroupClosed": "gruppo di eventi chiuso",
+			"liveOnly": "solo live",
+			"mobileOnly": "solo dispositivi mobili",
+			"namedSystemBet": "puntate di sistema indicate (Trixie, Patent, Yankee e così via)",
+			"noRestrictions": "tutti i tipi di puntata",
+			"nonEachWay": "non each way",
+			"nonLiveOnly": "solo non live",
+			"nonSystemBet": "singole e combinazioni",
+			"profitBoost": {
+				"maxExtraWinnings": "vincite extra max",
+				"maxStake": "puntata max"
+			},
+			"sizeDoubles": "doppie",
+			"sizeEights": "otto volte",
+			"sizeElevens": "undici volte",
+			"sizeFives": "cinque volte",
+			"sizeFours": "quattro volte",
+			"sizeNines": "nove volte",
+			"sizeSevens": "sette volte",
+			"sizeSixs": "sei volte",
+			"sizeTens": "dieci volte",
+			"sizeTriples": "triple",
+			"sizeTwelves": "dodici volte",
+			"validFor": "Valido per"
 		}
 	},
 	"scoreboard": {
@@ -1146,6 +1260,11 @@
 		},
 		"title": "Impostazioni"
 	},
+	"slideInContainer": {
+		"close": "Chiudi",
+		"maximise": "Ingrandisci",
+		"minimise": "Riduci"
+	},
 	"starred": {
 		"liveEventsTabAll": "Tutti gli eventi",
 		"liveEventsTabStarred": "Eventi preferiti"
@@ -1169,7 +1288,9 @@
 		"screens": "SCREENS"
 	},
 	"statistics": {
-		"eventStatsExternalLinkToolTip": "Cliccare per le statistiche dell'evento"
+		"eventStatsExternalLinkToolTip": "Cliccare per le statistiche dell'evento",
+		"tabTitle": "Statistiche",
+		"title": "Statistiche"
 	},
 	"streaming": {
 		"available": {
@@ -1216,7 +1337,8 @@
 	},
 	"termFilter": {
 		"menu": {
-			"streamedOnly": "Mostra solo eventi in streaming"
+			"streamedOnly": "Mostra solo eventi in streaming",
+			"upcomingLiveOnly": "Mostra solo i prossimi eventi dal vivo"
 		}
 	},
 	"termSearch": {
@@ -1257,11 +1379,115 @@
 	"vet": {
 		"stake_not_integer2": "Puntata non valida, non puó contenere importi decimali"
 	},
+	"visualisation": {
+		"extraTimeFullTime": "Tempo regolamentare - Tempo supplementare",
+		"extraTimeHalfTime": "Primo tempo - Tempo supplementare",
+		"fullTime": "Tempo regolamentare",
+		"penaltyShootout": "Calcio di rigore",
+		"waitingForAction": "In attesa di un'azione"
+	},
+	"widgetSettings": {
+		"widgets": [
+			{
+				"widgetId": "gm-league-table",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/league-table-widget/v2.0.1/index.html"
+			},
+			{
+				"widgetId": "gm-team-performance",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/team-performance-widget/v1.0.4/index.html"
+			},
+			{
+				"widgetId": "gm-head-to-head",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/head-to-head-widget/v1.1.3/index.html"
+			},
+			{
+				"widgetId": "gm-euro-2016-player-specials",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/player-specials-widget/v1.0.2/index.html",
+				"height": 682
+			},
+			{
+				"widgetId": "gm-euro-2016-overview",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/finals-widget/v1.0.1/index.html",
+				"height": 200
+			},
+			{
+				"widgetId": "gm-euro-2016-lineup",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/lineup-widget/v1.1.0/index.html",
+				"height": 0
+			},
+			{
+				"widgetId": "gm-golden-boot",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/golden-boot-widget/v1.0.0/index.html",
+				"height": 294
+			},
+			{
+				"widgetId": "gm-tournament-winner",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/tournament-winner-widget/v1.0.0/index.html",
+				"height": 338
+			}
+		],
+		"targets": {
+			"landingPageFeed": [
+				{
+					"widgetId": "gm-tournament-winner",
+					"order": 3
+				},
+				{
+					"widgetId": "gm-euro-2016-player-specials",
+					"order": 6
+				},
+				{
+					"widgetId": "gm-golden-boot",
+					"order": 10
+				}
+			],
+			"home": [
+				{
+					"widgetId": "gm-euro-2016-overview",
+					"order": 1
+				}
+			],
+			"eventGroupBottom": [
+				{
+					"widgetId": "gm-league-table",
+					"order": 10,
+					"filter": "^/?filter/football/england/premier_league(/|$|{)",
+					"args": {
+						"headerDefaultTitle": "Premier League 2015/2016"
+					}
+				}
+			],
+			"eventBeforeBetOffers": [
+				{
+					"order": 1,
+					"widgetId": "gm-euro-2016-lineup",
+					"args": {},
+					"filter": "football/euro_2016|football/euro 2016"
+				}
+			],
+			"eventPrematchStats": [
+				{
+					"widgetId": "gm-team-performance",
+					"order": 10
+				},
+				{
+					"widgetId": "gm-head-to-head",
+					"order": 20
+				}
+			]
+		}
+	},
 	"showRacingTodayTab": true,
 	"enablePush": true,
 	"enableMaxStake": true,
 	"disableRacingModeBalanceLink": false,
 	"enableFilterMenu": true,
 	"enableTermSearch": true,
-	"instantBettingTitle": "Instant Betting"
-}
+	"instantBettingTitle": "Instant Betting",
+	"enableFootballVisualisation": true
+};

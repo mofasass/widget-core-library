@@ -1,5 +1,4 @@
-{
-	"LOCALE_IMPORT": "---",
+window._kbc.locale={
 	"N/A": "La course est finie et n'est plus disponible",
 	"account": {
 		"balance": "Solde :",
@@ -8,7 +7,7 @@
 		"endsession": "Fin de Session",
 		"links": {
 			"bethistory": {
-				"label": "Historique de paris",
+				"label": "Historique de mes paris",
 				"url": "#bethistory",
 				"sortOrder": 1,
 				"external": false,
@@ -49,7 +48,7 @@
 		"betdetails": "Détails du Pari",
 		"betplacementdate": "Date de placement de pari",
 		"bets": "paris",
-		"bettinghistory": "Historique de paris",
+		"bettinghistory": "Historique de mes paris",
 		"bettype": "Type de paris",
 		"close": "Fermer",
 		"couponId": "Coupon ID",
@@ -323,7 +322,7 @@
 	},
 	"betslipReceipt": {
 		"awaitingApproval": "{0} en attente d'approbation",
-		"closeReceipt": "Ferme",
+		"closeReceipt": "Fermer",
 		"receiptPreString": "Reçu n°",
 		"retainSelections": "Conservez les sélections",
 		"timePreString": "Aujourd'hui",
@@ -356,7 +355,7 @@
 		},
 		"potentialwinnings": "Paiement Pot.",
 		"receipt": {
-			"header": "Votre paiement a été accept�� !"
+			"header": "Votre paiement a été accepté !"
 		}
 	},
 	"category": {
@@ -367,29 +366,29 @@
 		"sizeCombination": "Combinaison",
 		"sizeDouble": "Double",
 		"sizeDoubles": "Doubles",
-		"sizeEight": "Par Huit",
-		"sizeEights": "Par Huit",
-		"sizeEleven": "Par Onze",
-		"sizeElevens": "Par Onze",
-		"sizeFive": "Par Cinq",
-		"sizeFives": "Par Cinq",
-		"sizeFour": "Quadruple",
-		"sizeFours": "Par Quatre",
-		"sizeNine": "Par Neuf",
-		"sizeNines": "Par Neuf",
-		"sizeSeven": "Par Sept",
-		"sizeSevens": "Par Sept",
+		"sizeEight": "Multiple huit",
+		"sizeEights": "Multiples huit",
+		"sizeEleven": "Multiple onze",
+		"sizeElevens": "Multiples onze",
+		"sizeFive": "Multiple cinq",
+		"sizeFives": "Multiples cinq",
+		"sizeFour": "Multiple quatre",
+		"sizeFours": "Multiples quatre",
+		"sizeNine": "Multiple neuf",
+		"sizeNines": "Multiples neuf",
+		"sizeSeven": "Multiple sept",
+		"sizeSevens": "Multiples sept",
 		"sizeSingle": "Simple",
 		"sizeSingles": "Simples",
-		"sizeSix": "Par Six",
-		"sizeSixs": "Par Six",
+		"sizeSix": "Multiple six",
+		"sizeSixs": "Multiples six",
 		"sizeSystem": "Système",
-		"sizeTen": "Par Dix",
-		"sizeTens": "Par Dix",
+		"sizeTen": "Multiple dix",
+		"sizeTens": "Multiples dix",
 		"sizeTriple": "Triple",
 		"sizeTriples": "Triples",
-		"sizeTwelve": "Par Douze",
-		"sizeTwelves": "Par Douze"
+		"sizeTwelve": "Multiple douze",
+		"sizeTwelves": "Multiples douze"
 	},
 	"common": {
 		"bet": "Pari",
@@ -644,7 +643,7 @@
 			"allRaces": "Toutes les courses",
 			"alphabetical": "Τοus",
 			"browseSport": "Parcourir {0}",
-			"featured": "Sélectionné",
+			"featured": "En surbrillance",
 			"liveAndUpcoming": "En direct & Prochainement",
 			"nextOff": "Prochaines courses",
 			"today": "Aujourd'hui",
@@ -654,13 +653,27 @@
 	"events": {
 		"activities": "Événements",
 		"betoffers": "Offres de paris",
+		"cinematicView": "Vue cinématique",
+		"competitions": {
+			"default": "Paris sur la compétition"
+		},
+		"defaultView": "Vue par défaut",
 		"liveRightNow": "Live en ce moment",
+		"matches": {
+			"default": "Match"
+		},
 		"noBetAndWatchEventsFound": "Pour regarder la course en direct, vous devez d'abord vous placez un pari de qualification sur la course au moins £1 (monnaie équivalent) sur la course spécifique.",
 		"noBetOffersFound": "Pas de paris trouvés",
 		"noEventsFound": "Pas d'offres trouvés",
 		"noLiveEventsFound": "Pas d'offres en live trouvés",
-		"startingSoon": "Commence Bientôt",
-		"streaming": "Streaming"
+		"startingSoon": "A venir",
+		"streaming": "Streaming",
+		"upcomingLive": "Prochains en direct",
+		"visualisation": "Visualisation"
+	},
+	"eventtypes": {
+		"nocompetitions": "Il n’y a aucune compétition disponible actuellement.",
+		"nomatches": "Il n’y a aucune compétition disponible actuellement."
 	},
 	"footer": {
 		"links": {
@@ -689,10 +702,12 @@
 		"infoLabel": "Info",
 		"label": {
 			"freeBet": "Pari Gratuit",
+			"matchupFreeBet": "Pari gratuit d'un montant correspondant",
 			"profitBoost": "Profit Boost"
 		},
 		"labelShort": "fb",
 		"liveOnly": "Live Seulement",
+		"matchupMaxAmount": "Montant maximum du pari gratuit {0}.",
 		"mobileOnly": "Les appareils mobiles Seulement",
 		"namedSystemBet": "Named system bets (Trixie, Patent, Yankee, etc)",
 		"noRestrictions": "Tous les types de paris",
@@ -721,6 +736,7 @@
 		"statusPlaced": "Placé",
 		"statusReserved": "Réservé",
 		"statusUsed": "Usé",
+		"useButtonLabel": "Utiliser",
 		"validFor": "Valable pour"
 	},
 	"grouplistpage": {
@@ -738,7 +754,7 @@
 	"landingPageFeed": {
 		"card": {
 			"description": {
-				"liveRightNowAggregate": "Actuellement {0} événements en direct en cours",
+				"liveRightNowAggregate": "Actuellement {0} événements en cours",
 				"startingSoonAggregate": "{0} événements commençant dans {1} minutes"
 			},
 			"shocker": {
@@ -758,10 +774,10 @@
 				"timeRemaining": "{0} minutes restent."
 			},
 			"title": {
-				"highlights": "Temps Forts",
+				"highlights": "A ne pas manquer",
 				"liveRightNowAggregate": "Live en ce moment",
-				"startingSoon": "Commence Bientôt",
-				"startingSoonAggregate": "Commence Bientôt",
+				"startingSoon": "A venir",
+				"startingSoonAggregate": "A venir",
 				"trending": "Populaire"
 			}
 		}
@@ -788,17 +804,36 @@
 	},
 	"liveFeedCard": {
 		"type": {
+			"attack": "Attaque",
+			"ballOutOfPlay": "Ballon dehors",
+			"ballSafe": "Ballon en sécurité",
 			"corner": "Corner",
-			"freeKick": "Coup franc",
+			"dangerousAttack": "Attaque dangereuse",
+			"freeKick": "Coup-franc",
 			"game": "Match",
 			"goal": "But",
+			"goalKick": "Tir au but",
+			"goalOpportunity": "Occasion",
+			"halfTimeEnd": "Mi-temps",
+			"inPossession": "Possession de balle",
+			"injury": "Blessure",
 			"match": "Match",
+			"matchEnd": "Fin du match",
+			"offside": "Hors-jeu",
 			"penalty": "Pénalty",
+			"penaltyAwarded": "Pénalty accordé",
+			"penaltyScored": "Pénalty marqué",
+			"possibleCorner": "Corner possible",
+			"possibleFreeKick": "Coup-franc possible",
+			"possibleThrowIn": "Touche possible",
 			"redCard": "Carton Rouge",
 			"score": "Score",
 			"set": "Set",
-			"shotOffTarget": "Non ciblé",
-			"shotOnTarget": "Ciblé",
+			"shot": "Tir",
+			"shotOffTarget": "Non-cadré",
+			"shotOnTarget": "Cadré",
+			"substitution": "Changement",
+			"thowIn": "Touche",
 			"yellowCard": "Carton Jaune"
 		}
 	},
@@ -812,17 +847,30 @@
 			"title": "Note Importante"
 		}
 	},
+	"livestatistics": {
+		"aceswon": "Aces",
+		"attacks": "Attaques",
+		"dangerousattacks": "Attaques dangereuses",
+		"possession": "Possession %",
+		"servicefaults": "Doubles fautes",
+		"shotsofftarget": "Tirs non ciblés",
+		"shotsontarget": "Tirs ciblés",
+		"title": "Statistiques en direct"
+	},
 	"locale": {
 		"freeBets": {
 			"pleaseLogin": "Veuillez vous connecter pour accéder à votre panorama de paris gratuit"
 		},
 		"navigation": {
-			"showAllSports": "Montrer tous les Sports"
+			"showAllSports": "Tous les sports"
 		},
 		"transactions": {
 			"hideTransactions": "Cacher les transactions",
 			"showTransactions": "Afficher les transactions"
 		}
+	},
+	"maintenance": {
+		"release": "Le site est actuellement en cours de modification. Nous serons de retour dans {0}. Veuillez nous excuser pour la gêne occasionnée, nous vous remercions de votre patience."
 	},
 	"mostpopular": {
 		"details": {
@@ -841,15 +889,18 @@
 	"navigationMenu": {
 		"betOfferCountPlural": "{0} paris en {1}",
 		"betOfferCountSingular": "1 pari en {0}",
+		"bonusOffers": "Mes offres Bonus",
 		"browse": "Parcourir",
+		"fewerSports": "Moins de sports",
 		"live": "En Direct",
 		"startLobby": "Lancer écran d'accueil",
-		"startingSoon": "Commence Bientôt",
+		"startingSoon": "A venir",
 		"startsWithinHour": "Commence dans 1 Heure",
 		"startsWithinHours": "Commence dans {0} Heures",
 		"startsWithinMinutes": "Commence dans {0} Minutes"
 	},
 	"nowAndSoon": {
+		"highlighted": "En surbrillance",
 		"nextUp": "Match Suivant"
 	},
 	"occurrence": {
@@ -862,7 +913,7 @@
 		"american": "Αméricain",
 		"decimal": "Décimal",
 		"fractional": "Fractionnaire",
-		"label": "Format des paris"
+		"label": "Format de cote"
 	},
 	"oldbrowsernotsupported": "Désolé, votre navigateur n'est pas supporté (voir navigateurs pris en charge).",
 	"outcomes": {
@@ -975,6 +1026,10 @@
 		"oddsTooHigh": {
 			"text": "Les cotes totales sont trop élevées. Veuillez ajuster votre coupon.",
 			"title": "Les cotes sont trop élevées"
+		},
+		"oddsTooLow": {
+			"text": "Désolé, nous ne pouvons pas accepter les paris sur des paris simples ou des combinaisons avec des cotes inférieures à {0}. Veuillez ajuster votre coupon.",
+			"title": "Cote trop faible"
 		},
 		"oversizedBetSystem": {
 			"text": "Désolé, nous vous permettons un maximum de 220 paris placés dans votre coupon et vos paris dépassent ce nombre. Merci d'ajuster votre grille.",
@@ -1090,6 +1145,65 @@
 			}
 		}
 	},
+	"rewards": {
+		"betsPlacedTitle": "Paris placés :",
+		"bettingCriterion": {
+			"desktopOnly": "utilisation sur le bureau uniquement",
+			"eventClosed": "événement fermé",
+			"eventGroupClosed": "groupe d'événements fermé",
+			"liveOnly": "en direct uniquement",
+			"minCombinationOdds": "cote min de la combinaison",
+			"minOddsPerLeg": "cote min par manche",
+			"minStake": "Montant min de la mise",
+			"mobileOnly": "appareils mobiles uniquement",
+			"nonLiveOnly": "hors direct uniquement",
+			"placeBetThatHas": "Placer un pari qui est/a :",
+			"sizeDoublesAndBigger": "doubles et de plus grandes combinaisons",
+			"sizeEightsAndBigger": "huit volets et de plus grandes combinaisons",
+			"sizeElevensAndBigger": "onze volets et de plus grandes combinaisons",
+			"sizeFivesAndBigger": "cinq volets et de plus grandes combinaisons",
+			"sizeFoursAndBigger": "quatre volets et de plus grandes combinaisons",
+			"sizeNinesAndBigger": "neuf volets et de plus grandes combinaisons",
+			"sizeSevensAndBigger": "sept volets et de plus grandes combinaisons",
+			"sizeSixsAndBigger": "six volets et de plus grandes combinaisons",
+			"sizeTensAndBigger": "dix volets et de plus grandes combinaisons",
+			"sizeTriplesAndBigger": "triplés et de plus grandes combinaisons",
+			"sizeTwelves": "douze volets"
+		},
+		"pleaseLogin": "Veuillez vous connecter pour accéder à une vue d'ensemble de vos offres bonus",
+		"qualifyingBetsTitle": "Paris éligibles :",
+		"showBonusOffersHeading": "Aperçu des offres de bonus",
+		"validFor": {
+			"andBiggerCombos": "et de plus grandes combinaisons",
+			"desktopOnly": "utilisation sur le bureau uniquement",
+			"eachWay": "pari placé",
+			"eventClosed": "événement fermé",
+			"eventGroupClosed": "groupe d'événements fermé",
+			"liveOnly": "en direct uniquement",
+			"mobileOnly": "appareils mobiles uniquement",
+			"namedSystemBet": "paris système nommés (Trixie, Patent, Yankee, etc.)",
+			"noRestrictions": "tous types de paris",
+			"nonEachWay": "Pari non placé",
+			"nonLiveOnly": "hors direct uniquement",
+			"nonSystemBet": "paris uniques et combinaisons",
+			"profitBoost": {
+				"maxExtraWinnings": "gains supplémentaires max",
+				"maxStake": "mise max"
+			},
+			"sizeDoubles": "doubles",
+			"sizeEights": "huit volets",
+			"sizeElevens": "onze volets",
+			"sizeFives": "cinq volets",
+			"sizeFours": "quatre volets",
+			"sizeNines": "neuf volets",
+			"sizeSevens": "sept volets",
+			"sizeSixs": "six volets",
+			"sizeTens": "dix volets",
+			"sizeTriples": "triple",
+			"sizeTwelves": "douze volets",
+			"validFor": "Valide pour"
+		}
+	},
 	"scoreboard": {
 		"at": "à",
 		"racing": {
@@ -1146,6 +1260,11 @@
 		},
 		"title": "Paramètres"
 	},
+	"slideInContainer": {
+		"close": "Fermer",
+		"maximise": "Maximiser",
+		"minimise": "Minimiser"
+	},
 	"starred": {
 		"liveEventsTabAll": "Τοus les matchs",
 		"liveEventsTabStarred": "Sélectionné"
@@ -1162,14 +1281,16 @@
 	},
 	"startpage": {
 		"atoz": "Sports",
-		"popular": "Populaire",
+		"popular": "Tendance",
 		"racingModeHideSports": "Cacher les sports",
 		"racingModeShowSports": "Montrer les sports",
 		"racingSports": "Course",
 		"screens": "Ecrans"
 	},
 	"statistics": {
-		"eventStatsExternalLinkToolTip": "Cliquez pour les Statistiques sur les événements"
+		"eventStatsExternalLinkToolTip": "Cliquez pour les Statistiques sur les événements",
+		"tabTitle": "Statistiques",
+		"title": "Statistiques"
 	},
 	"streaming": {
 		"available": {
@@ -1216,12 +1337,13 @@
 	},
 	"termFilter": {
 		"menu": {
-			"streamedOnly": "N'afficher que les événements diffusés en direct"
+			"streamedOnly": "N'afficher que les événements diffusés en direct",
+			"upcomingLiveOnly": "Montrer uniquement les prochains événements en direct"
 		}
 	},
 	"termSearch": {
 		"heading": {
-			"popular": "Populaire / Tendance",
+			"popular": "Tendance",
 			"previous": "Recherches récentes",
 			"search": {
 				"groups": "Sports, régions et ligues",
@@ -1257,11 +1379,115 @@
 	"vet": {
 		"stake_not_integer2": "La mise n'est pas valable, ne peut pas contenir de décimales"
 	},
+	"visualisation": {
+		"extraTimeFullTime": "Fin du match - Prolongations",
+		"extraTimeHalfTime": "Mi-temps - Prolongations",
+		"fullTime": "Temps complet",
+		"penaltyShootout": "Tirs au but",
+		"waitingForAction": "En attente d'une action"
+	},
+	"widgetSettings": {
+		"widgets": [
+			{
+				"widgetId": "gm-league-table",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/league-table-widget/v2.0.1/index.html"
+			},
+			{
+				"widgetId": "gm-team-performance",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/team-performance-widget/v1.0.4/index.html"
+			},
+			{
+				"widgetId": "gm-head-to-head",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/head-to-head-widget/v1.1.3/index.html"
+			},
+			{
+				"widgetId": "gm-euro-2016-player-specials",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/player-specials-widget/v1.0.2/index.html",
+				"height": 682
+			},
+			{
+				"widgetId": "gm-euro-2016-overview",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/finals-widget/v1.0.1/index.html",
+				"height": 200
+			},
+			{
+				"widgetId": "gm-euro-2016-lineup",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/lineup-widget/v1.1.0/index.html",
+				"height": 0
+			},
+			{
+				"widgetId": "gm-golden-boot",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/golden-boot-widget/v1.0.0/index.html",
+				"height": 294
+			},
+			{
+				"widgetId": "gm-tournament-winner",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/tournament-winner-widget/v1.0.0/index.html",
+				"height": 338
+			}
+		],
+		"targets": {
+			"landingPageFeed": [
+				{
+					"widgetId": "gm-tournament-winner",
+					"order": 3
+				},
+				{
+					"widgetId": "gm-euro-2016-player-specials",
+					"order": 6
+				},
+				{
+					"widgetId": "gm-golden-boot",
+					"order": 10
+				}
+			],
+			"home": [
+				{
+					"widgetId": "gm-euro-2016-overview",
+					"order": 1
+				}
+			],
+			"eventGroupBottom": [
+				{
+					"widgetId": "gm-league-table",
+					"order": 10,
+					"filter": "^/?filter/football/england/premier_league(/|$|{)",
+					"args": {
+						"headerDefaultTitle": "Premier League 2015/2016"
+					}
+				}
+			],
+			"eventBeforeBetOffers": [
+				{
+					"order": 1,
+					"widgetId": "gm-euro-2016-lineup",
+					"args": {},
+					"filter": "football/euro_2016|football/euro 2016"
+				}
+			],
+			"eventPrematchStats": [
+				{
+					"widgetId": "gm-team-performance",
+					"order": 10
+				},
+				{
+					"widgetId": "gm-head-to-head",
+					"order": 20
+				}
+			]
+		}
+	},
 	"showRacingTodayTab": true,
 	"enablePush": true,
 	"enableMaxStake": true,
 	"disableRacingModeBalanceLink": false,
 	"enableFilterMenu": true,
 	"enableTermSearch": true,
-	"instantBettingTitle": "Instant Betting"
-}
+	"instantBettingTitle": "Instant Betting",
+	"enableFootballVisualisation": true
+};

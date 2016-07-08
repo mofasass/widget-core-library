@@ -1,5 +1,4 @@
-{
-	"LOCALE_IMPORT": "---",
+window._kbc.locale={
 	"N/A": "Cursa s-a terminat și nu mai este disponibilă.",
 	"account": {
 		"balance": "Balanta",
@@ -367,29 +366,29 @@
 		"sizeCombination": "Combinatie",
 		"sizeDouble": "Dublu",
 		"sizeDoubles": "Duble",
-		"sizeEight": "De opt ori",
-		"sizeEights": "De opt ori",
-		"sizeEleven": "De unsprezece ori",
-		"sizeElevens": "11Selectii",
-		"sizeFive": "De cinci ori",
-		"sizeFives": "De cinci ori",
-		"sizeFour": "De patru ori",
-		"sizeFours": "4Selectii",
-		"sizeNine": "De nouă ori",
-		"sizeNines": "De nouă ori",
-		"sizeSeven": "De șapte ori",
-		"sizeSevens": "De şapte ori",
-		"sizeSingle": "Simplu",
-		"sizeSingles": "Individual",
-		"sizeSix": "De șase ori",
-		"sizeSixs": "De şase ori",
+		"sizeEight": "8 selectii",
+		"sizeEights": "8 selectii",
+		"sizeEleven": "11 selectii",
+		"sizeElevens": "11 selectii",
+		"sizeFive": "5 selectii",
+		"sizeFives": "5 selectii",
+		"sizeFour": "4 selectii",
+		"sizeFours": "4 selectii",
+		"sizeNine": "9 selectii",
+		"sizeNines": "9 selectii",
+		"sizeSeven": "7 selectii",
+		"sizeSevens": "7 selectii",
+		"sizeSingle": "Simple",
+		"sizeSingles": "Simples",
+		"sizeSix": "6 selectii",
+		"sizeSixs": "6 selectii",
 		"sizeSystem": "Sistem",
-		"sizeTen": "De zece ori",
-		"sizeTens": "De zece ori",
+		"sizeTen": "10 selectii",
+		"sizeTens": "10 selectii",
 		"sizeTriple": "Triplă",
 		"sizeTriples": "Triple",
-		"sizeTwelve": "De douăsprezece ori",
-		"sizeTwelves": "12Selectii"
+		"sizeTwelve": "12 selectii",
+		"sizeTwelves": "12 selectii"
 	},
 	"common": {
 		"bet": "Pariu",
@@ -575,7 +574,7 @@
 		},
 		"RESPONSIBLE_GAMING_LIMIT_EXCEEDED": {
 			"text": "Ati atins limita de pariere pe care ati setat-o. Puteti verifica detaliile în contul dvs.",
-			"title": "Limita de pariere a fost dep��şită"
+			"title": "Limita de pariere a fost depăşită"
 		},
 		"RESPONSIBLE_GAMING_SELF_EXCLUSION_IN_EFFECT": {
 			"text": "V-ati auto-exclus de la utilizarea serviciului de pariere. Puteti găsi informatii despre excludere în contul dvs.",
@@ -654,13 +653,27 @@
 	"events": {
 		"activities": "Activităti",
 		"betoffers": "Oferte de pariere",
+		"cinematicView": "Vizualizare cinema",
+		"competitions": {
+			"default": "Outrights"
+		},
+		"defaultView": "Vizualizare implicită",
 		"liveRightNow": "Live chiar acum",
+		"matches": {
+			"default": "Match"
+		},
 		"noBetAndWatchEventsFound": "Pentru a urmări o cursă live trebuie să aveti plasat un pariu de calificare de cel putin 1 GBP (sau echivalent în altă monedă) pe cursa specific.",
 		"noBetOffersFound": "Nici o oferta de pariere nu a fost gasita",
 		"noEventsFound": "Nici un eveniment nu a fost gasit",
 		"noLiveEventsFound": "Nici un eveniment Live nu a fost gasit",
 		"startingSoon": "Începe în curând",
-		"streaming": "Streaming"
+		"streaming": "Streaming",
+		"upcomingLive": "Upcoming Live",
+		"visualisation": "Vizualizare"
+	},
+	"eventtypes": {
+		"nocompetitions": "Nu există niciun eveniment de competitie disponibil.",
+		"nomatches": "Nu există niciun eveniment de meci disponibil."
 	},
 	"footer": {
 		"links": {
@@ -689,10 +702,12 @@
 		"infoLabel": "Info",
 		"label": {
 			"freeBet": "Pariu gratuit",
+			"matchupFreeBet": "Meci cu pariu gratuit",
 			"profitBoost": "Creșterea profitului"
 		},
 		"labelShort": "fb",
 		"liveOnly": "Doar live",
+		"matchupMaxAmount": "Valoarea maximă a pariului gratuit {0}.",
 		"mobileOnly": "Doar dispozitive mobile",
 		"namedSystemBet": "Pariuri sistem denumite (Trixie, Patent, Yankee, etc)",
 		"noRestrictions": "Toate tipurile de pariuri",
@@ -721,6 +736,7 @@
 		"statusPlaced": "Plasat",
 		"statusReserved": "Rezervat",
 		"statusUsed": "Utilizat",
+		"useButtonLabel": "Utilizare",
 		"validFor": "Valabil pentru"
 	},
 	"grouplistpage": {
@@ -788,17 +804,36 @@
 	},
 	"liveFeedCard": {
 		"type": {
+			"attack": "Atac",
+			"ballOutOfPlay": "Minge afară din joc",
+			"ballSafe": "Minge în sigurantă",
 			"corner": "Corner",
+			"dangerousAttack": "Atac periculos",
 			"freeKick": "Lovitură liberă",
 			"game": "Game",
 			"goal": "Gol",
+			"goalKick": "Aut de poartă",
+			"goalOpportunity": "Ocazie de gol",
+			"halfTimeEnd": "Pauză",
+			"inPossession": "Minge în sigurantă",
+			"injury": "Accidentare",
 			"match": "Meci",
+			"matchEnd": "Finalul meciului",
+			"offside": "Ofsaid",
 			"penalty": "Penalty",
+			"penaltyAwarded": "Penalty acordat",
+			"penaltyScored": "Penalty marcat",
+			"possibleCorner": "Corner posibil",
+			"possibleFreeKick": "Lovitură liberă posibilă",
+			"possibleThrowIn": "Aruncare de la margine posibilă",
 			"redCard": "Cartonaș roșu",
 			"score": "Scor",
 			"set": "Set",
+			"shot": "Șut",
 			"shotOffTarget": "Pe lângă poartă",
 			"shotOnTarget": "Pe poartă",
+			"substitution": "Schimbare",
+			"thowIn": "Aruncare de la margine",
 			"yellowCard": "Cartonaș galben"
 		}
 	},
@@ -812,17 +847,30 @@
 			"title": "Notificare importantă"
 		}
 	},
+	"livestatistics": {
+		"aceswon": "Aşi",
+		"attacks": "Atacuri",
+		"dangerousattacks": "Atacuri periculoase",
+		"possession": "Posesie %",
+		"servicefaults": "Greșeli duble",
+		"shotsofftarget": "Șuturi în afara portii",
+		"shotsontarget": "Șuturi pe poartă",
+		"title": "Statistici live"
+	},
 	"locale": {
 		"freeBets": {
 			"pleaseLogin": "Conectati-vă pentru a vă accesa prezentarea pariurilor gratuite"
 		},
 		"navigation": {
-			"showAllSports": "Afișare toate sporturile"
+			"showAllSports": "Toate sporturile"
 		},
 		"transactions": {
 			"hideTransactions": "Ascundere tranzactii",
 			"showTransactions": "Prezentare tranzactii"
 		}
+	},
+	"maintenance": {
+		"release": "Site-ul se află momentan în revizie. Vom reveni la {0}. Ne cerem scuze pentru inconveniente şi apreciem întelegerea acordată."
 	},
 	"mostpopular": {
 		"details": {
@@ -841,7 +889,9 @@
 	"navigationMenu": {
 		"betOfferCountPlural": "{0} oferte de pariere în {1}",
 		"betOfferCountSingular": "1 ofertă de pariere în {0}",
+		"bonusOffers": "Ofertele mele bonus",
 		"browse": "răsfoire",
+		"fewerSports": "Mai putine sporturi",
 		"live": "Live",
 		"startLobby": "Pornire Lobby",
 		"startingSoon": "Începe în curând",
@@ -850,6 +900,7 @@
 		"startsWithinMinutes": "Pornește în {0} minute"
 	},
 	"nowAndSoon": {
+		"highlighted": "Selectate",
 		"nextUp": "Urmează"
 	},
 	"occurrence": {
@@ -976,6 +1027,10 @@
 			"text": "Cotele totale sunt prea mari. Vă rugăm să vă ajustati biletul de pariere.",
 			"title": "Cotele sunt prea mari"
 		},
+		"oddsTooLow": {
+			"text": "Ne pare rău, însă nu putem accepta pariuri pe simple sau combinatii cu cotele sub {0}. Vă rugăm să vă ajustati biletul de pariere.",
+			"title": "Cote prea mici"
+		},
 		"oversizedBetSystem": {
 			"text": "Ne pare rău, numărul maxim de selectii care poate fi plasat pe un cupon este 220. Vă rugăm ajustati numărul de selectii.",
 			"title": "Sistem invalid"
@@ -1090,6 +1145,65 @@
 			}
 		}
 	},
+	"rewards": {
+		"betsPlacedTitle": "Pariuri plasate:",
+		"bettingCriterion": {
+			"desktopOnly": "utilizare doar pe desktop",
+			"eventClosed": "evenimentul care a fost închis",
+			"eventGroupClosed": "grupul de evenimente care a fost închis",
+			"liveOnly": "doar live",
+			"minCombinationOdds": "cote minime combinatie",
+			"minOddsPerLeg": "cote minime per tur",
+			"minStake": "valoarea minimă a mizei",
+			"mobileOnly": "doar dispozitive mobile",
+			"nonLiveOnly": "doar non-live",
+			"placeBetThatHas": "Plasati un pariu care este/a avut:",
+			"sizeDoublesAndBigger": "duble și combinatii mai mari",
+			"sizeEightsAndBigger": "de opt ori și combinatii mai mari",
+			"sizeElevensAndBigger": "de unsprezece ori și combinatii mai mari",
+			"sizeFivesAndBigger": "de cinci ori și combinatii mai mari",
+			"sizeFoursAndBigger": "de patru ori și combinatii mai mari",
+			"sizeNinesAndBigger": "de nouă ori și combinatii mai mari",
+			"sizeSevensAndBigger": "de șapte ori și combinatii mai mari",
+			"sizeSixsAndBigger": "de șase ori și combinatii mai mari",
+			"sizeTensAndBigger": "de zece ori și combinatii mai mari",
+			"sizeTriplesAndBigger": "triple și combinatii mai mari",
+			"sizeTwelves": "de douăsprezece ori"
+		},
+		"pleaseLogin": "Conectati-vă pentru a vă accesa prezentarea ofertelor bonus",
+		"qualifyingBetsTitle": "Pariuri de calificare:",
+		"showBonusOffersHeading": "Prezentare oferte bonus",
+		"validFor": {
+			"andBiggerCombos": "și combinatii mai mari",
+			"desktopOnly": "utilizare doar pe desktop",
+			"eachWay": "each way",
+			"eventClosed": "evenimentul care a fost închis",
+			"eventGroupClosed": "grupul de evenimente care a fost închis",
+			"liveOnly": "doar live",
+			"mobileOnly": "doar dispozitive mobile",
+			"namedSystemBet": "pariuri sistem denumite (Trixie, Patent, Yankee, etc)",
+			"noRestrictions": "toate tipurile de pariuri",
+			"nonEachWay": "fără each way",
+			"nonLiveOnly": "doar non-live",
+			"nonSystemBet": "simple și combinatii",
+			"profitBoost": {
+				"maxExtraWinnings": "câștiguri suplimentare max",
+				"maxStake": "miză max"
+			},
+			"sizeDoubles": "duble",
+			"sizeEights": "de opt ori",
+			"sizeElevens": "de unsprezece ori",
+			"sizeFives": "de cinci ori",
+			"sizeFours": "de patru ori",
+			"sizeNines": "de nouă ori",
+			"sizeSevens": "de șapte ori",
+			"sizeSixs": "de șase ori",
+			"sizeTens": "de zece ori",
+			"sizeTriples": "triple",
+			"sizeTwelves": "de douăsprezece ori",
+			"validFor": "Valabil pentru"
+		}
+	},
 	"scoreboard": {
 		"at": "la",
 		"racing": {
@@ -1146,6 +1260,11 @@
 		},
 		"title": "Setări"
 	},
+	"slideInContainer": {
+		"close": "Închidere",
+		"maximise": "Maximizare",
+		"minimise": "Minimizare"
+	},
 	"starred": {
 		"liveEventsTabAll": "Toate",
 		"liveEventsTabStarred": "Favorite"
@@ -1169,7 +1288,9 @@
 		"screens": "Ecrane"
 	},
 	"statistics": {
-		"eventStatsExternalLinkToolTip": "Faceti clic pentru statisticile evenimentului"
+		"eventStatsExternalLinkToolTip": "Faceti clic pentru statisticile evenimentului",
+		"tabTitle": "Statistici",
+		"title": "Statistici"
 	},
 	"streaming": {
 		"available": {
@@ -1216,7 +1337,8 @@
 	},
 	"termFilter": {
 		"menu": {
-			"streamedOnly": "Afișează doar evenimentele transmise"
+			"streamedOnly": "Afișează doar evenimentele transmise",
+			"upcomingLiveOnly": "Show Upcoming Live events only"
 		}
 	},
 	"termSearch": {
@@ -1257,11 +1379,115 @@
 	"vet": {
 		"stake_not_integer2": "Miza nu este validă, nu poate contine zecimale"
 	},
+	"visualisation": {
+		"extraTimeFullTime": "Timpul regulamentar - Reprizele de prelungiri",
+		"extraTimeHalfTime": "La pauză - Reprizele de prelungiri",
+		"fullTime": "Timp regulamentar",
+		"penaltyShootout": "Loviturile de departajare",
+		"waitingForAction": "Se așteaptă actiunea"
+	},
+	"widgetSettings": {
+		"widgets": [
+			{
+				"widgetId": "gm-league-table",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/league-table-widget/v2.0.1/index.html"
+			},
+			{
+				"widgetId": "gm-team-performance",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/team-performance-widget/v1.0.4/index.html"
+			},
+			{
+				"widgetId": "gm-head-to-head",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/head-to-head-widget/v1.1.3/index.html"
+			},
+			{
+				"widgetId": "gm-euro-2016-player-specials",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/player-specials-widget/v1.0.2/index.html",
+				"height": 682
+			},
+			{
+				"widgetId": "gm-euro-2016-overview",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/finals-widget/v1.0.1/index.html",
+				"height": 200
+			},
+			{
+				"widgetId": "gm-euro-2016-lineup",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/lineup-widget/v1.1.0/index.html",
+				"height": 0
+			},
+			{
+				"widgetId": "gm-golden-boot",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/golden-boot-widget/v1.0.0/index.html",
+				"height": 294
+			},
+			{
+				"widgetId": "gm-tournament-winner",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/tournament-winner-widget/v1.0.0/index.html",
+				"height": 338
+			}
+		],
+		"targets": {
+			"landingPageFeed": [
+				{
+					"widgetId": "gm-tournament-winner",
+					"order": 3
+				},
+				{
+					"widgetId": "gm-euro-2016-player-specials",
+					"order": 6
+				},
+				{
+					"widgetId": "gm-golden-boot",
+					"order": 10
+				}
+			],
+			"home": [
+				{
+					"widgetId": "gm-euro-2016-overview",
+					"order": 1
+				}
+			],
+			"eventGroupBottom": [
+				{
+					"widgetId": "gm-league-table",
+					"order": 10,
+					"filter": "^/?filter/football/england/premier_league(/|$|{)",
+					"args": {
+						"headerDefaultTitle": "Premier League 2015/2016"
+					}
+				}
+			],
+			"eventBeforeBetOffers": [
+				{
+					"order": 1,
+					"widgetId": "gm-euro-2016-lineup",
+					"args": {},
+					"filter": "football/euro_2016|football/euro 2016"
+				}
+			],
+			"eventPrematchStats": [
+				{
+					"widgetId": "gm-team-performance",
+					"order": 10
+				},
+				{
+					"widgetId": "gm-head-to-head",
+					"order": 20
+				}
+			]
+		}
+	},
 	"showRacingTodayTab": true,
 	"enablePush": true,
 	"enableMaxStake": true,
 	"disableRacingModeBalanceLink": false,
 	"enableFilterMenu": true,
 	"enableTermSearch": true,
-	"instantBettingTitle": "Instant Betting"
-}
+	"instantBettingTitle": "Instant Betting",
+	"enableFootballVisualisation": true
+};

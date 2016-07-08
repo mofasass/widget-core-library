@@ -384,9 +384,9 @@ window.CoreLibrary = (() => {
    }
 
    if ( browser == null ) {
-      document.body.classList.add('kw-browser-other');
+      document.documentElement.classList.add('kw-browser-other');
    } else {
-      document.body.classList.add('kw-browser-' + browser);
+      document.documentElement.classList.add('kw-browser-' + browser);
    }
 
    return {

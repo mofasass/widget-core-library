@@ -1,5 +1,4 @@
-{
-	"LOCALE_IMPORT": "---",
+window._kbc.locale={
 	"N/A": "Sõit on lõppenud ja ei ole enam saadaval.",
 	"account": {
 		"balance": "Konto jääk:",
@@ -365,31 +364,31 @@
 	},
 	"combination": {
 		"sizeCombination": "Kombinatsioon",
-		"sizeDouble": "2kordne ",
-		"sizeDoubles": "2kordsed ",
-		"sizeEight": "8kordne ",
-		"sizeEights": "8kordsed ",
-		"sizeEleven": "11kordne ",
-		"sizeElevens": "11kordsed ",
-		"sizeFive": "5kordne ",
-		"sizeFives": "5kordsed ",
-		"sizeFour": "4kordne ",
-		"sizeFours": "4kordsed ",
-		"sizeNine": "9kordne ",
-		"sizeNines": "9kordsed ",
-		"sizeSeven": "7kordne ",
-		"sizeSevens": "7kordsed ",
-		"sizeSingle": "1kordne ",
-		"sizeSingles": "1kordsed ",
-		"sizeSix": "6kordne ",
-		"sizeSixs": "6kordsed ",
+		"sizeDouble": "kahekordne",
+		"sizeDoubles": "kahekordsed",
+		"sizeEight": "kaheksakordne",
+		"sizeEights": "kaheksakordsed",
+		"sizeEleven": "üheteistkordne",
+		"sizeElevens": "üheteistkordsed",
+		"sizeFive": "viiekordne",
+		"sizeFives": "viiekordsed",
+		"sizeFour": "neljakordne ",
+		"sizeFours": "neljakordsed",
+		"sizeNine": "üheksakordne",
+		"sizeNines": "üheksakordsed",
+		"sizeSeven": "seitsmekordne",
+		"sizeSevens": "seitsmekordsed",
+		"sizeSingle": "ühekordne",
+		"sizeSingles": "ühekordsed",
+		"sizeSix": "kuuekordne ",
+		"sizeSixs": "kuuekordsed ",
 		"sizeSystem": "Süsteem",
-		"sizeTen": "10kordne ",
-		"sizeTens": "10kordsed ",
-		"sizeTriple": "3kordne",
-		"sizeTriples": "3kordsed ",
-		"sizeTwelve": "12kordne ",
-		"sizeTwelves": "12Kordsed"
+		"sizeTen": "kümnekordne ",
+		"sizeTens": "kümnekordsed",
+		"sizeTriple": "kolmekordne",
+		"sizeTriples": "kolmekordsed",
+		"sizeTwelve": "kaheteistkordne",
+		"sizeTwelves": "kaheteistkordsed"
 	},
 	"common": {
 		"bet": "Ennustus",
@@ -644,7 +643,7 @@
 			"allRaces": "Kõik võidusõidud",
 			"alphabetical": "Kõik",
 			"browseSport": "Sirvi {0}",
-			"featured": "Soovitatud",
+			"featured": "Esiletõstetud",
 			"liveAndUpcoming": "Otse ja tulemas",
 			"nextOff": "Järgmine väljas",
 			"today": "Täna",
@@ -654,13 +653,27 @@
 	"events": {
 		"activities": "Tegevused",
 		"betoffers": "Panuste pakkumised",
+		"cinematicView": "Kinovaade",
+		"competitions": {
+			"default": "Outrights"
+		},
+		"defaultView": "Põhivaade",
 		"liveRightNow": "Live Praegu",
+		"matches": {
+			"default": "Matš"
+		},
 		"noBetAndWatchEventsFound": "Võidusõidu otseülekande vaatamiseks peab sul olema tehtud kvalifitseeruv panus summas £1 (või samas vääringus mõnes teises valuutas) konkreetse võistluse.",
 		"noBetOffersFound": "Ei leitud ennustuspakkumisi",
 		"noEventsFound": "Ei leitud sündmusi",
 		"noLiveEventsFound": "Ei leitud live sündmusi",
 		"startingSoon": "Algab varsti",
-		"streaming": "Ülekanne"
+		"streaming": "Ülekanne",
+		"upcomingLive": "Järgmiseks otse",
+		"visualisation": "Visualiseerimine"
+	},
+	"eventtypes": {
+		"nocompetitions": "Hetkel ei ole võistluse üritusi.",
+		"nomatches": "Hetkel ei ole matši üritusi."
 	},
 	"footer": {
 		"links": {
@@ -689,10 +702,12 @@
 		"infoLabel": "Info",
 		"label": {
 			"freeBet": "Tasuta ennustus",
+			"matchupFreeBet": "Tasuta panus paarile",
 			"profitBoost": "Kasumivõimendus"
 		},
 		"labelShort": "fb",
 		"liveOnly": "Ainult live",
+		"matchupMaxAmount": "Tasuta panuse maksimumsumma {0}.",
 		"mobileOnly": "Ainult mobiilsed seadmed",
 		"namedSystemBet": "Nimetatud süsteemiennustused (Trixie, Patent, Yankee jne)",
 		"noRestrictions": "Kõik ennustuse tüübid",
@@ -721,6 +736,7 @@
 		"statusPlaced": "Asetus",
 		"statusReserved": "Reserveeritud",
 		"statusUsed": "Kasutatud",
+		"useButtonLabel": "Kasuta",
 		"validFor": "Kehtiv kuni"
 	},
 	"grouplistpage": {
@@ -788,17 +804,36 @@
 	},
 	"liveFeedCard": {
 		"type": {
+			"attack": "Rünnak",
+			"ballOutOfPlay": "Pall mängust väljas",
+			"ballSafe": "Pall ohutu",
 			"corner": "Nurgalöök",
-			"freeKick": "Vabalöök",
+			"dangerousAttack": "Ohtlik rünnak",
+			"freeKick": "Karistuslöök",
 			"game": "Geim",
 			"goal": "Värav",
+			"goalKick": "Väravalöök",
+			"goalOpportunity": "Väravavõimalus",
+			"halfTimeEnd": "Poolaeg",
+			"inPossession": "Pall ohutu",
+			"injury": "Vigastus",
 			"match": "Matš",
+			"matchEnd": "Mängu lõpp",
+			"offside": "Suluseis",
 			"penalty": "Penalti",
+			"penaltyAwarded": "Antakse penalti",
+			"penaltyScored": "Penaltilöök sisse",
+			"possibleCorner": "Võimalik nurk",
+			"possibleFreeKick": "Võimalik karistuslöök",
+			"possibleThrowIn": "Võimalik sissevise",
 			"redCard": "Punane kaart",
 			"score": "Skoor",
 			"set": "Sett",
+			"shot": "Löök",
 			"shotOffTarget": "Mööda",
 			"shotOnTarget": "Pihta",
+			"substitution": "Vahetus",
+			"thowIn": "Sissevise",
 			"yellowCard": "Kollane kaart"
 		}
 	},
@@ -812,17 +847,30 @@
 			"title": "Tähtis teade"
 		}
 	},
+	"livestatistics": {
+		"aceswon": "Rabakud",
+		"attacks": "Rünnakud",
+		"dangerousattacks": "Ohtlikud rünnakud",
+		"possession": "Pallivaldamise %",
+		"servicefaults": "Topeltvead",
+		"shotsofftarget": "Möödalöögid",
+		"shotsontarget": "Pihtalöögid",
+		"title": "Otsestatistika"
+	},
 	"locale": {
 		"freeBets": {
 			"pleaseLogin": "Tasuta ennustuste ülevaate nägemiseks logi sisse"
 		},
 		"navigation": {
-			"showAllSports": "Näita kõiki spordialasid"
+			"showAllSports": "Kõiki spordialasid"
 		},
 		"transactions": {
 			"hideTransactions": "Peida tehingud",
 			"showTransactions": "Näita tehinguid"
 		}
+	},
+	"maintenance": {
+		"release": "Me teostame hetkel saidi hooldust. Me eeldame olla tagasi {0}. Me vabandame ebamugavuse eest ja hindame teie kannatlikkust."
 	},
 	"mostpopular": {
 		"details": {
@@ -841,7 +889,9 @@
 	"navigationMenu": {
 		"betOfferCountPlural": "{0} ennustuspakkumist kategoorias {1}",
 		"betOfferCountSingular": "1. ennususpakkumine kategoorias {0}",
+		"bonusOffers": "Minu boonuspakkumised",
 		"browse": "sirvi",
+		"fewerSports": "Vähem alasid",
 		"live": "Live",
 		"startLobby": "Alusta Ooteruum",
 		"startingSoon": "Algab varsti",
@@ -850,6 +900,7 @@
 		"startsWithinMinutes": "Algab {0} minuti jooksul"
 	},
 	"nowAndSoon": {
+		"highlighted": "Esiletõstetud",
 		"nextUp": "Järgmine"
 	},
 	"occurrence": {
@@ -976,6 +1027,10 @@
 			"text": "Kogukoefitsiendid liiga kõrged. Palun kohanda oma ennustussedelit.",
 			"title": "Koefitsiendid on liiga kõrged"
 		},
+		"oddsTooLow": {
+			"text": "Vabandame, me ei saa vastu võtta üksikuid ennustusi või kombinatsiooni, mille koefitsient on madalam kui  {0}. Palun kohanda oma ennustussedelit.",
+			"title": "Koefitsiendid liiga madalad"
+		},
 		"oversizedBetSystem": {
 			"text": "Kahjuks on maksimaaselt lubatud ühele ennustuslipikule lisada 220 valikut ja teine ennustus ületab seda numbrit. Palun korrigeerige oma ennustuslipikut.",
 			"title": "Vigane süsteemipanus"
@@ -1090,6 +1145,65 @@
 			}
 		}
 	},
+	"rewards": {
+		"betsPlacedTitle": "Panused tehtud:",
+		"bettingCriterion": {
+			"desktopOnly": "kasutamiseks ainult töölaual",
+			"eventClosed": "sündmus, mis on suletud",
+			"eventGroupClosed": "sündmuse grupp, mis on suletud",
+			"liveOnly": "ainult otse",
+			"minCombinationOdds": "kombinatsiooni miinimumšansid",
+			"minOddsPerLeg": "osa miinimumšansid",
+			"minStake": "panuse miinimumsumma",
+			"mobileOnly": "ainult mobiilsed seadmed",
+			"nonLiveOnly": "ainult mitte otse",
+			"placeBetThatHas": "Tee panus, mis on / millel on:",
+			"sizeDoublesAndBigger": "kahekordsed ja suuremad kombinatsioonid",
+			"sizeEightsAndBigger": "kaheksakordsed ja suuremad kombinatsioonid",
+			"sizeElevensAndBigger": "üheteistkordsed ja suuremad kombinatsioonid",
+			"sizeFivesAndBigger": "viiekordsed ja suuremad kombinatsioonid",
+			"sizeFoursAndBigger": "neljakordsed ja suuremad kombinatsioonid",
+			"sizeNinesAndBigger": "üheksakordsed ja suuremad kombinatsioonid",
+			"sizeSevensAndBigger": "seitsmekordsed ja suuremad kombinatsioonid",
+			"sizeSixsAndBigger": "kuuekordsed ja suuremad kombinatsioonid",
+			"sizeTensAndBigger": "kümnekordsed ja suuremad kombinatsioonid",
+			"sizeTriplesAndBigger": "kolmekordsed ja suuremad kombinatsioonid",
+			"sizeTwelves": "kaheteistkümnekordsed panused"
+		},
+		"pleaseLogin": "Boonuspakkumiste ülevaate nägemiseks logi sisse",
+		"qualifyingBetsTitle": "Kvalifitseeruvad panused:",
+		"showBonusOffersHeading": "Boonuspakkumiste ülevaade",
+		"validFor": {
+			"andBiggerCombos": "ja suuremad kombinatsioonid",
+			"desktopOnly": "kasutamiseks ainult töölaual",
+			"eachWay": "võidu/koha panus",
+			"eventClosed": "sündmus, mis on suletud",
+			"eventGroupClosed": "sündmuse grupp, mis on suletud",
+			"liveOnly": "ainult otse",
+			"mobileOnly": "ainult mobiilsed seadmed",
+			"namedSystemBet": "nimetatud süsteemiennustused (Trixie, Patent, Yankee jne)",
+			"noRestrictions": "kõik panuseliigid",
+			"nonEachWay": "mitte võidu/koha panus",
+			"nonLiveOnly": "ainult mitte otse",
+			"nonSystemBet": "üksik- ja kombinatsiooniennustused",
+			"profitBoost": {
+				"maxExtraWinnings": "maksimum lisavõite",
+				"maxStake": "max panusesumma"
+			},
+			"sizeDoubles": "kahekordsed panused",
+			"sizeEights": "kaheksakordsed panused",
+			"sizeElevens": "üheteistkümnekordsed panused",
+			"sizeFives": "viiekordsed panused",
+			"sizeFours": "neljakordsed panused",
+			"sizeNines": "üheksakordsed panused",
+			"sizeSevens": "seitsmekordsed panused",
+			"sizeSixs": "kuuekordsed panused",
+			"sizeTens": "kümnekordsed panused",
+			"sizeTriples": "kolmekordsed panused",
+			"sizeTwelves": "kaheteistkümnekordsed panused",
+			"validFor": "Kehtiv kuni"
+		}
+	},
 	"scoreboard": {
 		"at": "kell",
 		"racing": {
@@ -1146,6 +1260,11 @@
 		},
 		"title": "Seaded"
 	},
+	"slideInContainer": {
+		"close": "Sulge",
+		"maximise": "Suurenda",
+		"minimise": "Vähenda"
+	},
 	"starred": {
 		"liveEventsTabAll": "Kõik",
 		"liveEventsTabStarred": "Valitud"
@@ -1169,7 +1288,9 @@
 		"screens": "Kuvad"
 	},
 	"statistics": {
-		"eventStatsExternalLinkToolTip": "Kliki sündmuse statistikaks"
+		"eventStatsExternalLinkToolTip": "Kliki sündmuse statistikaks",
+		"tabTitle": "Statistika",
+		"title": "Statistika"
 	},
 	"streaming": {
 		"available": {
@@ -1216,7 +1337,8 @@
 	},
 	"termFilter": {
 		"menu": {
-			"streamedOnly": "Näita ainult striimitud üritusi"
+			"streamedOnly": "Näita ainult striimitud üritusi",
+			"upcomingLiveOnly": "Näita ainult järgmisi otseülekandeid"
 		}
 	},
 	"termSearch": {
@@ -1257,11 +1379,115 @@
 	"vet": {
 		"stake_not_integer2": "Panus on kehtetu, see ei tohi sisaldada komakohti"
 	},
+	"visualisation": {
+		"extraTimeFullTime": "Täisaeg – lisaaeg",
+		"extraTimeHalfTime": "Poolaeg – lisaaeg",
+		"fullTime": "Normaalaeg",
+		"penaltyShootout": "Penaltiseeria",
+		"waitingForAction": "Ootan tegevust"
+	},
+	"widgetSettings": {
+		"widgets": [
+			{
+				"widgetId": "gm-league-table",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/league-table-widget/v2.0.1/index.html"
+			},
+			{
+				"widgetId": "gm-team-performance",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/team-performance-widget/v1.0.4/index.html"
+			},
+			{
+				"widgetId": "gm-head-to-head",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/head-to-head-widget/v1.1.3/index.html"
+			},
+			{
+				"widgetId": "gm-euro-2016-player-specials",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/player-specials-widget/v1.0.2/index.html",
+				"height": 682
+			},
+			{
+				"widgetId": "gm-euro-2016-overview",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/finals-widget/v1.0.1/index.html",
+				"height": 200
+			},
+			{
+				"widgetId": "gm-euro-2016-lineup",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/lineup-widget/v1.1.0/index.html",
+				"height": 0
+			},
+			{
+				"widgetId": "gm-golden-boot",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/golden-boot-widget/v1.0.0/index.html",
+				"height": 294
+			},
+			{
+				"widgetId": "gm-tournament-winner",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/tournament-winner-widget/v1.0.0/index.html",
+				"height": 338
+			}
+		],
+		"targets": {
+			"landingPageFeed": [
+				{
+					"widgetId": "gm-tournament-winner",
+					"order": 3
+				},
+				{
+					"widgetId": "gm-euro-2016-player-specials",
+					"order": 6
+				},
+				{
+					"widgetId": "gm-golden-boot",
+					"order": 10
+				}
+			],
+			"home": [
+				{
+					"widgetId": "gm-euro-2016-overview",
+					"order": 1
+				}
+			],
+			"eventGroupBottom": [
+				{
+					"widgetId": "gm-league-table",
+					"order": 10,
+					"filter": "^/?filter/football/england/premier_league(/|$|{)",
+					"args": {
+						"headerDefaultTitle": "Premier League 2015/2016"
+					}
+				}
+			],
+			"eventBeforeBetOffers": [
+				{
+					"order": 1,
+					"widgetId": "gm-euro-2016-lineup",
+					"args": {},
+					"filter": "football/euro_2016|football/euro 2016"
+				}
+			],
+			"eventPrematchStats": [
+				{
+					"widgetId": "gm-team-performance",
+					"order": 10
+				},
+				{
+					"widgetId": "gm-head-to-head",
+					"order": 20
+				}
+			]
+		}
+	},
 	"showRacingTodayTab": true,
 	"enablePush": true,
 	"enableMaxStake": true,
 	"disableRacingModeBalanceLink": false,
 	"enableFilterMenu": true,
 	"enableTermSearch": true,
-	"instantBettingTitle": "Instant Betting"
-}
+	"instantBettingTitle": "Instant Betting",
+	"enableFootballVisualisation": true
+};

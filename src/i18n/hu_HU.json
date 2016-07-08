@@ -1,5 +1,4 @@
-{
-	"LOCALE_IMPORT": "---",
+window._kbc.locale={
 	"N/A": "A versenyre befejeződött és nem érhető el.",
 	"account": {
 		"balance": "Egyenleg:",
@@ -126,7 +125,7 @@
 				"FREE_BET": "Ingyenes fogadás elhelyezve",
 				"NON_APPROVED_LIVE_BET_DEPOSIT": "Ingyenes fogadás elhelyezve",
 				"PAYOUT_CASH_IN_DEPOSIT": "Befizetés",
-				"PAYOUT_SETTLED_BET_DEPOSIT": "Kifizet��s",
+				"PAYOUT_SETTLED_BET_DEPOSIT": "Kifizetés",
 				"PBA_CORRECTION_PARTIALLY_APPROVED_DEPOSIT": "PBA visszatérítés",
 				"PBA_CORRECTION_REJECTED_DEPOSIT": "PBA visszatérítés",
 				"SETTLEMENT_CORRECTION_DEPOSIT": "Fogadás újrarendvezve",
@@ -166,7 +165,7 @@
 				"1st": "Első:",
 				"2nd": "Második",
 				"3rd": "Harmadik",
-				"any": "Any",
+				"any": "Bármelyik",
 				"anyDescription": "Bármely sorrend"
 			},
 			"type": {
@@ -217,7 +216,7 @@
 			"head": "Döntetlen",
 			"htft": "HT/FT",
 			"oddeven": "Páratlan/Páros",
-			"onecrosstwo": "Meccs",
+			"onecrosstwo": "Mérkőzés",
 			"outright": "Kezdés",
 			"overunder": "Felett/alatt",
 			"result": "Eredmény",
@@ -266,7 +265,7 @@
 		"pba": {
 			"betApprovalAverageTimeMessage": "(A tét jóváhagyása általában néhány percet vesz igénybe)",
 			"canBePartiallyApprovedMessage": "* Részlegesen is jóváhagyható",
-			"continue": "Folytatódik",
+			"continue": "Folytatás",
 			"highestPreapprovedStake": "A legmagasabb jóváhagyott tét {0}.",
 			"optionDisregard": "{0} jóváhagyott tét elhelyezése",
 			"optionSendAll": "A teljes {0} tét elküldése jóváhagyásra *",
@@ -318,7 +317,7 @@
 		"multiplePoolCoupons": "Please note that poolbetting coupons must be placed one by one.",
 		"not_combinable": "Kérjük, vegye figyelembe, hogy egyes eredmények egymástól függenek és nem kombinálhatók. Az egymástól függő eredményeket tartalmazó kombinációkat eltávolítottuk.",
 		"oddsAndEachWayChangeApprove": "Elfogadja az E/W feltételek és esélyek változását?",
-		"oddsChangeApprove": "Jóváhagyja a tét módosításait?",
+		"oddsChangeApprove": "Jóváhagyja a szorzó módosítását?",
 		"prematchAndLiveEventsMixed": "Élnézést, pillanatnyilag nem lehetséges élő és nem élő fogadások kombinálása."
 	},
 	"betslipReceipt": {
@@ -365,31 +364,31 @@
 	},
 	"combination": {
 		"sizeCombination": "Kombináció",
-		"sizeDouble": "Dupla",
-		"sizeDoubles": "Páros",
+		"sizeDouble": "Kettes",
+		"sizeDoubles": "Kettesek",
 		"sizeEight": "Nyolcas",
 		"sizeEights": "Nyolcasok",
 		"sizeEleven": "Tizenegyes",
-		"sizeElevens": "Tizenegyes",
+		"sizeElevens": "Tizenegyesek",
 		"sizeFive": "Ötös",
 		"sizeFives": "Ötösök",
 		"sizeFour": "Négyes",
-		"sizeFours": "Négyes",
+		"sizeFours": "Négyesek",
 		"sizeNine": "Kilences",
 		"sizeNines": "Kilencesek",
 		"sizeSeven": "Hetes",
 		"sizeSevens": "Hetesek",
-		"sizeSingle": "Egyéni",
-		"sizeSingles": "Egyéni",
+		"sizeSingle": "Egyes",
+		"sizeSingles": "Egyesek",
 		"sizeSix": "Hatos",
 		"sizeSixs": "Hatosok",
 		"sizeSystem": "Rendszer",
 		"sizeTen": "Tízes",
 		"sizeTens": "Tízesek",
-		"sizeTriple": "Tripla",
-		"sizeTriples": "Hármas",
+		"sizeTriple": "Hármas",
+		"sizeTriples": "Hármasok",
 		"sizeTwelve": "Tizenkettes",
-		"sizeTwelves": "Tizenkettes"
+		"sizeTwelves": "Tizenkettesek"
 	},
 	"common": {
 		"bet": "Fogadás",
@@ -626,7 +625,7 @@
 		"tomorrow": "Holnap"
 	},
 	"drillDown": {
-		"allLeagues": "Összes bajnokság"
+		"allLeagues": "Összes esemény"
 	},
 	"eachWay": {
 		"labelShort": "E/W"
@@ -646,21 +645,35 @@
 			"browseSport": "Böngészés {0}",
 			"featured": "Kiemelt",
 			"liveAndUpcoming": "Élő és következik",
-			"nextOff": "Következő ki",
+			"nextOff": "Következő verseny",
 			"today": "Ma",
 			"watch": "Megtekintés"
 		}
 	},
 	"events": {
-		"activities": "Tevékenységek",
+		"activities": "Események",
 		"betoffers": "Fogadási ajánlatok",
+		"cinematicView": "Moziba illő nézet",
+		"competitions": {
+			"default": "Azonnali ajánlatok"
+		},
+		"defaultView": "Alapértelmezett nézet",
 		"liveRightNow": "Élőben most",
-		"noBetAndWatchEventsFound": "Az élő versenyre megtekintéséhez megfelelő fogadást kell tennie legalább £1 értékben (vagy ennek megfelelő más devizában) az adott versenyre.",
+		"matches": {
+			"default": "Mérkőzés"
+		},
+		"noBetAndWatchEventsFound": "Az élő verseny megtekintéséhez megfelelő fogadást kell tennie legalább £1 értékben (vagy ennek megfelelő más devizában) az adott versenyre.",
 		"noBetOffersFound": "Nincs fogadási ajánlat találat",
 		"noEventsFound": "Nincs esemény találat",
 		"noLiveEventsFound": "Nincs élő esemény találat",
 		"startingSoon": "Hamarosan kezdődik",
-		"streaming": "Áttöltés"
+		"streaming": "Áttöltés",
+		"upcomingLive": "Élőben következik",
+		"visualisation": "Megjelenítés"
+	},
+	"eventtypes": {
+		"nocompetitions": "Jelenleg nincs elérhető verseny.",
+		"nomatches": "Jelenleg nincs elérhető mérkőzés."
 	},
 	"footer": {
 		"links": {
@@ -689,10 +702,12 @@
 		"infoLabel": "Info",
 		"label": {
 			"freeBet": "Ingyenes fogadás",
+			"matchupFreeBet": "Match-up free bet",
 			"profitBoost": "profitnövekedés"
 		},
 		"labelShort": "fb",
 		"liveOnly": "Csak élő",
+		"matchupMaxAmount": "Maximum free bet amount {0}.",
 		"mobileOnly": "Csak mobil készüléken",
 		"namedSystemBet": "Nevesített rendszer fogadások (Trixie, Patent, Yankee, stb)",
 		"noRestrictions": "Összes fogadástípus",
@@ -721,6 +736,7 @@
 		"statusPlaced": "Helyezett",
 		"statusReserved": "Fenntartott",
 		"statusUsed": "Felhasznált",
+		"useButtonLabel": "Felhasználás",
 		"validFor": "Érvényes:"
 	},
 	"grouplistpage": {
@@ -760,9 +776,9 @@
 			"title": {
 				"highlights": "Előzetes",
 				"liveRightNowAggregate": "Élőben most",
-				"startingSoon": "Hamarosan rajtol",
+				"startingSoon": "Hamarosan kezdődik",
 				"startingSoonAggregate": "Hamarosan kezdődik",
-				"trending": "Jellemző fogadások"
+				"trending": "Népszerű események"
 			}
 		}
 	},
@@ -788,22 +804,41 @@
 	},
 	"liveFeedCard": {
 		"type": {
+			"attack": "Támadás",
+			"ballOutOfPlay": "A labda nincs játékban",
+			"ballSafe": "Labdabiztos",
 			"corner": "Szöglet",
+			"dangerousAttack": "Veszélyes támadás",
 			"freeKick": "Szabadrúgás",
-			"game": "Mérkőzés",
+			"game": "Játék",
 			"goal": "Gól",
+			"goalKick": "Kirúgás",
+			"goalOpportunity": "Gólhelyzet",
+			"halfTimeEnd": "Félidő",
+			"inPossession": "Labdabirtoklás",
+			"injury": "Sérülés",
 			"match": "Mérkőzés",
-			"penalty": "Büntet��",
+			"matchEnd": "Mérkőzés vége",
+			"offside": "Les",
+			"penalty": "Büntető",
+			"penaltyAwarded": "Megadott büntető",
+			"penaltyScored": "Értékesített büntető",
+			"possibleCorner": "Lehetséges szöglet",
+			"possibleFreeKick": "Lehetséges szabadrúgás",
+			"possibleThrowIn": "Lehetséges szabadrúgás",
 			"redCard": "Piros lap",
-			"score": "Pont",
-			"set": "Készlet",
+			"score": "Eredmény",
+			"set": "Szett",
+			"shot": "Lövés",
 			"shotOffTarget": "Nem talál kaput",
 			"shotOnTarget": "Kaput talál",
+			"substitution": "Csere",
+			"thowIn": "Bedobás",
 			"yellowCard": "Sárga lap"
 		}
 	},
 	"liveSelected": {
-		"heading": "Kiválasztott fogadások"
+		"heading": "Népszerű fogadási lehetőségek"
 	},
 	"livepage": {
 		"ipa": {
@@ -811,6 +846,16 @@
 			"link": "Information displayed and transmission delays",
 			"title": "Important note"
 		}
+	},
+	"livestatistics": {
+		"aceswon": "Aces",
+		"attacks": "Támadások",
+		"dangerousattacks": "Veszélyes támadások",
+		"possession": "Labdabirtoklás: %",
+		"servicefaults": "Double Faults",
+		"shotsofftarget": "Kaput elkerülő lövések",
+		"shotsontarget": "Kaput eltaláló lövések",
+		"title": "Élő statisztikák"
 	},
 	"locale": {
 		"freeBets": {
@@ -823,6 +868,9 @@
 			"hideTransactions": "Tranzakciók elrejtése",
 			"showTransactions": "Tranzakciók megjelenítése"
 		}
+	},
+	"maintenance": {
+		"release": "Az oldal karbantartása folyamatban van. A weboldal várhatóan {0}-től újra elérhető. Elnézést kérünk a kellemetlenségért, és köszönjük türelmét."
 	},
 	"mostpopular": {
 		"details": {
@@ -841,7 +889,9 @@
 	"navigationMenu": {
 		"betOfferCountPlural": "{0} fogadás ajánlat a {1}-ből",
 		"betOfferCountSingular": "1 fogadás ajánlat a {0}-ből",
+		"bonusOffers": "My Bonus Offers",
 		"browse": "böngészés",
+		"fewerSports": "Kevesebb sport",
 		"live": "Élő",
 		"startLobby": "Kezdőoldal",
 		"startingSoon": "Hamarosan kezdődik",
@@ -850,10 +900,11 @@
 		"startsWithinMinutes": "{0} percen belül kezdődik"
 	},
 	"nowAndSoon": {
-		"nextUp": "Next Up"
+		"highlighted": "Kiemelt",
+		"nextUp": "Következik"
 	},
 	"occurrence": {
-		"corner": "{0} got a corner",
+		"corner": "Szögletrúgást kap",
 		"goalScored": "{0} scored a goal",
 		"redCard": "{0} got a red card",
 		"yellowCard": "{0} got a yellow card"
@@ -976,6 +1027,10 @@
 			"text": "A teljes szorzó túl magas. Kérjük, módosítsa a fogadószelvényt.",
 			"title": "Az esélyek túl magasak"
 		},
+		"oddsTooLow": {
+			"text": "Sajnos nem fogadunk el egyedi vagy kombinációra megtett fogadásokat {0} értékű odds alatt Módosítsa a fogadási szelvényt.",
+			"title": "Az odds túl alacsony"
+		},
 		"oversizedBetSystem": {
 			"text": "Sajnáljuk, maximálisan 220 fogadást lehet megtenni egy kuponon, és az Ön fogadása túllépi ezt a számot. Kérjük, módosítsa fogadószelvényét.",
 			"title": "Érvénytelen rendszer fogadás"
@@ -1090,6 +1145,65 @@
 			}
 		}
 	},
+	"rewards": {
+		"betsPlacedTitle": "Megtett fogadások:",
+		"bettingCriterion": {
+			"desktopOnly": "kizárólag asztali felhasználásra",
+			"eventClosed": "lezárt sportesemény",
+			"eventGroupClosed": "lezárt sportesemény csoportja",
+			"liveOnly": "kizárólag élő",
+			"minCombinationOdds": "az oddszok min. kombinációja",
+			"minOddsPerLeg": "fordulónkénti min. oddszok",
+			"minStake": "tétek min. összege",
+			"mobileOnly": "kizárólag mobileszközök esetén",
+			"nonLiveOnly": "kizárólag nem élő közvetítések",
+			"placeBetThatHas": "Olyan fogadás megtétele, amely rendelkezik a következővel:",
+			"sizeDoublesAndBigger": "duplák és nagyobb kombinációk",
+			"sizeEightsAndBigger": "nyolcasok és nagyobb kombinációk",
+			"sizeElevensAndBigger": "tizenegyesek és nagyobb kombinációk",
+			"sizeFivesAndBigger": "ötösök és nagyobb kombinációk",
+			"sizeFoursAndBigger": "négyesek és nagyobb kombinációk",
+			"sizeNinesAndBigger": "kilencesek és nagyobb kombinációk",
+			"sizeSevensAndBigger": "hetesek és nagyobb kombinációk",
+			"sizeSixsAndBigger": "hatosok és nagyobb kombinációk",
+			"sizeTensAndBigger": "tízesek és nagyobb kombinációk",
+			"sizeTriplesAndBigger": "hármasok és nagyobb kombinációk",
+			"sizeTwelves": "tizenkettesek"
+		},
+		"pleaseLogin": "A bónuszajánlatok megtekintéséhez jelentkezzen be",
+		"qualifyingBetsTitle": "A feltételeknek megfelelő fogadások:",
+		"showBonusOffersHeading": "Bonus Offers Overview",
+		"validFor": {
+			"andBiggerCombos": "and bigger combinations",
+			"desktopOnly": "desktop usage only",
+			"eachWay": "each way",
+			"eventClosed": "event that has been closed",
+			"eventGroupClosed": "event group that has been closed",
+			"liveOnly": "live only",
+			"mobileOnly": "mobile devices only",
+			"namedSystemBet": "named system bets (Trixie, Patent, Yankee, etc)",
+			"noRestrictions": "all types of bets",
+			"nonEachWay": "non-each way",
+			"nonLiveOnly": "non-live only",
+			"nonSystemBet": "singles and combinations",
+			"profitBoost": {
+				"maxExtraWinnings": "max extra winnings",
+				"maxStake": "max stake"
+			},
+			"sizeDoubles": "doubles",
+			"sizeEights": "eightfolds",
+			"sizeElevens": "elevenfolds",
+			"sizeFives": "fivefolds",
+			"sizeFours": "fourfolds",
+			"sizeNines": "ninefolds",
+			"sizeSevens": "sevenfolds",
+			"sizeSixs": "sixfolds",
+			"sizeTens": "tenfolds",
+			"sizeTriples": "trebles",
+			"sizeTwelves": "twelvefolds",
+			"validFor": "Valid for"
+		}
+	},
 	"scoreboard": {
 		"at": "itt",
 		"racing": {
@@ -1146,6 +1260,11 @@
 		},
 		"title": "Beállítások"
 	},
+	"slideInContainer": {
+		"close": "Close",
+		"maximise": "Maximise",
+		"minimise": "Minimise"
+	},
 	"starred": {
 		"liveEventsTabAll": "Összes",
 		"liveEventsTabStarred": "Kiválasztott"
@@ -1169,7 +1288,9 @@
 		"screens": "Szuresek"
 	},
 	"statistics": {
-		"eventStatsExternalLinkToolTip": "Kattintson ide az esemény statisztikához"
+		"eventStatsExternalLinkToolTip": "Kattintson ide az esemény statisztikához",
+		"tabTitle": "Statisztikák",
+		"title": "Statisztikák"
 	},
 	"streaming": {
 		"available": {
@@ -1190,7 +1311,7 @@
 		"notAvailable": {
 			"genericError": "Az élő közvetítés pillanatnyilag nem elérhető , kérjük próbálja később",
 			"geoblocked": "Ez az élő közvetítés nem elérhető az Ön országában",
-			"noBetAndWatchEvents": "Az élő versenyre megtekintéséhez megfelelő fogadást kell tennie legalább {0} értékben az adott versenyre.",
+			"noBetAndWatchEvents": "Az élő verseny megtekintéséhez megfelelő fogadást kell tennie legalább {0} értékben az adott versenyre.",
 			"noFlash": "Adobe Flash Player letöltése és telepítése innen:",
 			"notEnoughStake": "Felhívjuk figyelmedet, hogy a stream megtekintéséhez legalább {0} összegben fogadnod kell.",
 			"raceStreamNotStarted": "A streamelés még nem indult el, ez a streamelés a futam előtt 5 perccel kezdődik.",
@@ -1211,12 +1332,13 @@
 			"desktopAvailableMessage": "A versenyhez online streamelés lesz elérhető",
 			"mobileAvailableMessage": "A versenyhez mobil streamelés lesz elérhető"
 		},
-		"raceWatchNotLoggedIn": "Az élő versenyre megtekintéséhez megfelelő fogadást kell tennie az adott versenyre.",
+		"raceWatchNotLoggedIn": "Az élő verseny megtekintéséhez megfelelő fogadást kell tennie az adott versenyre.",
 		"startStream": "Indítsa az élő közvetítést"
 	},
 	"termFilter": {
 		"menu": {
-			"streamedOnly": "Kizárólag a streamelt sportesemények mutatása"
+			"streamedOnly": "Kizárólag a streamelt sportesemények mutatása",
+			"upcomingLiveOnly": "Csak a következő élő sporteseményeket mutassa"
 		}
 	},
 	"termSearch": {
@@ -1257,11 +1379,115 @@
 	"vet": {
 		"stake_not_integer2": "A tét nem érvényes, tizedes számot nem tartalmazhat"
 	},
+	"visualisation": {
+		"extraTimeFullTime": "Full Time - Extra Time",
+		"extraTimeHalfTime": "Half Time - Extra Time",
+		"fullTime": "Végeredmény",
+		"penaltyShootout": "Tizenegyespárbaj",
+		"waitingForAction": "Várakozás eseményre"
+	},
+	"widgetSettings": {
+		"widgets": [
+			{
+				"widgetId": "gm-league-table",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/league-table-widget/v2.0.1/index.html"
+			},
+			{
+				"widgetId": "gm-team-performance",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/team-performance-widget/v1.0.4/index.html"
+			},
+			{
+				"widgetId": "gm-head-to-head",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/head-to-head-widget/v1.1.3/index.html"
+			},
+			{
+				"widgetId": "gm-euro-2016-player-specials",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/player-specials-widget/v1.0.2/index.html",
+				"height": 682
+			},
+			{
+				"widgetId": "gm-euro-2016-overview",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/finals-widget/v1.0.1/index.html",
+				"height": 200
+			},
+			{
+				"widgetId": "gm-euro-2016-lineup",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/lineup-widget/v1.1.0/index.html",
+				"height": 0
+			},
+			{
+				"widgetId": "gm-golden-boot",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/golden-boot-widget/v1.0.0/index.html",
+				"height": 294
+			},
+			{
+				"widgetId": "gm-tournament-winner",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/tournament-winner-widget/v1.0.0/index.html",
+				"height": 338
+			}
+		],
+		"targets": {
+			"landingPageFeed": [
+				{
+					"widgetId": "gm-tournament-winner",
+					"order": 3
+				},
+				{
+					"widgetId": "gm-euro-2016-player-specials",
+					"order": 6
+				},
+				{
+					"widgetId": "gm-golden-boot",
+					"order": 10
+				}
+			],
+			"home": [
+				{
+					"widgetId": "gm-euro-2016-overview",
+					"order": 1
+				}
+			],
+			"eventGroupBottom": [
+				{
+					"widgetId": "gm-league-table",
+					"order": 10,
+					"filter": "^/?filter/football/england/premier_league(/|$|{)",
+					"args": {
+						"headerDefaultTitle": "Premier League 2015/2016"
+					}
+				}
+			],
+			"eventBeforeBetOffers": [
+				{
+					"order": 1,
+					"widgetId": "gm-euro-2016-lineup",
+					"args": {},
+					"filter": "football/euro_2016|football/euro 2016"
+				}
+			],
+			"eventPrematchStats": [
+				{
+					"widgetId": "gm-team-performance",
+					"order": 10
+				},
+				{
+					"widgetId": "gm-head-to-head",
+					"order": 20
+				}
+			]
+		}
+	},
 	"showRacingTodayTab": true,
 	"enablePush": true,
 	"enableMaxStake": true,
 	"disableRacingModeBalanceLink": false,
 	"enableFilterMenu": true,
 	"enableTermSearch": true,
-	"instantBettingTitle": "Instant Betting"
-}
+	"instantBettingTitle": "Instant Betting",
+	"enableFootballVisualisation": true
+};

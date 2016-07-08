@@ -1,5 +1,4 @@
-{
-	"LOCALE_IMPORT": "---",
+window._kbc.locale={
 	"N/A": "Závod skončil a již není k dispozici.",
 	"account": {
 		"balance": "Zůstatek:",
@@ -58,7 +57,7 @@
 		"filter": {
 			"all": "Vše",
 			"apply": "Použít",
-			"live": "Živě",
+			"live": "Live",
 			"pending": "Vyřizuje se",
 			"prematch": "Předzápasové",
 			"settled": "Vyhodnoceno",
@@ -323,7 +322,7 @@
 	},
 	"betslipReceipt": {
 		"awaitingApproval": "(0) čeká na schválení",
-		"closeReceipt": "Zavrit",
+		"closeReceipt": "Zavřít",
 		"receiptPreString": "Č. dokladu",
 		"retainSelections": "Zachovat výběry",
 		"timePreString": "Dnes",
@@ -365,31 +364,31 @@
 	},
 	"combination": {
 		"sizeCombination": "Kombinace",
-		"sizeDouble": "2násobek",
-		"sizeDoubles": "2násobky",
-		"sizeEight": "8násobek",
-		"sizeEights": "8násobky",
-		"sizeEleven": "11násobek",
-		"sizeElevens": "11Záhyby",
-		"sizeFive": "5násobek",
-		"sizeFives": "5násobky",
-		"sizeFour": "4násobek",
-		"sizeFours": "4Násobky",
-		"sizeNine": "9násobek",
-		"sizeNines": "9násobky",
-		"sizeSeven": "7násobek",
-		"sizeSevens": "7násobky",
-		"sizeSingle": "1násobek",
-		"sizeSingles": "1násobky",
-		"sizeSix": "6násobek",
-		"sizeSixs": "6násobky",
+		"sizeDouble": "2-AKU",
+		"sizeDoubles": "2-AKU",
+		"sizeEight": "8-AKU",
+		"sizeEights": "8-AKU",
+		"sizeEleven": "11-AKU",
+		"sizeElevens": "11-AKU",
+		"sizeFive": "5-AKU",
+		"sizeFives": "5-AKU",
+		"sizeFour": "4-AKU",
+		"sizeFours": "4-AKU",
+		"sizeNine": "9-AKU",
+		"sizeNines": "9-AKU",
+		"sizeSeven": "7-AKU",
+		"sizeSevens": "7-AKU",
+		"sizeSingle": "1-AKU",
+		"sizeSingles": "1-AKU",
+		"sizeSix": "6-AKU",
+		"sizeSixs": "6-AKU",
 		"sizeSystem": "Systémy",
-		"sizeTen": "10násobek",
-		"sizeTens": "10násobky",
-		"sizeTriple": "3násobek",
-		"sizeTriples": "3násobky",
-		"sizeTwelve": "12násobek",
-		"sizeTwelves": "12Násobky"
+		"sizeTen": "10-AKU",
+		"sizeTens": "10-AKU",
+		"sizeTriple": "3-AKU",
+		"sizeTriples": "3-AKU",
+		"sizeTwelve": "12-AKU",
+		"sizeTwelves": "12-AKU"
 	},
 	"common": {
 		"bet": "Sázka",
@@ -550,7 +549,7 @@
 			"title": "Technická chyba."
 		},
 		"ACCOUNT_BLOCKED": {
-			"text": "Bohužel, přístup k vašemu ú��tu byl momentálně zablokován. Kontaktujte prosím zákaznickou podporu, vysvětlí vám vzniklou situaci.",
+			"text": "Bohužel, přístup k vašemu účtu byl momentálně zablokován. Kontaktujte prosím zákaznickou podporu, vysvětlí vám vzniklou situaci.",
 			"title": "Účet je omezen"
 		},
 		"ACCOUNT_INACTIVE": {
@@ -644,9 +643,9 @@
 			"allRaces": "Všechny závody",
 			"alphabetical": "Všechny",
 			"browseSport": "Procházet {0}",
-			"featured": "Významné",
+			"featured": "Zvýrazněno",
 			"liveAndUpcoming": "Živé a nadcházející",
-			"nextOff": "NEJBLIŽŠÍ ZÁVODY",
+			"nextOff": "Další start ",
 			"today": "Dnes",
 			"watch": "Sledovat"
 		}
@@ -654,13 +653,27 @@
 	"events": {
 		"activities": "Činnosti",
 		"betoffers": "Nabídky sázek",
-		"liveRightNow": "Právě teď živě",
-		"noBetAndWatchEventsFound": "Chcete-li sledovat dostih živě, musíte na daný dostih podat sázku ve výši alespoň 1 GBP (nebo ekvivalent).",
+		"cinematicView": "Širokoúhlé zobrazení",
+		"competitions": {
+			"default": "Outrights"
+		},
+		"defaultView": "Výchozí zobrazení",
+		"liveRightNow": "Live Právě probíhá ",
+		"matches": {
+			"default": "Match"
+		},
+		"noBetAndWatchEventsFound": "Chcete-li sledovat dostih live, musíte na daný dostih podat sázku ve výši alespoň 1 GBP (nebo ekvivalent).",
 		"noBetOffersFound": "Nebyly nalezeny žádné nabídky sázek",
 		"noEventsFound": "Nebyly nalezeny žádné události",
 		"noLiveEventsFound": "Nebyly nalezeny žádné živé události",
-		"startingSoon": "Začíná již brzy",
-		"streaming": "Streamování"
+		"startingSoon": "Brzy začíná ",
+		"streaming": "Streamování",
+		"upcomingLive": "Připravované živé",
+		"visualisation": "Zobrazení"
+	},
+	"eventtypes": {
+		"nocompetitions": "Momentálně nejsou k dispozici žádné události.",
+		"nomatches": "Momentálně nejsou k dispozici žádné zápasy."
 	},
 	"footer": {
 		"links": {
@@ -689,10 +702,12 @@
 		"infoLabel": "Informace",
 		"label": {
 			"freeBet": "Sázka zdarma",
+			"matchupFreeBet": "Bezplatná sázka typu souboj",
 			"profitBoost": "nárůst zisku"
 		},
 		"labelShort": "fb",
-		"liveOnly": "Pouze živé",
+		"liveOnly": "Pouze live",
+		"matchupMaxAmount": "Maximální částka bezplatné sázky {0}.",
 		"mobileOnly": "Pouze mobilní zařízení",
 		"namedSystemBet": "Jmenované systémové sázky (Trixie, Patent, Yankee atd.)",
 		"noRestrictions": "Všechny typy sázek",
@@ -721,10 +736,11 @@
 		"statusPlaced": "Podáno",
 		"statusReserved": "Vyhrazeno",
 		"statusUsed": "Použito",
+		"useButtonLabel": "Použít",
 		"validFor": "Platí pro"
 	},
 	"grouplistpage": {
-		"liveLabel": "Živě",
+		"liveLabel": "Live",
 		"nowLabel": "Nyní"
 	},
 	"home": "Domů",
@@ -738,7 +754,7 @@
 	"landingPageFeed": {
 		"card": {
 			"description": {
-				"liveRightNowAggregate": "Aktuální {0} živě běžící události",
+				"liveRightNowAggregate": "Aktuálně probíhá {0} Live událostí ",
 				"startingSoonAggregate": "{0} událostí začne během {1} minut"
 			},
 			"shocker": {
@@ -759,9 +775,9 @@
 			},
 			"title": {
 				"highlights": "Hlavní body",
-				"liveRightNowAggregate": "Živě právě teď",
-				"startingSoon": "Začíná již brzy",
-				"startingSoonAggregate": "Začíná již brzy",
+				"liveRightNowAggregate": "Live Právě probíhá ",
+				"startingSoon": "Brzy začíná ",
+				"startingSoonAggregate": "Brzy začíná ",
 				"trending": "Trendy"
 			}
 		}
@@ -774,7 +790,7 @@
 		"title": "Vsadit telefonicky"
 	},
 	"liveCarousel": {
-		"liveLabel": "Živě",
+		"liveLabel": "Live",
 		"rightNowLabel": "Právě teď",
 		"viewAllLabel": "Všechny live události"
 	},
@@ -788,17 +804,36 @@
 	},
 	"liveFeedCard": {
 		"type": {
+			"attack": "Útok",
+			"ballOutOfPlay": "Míč mimo hru",
+			"ballSafe": "Zákrok brankáře",
 			"corner": "Roh",
+			"dangerousAttack": "Nebezpečný útok",
 			"freeKick": "Volný přímý kop",
 			"game": "Hra",
 			"goal": "Gól",
+			"goalKick": "Výkop od brány",
+			"goalOpportunity": "Gólová příležitost",
+			"halfTimeEnd": "Poločas",
+			"inPossession": "Míč v bezpečí",
+			"injury": "Zranění",
 			"match": "Zápas",
+			"matchEnd": "Konec zápasu",
+			"offside": "Ofsajd",
 			"penalty": "Penalta",
+			"penaltyAwarded": "Nařízená penalta",
+			"penaltyScored": "Proměněná penalta",
+			"possibleCorner": "Možný roh",
+			"possibleFreeKick": "Možný přímý volný kop",
+			"possibleThrowIn": "Možné vhazování",
 			"redCard": "Červená karta",
 			"score": "Skóre",
 			"set": "Set",
+			"shot": "Střela",
 			"shotOffTarget": "Mimo branku",
 			"shotOnTarget": "Na branku",
+			"substitution": "Střídání",
+			"thowIn": "Vhazování",
 			"yellowCard": "Žlutá karta"
 		}
 	},
@@ -812,17 +847,30 @@
 			"title": "Důležité upozornění"
 		}
 	},
+	"livestatistics": {
+		"aceswon": "Esa",
+		"attacks": "Útoky",
+		"dangerousattacks": "Nebezpečné útoky",
+		"possession": "Držení míče %",
+		"servicefaults": "Dvojchyby",
+		"shotsofftarget": "Střely mimo bránu",
+		"shotsontarget": "Střely na bránu",
+		"title": "Živé statistiky"
+	},
 	"locale": {
 		"freeBets": {
 			"pleaseLogin": "K zobrazení přehledu sázek zdarma se musíte přihlásit"
 		},
 		"navigation": {
-			"showAllSports": "Zobrazit všechny sporty"
+			"showAllSports": "Všechny sporty"
 		},
 		"transactions": {
 			"hideTransactions": "Skrýt transakce",
 			"showTransactions": "Zobrazit transakce"
 		}
+	},
+	"maintenance": {
+		"release": "V současné době provádíme údržbu webu. Obnovu funkčnosti očekáváme {0}. Omlouváme se za nepříjemnosti a děkujeme za trpělivost."
 	},
 	"mostpopular": {
 		"details": {
@@ -841,15 +889,18 @@
 	"navigationMenu": {
 		"betOfferCountPlural": "{0} nabídek sázky v {1}",
 		"betOfferCountSingular": "1 nabídka sázky v ({0})",
+		"bonusOffers": "Mé bonusové nabídky",
 		"browse": "procházet",
-		"live": "Živě",
+		"fewerSports": "Méně sportů",
+		"live": "Live",
 		"startLobby": "Hlavní lobby",
-		"startingSoon": "Začíná již brzy",
+		"startingSoon": "Brzy začíná ",
 		"startsWithinHour": "Začíná do 1 hodiny",
 		"startsWithinHours": "Začíná do {0} hodin",
 		"startsWithinMinutes": "Začíná do {0} minut"
 	},
 	"nowAndSoon": {
+		"highlighted": "Zvýrazněno",
 		"nextUp": "Další na řadě"
 	},
 	"occurrence": {
@@ -871,7 +922,7 @@
 		"draw": "Remíza",
 		"homeOrAway": "Domácí nebo hosté",
 		"homeOrDraw": "Domácí nebo remíza",
-		"live": "Živě",
+		"live": "Live",
 		"no": "Ne",
 		"or": "nebo",
 		"orDraw": "nebo remíza",
@@ -976,6 +1027,10 @@
 			"text": "Celkový kurz je příliš vysoký. Upravte si prosím tiket.",
 			"title": "Příliš vysoké kurzy"
 		},
+		"oddsTooLow": {
+			"text": "Omlouváme se, ale nepřijímáme jednoduché sázky ani kombinace s kurzem pod {0}. Opravte si tiket.",
+			"title": "Příliš nízký kurz"
+		},
 		"oversizedBetSystem": {
 			"text": "Omlouváme se, ale tiket může obsahovat maximálně 220 sázek a váš počet přesáhl limit. Prosíme, upravte svůj tiket. ",
 			"title": "Neplatná systémová sázka"
@@ -1029,7 +1084,7 @@
 		"stakeTooLow": {
 			"text": "Je nám líto, minimální vklad je {0}.",
 			"text1": "Váš tiket bude upraven.",
-			"title": "P��íliš nízká sázka"
+			"title": "Příliš nízká sázka"
 		},
 		"timeout": {
 			"text": "Litujeme, při podávání sázky došlo k chybě. V historii sázek ověřte, zda byla vaše sázka podána."
@@ -1090,6 +1145,65 @@
 			}
 		}
 	},
+	"rewards": {
+		"betsPlacedTitle": "Sázky:",
+		"bettingCriterion": {
+			"desktopOnly": "pouze k použití se stolním PC",
+			"eventClosed": "událost, která byla uzavřena",
+			"eventGroupClosed": "skupina událostí, která byla uzavřena",
+			"liveOnly": "Pouze live",
+			"minCombinationOdds": "min. kurzy kombinace",
+			"minOddsPerLeg": "min. kurz na leg",
+			"minStake": "min. výše vkladu",
+			"mobileOnly": "pouze mobilní zařízení",
+			"nonLiveOnly": "pouze předzápasové",
+			"placeBetThatHas": "Vsadit sázku, která je/má:",
+			"sizeDoublesAndBigger": "dvojnásobky a vyšší kombinace",
+			"sizeEightsAndBigger": "osminásobky a vyšší kombinace",
+			"sizeElevensAndBigger": "jedenáctinásobky a vyšší kombinace",
+			"sizeFivesAndBigger": "pětinásobky a vyšší kombinace",
+			"sizeFoursAndBigger": "čtyřnásobky a vyšší kombinace",
+			"sizeNinesAndBigger": "devítinásobky a vyšší kombinace",
+			"sizeSevensAndBigger": "sedminásobky a vyšší kombinace",
+			"sizeSixsAndBigger": "šestinásobky a vyšší kombinace",
+			"sizeTensAndBigger": "desetinásobky a vyšší kombinace",
+			"sizeTriplesAndBigger": "trojnásobky a vyšší kombinace",
+			"sizeTwelves": "dvanáctinásobky"
+		},
+		"pleaseLogin": "K zobrazení přehledu bonusových nabídek se musíte přihlásit",
+		"qualifyingBetsTitle": "Platné sázky:",
+		"showBonusOffersHeading": "Přehled bonusových nabídek",
+		"validFor": {
+			"andBiggerCombos": "a větší kombinace",
+			"desktopOnly": "pouze k použití se stolním PC",
+			"eachWay": "each way",
+			"eventClosed": "událost, která byla uzavřena",
+			"eventGroupClosed": "skupina událostí, která byla uzavřena",
+			"liveOnly": "Pouze live",
+			"mobileOnly": "pouze mobilní zařízení",
+			"namedSystemBet": "jmenované systémové sázky (Trixie, Patent, Yankee atd.)",
+			"noRestrictions": "všechny typy sázek",
+			"nonEachWay": "non-each way",
+			"nonLiveOnly": "pouze předzápasové",
+			"nonSystemBet": "jednoduché a kombinované",
+			"profitBoost": {
+				"maxExtraWinnings": "max. výhry navíc",
+				"maxStake": "max. sázka"
+			},
+			"sizeDoubles": "dvojnásobky",
+			"sizeEights": "osminásobky",
+			"sizeElevens": "jedenáctinásobky",
+			"sizeFives": "pětinásobky",
+			"sizeFours": "čtyřnásobky",
+			"sizeNines": "devítinásobky",
+			"sizeSevens": "sedminásobky",
+			"sizeSixs": "šestinásobky",
+			"sizeTens": "desetinásobky",
+			"sizeTriples": "trojnásobky",
+			"sizeTwelves": "dvanáctinásobky",
+			"validFor": "Platí pro"
+		}
+	},
 	"scoreboard": {
 		"at": "při",
 		"racing": {
@@ -1146,6 +1260,11 @@
 		},
 		"title": "Nastavení"
 	},
+	"slideInContainer": {
+		"close": "Zavřít",
+		"maximise": "Maximalizovat",
+		"minimise": "Minimalizovat"
+	},
 	"starred": {
 		"liveEventsTabAll": "Všechny",
 		"liveEventsTabStarred": "Vybrané"
@@ -1169,7 +1288,9 @@
 		"screens": "Obrazovky"
 	},
 	"statistics": {
-		"eventStatsExternalLinkToolTip": "Kliknutím zobrazíte statistiky událostí"
+		"eventStatsExternalLinkToolTip": "Kliknutím zobrazíte statistiky událostí",
+		"tabTitle": "Statistiky",
+		"title": "Statistiky"
 	},
 	"streaming": {
 		"available": {
@@ -1190,7 +1311,7 @@
 		"notAvailable": {
 			"genericError": "Přímý přenos není dočasně dostupný, prosím zkuste později",
 			"geoblocked": "Tento přímý přenos není dostupný ve vaší zemi",
-			"noBetAndWatchEvents": "Chcete-li sledovat dostih živě, musíte na daný dostih podat sázku ve výši alespoň {0}.",
+			"noBetAndWatchEvents": "Chcete-li sledovat dostih live, musíte na daný dostih podat sázku ve výši alespoň {0}.",
 			"noFlash": "Přehrávač Adobe Flash Player si můžete stáhnout a nainstalovat zde.",
 			"notEnoughStake": "Mějte prosím na paměti, že abyste mohli sledovat stream, musíte provést sázky v celkové hodnotě alespoň {0}.",
 			"raceStreamNotStarted": "Streamování zatím není k dispozici - tento stream začne 5 minut před závodem.",
@@ -1211,12 +1332,13 @@
 			"desktopAvailableMessage": "Pro tento závod bude k dispozici desktopový stream",
 			"mobileAvailableMessage": "Pro tento závod bude k dispozici mobilní stream"
 		},
-		"raceWatchNotLoggedIn": "Chcete-li sledovat závod živě, musíte podat kvalifikační sázku na konkrétním závodě.",
+		"raceWatchNotLoggedIn": "Chcete-li sledovat závod live, musíte podat kvalifikační sázku na konkrétním závodě.",
 		"startStream": "Spustit přímý přenos"
 	},
 	"termFilter": {
 		"menu": {
-			"streamedOnly": "Zobrazit pouze streamované události"
+			"streamedOnly": "Zobrazit pouze streamované události",
+			"upcomingLiveOnly": "Zobrazit pouze připravované živé události"
 		}
 	},
 	"termSearch": {
@@ -1257,11 +1379,115 @@
 	"vet": {
 		"stake_not_integer2": "Sázka je neplatná, nesmí obsahovat desetinná čísla"
 	},
+	"visualisation": {
+		"extraTimeFullTime": "Celková hrací doba - prodloužení",
+		"extraTimeHalfTime": "Poločas - prodloužení",
+		"fullTime": "Celý zápas",
+		"penaltyShootout": "Penaltový rozstřel",
+		"waitingForAction": "Čekání na úkon"
+	},
+	"widgetSettings": {
+		"widgets": [
+			{
+				"widgetId": "gm-league-table",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/league-table-widget/v2.0.1/index.html"
+			},
+			{
+				"widgetId": "gm-team-performance",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/team-performance-widget/v1.0.4/index.html"
+			},
+			{
+				"widgetId": "gm-head-to-head",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/head-to-head-widget/v1.1.3/index.html"
+			},
+			{
+				"widgetId": "gm-euro-2016-player-specials",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/player-specials-widget/v1.0.2/index.html",
+				"height": 682
+			},
+			{
+				"widgetId": "gm-euro-2016-overview",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/finals-widget/v1.0.1/index.html",
+				"height": 200
+			},
+			{
+				"widgetId": "gm-euro-2016-lineup",
+				"widgetType": "iframe",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/lineup-widget/v1.1.0/index.html",
+				"height": 0
+			},
+			{
+				"widgetId": "gm-golden-boot",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/golden-boot-widget/v1.0.0/index.html",
+				"height": 294
+			},
+			{
+				"widgetId": "gm-tournament-winner",
+				"url": "https://d1fqgomuxh4f5p.cloudfront.net/tournament-winner-widget/v1.0.0/index.html",
+				"height": 338
+			}
+		],
+		"targets": {
+			"landingPageFeed": [
+				{
+					"widgetId": "gm-tournament-winner",
+					"order": 3
+				},
+				{
+					"widgetId": "gm-euro-2016-player-specials",
+					"order": 6
+				},
+				{
+					"widgetId": "gm-golden-boot",
+					"order": 10
+				}
+			],
+			"home": [
+				{
+					"widgetId": "gm-euro-2016-overview",
+					"order": 1
+				}
+			],
+			"eventGroupBottom": [
+				{
+					"widgetId": "gm-league-table",
+					"order": 10,
+					"filter": "^/?filter/football/england/premier_league(/|$|{)",
+					"args": {
+						"headerDefaultTitle": "Premier League 2015/2016"
+					}
+				}
+			],
+			"eventBeforeBetOffers": [
+				{
+					"order": 1,
+					"widgetId": "gm-euro-2016-lineup",
+					"args": {},
+					"filter": "football/euro_2016|football/euro 2016"
+				}
+			],
+			"eventPrematchStats": [
+				{
+					"widgetId": "gm-team-performance",
+					"order": 10
+				},
+				{
+					"widgetId": "gm-head-to-head",
+					"order": 20
+				}
+			]
+		}
+	},
 	"showRacingTodayTab": true,
 	"enablePush": true,
 	"enableMaxStake": true,
 	"disableRacingModeBalanceLink": false,
 	"enableFilterMenu": true,
 	"enableTermSearch": true,
-	"instantBettingTitle": "Instant Betting"
-}
+	"instantBettingTitle": "Instant Betting",
+	"enableFootballVisualisation": true
+};
