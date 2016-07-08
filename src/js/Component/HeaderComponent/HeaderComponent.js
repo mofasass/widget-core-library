@@ -52,7 +52,7 @@
       static: ['collapsable', 'collapsed', 'css-classes'],
 
       /**
-       * Returns header template
+       * Returns header template.
        * @memberOf module:HeaderComponent#
        * @returns {string}
        */
@@ -63,10 +63,10 @@
       },
 
       /**
-       * initializes the rivets component
+       * Initializes the rivets component.
        * @memberOf module:HeaderComponent#
-       * @param el
-       * @param attributes
+       * @param {element} el DOM element to be binded
+       * @param {object} attributes DOM attributes
        * @returns {HeaderController}
        */
       initialize ( el, attributes ) {

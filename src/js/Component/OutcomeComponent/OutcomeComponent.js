@@ -51,7 +51,7 @@
 
    /**
     * Outcome view controller.
-    * @param {object} attributes
+    * @param {object} attributes Attributes
     * @memberOf module:OutcomeComponent#
     */
    var OutcomeViewController = function ( attributes ) {

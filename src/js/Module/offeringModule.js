@@ -8,8 +8,8 @@ window.CoreLibrary.offeringModule = (() => {
    return {
 
       /**
-       * Get group events
-       * @param groupId
+       * Get group events.
+       * @param {number|string} groupId Group id
        * @returns {*|Promise}
        */
       getGroupEvents ( groupId ) {
@@ -18,9 +18,9 @@ window.CoreLibrary.offeringModule = (() => {
       },
 
       /**
-       * Get events by filter
-       * @param filter
-       * @param params
+       * Get events by filter.
+       * @param {string} filter Filter string, eg: football
+       * @param {object} params Request relevant parameters
        * @returns {Promise}
        */
       getEventsByFilter ( filter, params ) {
@@ -30,8 +30,8 @@ window.CoreLibrary.offeringModule = (() => {
       },
 
       /**
-       * Normalizes v2 api betoffers
-       * @param betOffer
+       * Normalizes v2 api betoffers.
+       * @param {object} betOffer Betoffer object we get from api
        */
       adaptV2BetOffer ( betOffer ) {
          if ( betOffer.suspended === true ) {
@@ -40,8 +40,8 @@ window.CoreLibrary.offeringModule = (() => {
       },
 
       /**
-       * Normalizes the v2 api response
-       * @param liveData
+       * Normalizes the v2 api response.
+       * @param {object} liveData Livedata object we get from api
        */
       adaptV2LiveData ( liveData ) {
          if ( liveData != null && liveData.statistics != null ) {
@@ -64,8 +64,8 @@ window.CoreLibrary.offeringModule = (() => {
       },
 
       /**
-       * Get live event data only, eg: match statistics, score, macthClock
-       * @param eventId
+       * Get live event data only, eg: match statistics, score, macthClock.
+       * @param {number|string} eventId The event id we need to fetch
        * @returns {Promise}
        */
       getLiveEventData ( eventId ) {
@@ -78,7 +78,7 @@ window.CoreLibrary.offeringModule = (() => {
       },
 
       /**
-       * Get all live events
+       * Get all live events.
        * @returns {Promise}
        */
       getLiveEvents () {
@@ -107,8 +107,8 @@ window.CoreLibrary.offeringModule = (() => {
       },
 
       /**
-       * Returns a live event
-       * @param eventId
+       * Returns a live event.
+       * @param {number|string} eventId The event id we need to fetch
        * @returns {Promise}
        */
       getLiveEvent ( eventId ) {
@@ -126,8 +126,8 @@ window.CoreLibrary.offeringModule = (() => {
       },
 
       /**
-       * Get live events by filter
-       * @param filter
+       * Get live events by filter.
+       * @param {string} filter Filter string
        * @returns {Promise}
        */
       getLiveEventsByFilter ( filter ) {
@@ -139,7 +139,7 @@ window.CoreLibrary.offeringModule = (() => {
 
          var requestPath = '/listView/all/all/all/all/in-play/';
 
-         var liveEventsPromise = new Promise(( resolve, reject ) => {
+         return new Promise(( resolve, reject ) => {
             this.doRequest(requestPath, null, 'v3')
                .then(( response ) => {
                   var result = {
@@ -163,13 +163,11 @@ window.CoreLibrary.offeringModule = (() => {
                   resolve(result);
                });
          });
-
-         return liveEventsPromise;
       },
 
       /**
-       * Requests and event from api
-       * @param eventId
+       * Requests and event from api.
+       * @param {string} eventId The event id we need to fetch
        * @returns {Promise}
        */
       getEvent ( eventId ) {
@@ -178,7 +176,7 @@ window.CoreLibrary.offeringModule = (() => {
 
       /**
        * @deprecated
-       * @param eventId
+       * @param {number|string} eventId The event id we need to fetch
        * @returns {*}
        */
       getEventBetoffers ( eventId ) {
@@ -187,11 +185,11 @@ window.CoreLibrary.offeringModule = (() => {
       },
 
       /**
-       * Makes a request to provided path
-       * @param requestPath
-       * @param params
-       * @param version
-       * @param noCache
+       * Makes a request to provided path.
+       * @param {string} requestPath
+       * @param {object} params
+       * @param {number|string} version
+       * @param {boolean} noCache
        * @returns {Promise}
        */
       doRequest ( requestPath, params, version, noCache ) {

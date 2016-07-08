@@ -14,13 +14,13 @@
       defaultArgs: {},
 
       /**
-       * If string this value is appended to rootElement with the innerHTML DOM call
+       * If string, this value is appended to rootElement with the innerHTML DOM call
        * essentially parsing the the text as HTML.
        */
       htmlTemplate: null,
 
       /**
-       * Construct method.
+       * Stapes Constructor method
        * @param {object} options
        * @returns {Promise}
        */
@@ -59,6 +59,7 @@
             throw new Error('options.rootElement not set, please pass a HTMLElement or a CSS selector');
          }
 
+         // Merges scope args with the default args
          this.scope.args = this.defaultArgs;
 
          var coreLibraryPromise;

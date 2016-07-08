@@ -8,6 +8,10 @@ window.CoreLibrary.widgetModule = (() => {
    var Module = Stapes.subclass();
 
    return {
+
+      /**
+       * @type {object}
+       */
       api: { // placeholders for when not running inside iframe
          requestSetup () {
          },
@@ -20,11 +24,20 @@ window.CoreLibrary.widgetModule = (() => {
          createUrl () {
          }
       },
+
+      /**
+       * Instantiates a new Stapes subclass
+       */
       events: new Module(),
+
+      /**
+       * @type {array}
+       */
       betslipIds: [],
 
       /**
        * Handles widget api response.
+       * Emits events for each response
        * @param {Object} response
        */
       handleResponse ( response ) {

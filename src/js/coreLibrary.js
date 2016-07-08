@@ -8,7 +8,9 @@ window.CoreLibrary = (() => {
 
    /**
     * Check if v1 and v2 are "strict" equal.
-    * @mixin "==="
+    * @example
+    * <div>{v1 | === v2}</div>
+    * @mixin formatter "==="
     * @param v1
     * @param v2
     * @returns {boolean}
@@ -19,7 +21,9 @@ window.CoreLibrary = (() => {
 
    /**
     * Check if v1 and v2 are equal.
-    * @mixin "=="
+    * @example
+    * <div>{v1 | == v2}</div>
+    * @mixin formatter "=="
     * @param v1
     * @param v2
     * @returns {boolean}
@@ -30,7 +34,9 @@ window.CoreLibrary = (() => {
 
    /**
     * Check if v1 is greater or equal than v2.
-    * @mixin ">="
+    * @example
+    * <div>{v1 | >= v2}</div>
+    * @mixin formatter ">="
     * @param v1
     * @param v2
     * @returns {boolean}
@@ -41,7 +47,9 @@ window.CoreLibrary = (() => {
 
    /**
     * Check if v1 is greater than v2.
-    * @mixin ">"
+    * @example
+    * <div>{v1 | > v2}</div>
+    * @mixin formatter ">"
     * @param v1
     * @param v2
     * @returns {boolean}
@@ -52,7 +60,9 @@ window.CoreLibrary = (() => {
 
    /**
     * Check if v1 is less or equal than v2.
-    * @mixin "<="
+    * @example
+    * <div>{v1 | =< v2}</div>
+    * @mixin formatter "<="
     * @param v1
     * @param v2
     * @returns {boolean}
@@ -63,7 +73,9 @@ window.CoreLibrary = (() => {
 
    /**
     * Check if v1 is less than v2.
-    * @mixin "<"
+    * @example
+    * <div>{v1 | < v2}</div>
+    * @mixin formatter "<"
     * @param v1
     * @param v2
     * @returns {boolean}
@@ -74,7 +86,9 @@ window.CoreLibrary = (() => {
 
    /**
     * Check if v1 is not equal to v2.
-    * @mixin "!="
+    * @example
+    * <div>{v1 | != v2}</div>
+    * @mixin formatter "!="
     * @param v1
     * @param v2
     * @returns {boolean}
@@ -85,7 +99,9 @@ window.CoreLibrary = (() => {
 
    /**
     * Check if v1 is not equal value/type to v2.
-    * @mixin "!=="
+    * @example
+    * <div>{v1 | !== v2}</div>
+    * @mixin formatter "!=="
     * @param v1
     * @param v2
     * @returns {boolean}
@@ -96,7 +112,9 @@ window.CoreLibrary = (() => {
 
    /**
     * Check if v1 and v2 are valid.
-    * @mixin "and"
+    * @example
+    * <div>{v1 | and v2}</div>
+    * @mixin formatter "and"
     * @param v1
     * @param v2
     * @returns {boolean}
@@ -107,7 +125,9 @@ window.CoreLibrary = (() => {
 
    /**
     * Check if v1 or v2 are valid.
-    * @mixin "or"
+    * @example
+    * <div>{v1 | or v2}</div>
+    * @mixin formatter "or"
     * @param v1
     * @param v2
     * @returns {boolean}
@@ -118,7 +138,9 @@ window.CoreLibrary = (() => {
 
    /**
     * Check if v1 is not false.
-    * @mixin "not"
+    * @example
+    * <div>{v1 | not}</div>
+    * @mixin formatter "not"
     * @param v1
     * @returns {boolean}
     */
@@ -128,7 +150,9 @@ window.CoreLibrary = (() => {
 
    /**
     * Subtract v2 from v1.
-    * @mixin "-"
+    * @example
+    * <div>{v1 | - v2}</div>
+    * @mixin formatter "-"
     * @param v1
     * @param v2
     * @returns {Number}
@@ -138,8 +162,10 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Sum v1 and v2.
-    * @mixin "+"
+    * Sum of v1 and v2.
+    * @example
+    * <div>{v1 | + v2}</div>
+    * @mixin formatter "+"
     * @param v1
     * @param v2
     * @returns {boolean}
@@ -150,7 +176,9 @@ window.CoreLibrary = (() => {
 
    /**
     * Multiply v1 by v2.
-    * @mixin "*"
+    * @example
+    * <div>{v1 | * v2}</div>
+    * @mixin formatter "*"
     * @param v1
     * @param v2
     * @returns {Number}
@@ -161,7 +189,9 @@ window.CoreLibrary = (() => {
 
    /**
     * Divide v1 by v2.
-    * @mixin "/"
+    * @example
+    * <div>{v1 | / v2}</div>
+    * @mixin formatter "/"
     * @param v1
     * @param v2
     * @returns {Number}
@@ -172,7 +202,9 @@ window.CoreLibrary = (() => {
 
    /**
     * Check if v1 is valid, otherwise use v2.
-    * @mixin ">"
+    * @example
+    * <div>{v1 | > v2}</div>
+    * @mixin formatter ">"
     * @param v1
     * @param v2
     * @returns {boolean}
@@ -183,7 +215,9 @@ window.CoreLibrary = (() => {
 
    /**
     * Returns specified object at specified key for specified array index.
-    * @mixin "array_at"
+    * @example
+    * <div>{arr | array_at index key}</div>
+    * @mixin formatter "array_at"
     * @param arr The source array
     * @param index The desired index from given array
     * @param key The desired key of the object to be returned
@@ -195,7 +229,9 @@ window.CoreLibrary = (() => {
 
    /**
     * Returns an array of objects where each objects contains key and value properties based on the passed array.
-    * @mixin "property_list"
+    * @example
+    * <div>{v1 | property_list}</div>
+    * @mixin formatter "property_list"
     * @param {Object} obj The source object
     * @returns {Array}
     */
@@ -215,7 +251,7 @@ window.CoreLibrary = (() => {
     * Custom style binder.
     * @example
     * <div rv-style-opacity="1">
-    * @mixin "style-*"
+    * @mixin binder "style-*"
     * @param el
     * @param value
     */
@@ -231,7 +267,7 @@ window.CoreLibrary = (() => {
     * In promise resolution, add something like this.scope.loaded = true
     * @example
     * <div rv-cloak> or <div rv-cloak="value">
-    * @mixin "cloak"
+    * @mixin binder "cloak"
     * @type {{priority: number, bind: rivets.binders.cloak.bind}}
     */
    rivets.binders['cloak'] = {
@@ -252,7 +288,7 @@ window.CoreLibrary = (() => {
     * Binder that adds animation class.
     *
     * @example <div rv-anim-stagger="index"></div>
-    * @mixin "anim-stagger"
+    * @mixin binder "anim-stagger"
     * @param el DOM element to apply classes
     * @param index List item index
     */
@@ -282,7 +318,7 @@ window.CoreLibrary = (() => {
     * IMPORTANT: The rv-anim-disable attribute has to be placed before the binder that provides the animation for it to take effect in the animation binder
     * @example
     * <div rv-anim-disable="event.disableAnimation" rv-anim-stagger="index">
-    * @mixin "anim-disable"
+    * @mixin binder "anim-disable"
     * @param el Dom element to disable the animation on
     * @param animationDisable 'true' to disable animations
     */
@@ -293,7 +329,7 @@ window.CoreLibrary = (() => {
    /**
     * @description Binder to toggle a custom class based on the passed property, picks up the class name form the "rv-toggle-class" attribute.
     * @example <div rv-custom-class="myBoolean" rv-toggle-class="myCustomClass">
-    * @mixin "custom-class"
+    * @mixin binder "custom-class"
     * @param el DOM element to apply class to
     * @param property The property to check
     */

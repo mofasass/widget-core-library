@@ -22,11 +22,11 @@
 
       /**
        * Constructor method.
-       * @param {string} htmlElement
-       * @param {object} mainComponentScope
-       * @param {string} scopeKey
-       * @param {number} pageSize
-       * @param {number} maxVisiblePages
+       * @param {string} htmlElement Html element to be attached to
+       * @param {object} mainComponentScope The scope object of the widget
+       * @param {string} scopeKey scope key - will be used to create a copy
+       * @param {number} pageSize Pagination page size
+       * @param {number} maxVisiblePages Max visible pages
        */
       constructor ( htmlElement, mainComponentScope, scopeKey, pageSize, maxVisiblePages ) {
          CoreLibrary.Component.apply(this, [{
@@ -79,7 +79,7 @@
 
       /**
        * Sets currentPage variable.
-       * @param {number} pageNumber
+       * @param {number} pageNumber Set a certain page as current one
        */
       setCurrentPage ( pageNumber ) {
          if ( pageNumber === this.getCurrentPage() ) {
