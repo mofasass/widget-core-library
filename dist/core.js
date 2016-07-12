@@ -799,6 +799,23 @@ window.CoreLibrary = function () {
 (function () {
    'use strict';
 
+   // shallow merges objects together into a new object, right-most parameters have precedence
+
+   var mergeObjs = function mergeObjs() {
+      for (var _len = arguments.length, objs = Array(_len), _key = 0; _key < _len; _key++) {
+         objs[_key] = arguments[_key];
+      }
+
+      var ret = {};
+      objs.forEach(function (obj) {
+         obj = obj || {};
+         Object.keys(obj).forEach(function (key) {
+            ret[key] = obj[key];
+         });
+      });
+      return ret;
+   };
+
    CoreLibrary.Component = Stapes.subclass({
 
       /**
@@ -854,9 +871,6 @@ window.CoreLibrary = function () {
             throw new Error('options.rootElement not set, please pass a HTMLElement or a CSS selector');
          }
 
-         // Merges scope args with the default args
-         this.scope.args = this.defaultArgs;
-
          var coreLibraryPromise;
          if (CoreLibrary.apiReady === true) {
             coreLibraryPromise = new Promise(function (resolve, reject) {
@@ -865,17 +879,29 @@ window.CoreLibrary = function () {
          } else {
             coreLibraryPromise = new Promise(function (resolve, reject) {
                CoreLibrary.init().then(function (widgetArgs) {
-                  if (widgetArgs != null) {
-                     Object.keys(widgetArgs).forEach(function (key) {
-                        _this.scope.args[key] = widgetArgs[key];
-                     });
+                  if (widgetArgs == null) {
+                     widgetArgs = {};
                   }
                   var apiVersion = CoreLibrary.widgetModule.api.VERSION;
                   if (apiVersion == null) {
                      apiVersion = '1.0.0.13';
                   }
                   _this.scope.widgetCss = '//c3-static.kambi.com/sb-mobileclient/widget-api/' + apiVersion + '/resources/css/' + CoreLibrary.config.customer + '/' + CoreLibrary.config.offering + '/widgets.css';
-                  resolve();
+
+                  var externalArgsUrl = widgetArgs.externalArgsUrl || _this.defaultArgs.externalArgsUrl;
+                  if (externalArgsUrl != null) {
+                     CoreLibrary.getData(externalArgsUrl).then(function (externalArgs) {
+                        _this.scope.args = mergeObjs(_this.defaultArgs, widgetArgs, externalArgs);
+                        resolve();
+                     }).catch(function (err) {
+                        void 0;
+                        _this.scope.args = mergeObjs(_this.defaultArgs, widgetArgs);
+                        resolve();
+                     });
+                  } else {
+                     _this.scope.args = mergeObjs(_this.defaultArgs, widgetArgs);
+                     resolve();
+                  }
                });
             });
          }

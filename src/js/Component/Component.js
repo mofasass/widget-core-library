@@ -5,6 +5,18 @@
 (() => {
    'use strict';
 
+   // shallow merges objects together into a new object, right-most parameters have precedence
+   var mergeObjs = (...objs) => {
+      var ret = {};
+      objs.forEach((obj) => {
+         obj = obj || {};
+         Object.keys(obj).forEach((key) => {
+            ret[key] = obj[key];
+         });
+      });
+      return ret;
+   };
+
    CoreLibrary.Component = Stapes.subclass({
 
       /**
@@ -59,9 +71,6 @@
             throw new Error('options.rootElement not set, please pass a HTMLElement or a CSS selector');
          }
 
-         // Merges scope args with the default args
-         this.scope.args = this.defaultArgs;
-
          var coreLibraryPromise;
          if ( CoreLibrary.apiReady === true ) {
             coreLibraryPromise = new Promise(( resolve, reject ) => {
@@ -71,10 +80,8 @@
             coreLibraryPromise = new Promise(( resolve, reject ) => {
                CoreLibrary.init()
                   .then(( widgetArgs ) => {
-                     if ( widgetArgs != null ) {
-                        Object.keys(widgetArgs).forEach(( key ) => {
-                           this.scope.args[key] = widgetArgs[key];
-                        });
+                     if ( widgetArgs == null ) {
+                        widgetArgs = {};
                      }
                      var apiVersion = CoreLibrary.widgetModule.api.VERSION;
                      if ( apiVersion == null ) {
@@ -87,7 +94,22 @@
                         '/' +
                         CoreLibrary.config.offering +
                         '/widgets.css';
-                     resolve();
+
+                     var externalArgsUrl = widgetArgs.externalArgsUrl || this.defaultArgs.externalArgsUrl;
+                     if (externalArgsUrl != null) {
+                        CoreLibrary.getData(externalArgsUrl)
+                           .then((externalArgs) => {
+                              this.scope.args = mergeObjs(this.defaultArgs, widgetArgs, externalArgs);
+                              resolve();
+                           }).catch((err) => {
+                              console.log('Unable to load or parse external args');
+                              this.scope.args = mergeObjs(this.defaultArgs, widgetArgs);
+                              resolve();
+                           });
+                     } else {
+                        this.scope.args = mergeObjs(this.defaultArgs, widgetArgs);
+                        resolve();
+                     }
                   });
             });
          }
