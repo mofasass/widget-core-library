@@ -259,7 +259,7 @@ window.CoreLibrary = function () {
     * @param value
     */
    rivets.binders['style-*'] = function (el, value) {
-      el.style.setProperty(undefined.args[0], value);
+      el.style.setProperty(this.args[0], value);
    };
 
    /**

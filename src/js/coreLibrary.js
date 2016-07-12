@@ -255,7 +255,7 @@ window.CoreLibrary = (() => {
     * @param el
     * @param value
     */
-   rivets.binders['style-*'] = ( el, value ) => {
+   rivets.binders['style-*'] = function ( el, value ) {
       el.style.setProperty(this.args[0], value);
    };
 
