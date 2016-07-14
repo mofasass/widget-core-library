@@ -155,7 +155,7 @@
                   rv-outcome-suspended="betOffer.suspended"
                   type="button"
                   role="button"
-                  class="KambiWidget-outcome kw-link l-flex-1 l-ml-6">
+                  class="KambiWidget-outcome kw-link l-flex-1">
                <div class="KambiWidget-outcome__flexwrap">
                   <div class="KambiWidget-outcome__label-wrapper">
                      <span
@@ -214,7 +214,7 @@
                   rv-outcome-suspended="betOffer.suspended"
                   type="button"
                   role="button"
-                  class="KambiWidget-outcome kw-link l-ml-6">
+                  class="KambiWidget-outcome kw-link">
                <div class="l-flexbox l-pack-center">
                   <div class="KambiWidget-outcome__odds-wrapper">
                      <span class="KambiWidget-outcome__odds" rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat" ></span>
