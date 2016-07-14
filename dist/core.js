@@ -871,6 +871,8 @@ window.CoreLibrary = function () {
             throw new Error('options.rootElement not set, please pass a HTMLElement or a CSS selector');
          }
 
+         var args = {};
+
          var coreLibraryPromise;
          if (CoreLibrary.apiReady === true) {
             coreLibraryPromise = new Promise(function (resolve, reject) {
@@ -891,15 +893,15 @@ window.CoreLibrary = function () {
                   var externalArgsUrl = widgetArgs.externalArgsUrl || _this.defaultArgs.externalArgsUrl;
                   if (externalArgsUrl != null) {
                      CoreLibrary.getData(externalArgsUrl).then(function (externalArgs) {
-                        _this.scope.args = mergeObjs(_this.defaultArgs, widgetArgs, externalArgs);
+                        args = mergeObjs(_this.defaultArgs, widgetArgs, externalArgs);
                         resolve();
                      }).catch(function (err) {
                         void 0;
-                        _this.scope.args = mergeObjs(_this.defaultArgs, widgetArgs);
+                        args = mergeObjs(_this.defaultArgs, widgetArgs);
                         resolve();
                      });
                   } else {
-                     _this.scope.args = mergeObjs(_this.defaultArgs, widgetArgs);
+                     args = mergeObjs(_this.defaultArgs, widgetArgs);
                      resolve();
                   }
                });
@@ -907,6 +909,36 @@ window.CoreLibrary = function () {
          }
 
          return coreLibraryPromise.then(function () {
+            // applying conditionalArgs (see #KSBWI-653)
+            if (args.conditionalArgs != null) {
+               args.conditionalArgs.forEach(function (carg) {
+                  var apply = true;
+                  if (carg.clientConfig != null) {
+                     Object.keys(carg.clientConfig).forEach(function (key) {
+                        if (CoreLibrary.config[key] !== carg.clientConfig[key]) {
+                           apply = false;
+                        }
+                     });
+                  }
+
+                  if (carg.pageInfo != null) {
+                     Object.keys(carg.pageInfo).forEach(function (key) {
+                        if (CoreLibrary.pageInfo[key] !== carg.pageInfo[key]) {
+                           apply = false;
+                        }
+                     });
+                  }
+
+                  if (apply) {
+                     void 0;
+                     void 0;
+                     args = mergeObjs(args, carg.args);
+                  }
+               });
+            }
+
+            _this.scope.args = args;
+
             if (typeof _this.rootElement === 'string') {
                _this.rootElement = document.querySelector(_this.rootElement);
             }
@@ -1850,101 +1882,6 @@ window.CoreLibrary.widgetModule = function () {
 'use strict';
 
 /**
- * header-component dom attribute
- * @module HeaderComponent
- * @type {{static: string[], template: (function()), initialize: (function(*, *))}}
- */
-(function () {
-   'use strict';
-
-   /**
-    * Header Controller
-    * @param title
-    * @param cssClasses
-    * @param scope
-    * @param collapsible
-    * @param startCollapsed
-    * @constructor
-    */
-
-   var HeaderController = function HeaderController(title, cssClasses, scope, collapsible, startCollapsed) {
-      var headerHeight = 36;
-      undefined.title = title;
-      undefined.cssClasses = cssClasses + ' KambiWidget-font kw-header l-flexbox l-align-center l-pl-16';
-
-      if (collapsible) {
-         scope.collapsed = startCollapsed;
-         if (scope.collapsed) {
-            CoreLibrary.widgetModule.enableWidgetTransition(false);
-            CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
-            CoreLibrary.widgetModule.enableWidgetTransition(true);
-         }
-
-         undefined.cssClasses += ' KambiWidget-header';
-         undefined.style = 'cursor: pointer;';
-
-         undefined.click = function (ev, controller) {
-            scope.collapsed = !scope.collapsed;
-            if (scope.collapsed) {
-               CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
-            } else {
-               CoreLibrary.widgetModule.adaptWidgetHeight();
-            }
-         };
-      }
-   };
-
-   /**
-    * @mixin header-component
-    * @example
-    * <div header-component>
-    * @type {{static: string[], template: (function(): string), initialize: (function(*, *): HeaderController)}}
-    */
-   rivets.components['header-component'] = {
-      static: ['collapsable', 'collapsed', 'css-classes'],
-
-      /**
-       * Returns header template.
-       * @memberOf module:HeaderComponent#
-       * @returns {string}
-       */
-      template: function template() {
-         return '\n            <header rv-class="cssClasses" rv-style="style" rv-on-click="click">{title | translate}</header>\n         ';
-      },
-
-
-      /**
-       * Initializes the rivets component.
-       * @memberOf module:HeaderComponent#
-       * @param {element} el DOM element to be binded
-       * @param {object} attributes DOM attributes
-       * @returns {HeaderController}
-       */
-      initialize: function initialize(el, attributes) {
-         var cssClasses = attributes['css-classes'];
-         if (cssClasses == null) {
-            cssClasses = '';
-         }
-
-         var collapsible = false;
-         if (attributes.collapsible === 'true') {
-            collapsible = true;
-         }
-
-         var startCollapsed = false;
-         if (attributes.collapsed === 'true') {
-            startCollapsed = true;
-         }
-
-         return new HeaderController(attributes.title, cssClasses, this.view.models, collapsible, startCollapsed);
-      }
-   };
-})();
-//# sourceMappingURL=HeaderComponent.js.map
-
-'use strict';
-
-/**
  * @module OutcomeComponent
  */
 (function () {
@@ -2097,7 +2034,7 @@ window.CoreLibrary.widgetModule = function () {
        */
 
       template: function template() {
-         return '\n            <button\n                  rv-on-click="toggleOutcome"\n                  rv-disabled="betOffer.suspended | == true"\n                  rv-outcome-selected="selected"\n                  rv-outcome-suspended="betOffer.suspended"\n                  type="button"\n                  role="button"\n                  class="KambiWidget-outcome kw-link l-flex-1 l-ml-6">\n               <div class="KambiWidget-outcome__flexwrap">\n                  <div class="KambiWidget-outcome__label-wrapper">\n                     <span\n                           class="KambiWidget-outcome__label"\n                           rv-text="getLabel < data.outcomeAttr.odds data.eventAttr">\n                     </span>\n                     <span class="KambiWidget-outcome__line"></span>\n                  </div>\n               <div class="KambiWidget-outcome__odds-wrapper">\n                  <span\n                        class="KambiWidget-outcome__odds"\n                        rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat">\n                  </span>\n               </div>\n            </button>\n         ';
+         return '\n            <button\n                  rv-on-click="toggleOutcome"\n                  rv-disabled="betOffer.suspended | == true"\n                  rv-outcome-selected="selected"\n                  rv-outcome-suspended="betOffer.suspended"\n                  type="button"\n                  role="button"\n                  class="KambiWidget-outcome kw-link l-flex-1">\n               <div class="KambiWidget-outcome__flexwrap">\n                  <div class="KambiWidget-outcome__label-wrapper">\n                     <span\n                           class="KambiWidget-outcome__label"\n                           rv-text="getLabel < data.outcomeAttr.odds data.eventAttr">\n                     </span>\n                     <span class="KambiWidget-outcome__line"></span>\n                  </div>\n               <div class="KambiWidget-outcome__odds-wrapper">\n                  <span\n                        class="KambiWidget-outcome__odds"\n                        rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat">\n                  </span>\n               </div>\n            </button>\n         ';
       },
 
 
@@ -2134,7 +2071,7 @@ window.CoreLibrary.widgetModule = function () {
        */
 
       template: function template() {
-         return '\n            <button\n                  rv-on-click="toggleOutcome"\n                  rv-disabled="betOffer.suspended | == true"\n                  rv-outcome-selected="selected"\n                  rv-outcome-suspended="betOffer.suspended"\n                  type="button"\n                  role="button"\n                  class="KambiWidget-outcome kw-link l-ml-6">\n               <div class="l-flexbox l-pack-center">\n                  <div class="KambiWidget-outcome__odds-wrapper">\n                     <span class="KambiWidget-outcome__odds" rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat" ></span>\n                  </div>\n               </div>\n            </button>\n         ';
+         return '\n            <button\n                  rv-on-click="toggleOutcome"\n                  rv-disabled="betOffer.suspended | == true"\n                  rv-outcome-selected="selected"\n                  rv-outcome-suspended="betOffer.suspended"\n                  type="button"\n                  role="button"\n                  class="KambiWidget-outcome kw-link">\n               <div class="l-flexbox l-pack-center">\n                  <div class="KambiWidget-outcome__odds-wrapper">\n                     <span class="KambiWidget-outcome__odds" rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat" ></span>\n                  </div>\n               </div>\n            </button>\n         ';
       },
 
 
@@ -2330,3 +2267,98 @@ window.CoreLibrary.widgetModule = function () {
    });
 })();
 //# sourceMappingURL=PaginationComponent.js.map
+
+'use strict';
+
+/**
+ * header-component dom attribute
+ * @module HeaderComponent
+ * @type {{static: string[], template: (function()), initialize: (function(*, *))}}
+ */
+(function () {
+   'use strict';
+
+   /**
+    * Header Controller
+    * @param title
+    * @param cssClasses
+    * @param scope
+    * @param collapsible
+    * @param startCollapsed
+    * @constructor
+    */
+
+   var HeaderController = function HeaderController(title, cssClasses, scope, collapsible, startCollapsed) {
+      var headerHeight = 36;
+      undefined.title = title;
+      undefined.cssClasses = cssClasses + ' KambiWidget-font kw-header l-flexbox l-align-center l-pl-16';
+
+      if (collapsible) {
+         scope.collapsed = startCollapsed;
+         if (scope.collapsed) {
+            CoreLibrary.widgetModule.enableWidgetTransition(false);
+            CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
+            CoreLibrary.widgetModule.enableWidgetTransition(true);
+         }
+
+         undefined.cssClasses += ' KambiWidget-header';
+         undefined.style = 'cursor: pointer;';
+
+         undefined.click = function (ev, controller) {
+            scope.collapsed = !scope.collapsed;
+            if (scope.collapsed) {
+               CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
+            } else {
+               CoreLibrary.widgetModule.adaptWidgetHeight();
+            }
+         };
+      }
+   };
+
+   /**
+    * @mixin header-component
+    * @example
+    * <div header-component>
+    * @type {{static: string[], template: (function(): string), initialize: (function(*, *): HeaderController)}}
+    */
+   rivets.components['header-component'] = {
+      static: ['collapsable', 'collapsed', 'css-classes'],
+
+      /**
+       * Returns header template.
+       * @memberOf module:HeaderComponent#
+       * @returns {string}
+       */
+      template: function template() {
+         return '\n            <header rv-class="cssClasses" rv-style="style" rv-on-click="click">{title | translate}</header>\n         ';
+      },
+
+
+      /**
+       * Initializes the rivets component.
+       * @memberOf module:HeaderComponent#
+       * @param {element} el DOM element to be binded
+       * @param {object} attributes DOM attributes
+       * @returns {HeaderController}
+       */
+      initialize: function initialize(el, attributes) {
+         var cssClasses = attributes['css-classes'];
+         if (cssClasses == null) {
+            cssClasses = '';
+         }
+
+         var collapsible = false;
+         if (attributes.collapsible === 'true') {
+            collapsible = true;
+         }
+
+         var startCollapsed = false;
+         if (attributes.collapsed === 'true') {
+            startCollapsed = true;
+         }
+
+         return new HeaderController(attributes.title, cssClasses, this.view.models, collapsible, startCollapsed);
+      }
+   };
+})();
+//# sourceMappingURL=HeaderComponent.js.map
