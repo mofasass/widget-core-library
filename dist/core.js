@@ -1882,6 +1882,101 @@ window.CoreLibrary.widgetModule = function () {
 'use strict';
 
 /**
+ * header-component dom attribute
+ * @module HeaderComponent
+ * @type {{static: string[], template: (function()), initialize: (function(*, *))}}
+ */
+(function () {
+   'use strict';
+
+   /**
+    * Header Controller
+    * @param title
+    * @param cssClasses
+    * @param scope
+    * @param collapsible
+    * @param startCollapsed
+    * @constructor
+    */
+
+   var HeaderController = function HeaderController(title, cssClasses, scope, collapsible, startCollapsed) {
+      var headerHeight = 36;
+      undefined.title = title;
+      undefined.cssClasses = cssClasses + ' KambiWidget-font kw-header l-flexbox l-align-center l-pl-16';
+
+      if (collapsible) {
+         scope.collapsed = startCollapsed;
+         if (scope.collapsed) {
+            CoreLibrary.widgetModule.enableWidgetTransition(false);
+            CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
+            CoreLibrary.widgetModule.enableWidgetTransition(true);
+         }
+
+         undefined.cssClasses += ' KambiWidget-header';
+         undefined.style = 'cursor: pointer;';
+
+         undefined.click = function (ev, controller) {
+            scope.collapsed = !scope.collapsed;
+            if (scope.collapsed) {
+               CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
+            } else {
+               CoreLibrary.widgetModule.adaptWidgetHeight();
+            }
+         };
+      }
+   };
+
+   /**
+    * @mixin header-component
+    * @example
+    * <div header-component>
+    * @type {{static: string[], template: (function(): string), initialize: (function(*, *): HeaderController)}}
+    */
+   rivets.components['header-component'] = {
+      static: ['collapsable', 'collapsed', 'css-classes'],
+
+      /**
+       * Returns header template.
+       * @memberOf module:HeaderComponent#
+       * @returns {string}
+       */
+      template: function template() {
+         return '\n            <header rv-class="cssClasses" rv-style="style" rv-on-click="click">{title | translate}</header>\n         ';
+      },
+
+
+      /**
+       * Initializes the rivets component.
+       * @memberOf module:HeaderComponent#
+       * @param {element} el DOM element to be binded
+       * @param {object} attributes DOM attributes
+       * @returns {HeaderController}
+       */
+      initialize: function initialize(el, attributes) {
+         var cssClasses = attributes['css-classes'];
+         if (cssClasses == null) {
+            cssClasses = '';
+         }
+
+         var collapsible = false;
+         if (attributes.collapsible === 'true') {
+            collapsible = true;
+         }
+
+         var startCollapsed = false;
+         if (attributes.collapsed === 'true') {
+            startCollapsed = true;
+         }
+
+         return new HeaderController(attributes.title, cssClasses, this.view.models, collapsible, startCollapsed);
+      }
+   };
+})();
+//# sourceMappingURL=HeaderComponent.js.map
+
+'use strict';
+
+/**
  * @module OutcomeComponent
  */
 (function () {
@@ -2267,98 +2362,3 @@ window.CoreLibrary.widgetModule = function () {
    });
 })();
 //# sourceMappingURL=PaginationComponent.js.map
-
-'use strict';
-
-/**
- * header-component dom attribute
- * @module HeaderComponent
- * @type {{static: string[], template: (function()), initialize: (function(*, *))}}
- */
-(function () {
-   'use strict';
-
-   /**
-    * Header Controller
-    * @param title
-    * @param cssClasses
-    * @param scope
-    * @param collapsible
-    * @param startCollapsed
-    * @constructor
-    */
-
-   var HeaderController = function HeaderController(title, cssClasses, scope, collapsible, startCollapsed) {
-      var headerHeight = 36;
-      undefined.title = title;
-      undefined.cssClasses = cssClasses + ' KambiWidget-font kw-header l-flexbox l-align-center l-pl-16';
-
-      if (collapsible) {
-         scope.collapsed = startCollapsed;
-         if (scope.collapsed) {
-            CoreLibrary.widgetModule.enableWidgetTransition(false);
-            CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
-            CoreLibrary.widgetModule.enableWidgetTransition(true);
-         }
-
-         undefined.cssClasses += ' KambiWidget-header';
-         undefined.style = 'cursor: pointer;';
-
-         undefined.click = function (ev, controller) {
-            scope.collapsed = !scope.collapsed;
-            if (scope.collapsed) {
-               CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
-            } else {
-               CoreLibrary.widgetModule.adaptWidgetHeight();
-            }
-         };
-      }
-   };
-
-   /**
-    * @mixin header-component
-    * @example
-    * <div header-component>
-    * @type {{static: string[], template: (function(): string), initialize: (function(*, *): HeaderController)}}
-    */
-   rivets.components['header-component'] = {
-      static: ['collapsable', 'collapsed', 'css-classes'],
-
-      /**
-       * Returns header template.
-       * @memberOf module:HeaderComponent#
-       * @returns {string}
-       */
-      template: function template() {
-         return '\n            <header rv-class="cssClasses" rv-style="style" rv-on-click="click">{title | translate}</header>\n         ';
-      },
-
-
-      /**
-       * Initializes the rivets component.
-       * @memberOf module:HeaderComponent#
-       * @param {element} el DOM element to be binded
-       * @param {object} attributes DOM attributes
-       * @returns {HeaderController}
-       */
-      initialize: function initialize(el, attributes) {
-         var cssClasses = attributes['css-classes'];
-         if (cssClasses == null) {
-            cssClasses = '';
-         }
-
-         var collapsible = false;
-         if (attributes.collapsible === 'true') {
-            collapsible = true;
-         }
-
-         var startCollapsed = false;
-         if (attributes.collapsed === 'true') {
-            startCollapsed = true;
-         }
-
-         return new HeaderController(attributes.title, cssClasses, this.view.models, collapsible, startCollapsed);
-      }
-   };
-})();
-//# sourceMappingURL=HeaderComponent.js.map
