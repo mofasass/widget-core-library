@@ -71,6 +71,8 @@
             throw new Error('options.rootElement not set, please pass a HTMLElement or a CSS selector');
          }
 
+         var args = {};
+
          var coreLibraryPromise;
          if ( CoreLibrary.apiReady === true ) {
             coreLibraryPromise = new Promise(( resolve, reject ) => {
@@ -99,15 +101,15 @@
                      if (externalArgsUrl != null) {
                         CoreLibrary.getData(externalArgsUrl)
                            .then((externalArgs) => {
-                              this.scope.args = mergeObjs(this.defaultArgs, widgetArgs, externalArgs);
+                              args = mergeObjs(this.defaultArgs, widgetArgs, externalArgs);
                               resolve();
                            }).catch((err) => {
                               console.log('Unable to load or parse external args');
-                              this.scope.args = mergeObjs(this.defaultArgs, widgetArgs);
+                              args = mergeObjs(this.defaultArgs, widgetArgs);
                               resolve();
                            });
                      } else {
-                        this.scope.args = mergeObjs(this.defaultArgs, widgetArgs);
+                        args = mergeObjs(this.defaultArgs, widgetArgs);
                         resolve();
                      }
                   });
@@ -116,6 +118,36 @@
 
          return coreLibraryPromise
             .then(() => {
+               // applying conditionalArgs (see #KSBWI-653)
+               if (args.conditionalArgs != null) {
+                  args.conditionalArgs.forEach((carg) => {
+                     var apply = true;
+                     if (carg.clientConfig != null) {
+                        Object.keys(carg.clientConfig).forEach((key) => {
+                           if (CoreLibrary.config[key] !== carg.clientConfig[key]) {
+                              apply = false;
+                           }
+                        });
+                     }
+
+                     if (carg.pageInfo != null) {
+                        Object.keys(carg.pageInfo).forEach((key) => {
+                           if (CoreLibrary.pageInfo[key] !== carg.pageInfo[key]) {
+                              apply = false;
+                           }
+                        });
+                     }
+
+                     if (apply) {
+                        console.log('Applying conditional arguments:');
+                        console.log(carg.args);
+                        args = mergeObjs(args, carg.args);
+                     }
+                  });
+               }
+
+               this.scope.args = args;
+
                if ( typeof this.rootElement === 'string' ) {
                   this.rootElement = document.querySelector(this.rootElement);
                }
