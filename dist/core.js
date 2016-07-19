@@ -1332,9 +1332,10 @@ window.CoreLibrary.translationModule = function () {
                args[_key2 - 1] = arguments[_key2];
             }
 
-            for (var i = 1; i < args.length; i++) {
+            void 0;
+            for (var i = 0; i < args.length; i++) {
                var replacement = args[i] || '';
-               str = str.replace('{' + (i - 1) + '}', replacement);
+               str = str.replace('{' + i + '}', replacement);
             }
             return str;
          }
