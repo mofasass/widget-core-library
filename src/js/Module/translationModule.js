@@ -66,9 +66,10 @@ window.CoreLibrary.translationModule = (() => {
       getTranslation: function ( key, ...args ) {
          if ( this.i18nStrings[key] != null ) {
             var str = this.i18nStrings[key];
-            for ( var i = 1; i < args.length; i++ ) {
+            console.log(args);
+            for ( var i = 0; i < args.length; i++ ) {
                var replacement = args[i] || '';
-               str = str.replace('{' + (i - 1) + '}', replacement);
+               str = str.replace('{' + i + '}', replacement);
             }
             return str;
          }
