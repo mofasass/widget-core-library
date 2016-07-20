@@ -22,6 +22,8 @@ window.CoreLibrary.widgetModule = (() => {
          remove () {
          },
          createUrl () {
+         },
+         createFilterUrl() {
          }
       },
 
@@ -120,6 +122,17 @@ window.CoreLibrary.widgetModule = (() => {
        */
       createUrl ( path, optionalRoot ) {
          return this.api.createUrl(path, optionalRoot);
+      },
+
+      /**
+       * Creates a filter url from given array
+       * @example
+       * destination = ['/football/europa_league/', '/football/world_cup_qualifying_-_europe/'];
+       * @param {Array} destination
+       * @returns {string}
+       */
+      createFilterUrl ( destination ) {
+         return this.api.createFilterUrl(destination, CoreLibrary.config.routeRoot);
       },
 
       /**
