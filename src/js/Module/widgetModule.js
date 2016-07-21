@@ -23,8 +23,7 @@ window.CoreLibrary.widgetModule = (() => {
          },
          createUrl () {
          },
-         createFilterUrl() {
-         }
+         createFilterUrl () {}
       },
 
       /**

@@ -1493,7 +1493,8 @@ window.CoreLibrary.widgetModule = function () {
          request: function request() {},
          set: function set() {},
          remove: function remove() {},
-         createUrl: function createUrl() {}
+         createUrl: function createUrl() {},
+         createFilterUrl: function createFilterUrl() {}
       },
 
       /**
@@ -1593,6 +1594,18 @@ window.CoreLibrary.widgetModule = function () {
        */
       createUrl: function createUrl(path, optionalRoot) {
          return this.api.createUrl(path, optionalRoot);
+      },
+
+
+      /**
+       * Creates a filter url from given array
+       * @example
+       * destination = ['/football/europa_league/', '/football/world_cup_qualifying_-_europe/'];
+       * @param {Array} destination
+       * @returns {string}
+       */
+      createFilterUrl: function createFilterUrl(destination) {
+         return this.api.createFilterUrl(destination, CoreLibrary.config.routeRoot);
       },
 
 
