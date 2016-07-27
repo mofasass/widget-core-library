@@ -171,7 +171,16 @@ window.CoreLibrary.offeringModule = (() => {
        * @returns {Promise}
        */
       getEvent ( eventId ) {
-         return this.doRequest('/betoffer/event/' + eventId + '.json');
+         return this.doRequest('/betoffer/event/' + eventId + '.json')
+            .then(( res ) => {
+               res.betOffers = res.betoffers;
+               delete res.betoffers;
+               res.betOffers.forEach(this.adaptV2BetOffer);
+               res.event = res.events[0];
+               this.adaptV2Event(res.event);
+               delete res.events;
+               return res;
+            });
       },
 
       /**

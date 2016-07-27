@@ -1158,7 +1158,17 @@ window.CoreLibrary.offeringModule = function () {
        * @returns {Promise}
        */
       getEvent: function getEvent(eventId) {
-         return this.doRequest('/betoffer/event/' + eventId + '.json');
+         var _this5 = this;
+
+         return this.doRequest('/betoffer/event/' + eventId + '.json').then(function (res) {
+            res.betOffers = res.betoffers;
+            delete res.betoffers;
+            res.betOffers.forEach(_this5.adaptV2BetOffer);
+            res.event = res.events[0];
+            _this5.adaptV2Event(res.event);
+            delete res.events;
+            return res;
+         });
       },
 
 
