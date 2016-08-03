@@ -992,6 +992,17 @@ window.CoreLibrary.offeringModule = function () {
 
 
       /**
+       * Get group information.
+       * @param {number|string} groupId Group id
+       * @returns {*|Promise}
+       */
+      getGroup: function getGroup(groupId) {
+         var requesPath = '/group/' + groupId + '.json';
+         return this.doRequest(requesPath);
+      },
+
+
+      /**
        * Get events by filter.
        * @param {string} filter Filter string, eg: football
        * @param {object} params Request relevant parameters
