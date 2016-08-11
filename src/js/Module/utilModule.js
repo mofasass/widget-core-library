@@ -1,4 +1,5 @@
 /**
+ * Module with utility functions
  * @module utilModule
  * @memberOf CoreLibrary
  */
@@ -30,8 +31,8 @@ window.CoreLibrary.utilModule = (() => {
 
       /**
        * Get decimal formatted odds.
-       * @param {number} odds Odds number
-       * @returns {number}
+       * @param {Number} odds Odds number
+       * @returns {Number}
        */
       getOddsDecimalValue ( odds ) {
          if ( odds < 100 ) {
@@ -45,7 +46,7 @@ window.CoreLibrary.utilModule = (() => {
 
       /**
        * Returns the outcome label translated.
-       * @param {Object} outcome Outcome object
+       * @param {Object} outcome A betoffer outcome object
        * @param {Object} event Event object
        * @returns {string}
        */

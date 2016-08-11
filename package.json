@@ -1,41 +1,45 @@
 {
-   "name": "widget-core-library",
-   "version": "2.9.0",
-   "description": "",
-   "main": "dist/js/app.js",
-   "scripts": {
-      "changelog": "changelog kambi-sportsbook-widgets/widget-library all -m > CHANGELOG.md",
-      "test": "echo \"Error: no test specified\" && exit 1"
-   },
-   "repository": {
-      "type": "git",
-      "url": "git+ssh://github.com/kambi-sportsbook-widgets/widget-library.git"
-   },
-   "author": "Michael Blom <michael@globalmouth.com>",
-   "contributors": [
-      "Daniel Hoffmann <daniel.hoffmann@globalmouth.com>",
-      "Andrei Teodorescu <andrei@globalmouth.com>",
-      "Michael Blom <michael@globalmouth.com>"
-   ],
-   "private": false,
-   "license": "MIT",
-   "homepage": "https://github.com/kambi-sportsbook-widgets/widget-core-library#readme",
-   "devDependencies": {
-      "changelog": "latest",
-      "gulp": "^3.9.0",
-      "del": "^2.0.2",
-      "gulp-sourcemaps": "^1.6.0",
-      "gulp-jscs": "^3.0.2",
-      "gulp-jshint": "^1.11.2",
-      "gulp-replace": "^0.5.4",
-      "gulp-babel": "^6.1.2",
-      "gulp-concat": "^2.6.0",
-      "babel-preset-es2015": "^6.5.0",
-      "gulp-download-stream": "0.0.13",
-      "gulp-strip-debug": "^1.0.2",
-      "gulp-bump": "^1.0.0",
-      "gulp-git": "^1.7.0"
-   },
-   "dependencies": {},
-   "kambi-widget-api-version": "1.0.0.13"
+  "name": "widget-core-library",
+  "version": "2.9.0",
+  "description": "",
+  "main": "dist/js/app.js",
+  "scripts": {
+    "docs": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://github.com/kambi-sportsbook-widgets/widget-library.git"
+  },
+  "author": "Michael Blom <michael@globalmouth.com>",
+  "contributors": [
+    "Daniel Hoffmann <daniel.hoffmann@globalmouth.com>",
+    "Andrei Teodorescu <andrei@globalmouth.com>",
+    "Michael Blom <michael@globalmouth.com>"
+  ],
+  "private": false,
+  "license": "MIT",
+  "homepage": "https://github.com/kambi-sportsbook-widgets/widget-core-library#readme",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.5.0",
+    "changelog": "latest",
+    "del": "^2.0.2",
+    "documentation": "^4.0.0-beta9",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^6.1.2",
+    "gulp-bump": "^1.0.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-documentation": "^2.2.0",
+    "gulp-download-stream": "0.0.13",
+    "gulp-doxx": "0.0.5",
+    "gulp-git": "^1.7.0",
+    "gulp-jscs": "^3.0.2",
+    "gulp-jsdoc3": "^0.3.0",
+    "gulp-jshint": "^1.11.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-strip-debug": "^1.0.2",
+    "jsdoc": "^3.4.0"
+  },
+  "dependencies": {},
+  "kambi-widget-api-version": "1.0.0.13"
 }

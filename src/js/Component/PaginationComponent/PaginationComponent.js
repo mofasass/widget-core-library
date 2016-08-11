@@ -1,9 +1,11 @@
-/**
- * @module PaginationComponent
- */
+
 (() => {
    'use strict';
 
+   /**
+    * Component used for creating number-based pagination
+    * @class PaginationComponent
+    */
    CoreLibrary.PaginationComponent = CoreLibrary.Component.subclass({
       htmlTemplate: '<div class="kw-pagination l-flexbox l-pack-center l-align-center">' +
       '<span rv-on-click="previousPage" rv-class-disabled="firstPage"' +
@@ -27,6 +29,7 @@
        * @param {string} scopeKey scope key - will be used to create a copy
        * @param {number} pageSize Pagination page size
        * @param {number} maxVisiblePages Max visible pages
+       * @memberof PaginationComponent
        */
       constructor ( htmlElement, mainComponentScope, scopeKey, pageSize, maxVisiblePages ) {
          CoreLibrary.Component.apply(this, [{
@@ -64,6 +67,7 @@
 
       /**
        * Empties the currentPageArray.
+       * @memberof PaginationComponent
        */
       clearArray () {
          this.currentPageArray.splice(0, this.currentPageArray.length);
@@ -71,7 +75,8 @@
 
       /**
        * Get current page.
-       * @returns {*|number}
+       * @returns {number}
+       * @memberof PaginationComponent
        */
       getCurrentPage () {
          return this.scope.currentPage;
@@ -80,6 +85,7 @@
       /**
        * Sets currentPage variable.
        * @param {number} pageNumber Set a certain page as current one
+       * @memberof PaginationComponent
        */
       setCurrentPage ( pageNumber ) {
          if ( pageNumber === this.getCurrentPage() ) {
@@ -95,6 +101,7 @@
       /**
        * Returns the number of pages.
        * @returns {number}
+       * @memberof PaginationComponent
        */
       getNumberOfPages () {
          return Math.ceil(this.originalArray.length / this.pageSize);
@@ -103,6 +110,7 @@
       /**
        * Method for displaying next page.
        * @returns {*|number}
+       * @memberof PaginationComponent
        */
       nextPage () {
          if ( this.getCurrentPage() < this.getNumberOfPages() - 1 ) {
@@ -114,6 +122,7 @@
       /**
        * Method for displaying previous page.
        * @returns {*|number}
+       * @memberof PaginationComponent
        */
       previousPage () {
          if ( this.getCurrentPage() > 0 ) {
@@ -124,6 +133,8 @@
 
       /**
        * Changes the _scopeKey array to match the current page elements.
+       * @memberof PaginationComponent
+       * @private
        */
       adaptArray () {
          this.clearArray();
@@ -144,6 +155,8 @@
 
       /**
        * Renders the component.
+       * @memberof PaginationComponent
+       * @private
        */
       init () {
          this.render();
@@ -151,6 +164,8 @@
 
       /**
        * Updates the scope.pages value which is used to render the page numbers and arrows.
+       * @memberof PaginationComponent
+       * @private
        */
       render () {
          this.scope.pages = [];

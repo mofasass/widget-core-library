@@ -1,7 +1,3 @@
-/**
- * @module Component
- * @memberOf CoreLibrary
- */
 (() => {
    'use strict';
 
@@ -17,43 +13,66 @@
       return ret;
    };
 
+   /**
+    * Component base class that should be inherited to create widgets
+    * @class Component
+    * @abstract
+    */
    CoreLibrary.Component = Stapes.subclass({
 
       /**
        * Object with default values from args if they are not present in
        * the Kambi API provided ones.
+       * @static
+       * @type {Object}
+       * @memberof Component
        */
       defaultArgs: {},
 
       /**
-       * If string, this value is appended to rootElement with the innerHTML DOM call
+       * If present, this value is appended to rootElement with the innerHTML DOM call
        * essentially parsing the the text as HTML.
+       * @static
+       * @type {String}
+       * @memberof Component
        */
       htmlTemplate: null,
 
       /**
        * Stapes Constructor method
        * @param {object} options
+       * @param {HTMLElement|String} options.rootElement an HTML element or a
+       * CSS selector for the HTMLElement.
+       * This element will be the "root" of the rivets scope
        * @returns {Promise}
+       * @memberof Component
        */
       constructor ( options ) {
 
          /**
-          * object to be used in the HTML templates for data binding.
+          * object to be used in the HTML templates for data binding
           * @type {Object}
           */
          this.scope = {};
 
          /**
           * Rivets view object, binds this.scope to this.rootElement.
+          * @type {Object}
           */
          this.view = null;
 
          /**
           * HTML element to in which rivets.bind will be called,
           * if string uses document.querySelector to get the element
+          * @type {HTMLElement}
           */
          this.rootElement = null;
+
+         /**
+          * Method that should contain the widget initialization logic
+          * This method is only called after the API is ready
+          */
+         this.init; // jshint ignore:line
 
          if ( options == null ) {
             options = {};

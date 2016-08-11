@@ -1,4 +1,5 @@
 /**
+ * Module to access statistics data
  * @module statisticsModule
  * @memberOf CoreLibrary
  */
@@ -9,8 +10,8 @@ window.CoreLibrary.statisticsModule = (() => {
 
       /**
        * Configuration.
-       * @type {Object} config
-       * @type {String} config.baseApiUrl
+       * @type {Object}
+       * @property {String} baseApiUrl
        */
       config: {
          baseApiUrl: 'https://api.kambi.com/statistics/api/'
@@ -19,8 +20,8 @@ window.CoreLibrary.statisticsModule = (() => {
       /**
        * Requests statistics data from api.
        * @param {String} type
-       * @param {string} filter
-       * @returns {*|Promise}
+       * @param {String} filter
+       * @returns {Promise}
        */
       getStatistics ( type, filter ) {
          // Remove url parameters from filter

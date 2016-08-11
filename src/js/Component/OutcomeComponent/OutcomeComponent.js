@@ -1,6 +1,3 @@
-/**
- * @module OutcomeComponent
- */
 (() => {
    'use strict';
 
@@ -13,9 +10,10 @@
     *     outcome-attr="outcome"
     *     event-attr="event">
     * </outcome-component-no-label>
-    * @mixin outcome-suspended
+    * @mixin binder outcome-suspended
     * @param {element} el
     * @param {boolean} property
+    * @private
     */
    rivets.binders['outcome-suspended'] = ( el, property ) => {
       var cssClass = 'KambiWidget-outcome--suspended';
@@ -35,9 +33,10 @@
     *     outcome-attr="outcome"
     *     event-attr="event">
     * </outcome-component-no-label>
-    * @mixin outcome-selected
+    * @mixin binder outcome-selected
     * @param {element} el
     * @param {boolean} property
+    * @private
     */
    rivets.binders['outcome-selected'] = ( el, property ) => {
       var cssClass = 'KambiWidget-outcome--selected';
@@ -53,6 +52,7 @@
     * Outcome view controller.
     * @param {object} attributes Attributes
     * @memberOf module:OutcomeComponent#
+    * @private
     */
    var OutcomeViewController = function ( attributes ) {
       this.data = attributes;
@@ -86,6 +86,7 @@
        * Toggle outcomes.
        * @param event
        * @param scope
+       * @private
        */
       this.toggleOutcome = ( event, scope ) => {
          if ( scope.selected === false ) {
@@ -98,6 +99,7 @@
       /**
        * Returns label.
        * If data contains 'customLabel' it will return that custom value
+       * @private
        */
       this.getLabel = () => {
          if ( this.data.customLabel ) {
@@ -116,6 +118,7 @@
       /**
        * Returns Odds format.
        * @returns {*}
+       * @private
        */
       this.getOddsFormat = () => {
          switch ( this.coreLibraryConfig.oddsFormat ) {
@@ -130,21 +133,23 @@
    };
 
    /**
-    * Outcome component.
+    * Outcome component
     * @example
     * <outcome-component
     *    rv-each-outcome="betoffer.outcomes"
     *    outcome-attr="outcome"
     *    event-attr="event">
     * </outcome-component>
-    * @mixin outcome-component
-    * @type {{template: (function()), initialize: (function(*, *=))}}
+    * @mixin component outcome-component
+    * @property {Object} outcome-attr An (single) outcome object
+    * @property {Object} event-attr The event itself
+    * @property {String} customLabel Optional, custom label to show
     */
    rivets.components['outcome-component'] = {
-
       /**
        * Returns the template.
        * @returns {string}
+       * @private
        */
       template () {
          return `
@@ -179,6 +184,7 @@
        * @param el
        * @param attributes
        * @returns {*}
+       * @private
        */
       initialize ( el, attributes ) {
          if ( attributes.outcomeAttr == null ) {
@@ -196,14 +202,15 @@
     * <outcome-component-no-label
     *     outcome-attr="outcome" event-attr="event">
     * </outcome-component-no-label>
-    * @mixin outcome-component-no-label
-    * @type {{template: (function()), initialize: (function(*, *=))}}
+    * @mixin component outcome-component-no-label
+    * @property {Object} outcome-attr An (single) outcome object
+    * @property {Object} event-attr The event itself
     */
    rivets.components['outcome-component-no-label'] = {
-
       /**
-       * Template outcome-component-no-label.
+       * Template outcome-component-no-label
        * @returns {string}
+       * @private
        */
       template () {
          return `
@@ -229,6 +236,7 @@
        * @param el
        * @param attributes
        * @returns {OutcomeViewController}
+       * @private
        */
       initialize ( el, attributes ) {
          return new OutcomeViewController(attributes);

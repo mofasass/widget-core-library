@@ -24,6 +24,8 @@ var gulp = require('gulp'),
 
    jscs = require('gulp-jscs'),
 
+   jsdoc = require('gulp-jsdoc3'),
+
    supportedLanguages = [
       'cs_CZ',
       'da_DK',
@@ -82,7 +84,7 @@ gulp.task('clean-temp', function () {
 });
 
 gulp.task('clean', ['clean-temp'], function () {
-   return del.sync('./dist/');
+   return del.sync(['./dist/', './docs/']);
 });
 
 gulp.task('default', ['clean'], function () {
@@ -123,6 +125,15 @@ gulp.task('fetch-translations', function () {
       .pipe(replace(');})(_kbc.require, _kbc.define);', ''))
       .pipe(replace('};', '}'))
       .pipe(gulp.dest('./src/i18n/'));
+});
+
+gulp.task('documentation', function(cb) {
+   del.sync('./docs/');
+   gulp.src([
+         'README.md',
+         './src/js/**/*.js',
+      ], {read: false})
+      .pipe(jsdoc(cb));
 });
 
 /**

@@ -1,8 +1,3 @@
-/**
- * header-component dom attribute
- * @module HeaderComponent
- * @type {{static: string[], template: (function()), initialize: (function(*, *))}}
- */
 (() => {
    'use strict';
 
@@ -11,16 +6,17 @@
     * @param title
     * @param cssClasses
     * @param scope
-    * @param collapsible
+    * @param collapsable
     * @param startCollapsed
     * @constructor
+    * @private
     */
-   var HeaderController = ( title, cssClasses, scope, collapsible, startCollapsed ) => {
+   var HeaderController = ( title, cssClasses, scope, collapsable, startCollapsed ) => {
       var headerHeight = 36;
       this.title = title;
       this.cssClasses = cssClasses + ' KambiWidget-font kw-header l-flexbox l-align-center l-pl-16';
 
-      if ( collapsible ) {
+      if ( collapsable ) {
          scope.collapsed = startCollapsed;
          if ( scope.collapsed ) {
             CoreLibrary.widgetModule.enableWidgetTransition(false);
@@ -43,18 +39,22 @@
    };
 
    /**
-    * @mixin header-component
+    * Component that creates a header for the widget that can optionally
+    * collapse the widget by cliking on it
+    * @mixin component header-component
     * @example
-    * <div header-component>
-    * @type {{static: string[], template: (function(): string), initialize: (function(*, *): HeaderController)}}
+    * <header-component title='Title'>
+    * @property {Boolean} collapsable if true clickin on header will collapse the widget
+    * @property {Boolean} collapsed if true the widget starts collapsed
+    * @property {String} css-classes classes to add to the header
     */
    rivets.components['header-component'] = {
       static: ['collapsable', 'collapsed', 'css-classes'],
 
       /**
        * Returns header template.
-       * @memberOf module:HeaderComponent#
        * @returns {string}
+       * @private
        */
       template () {
          return `
@@ -64,10 +64,10 @@
 
       /**
        * Initializes the rivets component.
-       * @memberOf module:HeaderComponent#
        * @param {element} el DOM element to be binded
        * @param {object} attributes DOM attributes
        * @returns {HeaderController}
+       * @private
        */
       initialize ( el, attributes ) {
          var cssClasses = attributes['css-classes'];
@@ -75,9 +75,9 @@
             cssClasses = '';
          }
 
-         var collapsible = false;
-         if ( attributes.collapsible === 'true' ) {
-            collapsible = true;
+         var collapsable = false;
+         if ( attributes.collapsable === 'true' ) {
+            collapsable = true;
          }
 
          var startCollapsed = false;
@@ -85,7 +85,7 @@
             startCollapsed = true;
          }
 
-         return new HeaderController(attributes.title, cssClasses, this.view.models, collapsible, startCollapsed);
+         return new HeaderController(attributes.title, cssClasses, this.view.models, collapsable, startCollapsed);
       }
    };
 })();

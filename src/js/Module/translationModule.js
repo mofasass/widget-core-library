@@ -1,25 +1,16 @@
 /**
+ * Module with internationalization methods
  * @module translationModule
  * @memberOf CoreLibrary
  */
 window.CoreLibrary.translationModule = (() => {
    'use strict';
 
-   /**
-    * Formatter that translates current value in binder.
-    * @example
-    * <span>{'key' | translate}</span>
-    * @mixin translate
-    * @param args
-    * @returns {*|String}
-    */
-   rivets.formatters.translate = ( ...args ) => {
-      return CoreLibrary.translationModule.getTranslation.apply(CoreLibrary.translationModule, args);
-   };
-
    return {
       /**
-       * @type {object}
+       * fetched from the i18n folder JSON files. Only the current
+       * locale strings are fetched
+       * @type {Object}
        */
       i18nStrings: {},
 
@@ -28,6 +19,7 @@ window.CoreLibrary.translationModule = (() => {
        * The locale json file resides in CoreLibrary/i18n folder; it is populated with locales during build process
        * @param {String} locale Locale string, eg: sv_SE
        * @returns {Promise}
+       * @private
        */
       fetchTranslations ( locale ) {
          if ( locale == null ) {
@@ -60,7 +52,12 @@ window.CoreLibrary.translationModule = (() => {
       /**
        * Returns translated string based of a provided key.
        * @param {String} key Key to fetch translation for
-       * @param {Array} args other arguments that are passed to this method
+       * @param {...String} args arguments to replace inside the translated string
+       * @example
+       * en_GB.json:
+       * { "welcomeUserToPlace": "Welcome {0} to {1}" }
+       * Javascriot:
+       * getTranslation('welcomeUserToPlace', 'Daniel', 'Stadium') => 'Welcome Daniel to Stadium'
        * @returns {String}
        */
       getTranslation: function ( key, ...args ) {

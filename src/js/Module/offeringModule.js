@@ -1,16 +1,16 @@
 /**
+ * Module with methods to request data from the offering API
  * @module offeringModule
- * @memberOf CoreLibrary
+ * @memberof CoreLibrary
  */
 window.CoreLibrary.offeringModule = (() => {
    'use strict';
 
    return {
-
       /**
-       * Get group events.
+       * Get group events
        * @param {number|string} groupId Group id
-       * @returns {*|Promise}
+       * @returns {Promise}
        */
       getGroupEvents ( groupId ) {
          var requesPath = '/event/group/' + groupId + '.json';
@@ -19,8 +19,8 @@ window.CoreLibrary.offeringModule = (() => {
 
       /**
        * Get group information.
-       * @param {number|string} groupId Group id
-       * @returns {*|Promise}
+       * @param {Number|String} groupId Group id
+       * @returns {Promise}
        */
       getGroup (groupId) {
          var requesPath = '/group/' + groupId + '.json';
@@ -28,9 +28,9 @@ window.CoreLibrary.offeringModule = (() => {
       },
 
       /**
-       * Get events by filter.
-       * @param {string} filter Filter string, eg: football
-       * @param {object} params Request relevant parameters
+       * Get events by filter
+       * @param {String} filter Filter string, eg: football
+       * @param {Object} params Request relevant parameters
        * @returns {Promise}
        */
       getEventsByFilter ( filter, params ) {
@@ -40,8 +40,9 @@ window.CoreLibrary.offeringModule = (() => {
       },
 
       /**
-       * Normalizes v2 api betoffers.
-       * @param {object} betOffer Betoffer object we get from api
+       * Normalizes v2 api betoffers
+       * @param {Object} betOffer Betoffer object we get from api
+       * @private
        */
       adaptV2BetOffer ( betOffer ) {
          if ( betOffer.suspended === true ) {
@@ -50,8 +51,9 @@ window.CoreLibrary.offeringModule = (() => {
       },
 
       /**
-       * Normalizes the v2 api response.
-       * @param {object} liveData Livedata object we get from api
+       * Normalizes the v2 api response
+       * @param {Object} liveData Livedata object we get from api
+       * @private
        */
       adaptV2LiveData ( liveData ) {
          if ( liveData != null && liveData.statistics != null ) {
@@ -68,15 +70,20 @@ window.CoreLibrary.offeringModule = (() => {
          }
       },
 
+      /**
+       * Normalizes the v2 event object
+       * @private
+       */
       adaptV2Event ( event ) {
          // v3 and v2 event objects are almost the same
          // only a few attributes we don't are different
       },
 
       /**
-       * Get live event data only, eg: match statistics, score, macthClock.
-       * @param {number|string} eventId The event id we need to fetch
+       * Get live event data only, eg: match statistics, score, macthClock
+       * @param {Number|String} eventId The event id we need to fetch
        * @returns {Promise}
+       * @private
        */
       getLiveEventData ( eventId ) {
          var requestPath = '/event/' + eventId + '/livedata.json';
@@ -88,8 +95,9 @@ window.CoreLibrary.offeringModule = (() => {
       },
 
       /**
-       * Get all live events.
+       * Get all live events
        * @returns {Promise}
+       * @private
        */
       getLiveEvents () {
          var requestPath = '/event/live/open.json';
@@ -117,8 +125,8 @@ window.CoreLibrary.offeringModule = (() => {
       },
 
       /**
-       * Returns a live event.
-       * @param {number|string} eventId The event id we need to fetch
+       * Returns a live event
+       * @param {Number|String} eventId The event id we need to fetch
        * @returns {Promise}
        */
       getLiveEvent ( eventId ) {
@@ -136,8 +144,8 @@ window.CoreLibrary.offeringModule = (() => {
       },
 
       /**
-       * Get live events by filter.
-       * @param {string} filter Filter string
+       * Get live events by filter
+       * @param {String} filter Filter string
        * @returns {Promise}
        */
       getLiveEventsByFilter ( filter ) {
@@ -176,8 +184,8 @@ window.CoreLibrary.offeringModule = (() => {
       },
 
       /**
-       * Requests and event from api.
-       * @param {string} eventId The event id we need to fetch
+       * Requests and event from api
+       * @param {String} eventId The event id we need to fetch
        * @returns {Promise}
        */
       getEvent ( eventId ) {
@@ -204,7 +212,7 @@ window.CoreLibrary.offeringModule = (() => {
       },
 
       /**
-       * Makes a request to provided path.
+       * Makes a request to provided path
        * @param {string} requestPath
        * @param {object} params
        * @param {number|string} version

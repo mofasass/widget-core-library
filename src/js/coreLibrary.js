@@ -1,240 +1,278 @@
-/**
- * Main module that holds formaters, binders and all widget related configurations
- * @module CoreLibrary
- */
-
-window.CoreLibrary = (() => {
+(() => {
    'use strict';
+   // Set Sightglass root adapter.
+   sightglass.adapters = rivets.adapters;
+   sightglass.root = '.';
 
    /**
-    * Check if v1 and v2 are "strict" equal.
-    * @example
-    * <div>{v1 | === v2}</div>
-    * @mixin formatter "==="
-    * @param v1
-    * @param v2
-    * @returns {boolean}
+    * Rivets custom binders and formatters
+    * @namespace rivets
     */
+   rivets; // jshint ignore:line
+
+   /**
+    * Formatter that translates current value in binder.
+    * @memberof rivets
+    * @example
+    * <span>{'key' | translate}</span>
+    * <span>{'someTextWithArgs' | translate 'arg1' 'arg2'}
+    * @mixin formatter "translate"
+    * @param ...args {String} arguments to pass to the translationModule.getTranslation
+    * @returns {String}
+    */
+   rivets.formatters.translate = ( ...args ) => {
+      return CoreLibrary.translationModule
+         .getTranslation
+         .apply(CoreLibrary.translationModule, args);
+   };
+
+   /**
+   * Check if v1 and v2 are "strict" equal.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | === v2}</div>
+   * @static
+   * @param v1
+   * @param v2
+   * @returns {boolean}
+   */
    rivets.formatters['==='] = ( v1, v2 ) => {
       return v1 === v2;
    };
 
    /**
-    * Check if v1 and v2 are equal.
-    * @example
-    * <div>{v1 | == v2}</div>
-    * @mixin formatter "=="
-    * @param v1
-    * @param v2
-    * @returns {boolean}
-    */
+   * Check if v1 and v2 are equal.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | == v2}</div>
+   * @mixin formatter "=="
+   * @param v1
+   * @param v2
+   * @returns {boolean}
+   */
    rivets.formatters['=='] = ( v1, v2 ) => {
       return v1 == v2; // jshint ignore:line
    };
 
    /**
-    * Check if v1 is greater or equal than v2.
-    * @example
-    * <div>{v1 | >= v2}</div>
-    * @mixin formatter ">="
-    * @param v1
-    * @param v2
-    * @returns {boolean}
-    */
+   * Check if v1 is greater or equal than v2.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | >= v2}</div>
+   * @mixin formatter ">="
+   * @param v1
+   * @param v2
+   * @returns {boolean}
+   */
    rivets.formatters['>='] = ( v1, v2 ) => {
       return v1 >= v2;
    };
 
    /**
-    * Check if v1 is greater than v2.
-    * @example
-    * <div>{v1 | > v2}</div>
-    * @mixin formatter ">"
-    * @param v1
-    * @param v2
-    * @returns {boolean}
-    */
+   * Check if v1 is greater than v2.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | > v2}</div>
+   * @mixin formatter ">"
+   * @param v1
+   * @param v2
+   * @returns {boolean}
+   */
    rivets.formatters['>'] = ( v1, v2 ) => {
       return v1 > v2;
    };
 
    /**
-    * Check if v1 is less or equal than v2.
-    * @example
-    * <div>{v1 | =< v2}</div>
-    * @mixin formatter "<="
-    * @param v1
-    * @param v2
-    * @returns {boolean}
-    */
+   * Check if v1 is less or equal than v2.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | =< v2}</div>
+   * @mixin formatter "<="
+   * @param v1
+   * @param v2
+   * @returns {boolean}
+   */
    rivets.formatters['<='] = ( v1, v2 ) => {
       return v1 <= v2;
    };
 
    /**
-    * Check if v1 is less than v2.
-    * @example
-    * <div>{v1 | < v2}</div>
-    * @mixin formatter "<"
-    * @param v1
-    * @param v2
-    * @returns {boolean}
-    */
+   * Check if v1 is less than v2.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | < v2}</div>
+   * @mixin formatter "<"
+   * @param v1
+   * @param v2
+   * @returns {boolean}
+   */
    rivets.formatters['<'] = ( v1, v2 ) => {
       return v1 < v2;
    };
 
    /**
-    * Check if v1 is not equal to v2.
-    * @example
-    * <div>{v1 | != v2}</div>
-    * @mixin formatter "!="
-    * @param v1
-    * @param v2
-    * @returns {boolean}
-    */
+   * Check if v1 is not equal to v2.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | != v2}</div>
+   * @mixin formatter "!="
+   * @param v1
+   * @param v2
+   * @returns {boolean}
+   */
    rivets.formatters['!='] = ( v1, v2 ) => {
       return v1 != v2; // jshint ignore:line
    };
 
    /**
-    * Check if v1 is not equal value/type to v2.
-    * @example
-    * <div>{v1 | !== v2}</div>
-    * @mixin formatter "!=="
-    * @param v1
-    * @param v2
-    * @returns {boolean}
-    */
+   * Check if v1 is not equal value/type to v2.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | !== v2}</div>
+   * @mixin formatter "!=="
+   * @param v1
+   * @param v2
+   * @returns {boolean}
+   */
    rivets.formatters['!=='] = ( v1, v2 ) => {
       return v1 !== v2;
    };
 
    /**
-    * Check if v1 and v2 are valid.
-    * @example
-    * <div>{v1 | and v2}</div>
-    * @mixin formatter "and"
-    * @param v1
-    * @param v2
-    * @returns {boolean}
-    */
+   * Check if v1 and v2 are valid.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | and v2}</div>
+   * @mixin formatter "and"
+   * @param v1
+   * @param v2
+   * @returns {boolean}
+   */
    rivets.formatters['and'] = ( v1, v2 ) => {
       return v1 && v2;
    };
 
    /**
-    * Check if v1 or v2 are valid.
-    * @example
-    * <div>{v1 | or v2}</div>
-    * @mixin formatter "or"
-    * @param v1
-    * @param v2
-    * @returns {boolean}
-    */
+   * Check if v1 or v2 are valid.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | or v2}</div>
+   * @mixin formatter "or"
+   * @param v1
+   * @param v2
+   * @returns {boolean}
+   */
    rivets.formatters['or'] = ( v1, v2 ) => {
       return v1 || v2;
    };
 
    /**
-    * Check if v1 is not false.
-    * @example
-    * <div>{v1 | not}</div>
-    * @mixin formatter "not"
-    * @param v1
-    * @returns {boolean}
-    */
+   * Check if v1 is not false.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | not}</div>
+   * @mixin formatter "not"
+   * @param v1
+   * @returns {boolean}
+   */
    rivets.formatters['not'] = ( v1 )=> {
       return !v1;
    };
 
    /**
-    * Subtract v2 from v1.
-    * @example
-    * <div>{v1 | - v2}</div>
-    * @mixin formatter "-"
-    * @param v1
-    * @param v2
-    * @returns {Number}
-    */
+   * Subtract v2 from v1.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | - v2}</div>
+   * @mixin formatter "-"
+   * @param v1
+   * @param v2
+   * @returns {Number}
+   */
    rivets.formatters['-'] = ( v1, v2 ) => {
       return v1 - v2;
    };
 
    /**
-    * Sum of v1 and v2.
-    * @example
-    * <div>{v1 | + v2}</div>
-    * @mixin formatter "+"
-    * @param v1
-    * @param v2
-    * @returns {boolean}
-    */
+   * Sum of v1 and v2.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | + v2}</div>
+   * @mixin formatter "+"
+   * @param v1
+   * @param v2
+   * @returns {boolean}
+   */
    rivets.formatters['+'] = ( v1, v2 ) => {
       return v1 + v2;
    };
 
    /**
-    * Multiply v1 by v2.
-    * @example
-    * <div>{v1 | * v2}</div>
-    * @mixin formatter "*"
-    * @param v1
-    * @param v2
-    * @returns {Number}
-    */
+   * Multiply v1 by v2.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | * v2}</div>
+   * @mixin formatter "*"
+   * @param v1
+   * @param v2
+   * @returns {Number}
+   */
    rivets.formatters['*'] = ( v1, v2 ) => {
       return v1 * v2;
    };
 
    /**
-    * Divide v1 by v2.
-    * @example
-    * <div>{v1 | / v2}</div>
-    * @mixin formatter "/"
-    * @param v1
-    * @param v2
-    * @returns {Number}
-    */
+   * Divide v1 by v2.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | / v2}</div>
+   * @mixin formatter "/"
+   * @param v1
+   * @param v2
+   * @returns {Number}
+   */
    rivets.formatters['/'] = ( v1, v2 ) => {
       return v1 / v2;
    };
 
    /**
-    * Check if v1 is valid, otherwise use v2.
-    * @example
-    * <div>{v1 | > v2}</div>
-    * @mixin formatter ">"
-    * @param v1
-    * @param v2
-    * @returns {boolean}
-    */
+   * Check if v1 is valid, otherwise use v2.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | > v2}</div>
+   * @mixin formatter ">"
+   * @param v1
+   * @param v2
+   * @returns {boolean}
+   */
    rivets.formatters['?'] = ( v1, v2 ) => {
       return v1 ? v1 : v2;
    };
 
    /**
-    * Returns specified object at specified key for specified array index.
-    * @example
-    * <div>{arr | array_at index key}</div>
-    * @mixin formatter "array_at"
-    * @param arr The source array
-    * @param index The desired index from given array
-    * @param key The desired key of the object to be returned
-    * @returns {*}
-    */
+   * Returns specified object at specified key for specified array index.
+   * @memberof rivets
+   * @example
+   * <div>{arr | array_at index key}</div>
+   * @mixin formatter "array_at"
+   * @param arr The source array
+   * @param index The desired index from given array
+   * @param key The desired key of the object to be returned
+   * @returns {*}
+   */
    rivets.formatters['array_at'] = ( arr, index, key ) => {
       return arr == null || arr.length === 0 ? [] : arr[index][key];
    };
 
    /**
-    * Returns an array of objects where each objects contains key and value properties based on the passed array.
-    * @example
-    * <div>{v1 | property_list}</div>
-    * @mixin formatter "property_list"
-    * @param {Object} obj The source object
-    * @returns {Array}
-    */
+   * Returns an array of objects where each objects contains key and value properties based on the passed array.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | property_list}</div>
+   * @mixin formatter "property_list"
+   * @param {Object} obj The source object
+   * @returns {Array}
+   */
    rivets.formatters['property_list'] = ( obj ) => {
       return (() => {
          var properties = [];
@@ -248,28 +286,30 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Custom style binder.
-    * @example
-    * <div rv-style-opacity="1">
-    * @mixin binder "style-*"
-    * @param el
-    * @param value
-    */
+   * Custom style binder.
+   * @memberof rivets
+   * @example
+   * <div rv-style-opacity="1">
+   * @mixin binder "style-*"
+   * @param el
+   * @param value
+   */
    rivets.binders['style-*'] = function ( el, value ) {
       el.style.setProperty(this.args[0], value);
    };
 
    /**
-    * Cloaking waits for element to bind and then sets it visible with a slight delay.
-    *
-    * Can listen to a value and apply the opacity after that value has changed
-    * Usage: rv-cloak or rv-cloak="value"
-    * In promise resolution, add something like this.scope.loaded = true
-    * @example
-    * <div rv-cloak> or <div rv-cloak="value">
-    * @mixin binder "cloak"
-    * @type {{priority: number, bind: rivets.binders.cloak.bind}}
-    */
+   * Cloaking waits for element to bind and then sets it visible with a slight delay.
+   *
+   * Can listen to a value and apply the opacity after that value has changed
+   * Usage: rv-cloak or rv-cloak="value"
+   * In promise resolution, add something like this.scope.loaded = true
+   * @example
+   * <div rv-cloak> or <div rv-cloak="value">
+   * @memberof rivets
+   * @mixin binder "cloak"
+   * @type {{priority: number, bind: rivets.binders.cloak.bind}}
+   */
    rivets.binders['cloak'] = {
       priority: -1000,
       bind ( el ) {
@@ -285,13 +325,13 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Binder that adds animation class.
-    *
-    * @example <div rv-anim-stagger="index"></div>
-    * @mixin binder "anim-stagger"
-    * @param el DOM element to apply classes
-    * @param index List item index
-    */
+   * Binder that adds animation class.
+   * @memberof rivets
+   * @example <div rv-anim-stagger="index"></div>
+   * @mixin binder "anim-stagger"
+   * @param el DOM element to apply classes
+   * @param index List item index
+   */
    rivets.binders['anim-stagger'] = ( el, index ) => {
       if ( index < 0 ) {
          return false;
@@ -314,25 +354,27 @@ window.CoreLibrary = (() => {
    };
 
    /**
-    * Binder to temporarily disable the stagger animation.
-    * IMPORTANT: The rv-anim-disable attribute has to be placed before the binder that provides the animation for it to take effect in the animation binder
-    * @example
-    * <div rv-anim-disable="event.disableAnimation" rv-anim-stagger="index">
-    * @mixin binder "anim-disable"
-    * @param el Dom element to disable the animation on
-    * @param animationDisable 'true' to disable animations
-    */
+   * Binder to temporarily disable the stagger animation.
+   * IMPORTANT: The rv-anim-disable attribute has to be placed before the binder that provides the animation for it to take effect in the animation binder
+   * @memberof rivets
+   * @example
+   * <div rv-anim-disable="event.disableAnimation" rv-anim-stagger="index">
+   * @mixin binder "anim-disable"
+   * @param el Dom element to disable the animation on
+   * @param animationDisable 'true' to disable animations
+   */
    rivets.binders['anim-disable'] = ( el, animationDisable ) => {
       el.setAttribute('data-anim-disable', animationDisable);
    };
 
    /**
-    * @description Binder to toggle a custom class based on the passed property, picks up the class name form the "rv-toggle-class" attribute.
-    * @example <div rv-custom-class="myBoolean" rv-toggle-class="myCustomClass">
-    * @mixin binder "custom-class"
-    * @param el DOM element to apply class to
-    * @param property The property to check
-    */
+   * @description Binder to toggle a custom class based on the passed property, picks up the class name form the "rv-toggle-class" attribute.
+   * @memberof rivets
+   * @example <div rv-custom-class="myBoolean" rv-toggle-class="myCustomClass">
+   * @mixin binder "custom-class"
+   * @param el DOM element to apply class to
+   * @param property The property to check
+   */
    rivets.binders['custom-class'] = ( el, property ) => {
       var cssClass = el.getAttribute('rv-toggle-class');
 
@@ -343,9 +385,8 @@ window.CoreLibrary = (() => {
       }
    };
 
-   /**
-    * Checks the HTTP status of a response.
-    * @memberOf module:CoreLibrary
+   /*
+    * Checks the HTTP status of a response
     * @private
     * @param {Object} response
     * @returns {*}
@@ -360,32 +401,13 @@ window.CoreLibrary = (() => {
       }
    }
 
-   /**
-    * Parses the response as json.
-    * @memberOf module:CoreLibrary
-    * @private
-    * @param response
-    * @returns {*}
-    */
    function parseJSON ( response ) {
       return response.json();
    }
 
-   /**
-    * Assign adapters.
-    */
-   sightglass.adapters = rivets.adapters;
-
-   /**
-    * Set Sightglass root adapter.
-    * @type {string}
-    */
-   sightglass.root = '.';
-
-   /* adding classes to body based on browser and browser version,
-    code inspired by the Bowser library:
-    https://github.com/ded/bowser
-    */
+   // adding classes to body based on browser and browser version,
+   // code inspired by the Bowser library:
+   // https://github.com/ded/bowser
    var ua = window.navigator.userAgent;
    var getFirstMatch = function ( regex ) {
       var match = ua.match(regex);
@@ -425,68 +447,94 @@ window.CoreLibrary = (() => {
       document.documentElement.classList.add('kw-browser-' + browser);
    }
 
-   return {
+   /**
+    * Main module that holds the other modules as well as widget
+    * related configurations
+    * @module CoreLibrary
+    */
+   window.CoreLibrary = {
       /**
-       * Expected api version is replaced with the API version number during the compilation step.
-       * @memberOf module:CoreLibrary
+       * Name of the browser that is running the widget
+       * @memberof module:CoreLibrary
+       * @type {String}
        */
       browser: browser,
+
       /**
        * Browser version.
-       * @memberOf module:CoreLibrary
+       * @memberof module:CoreLibrary
+       * @type {String}
        */
       browserVersion: browserVersion,
-      expectedApiVersion: '{{expectedApiVersion}}', // this value is replaced with the API version number during the compilation step
+
       /**
-       * Development flag.
+       * Expected Kambi API version to use
+       * @type {String}
+       * @private
+       */
+      expectedApiVersion: '{{expectedApiVersion}}', // this value is replaced with the API version number during the compilation step
+
+      /**
+       * Development flag
+       * @type {Boolean}
        * @memberOf module:CoreLibrary
        */
       development: false,
+
       /**
-       * utilModule.
+       * utilModule
+       * @type {Object}
        * @memberOf module:CoreLibrary
        */
       utilModule: null,
+
       /**
-       * widgetModule.
+       * widgetModule
+       * @type {Object}
        * @memberOf module:CoreLibrary
        */
       widgetModule: null,
+
       /**
-       * offeringModule.
+       * offeringModule
+       * @type {Object}
        * @memberOf module:CoreLibrary
        */
       offeringModule: null,
+
       /**
-       * statisticsModule.
+       * statisticsModule
+       * @type {Object}
        * @memberOf module:CoreLibrary
        */
       statisticsModule: null,
-      /**
-       * Api ready flag.
-       * This value is set to true once the kambi API has finished loaded
-       * @memberOf module:CoreLibrary
-       */
-      apiReady: false, // this value is set to true once the kambi API has finished loaded
 
       /**
-       * Config object.
-       * @type {{
-            apiBaseUrl: string,
-            auth: false,
-            channelId: 1,
-            currency: string,
-            customer: string,
-            device: 'desktop',
-            locale: 'en_GB',
-            market: 'GB',
-            oddsFormat: 'decimal',
-            offering: string,
-            routeRoot: string,
-            streamingAllowedForPlayer: true,
-            client_id: 2,
-            version: 'v2'
-         }}
+       * Api ready flag
+       * This value is set to true once the kambi API has finished loaded
+       * @type Boolean
+       * @memberOf module:CoreLibrary
+       */
+      apiReady: false,
+
+      /**
+       * Config object
+       * @type {Object}
+       * @property {String} apiBaseUrl
+       * @property {String} apiBaseUrl
+       * @property {Boolean} auth
+       * @property {Number} channelId
+       * @property {String} currency
+       * @property {String} customer
+       * @property {String} device
+       * @property {String} locale
+       * @property {String} market
+       * @property {String} oddsFormat
+       * @property {String} offering
+       * @property {String} routeRoot
+       * @property {Boolean} streamingAllowedForPlayer
+       * @property {Number} client_id
+       * @property {String} version
        * @memberOf module:CoreLibrary
        */
       config: {
@@ -508,12 +556,19 @@ window.CoreLibrary = (() => {
 
       /**
        * Default height: 450.
+       * @type {Number}
        * @memberOf module:CoreLibrary
+       * @private
        */
       height: 450,
 
       /**
        * Page info.
+       * @type {Object}
+       * @property {Array(String)} leaguePaths
+       * @property {String} pageParam
+       * @property {String} pageTrackingPath
+       * @property {String} pageType
        * @memberOf module:CoreLibrary
        */
       pageInfo: {
@@ -525,6 +580,10 @@ window.CoreLibrary = (() => {
 
       /**
        * api versions object.
+       * @type {Object}
+       * @property {String} client
+       * @property {String} libs
+       * @property {String} wapi
        * @memberOf module:CoreLibrary
        */
       apiVersions: {
@@ -534,14 +593,16 @@ window.CoreLibrary = (() => {
       },
 
       /**
-       * widget tracking name is null by default.
+       * The name sent to Kambi API for analytics data collection
        * @memberOf module:CoreLibrary
+       * @private
        */
       widgetTrackingName: null,
 
       /**
        * args object for each component.
        * @memberOf module:CoreLibrary
+       * @private
        */
       args: {},
 
@@ -629,6 +690,7 @@ window.CoreLibrary = (() => {
        * @memberOf module:CoreLibrary
        * @param {Object} setupData Setup data object
        * @param {boolean} setDefaultHeight Default height value
+       * @private
        */
       applySetupData ( setupData, setDefaultHeight ) {
 
@@ -653,6 +715,7 @@ window.CoreLibrary = (() => {
        * Set config object of CoreLibrary.
        * @memberOf module:CoreLibrary
        * @param {Object} config Config object to be set
+       * @private
        */
       setConfig ( config ) {
          for ( var i in config ) {
@@ -673,6 +736,7 @@ window.CoreLibrary = (() => {
        * Sets page info.
        * @memberOf module:CoreLibrary
        * @param {Object} pageInfo pageinfo object we receive from api
+       * @private
        */
       setPageInfo ( pageInfo ) {
          // Check if the last character in the pageParam property is a slash, if not add it so we can use this property in filter requests
@@ -686,6 +750,7 @@ window.CoreLibrary = (() => {
        * Sets versions.
        * @memberOf module:CoreLibrary
        * @param {Object} versions
+       * @private
        */
       setVersions ( versions ) {
          for ( var i in versions ) {
@@ -699,6 +764,7 @@ window.CoreLibrary = (() => {
        * Set args object.
        * @memberOf module:CoreLibrary
        * @param {Object} args
+       * @private
        */
       setArgs ( args ) {
          this.args = args;
@@ -708,6 +774,7 @@ window.CoreLibrary = (() => {
        * Requests setup data from widgetModule.
        * @memberOf module:CoreLibrary
        * @param {function} callback
+       * @private
        */
       requestSetup ( callback ) {
          this.widgetModule.requestSetup(callback);
@@ -717,6 +784,7 @@ window.CoreLibrary = (() => {
        * Logs the response.
        * @memberOf module:CoreLibrary
        * @param {Object} response
+       * @private
        */
       receiveRespone ( response ) {
          console.debug(response);
@@ -725,7 +793,8 @@ window.CoreLibrary = (() => {
       /**
        * Sets odds format.
        * @memberOf module:CoreLibrary
-       * @param {*} oddsFormat
+       * @param {String} oddsFormat
+       * @private
        */
       setOddsFormat ( oddsFormat ) {
          this.config.oddsFormat = oddsFormat;
@@ -735,6 +804,7 @@ window.CoreLibrary = (() => {
        * Sets widget height.
        * @memberOf module:CoreLibrary
        * @param {Number} height
+       * @private
        */
       setHeight ( height ) {
          this.height = height;
@@ -783,5 +853,4 @@ window.CoreLibrary = (() => {
          this.widgetTrackingName = name;
       }
    };
-
 })();

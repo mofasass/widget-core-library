@@ -1,243 +1,283 @@
 'use strict';
 
-/**
- * Main module that holds formaters, binders and all widget related configurations
- * @module CoreLibrary
- */
-
-window.CoreLibrary = function () {
+(function () {
    'use strict';
+   // Set Sightglass root adapter.
+
+   sightglass.adapters = rivets.adapters;
+   sightglass.root = '.';
 
    /**
-    * Check if v1 and v2 are "strict" equal.
-    * @example
-    * <div>{v1 | === v2}</div>
-    * @mixin formatter "==="
-    * @param v1
-    * @param v2
-    * @returns {boolean}
+    * Rivets custom binders and formatters
+    * @namespace rivets
     */
+   rivets; // jshint ignore:line
 
+   /**
+    * Formatter that translates current value in binder.
+    * @memberof rivets
+    * @example
+    * <span>{'key' | translate}</span>
+    * <span>{'someTextWithArgs' | translate 'arg1' 'arg2'}
+    * @mixin formatter "translate"
+    * @param ...args {String} arguments to pass to the translationModule.getTranslation
+    * @returns {String}
+    */
+   rivets.formatters.translate = function () {
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+         args[_key] = arguments[_key];
+      }
+
+      return CoreLibrary.translationModule.getTranslation.apply(CoreLibrary.translationModule, args);
+   };
+
+   /**
+   * Check if v1 and v2 are "strict" equal.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | === v2}</div>
+   * @static
+   * @param v1
+   * @param v2
+   * @returns {boolean}
+   */
    rivets.formatters['==='] = function (v1, v2) {
       return v1 === v2;
    };
 
    /**
-    * Check if v1 and v2 are equal.
-    * @example
-    * <div>{v1 | == v2}</div>
-    * @mixin formatter "=="
-    * @param v1
-    * @param v2
-    * @returns {boolean}
-    */
+   * Check if v1 and v2 are equal.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | == v2}</div>
+   * @mixin formatter "=="
+   * @param v1
+   * @param v2
+   * @returns {boolean}
+   */
    rivets.formatters['=='] = function (v1, v2) {
       return v1 == v2; // jshint ignore:line
    };
 
    /**
-    * Check if v1 is greater or equal than v2.
-    * @example
-    * <div>{v1 | >= v2}</div>
-    * @mixin formatter ">="
-    * @param v1
-    * @param v2
-    * @returns {boolean}
-    */
+   * Check if v1 is greater or equal than v2.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | >= v2}</div>
+   * @mixin formatter ">="
+   * @param v1
+   * @param v2
+   * @returns {boolean}
+   */
    rivets.formatters['>='] = function (v1, v2) {
       return v1 >= v2;
    };
 
    /**
-    * Check if v1 is greater than v2.
-    * @example
-    * <div>{v1 | > v2}</div>
-    * @mixin formatter ">"
-    * @param v1
-    * @param v2
-    * @returns {boolean}
-    */
+   * Check if v1 is greater than v2.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | > v2}</div>
+   * @mixin formatter ">"
+   * @param v1
+   * @param v2
+   * @returns {boolean}
+   */
    rivets.formatters['>'] = function (v1, v2) {
       return v1 > v2;
    };
 
    /**
-    * Check if v1 is less or equal than v2.
-    * @example
-    * <div>{v1 | =< v2}</div>
-    * @mixin formatter "<="
-    * @param v1
-    * @param v2
-    * @returns {boolean}
-    */
+   * Check if v1 is less or equal than v2.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | =< v2}</div>
+   * @mixin formatter "<="
+   * @param v1
+   * @param v2
+   * @returns {boolean}
+   */
    rivets.formatters['<='] = function (v1, v2) {
       return v1 <= v2;
    };
 
    /**
-    * Check if v1 is less than v2.
-    * @example
-    * <div>{v1 | < v2}</div>
-    * @mixin formatter "<"
-    * @param v1
-    * @param v2
-    * @returns {boolean}
-    */
+   * Check if v1 is less than v2.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | < v2}</div>
+   * @mixin formatter "<"
+   * @param v1
+   * @param v2
+   * @returns {boolean}
+   */
    rivets.formatters['<'] = function (v1, v2) {
       return v1 < v2;
    };
 
    /**
-    * Check if v1 is not equal to v2.
-    * @example
-    * <div>{v1 | != v2}</div>
-    * @mixin formatter "!="
-    * @param v1
-    * @param v2
-    * @returns {boolean}
-    */
+   * Check if v1 is not equal to v2.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | != v2}</div>
+   * @mixin formatter "!="
+   * @param v1
+   * @param v2
+   * @returns {boolean}
+   */
    rivets.formatters['!='] = function (v1, v2) {
       return v1 != v2; // jshint ignore:line
    };
 
    /**
-    * Check if v1 is not equal value/type to v2.
-    * @example
-    * <div>{v1 | !== v2}</div>
-    * @mixin formatter "!=="
-    * @param v1
-    * @param v2
-    * @returns {boolean}
-    */
+   * Check if v1 is not equal value/type to v2.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | !== v2}</div>
+   * @mixin formatter "!=="
+   * @param v1
+   * @param v2
+   * @returns {boolean}
+   */
    rivets.formatters['!=='] = function (v1, v2) {
       return v1 !== v2;
    };
 
    /**
-    * Check if v1 and v2 are valid.
-    * @example
-    * <div>{v1 | and v2}</div>
-    * @mixin formatter "and"
-    * @param v1
-    * @param v2
-    * @returns {boolean}
-    */
+   * Check if v1 and v2 are valid.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | and v2}</div>
+   * @mixin formatter "and"
+   * @param v1
+   * @param v2
+   * @returns {boolean}
+   */
    rivets.formatters['and'] = function (v1, v2) {
       return v1 && v2;
    };
 
    /**
-    * Check if v1 or v2 are valid.
-    * @example
-    * <div>{v1 | or v2}</div>
-    * @mixin formatter "or"
-    * @param v1
-    * @param v2
-    * @returns {boolean}
-    */
+   * Check if v1 or v2 are valid.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | or v2}</div>
+   * @mixin formatter "or"
+   * @param v1
+   * @param v2
+   * @returns {boolean}
+   */
    rivets.formatters['or'] = function (v1, v2) {
       return v1 || v2;
    };
 
    /**
-    * Check if v1 is not false.
-    * @example
-    * <div>{v1 | not}</div>
-    * @mixin formatter "not"
-    * @param v1
-    * @returns {boolean}
-    */
+   * Check if v1 is not false.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | not}</div>
+   * @mixin formatter "not"
+   * @param v1
+   * @returns {boolean}
+   */
    rivets.formatters['not'] = function (v1) {
       return !v1;
    };
 
    /**
-    * Subtract v2 from v1.
-    * @example
-    * <div>{v1 | - v2}</div>
-    * @mixin formatter "-"
-    * @param v1
-    * @param v2
-    * @returns {Number}
-    */
+   * Subtract v2 from v1.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | - v2}</div>
+   * @mixin formatter "-"
+   * @param v1
+   * @param v2
+   * @returns {Number}
+   */
    rivets.formatters['-'] = function (v1, v2) {
       return v1 - v2;
    };
 
    /**
-    * Sum of v1 and v2.
-    * @example
-    * <div>{v1 | + v2}</div>
-    * @mixin formatter "+"
-    * @param v1
-    * @param v2
-    * @returns {boolean}
-    */
+   * Sum of v1 and v2.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | + v2}</div>
+   * @mixin formatter "+"
+   * @param v1
+   * @param v2
+   * @returns {boolean}
+   */
    rivets.formatters['+'] = function (v1, v2) {
       return v1 + v2;
    };
 
    /**
-    * Multiply v1 by v2.
-    * @example
-    * <div>{v1 | * v2}</div>
-    * @mixin formatter "*"
-    * @param v1
-    * @param v2
-    * @returns {Number}
-    */
+   * Multiply v1 by v2.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | * v2}</div>
+   * @mixin formatter "*"
+   * @param v1
+   * @param v2
+   * @returns {Number}
+   */
    rivets.formatters['*'] = function (v1, v2) {
       return v1 * v2;
    };
 
    /**
-    * Divide v1 by v2.
-    * @example
-    * <div>{v1 | / v2}</div>
-    * @mixin formatter "/"
-    * @param v1
-    * @param v2
-    * @returns {Number}
-    */
+   * Divide v1 by v2.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | / v2}</div>
+   * @mixin formatter "/"
+   * @param v1
+   * @param v2
+   * @returns {Number}
+   */
    rivets.formatters['/'] = function (v1, v2) {
       return v1 / v2;
    };
 
    /**
-    * Check if v1 is valid, otherwise use v2.
-    * @example
-    * <div>{v1 | > v2}</div>
-    * @mixin formatter ">"
-    * @param v1
-    * @param v2
-    * @returns {boolean}
-    */
+   * Check if v1 is valid, otherwise use v2.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | > v2}</div>
+   * @mixin formatter ">"
+   * @param v1
+   * @param v2
+   * @returns {boolean}
+   */
    rivets.formatters['?'] = function (v1, v2) {
       return v1 ? v1 : v2;
    };
 
    /**
-    * Returns specified object at specified key for specified array index.
-    * @example
-    * <div>{arr | array_at index key}</div>
-    * @mixin formatter "array_at"
-    * @param arr The source array
-    * @param index The desired index from given array
-    * @param key The desired key of the object to be returned
-    * @returns {*}
-    */
+   * Returns specified object at specified key for specified array index.
+   * @memberof rivets
+   * @example
+   * <div>{arr | array_at index key}</div>
+   * @mixin formatter "array_at"
+   * @param arr The source array
+   * @param index The desired index from given array
+   * @param key The desired key of the object to be returned
+   * @returns {*}
+   */
    rivets.formatters['array_at'] = function (arr, index, key) {
       return arr == null || arr.length === 0 ? [] : arr[index][key];
    };
 
    /**
-    * Returns an array of objects where each objects contains key and value properties based on the passed array.
-    * @example
-    * <div>{v1 | property_list}</div>
-    * @mixin formatter "property_list"
-    * @param {Object} obj The source object
-    * @returns {Array}
-    */
+   * Returns an array of objects where each objects contains key and value properties based on the passed array.
+   * @memberof rivets
+   * @example
+   * <div>{v1 | property_list}</div>
+   * @mixin formatter "property_list"
+   * @param {Object} obj The source object
+   * @returns {Array}
+   */
    rivets.formatters['property_list'] = function (obj) {
       return function () {
          var properties = [];
@@ -251,28 +291,30 @@ window.CoreLibrary = function () {
    };
 
    /**
-    * Custom style binder.
-    * @example
-    * <div rv-style-opacity="1">
-    * @mixin binder "style-*"
-    * @param el
-    * @param value
-    */
+   * Custom style binder.
+   * @memberof rivets
+   * @example
+   * <div rv-style-opacity="1">
+   * @mixin binder "style-*"
+   * @param el
+   * @param value
+   */
    rivets.binders['style-*'] = function (el, value) {
       el.style.setProperty(this.args[0], value);
    };
 
    /**
-    * Cloaking waits for element to bind and then sets it visible with a slight delay.
-    *
-    * Can listen to a value and apply the opacity after that value has changed
-    * Usage: rv-cloak or rv-cloak="value"
-    * In promise resolution, add something like this.scope.loaded = true
-    * @example
-    * <div rv-cloak> or <div rv-cloak="value">
-    * @mixin binder "cloak"
-    * @type {{priority: number, bind: rivets.binders.cloak.bind}}
-    */
+   * Cloaking waits for element to bind and then sets it visible with a slight delay.
+   *
+   * Can listen to a value and apply the opacity after that value has changed
+   * Usage: rv-cloak or rv-cloak="value"
+   * In promise resolution, add something like this.scope.loaded = true
+   * @example
+   * <div rv-cloak> or <div rv-cloak="value">
+   * @memberof rivets
+   * @mixin binder "cloak"
+   * @type {{priority: number, bind: rivets.binders.cloak.bind}}
+   */
    rivets.binders['cloak'] = {
       priority: -1000,
       bind: function bind(el) {
@@ -288,13 +330,13 @@ window.CoreLibrary = function () {
    };
 
    /**
-    * Binder that adds animation class.
-    *
-    * @example <div rv-anim-stagger="index"></div>
-    * @mixin binder "anim-stagger"
-    * @param el DOM element to apply classes
-    * @param index List item index
-    */
+   * Binder that adds animation class.
+   * @memberof rivets
+   * @example <div rv-anim-stagger="index"></div>
+   * @mixin binder "anim-stagger"
+   * @param el DOM element to apply classes
+   * @param index List item index
+   */
    rivets.binders['anim-stagger'] = function (el, index) {
       if (index < 0) {
          return false;
@@ -317,25 +359,27 @@ window.CoreLibrary = function () {
    };
 
    /**
-    * Binder to temporarily disable the stagger animation.
-    * IMPORTANT: The rv-anim-disable attribute has to be placed before the binder that provides the animation for it to take effect in the animation binder
-    * @example
-    * <div rv-anim-disable="event.disableAnimation" rv-anim-stagger="index">
-    * @mixin binder "anim-disable"
-    * @param el Dom element to disable the animation on
-    * @param animationDisable 'true' to disable animations
-    */
+   * Binder to temporarily disable the stagger animation.
+   * IMPORTANT: The rv-anim-disable attribute has to be placed before the binder that provides the animation for it to take effect in the animation binder
+   * @memberof rivets
+   * @example
+   * <div rv-anim-disable="event.disableAnimation" rv-anim-stagger="index">
+   * @mixin binder "anim-disable"
+   * @param el Dom element to disable the animation on
+   * @param animationDisable 'true' to disable animations
+   */
    rivets.binders['anim-disable'] = function (el, animationDisable) {
       el.setAttribute('data-anim-disable', animationDisable);
    };
 
    /**
-    * @description Binder to toggle a custom class based on the passed property, picks up the class name form the "rv-toggle-class" attribute.
-    * @example <div rv-custom-class="myBoolean" rv-toggle-class="myCustomClass">
-    * @mixin binder "custom-class"
-    * @param el DOM element to apply class to
-    * @param property The property to check
-    */
+   * @description Binder to toggle a custom class based on the passed property, picks up the class name form the "rv-toggle-class" attribute.
+   * @memberof rivets
+   * @example <div rv-custom-class="myBoolean" rv-toggle-class="myCustomClass">
+   * @mixin binder "custom-class"
+   * @param el DOM element to apply class to
+   * @param property The property to check
+   */
    rivets.binders['custom-class'] = function (el, property) {
       var cssClass = el.getAttribute('rv-toggle-class');
 
@@ -346,9 +390,8 @@ window.CoreLibrary = function () {
       }
    };
 
-   /**
-    * Checks the HTTP status of a response.
-    * @memberOf module:CoreLibrary
+   /*
+    * Checks the HTTP status of a response
     * @private
     * @param {Object} response
     * @returns {*}
@@ -363,32 +406,13 @@ window.CoreLibrary = function () {
       }
    }
 
-   /**
-    * Parses the response as json.
-    * @memberOf module:CoreLibrary
-    * @private
-    * @param response
-    * @returns {*}
-    */
    function parseJSON(response) {
       return response.json();
    }
 
-   /**
-    * Assign adapters.
-    */
-   sightglass.adapters = rivets.adapters;
-
-   /**
-    * Set Sightglass root adapter.
-    * @type {string}
-    */
-   sightglass.root = '.';
-
-   /* adding classes to body based on browser and browser version,
-    code inspired by the Bowser library:
-    https://github.com/ded/bowser
-    */
+   // adding classes to body based on browser and browser version,
+   // code inspired by the Bowser library:
+   // https://github.com/ded/bowser
    var ua = window.navigator.userAgent;
    var getFirstMatch = function getFirstMatch(regex) {
       var match = ua.match(regex);
@@ -428,68 +452,94 @@ window.CoreLibrary = function () {
       document.documentElement.classList.add('kw-browser-' + browser);
    }
 
-   return {
+   /**
+    * Main module that holds the other modules as well as widget
+    * related configurations
+    * @module CoreLibrary
+    */
+   window.CoreLibrary = {
       /**
-       * Expected api version is replaced with the API version number during the compilation step.
-       * @memberOf module:CoreLibrary
+       * Name of the browser that is running the widget
+       * @memberof module:CoreLibrary
+       * @type {String}
        */
       browser: browser,
+
       /**
        * Browser version.
-       * @memberOf module:CoreLibrary
+       * @memberof module:CoreLibrary
+       * @type {String}
        */
       browserVersion: browserVersion,
-      expectedApiVersion: '1.0.0.13', // this value is replaced with the API version number during the compilation step
+
       /**
-       * Development flag.
+       * Expected Kambi API version to use
+       * @type {String}
+       * @private
+       */
+      expectedApiVersion: '1.0.0.13', // this value is replaced with the API version number during the compilation step
+
+      /**
+       * Development flag
+       * @type {Boolean}
        * @memberOf module:CoreLibrary
        */
       development: false,
+
       /**
-       * utilModule.
+       * utilModule
+       * @type {Object}
        * @memberOf module:CoreLibrary
        */
       utilModule: null,
+
       /**
-       * widgetModule.
+       * widgetModule
+       * @type {Object}
        * @memberOf module:CoreLibrary
        */
       widgetModule: null,
+
       /**
-       * offeringModule.
+       * offeringModule
+       * @type {Object}
        * @memberOf module:CoreLibrary
        */
       offeringModule: null,
+
       /**
-       * statisticsModule.
+       * statisticsModule
+       * @type {Object}
        * @memberOf module:CoreLibrary
        */
       statisticsModule: null,
-      /**
-       * Api ready flag.
-       * This value is set to true once the kambi API has finished loaded
-       * @memberOf module:CoreLibrary
-       */
-      apiReady: false, // this value is set to true once the kambi API has finished loaded
 
       /**
-       * Config object.
-       * @type {{
-            apiBaseUrl: string,
-            auth: false,
-            channelId: 1,
-            currency: string,
-            customer: string,
-            device: 'desktop',
-            locale: 'en_GB',
-            market: 'GB',
-            oddsFormat: 'decimal',
-            offering: string,
-            routeRoot: string,
-            streamingAllowedForPlayer: true,
-            client_id: 2,
-            version: 'v2'
-         }}
+       * Api ready flag
+       * This value is set to true once the kambi API has finished loaded
+       * @type Boolean
+       * @memberOf module:CoreLibrary
+       */
+      apiReady: false,
+
+      /**
+       * Config object
+       * @type {Object}
+       * @property {String} apiBaseUrl
+       * @property {String} apiBaseUrl
+       * @property {Boolean} auth
+       * @property {Number} channelId
+       * @property {String} currency
+       * @property {String} customer
+       * @property {String} device
+       * @property {String} locale
+       * @property {String} market
+       * @property {String} oddsFormat
+       * @property {String} offering
+       * @property {String} routeRoot
+       * @property {Boolean} streamingAllowedForPlayer
+       * @property {Number} client_id
+       * @property {String} version
        * @memberOf module:CoreLibrary
        */
       config: {
@@ -511,12 +561,19 @@ window.CoreLibrary = function () {
 
       /**
        * Default height: 450.
+       * @type {Number}
        * @memberOf module:CoreLibrary
+       * @private
        */
       height: 450,
 
       /**
        * Page info.
+       * @type {Object}
+       * @property {Array(String)} leaguePaths
+       * @property {String} pageParam
+       * @property {String} pageTrackingPath
+       * @property {String} pageType
        * @memberOf module:CoreLibrary
        */
       pageInfo: {
@@ -528,6 +585,10 @@ window.CoreLibrary = function () {
 
       /**
        * api versions object.
+       * @type {Object}
+       * @property {String} client
+       * @property {String} libs
+       * @property {String} wapi
        * @memberOf module:CoreLibrary
        */
       apiVersions: {
@@ -537,14 +598,16 @@ window.CoreLibrary = function () {
       },
 
       /**
-       * widget tracking name is null by default.
+       * The name sent to Kambi API for analytics data collection
        * @memberOf module:CoreLibrary
+       * @private
        */
       widgetTrackingName: null,
 
       /**
        * args object for each component.
        * @memberOf module:CoreLibrary
+       * @private
        */
       args: {},
 
@@ -627,6 +690,7 @@ window.CoreLibrary = function () {
        * @memberOf module:CoreLibrary
        * @param {Object} setupData Setup data object
        * @param {boolean} setDefaultHeight Default height value
+       * @private
        */
       applySetupData: function applySetupData(setupData, setDefaultHeight) {
 
@@ -652,6 +716,7 @@ window.CoreLibrary = function () {
        * Set config object of CoreLibrary.
        * @memberOf module:CoreLibrary
        * @param {Object} config Config object to be set
+       * @private
        */
       setConfig: function setConfig(config) {
          for (var i in config) {
@@ -673,6 +738,7 @@ window.CoreLibrary = function () {
        * Sets page info.
        * @memberOf module:CoreLibrary
        * @param {Object} pageInfo pageinfo object we receive from api
+       * @private
        */
       setPageInfo: function setPageInfo(pageInfo) {
          // Check if the last character in the pageParam property is a slash, if not add it so we can use this property in filter requests
@@ -687,6 +753,7 @@ window.CoreLibrary = function () {
        * Sets versions.
        * @memberOf module:CoreLibrary
        * @param {Object} versions
+       * @private
        */
       setVersions: function setVersions(versions) {
          for (var i in versions) {
@@ -701,6 +768,7 @@ window.CoreLibrary = function () {
        * Set args object.
        * @memberOf module:CoreLibrary
        * @param {Object} args
+       * @private
        */
       setArgs: function setArgs(args) {
          this.args = args;
@@ -711,6 +779,7 @@ window.CoreLibrary = function () {
        * Requests setup data from widgetModule.
        * @memberOf module:CoreLibrary
        * @param {function} callback
+       * @private
        */
       requestSetup: function requestSetup(callback) {
          this.widgetModule.requestSetup(callback);
@@ -721,6 +790,7 @@ window.CoreLibrary = function () {
        * Logs the response.
        * @memberOf module:CoreLibrary
        * @param {Object} response
+       * @private
        */
       receiveRespone: function receiveRespone(response) {
          void 0;
@@ -730,7 +800,8 @@ window.CoreLibrary = function () {
       /**
        * Sets odds format.
        * @memberOf module:CoreLibrary
-       * @param {*} oddsFormat
+       * @param {String} oddsFormat
+       * @private
        */
       setOddsFormat: function setOddsFormat(oddsFormat) {
          this.config.oddsFormat = oddsFormat;
@@ -741,6 +812,7 @@ window.CoreLibrary = function () {
        * Sets widget height.
        * @memberOf module:CoreLibrary
        * @param {Number} height
+       * @private
        */
       setHeight: function setHeight(height) {
          this.height = height;
@@ -787,15 +859,11 @@ window.CoreLibrary = function () {
          this.widgetTrackingName = name;
       }
    };
-}();
+})();
 //# sourceMappingURL=coreLibrary.js.map
 
 'use strict';
 
-/**
- * @module Component
- * @memberOf CoreLibrary
- */
 (function () {
    'use strict';
 
@@ -816,44 +884,67 @@ window.CoreLibrary = function () {
       return ret;
    };
 
+   /**
+    * Component base class that should be inherited to create widgets
+    * @class Component
+    * @abstract
+    */
    CoreLibrary.Component = Stapes.subclass({
 
       /**
        * Object with default values from args if they are not present in
        * the Kambi API provided ones.
+       * @static
+       * @type {Object}
+       * @memberof Component
        */
       defaultArgs: {},
 
       /**
-       * If string, this value is appended to rootElement with the innerHTML DOM call
+       * If present, this value is appended to rootElement with the innerHTML DOM call
        * essentially parsing the the text as HTML.
+       * @static
+       * @type {String}
+       * @memberof Component
        */
       htmlTemplate: null,
 
       /**
        * Stapes Constructor method
        * @param {object} options
+       * @param {HTMLElement|String} options.rootElement an HTML element or a
+       * CSS selector for the HTMLElement.
+       * This element will be the "root" of the rivets scope
        * @returns {Promise}
+       * @memberof Component
        */
       constructor: function constructor(options) {
          var _this = this;
 
          /**
-          * object to be used in the HTML templates for data binding.
+          * object to be used in the HTML templates for data binding
           * @type {Object}
           */
          this.scope = {};
 
          /**
           * Rivets view object, binds this.scope to this.rootElement.
+          * @type {Object}
           */
          this.view = null;
 
          /**
           * HTML element to in which rivets.bind will be called,
           * if string uses document.querySelector to get the element
+          * @type {HTMLElement}
           */
          this.rootElement = null;
+
+         /**
+          * Method that should contain the widget initialization logic
+          * This method is only called after the API is ready
+          */
+         this.init; // jshint ignore:line
 
          if (options == null) {
             options = {};
@@ -971,18 +1062,18 @@ window.CoreLibrary = function () {
 'use strict';
 
 /**
+ * Module with methods to request data from the offering API
  * @module offeringModule
- * @memberOf CoreLibrary
+ * @memberof CoreLibrary
  */
 window.CoreLibrary.offeringModule = function () {
    'use strict';
 
    return {
-
       /**
-       * Get group events.
+       * Get group events
        * @param {number|string} groupId Group id
-       * @returns {*|Promise}
+       * @returns {Promise}
        */
 
       getGroupEvents: function getGroupEvents(groupId) {
@@ -993,8 +1084,8 @@ window.CoreLibrary.offeringModule = function () {
 
       /**
        * Get group information.
-       * @param {number|string} groupId Group id
-       * @returns {*|Promise}
+       * @param {Number|String} groupId Group id
+       * @returns {Promise}
        */
       getGroup: function getGroup(groupId) {
          var requesPath = '/group/' + groupId + '.json';
@@ -1003,9 +1094,9 @@ window.CoreLibrary.offeringModule = function () {
 
 
       /**
-       * Get events by filter.
-       * @param {string} filter Filter string, eg: football
-       * @param {object} params Request relevant parameters
+       * Get events by filter
+       * @param {String} filter Filter string, eg: football
+       * @param {Object} params Request relevant parameters
        * @returns {Promise}
        */
       getEventsByFilter: function getEventsByFilter(filter, params) {
@@ -1016,8 +1107,9 @@ window.CoreLibrary.offeringModule = function () {
 
 
       /**
-       * Normalizes v2 api betoffers.
-       * @param {object} betOffer Betoffer object we get from api
+       * Normalizes v2 api betoffers
+       * @param {Object} betOffer Betoffer object we get from api
+       * @private
        */
       adaptV2BetOffer: function adaptV2BetOffer(betOffer) {
          if (betOffer.suspended === true) {
@@ -1027,8 +1119,9 @@ window.CoreLibrary.offeringModule = function () {
 
 
       /**
-       * Normalizes the v2 api response.
-       * @param {object} liveData Livedata object we get from api
+       * Normalizes the v2 api response
+       * @param {Object} liveData Livedata object we get from api
+       * @private
        */
       adaptV2LiveData: function adaptV2LiveData(liveData) {
          if (liveData != null && liveData.statistics != null) {
@@ -1044,6 +1137,12 @@ window.CoreLibrary.offeringModule = function () {
             }
          }
       },
+
+
+      /**
+       * Normalizes the v2 event object
+       * @private
+       */
       adaptV2Event: function adaptV2Event(event) {
          // v3 and v2 event objects are almost the same
          // only a few attributes we don't are different
@@ -1051,9 +1150,10 @@ window.CoreLibrary.offeringModule = function () {
 
 
       /**
-       * Get live event data only, eg: match statistics, score, macthClock.
-       * @param {number|string} eventId The event id we need to fetch
+       * Get live event data only, eg: match statistics, score, macthClock
+       * @param {Number|String} eventId The event id we need to fetch
        * @returns {Promise}
+       * @private
        */
       getLiveEventData: function getLiveEventData(eventId) {
          var _this = this;
@@ -1067,8 +1167,9 @@ window.CoreLibrary.offeringModule = function () {
 
 
       /**
-       * Get all live events.
+       * Get all live events
        * @returns {Promise}
+       * @private
        */
       getLiveEvents: function getLiveEvents() {
          var _this2 = this;
@@ -1098,8 +1199,8 @@ window.CoreLibrary.offeringModule = function () {
 
 
       /**
-       * Returns a live event.
-       * @param {number|string} eventId The event id we need to fetch
+       * Returns a live event
+       * @param {Number|String} eventId The event id we need to fetch
        * @returns {Promise}
        */
       getLiveEvent: function getLiveEvent(eventId) {
@@ -1119,8 +1220,8 @@ window.CoreLibrary.offeringModule = function () {
 
 
       /**
-       * Get live events by filter.
-       * @param {string} filter Filter string
+       * Get live events by filter
+       * @param {String} filter Filter string
        * @returns {Promise}
        */
       getLiveEventsByFilter: function getLiveEventsByFilter(filter) {
@@ -1164,8 +1265,8 @@ window.CoreLibrary.offeringModule = function () {
 
 
       /**
-       * Requests and event from api.
-       * @param {string} eventId The event id we need to fetch
+       * Requests and event from api
+       * @param {String} eventId The event id we need to fetch
        * @returns {Promise}
        */
       getEvent: function getEvent(eventId) {
@@ -1195,7 +1296,7 @@ window.CoreLibrary.offeringModule = function () {
 
 
       /**
-       * Makes a request to provided path.
+       * Makes a request to provided path
        * @param {string} requestPath
        * @param {object} params
        * @param {number|string} version
@@ -1235,6 +1336,7 @@ window.CoreLibrary.offeringModule = function () {
 'use strict';
 
 /**
+ * Module to access statistics data
  * @module statisticsModule
  * @memberOf CoreLibrary
  */
@@ -1245,8 +1347,8 @@ window.CoreLibrary.statisticsModule = function () {
 
       /**
        * Configuration.
-       * @type {Object} config
-       * @type {String} config.baseApiUrl
+       * @type {Object}
+       * @property {String} baseApiUrl
        */
       config: {
          baseApiUrl: 'https://api.kambi.com/statistics/api/'
@@ -1255,8 +1357,8 @@ window.CoreLibrary.statisticsModule = function () {
       /**
        * Requests statistics data from api.
        * @param {String} type
-       * @param {string} filter
-       * @returns {*|Promise}
+       * @param {String} filter
+       * @returns {Promise}
        */
       getStatistics: function getStatistics(type, filter) {
          // Remove url parameters from filter
@@ -1277,32 +1379,18 @@ window.CoreLibrary.statisticsModule = function () {
 'use strict';
 
 /**
+ * Module with internationalization methods
  * @module translationModule
  * @memberOf CoreLibrary
  */
 window.CoreLibrary.translationModule = function () {
    'use strict';
 
-   /**
-    * Formatter that translates current value in binder.
-    * @example
-    * <span>{'key' | translate}</span>
-    * @mixin translate
-    * @param args
-    * @returns {*|String}
-    */
-
-   rivets.formatters.translate = function () {
-      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-         args[_key] = arguments[_key];
-      }
-
-      return CoreLibrary.translationModule.getTranslation.apply(CoreLibrary.translationModule, args);
-   };
-
    return {
       /**
-       * @type {object}
+       * fetched from the i18n folder JSON files. Only the current
+       * locale strings are fetched
+       * @type {Object}
        */
       i18nStrings: {},
 
@@ -1311,6 +1399,7 @@ window.CoreLibrary.translationModule = function () {
        * The locale json file resides in CoreLibrary/i18n folder; it is populated with locales during build process
        * @param {String} locale Locale string, eg: sv_SE
        * @returns {Promise}
+       * @private
        */
       fetchTranslations: function fetchTranslations(locale) {
          if (locale == null) {
@@ -1342,15 +1431,20 @@ window.CoreLibrary.translationModule = function () {
       /**
        * Returns translated string based of a provided key.
        * @param {String} key Key to fetch translation for
-       * @param {Array} args other arguments that are passed to this method
+       * @param {...String} args arguments to replace inside the translated string
+       * @example
+       * en_GB.json:
+       * { "welcomeUserToPlace": "Welcome {0} to {1}" }
+       * Javascriot:
+       * getTranslation('welcomeUserToPlace', 'Daniel', 'Stadium') => 'Welcome Daniel to Stadium'
        * @returns {String}
        */
       getTranslation: function getTranslation(key) {
          if (this.i18nStrings[key] != null) {
             var str = this.i18nStrings[key];
 
-            for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-               args[_key2 - 1] = arguments[_key2];
+            for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+               args[_key - 1] = arguments[_key];
             }
 
             for (var i = 0; i < args.length; i++) {
@@ -1368,6 +1462,7 @@ window.CoreLibrary.translationModule = function () {
 'use strict';
 
 /**
+ * Module with utility functions
  * @module utilModule
  * @memberOf CoreLibrary
  */
@@ -1402,8 +1497,8 @@ window.CoreLibrary.utilModule = function () {
 
       /**
        * Get decimal formatted odds.
-       * @param {number} odds Odds number
-       * @returns {number}
+       * @param {Number} odds Odds number
+       * @returns {Number}
        */
       getOddsDecimalValue: function getOddsDecimalValue(odds) {
          if (odds < 100) {
@@ -1418,7 +1513,7 @@ window.CoreLibrary.utilModule = function () {
 
       /**
        * Returns the outcome label translated.
-       * @param {Object} outcome Outcome object
+       * @param {Object} outcome A betoffer outcome object
        * @param {Object} event Event object
        * @returns {string}
        */
@@ -1495,6 +1590,7 @@ window.CoreLibrary.utilModule = function () {
 'use strict';
 
 /**
+ * Module with methods to manipulate the widget and interact with the sportsbook
  * @module widgetModule
  * @memberOf CoreLibrary
  */
@@ -1507,6 +1603,7 @@ window.CoreLibrary.widgetModule = function () {
 
       /**
        * @type {object}
+       * @private
        */
       api: { // placeholders for when not running inside iframe
 
@@ -1519,7 +1616,36 @@ window.CoreLibrary.widgetModule = function () {
       },
 
       /**
-       * Instantiates a new Stapes subclass
+       * Object in which you can add event listeners for Kambi API events
+       * Valid events listeners:
+       *
+       * 'WIDGET:HEIGHT': Widget height changed
+       *
+       * 'OUTCOME:REMOVED:{outcomeId}': Outcome with {outcomeId} removed
+       *
+       * 'OUTCOME:ADDED:{outcomeId}': Outcome with {outcomeId} added
+       *
+       * 'OUTCOME:UPDATE:{outcomeId}': Outcome with {outcomeId} updated
+       *
+       * 'WIDGET:ARGS': Widget args changed
+       *
+       * 'PAGE:INFO':  Page info changed
+       *
+       * 'ODDS:FORMAT': Odds format changed
+       *
+       * 'CLIENT:CONFIG': Client config changed
+       *
+       * 'USER:LOGGED_IN': User logged in changed
+       *
+       * @example
+       *
+       * CoreLibrary.widgetModule.events
+       *    .on('OUTCOME:ADDED:' + outcome.id,
+       *       ( data, event ) => {
+       *          ...
+       *       });
+       *
+       * @type {Object}
        */
       events: new Module(),
 
@@ -1532,6 +1658,7 @@ window.CoreLibrary.widgetModule = function () {
        * Handles widget api response.
        * Emits events for each response
        * @param {Object} response
+       * @private
        */
       handleResponse: function handleResponse(response) {
          switch (response.type) {
@@ -1608,7 +1735,7 @@ window.CoreLibrary.widgetModule = function () {
 
 
       /**
-       * Creates url from given path and optionalRoot.
+       * Creates url from given path and optionalRoot
        * @param {String} path
        * @param {String} optionalRoot
        * @returns {String}
@@ -1631,7 +1758,7 @@ window.CoreLibrary.widgetModule = function () {
 
 
       /**
-       * Get page type.
+       * Get page type
        * @returns {String}
        */
       getPageType: function getPageType() {
@@ -1652,7 +1779,7 @@ window.CoreLibrary.widgetModule = function () {
 
 
       /**
-       * Makes widget api request for setupdata.
+       * Makes widget api request for setupdata
        * @param {fn} callback Callback
        */
       requestSetup: function requestSetup(callback) {
@@ -1661,7 +1788,7 @@ window.CoreLibrary.widgetModule = function () {
 
 
       /**
-       * Requests widget height from widget api.
+       * Requests widget height from widget api
        */
       requestWidgetHeight: function requestWidgetHeight() {
          this.api.request(this.api.WIDGET_HEIGHT);
@@ -1669,8 +1796,8 @@ window.CoreLibrary.widgetModule = function () {
 
 
       /**
-       * Set widget api widget height.
-       * @param {Number} height
+       * Set widget api widget height
+       * @param {Number} height the height in pixels
        */
       setWidgetHeight: function setWidgetHeight(height) {
          this.api.set(this.api.WIDGET_HEIGHT, height);
@@ -1678,7 +1805,9 @@ window.CoreLibrary.widgetModule = function () {
 
 
       /**
-       * tries to adapt the widget iframe height to match the content.
+       * tries to adapt the widget iframe height to match the content
+       * Only works if the <html> and <body> tags don't have height: 100%
+       * styling rule
        */
       adaptWidgetHeight: function adaptWidgetHeight() {
          // tries to adapt the widget iframe height to match the content
@@ -1690,7 +1819,7 @@ window.CoreLibrary.widgetModule = function () {
 
 
       /**
-       * Sets widget api widget transition state.
+       * Sets widget api widget transition state
        * @param {boolean} enableTransition
        */
       enableWidgetTransition: function enableWidgetTransition(enableTransition) {
@@ -1703,7 +1832,7 @@ window.CoreLibrary.widgetModule = function () {
 
 
       /**
-       * Call api to remove widget.
+       * Call api to remove widget from the sportsbook
        */
       removeWidget: function removeWidget() {
          this.api.remove();
@@ -1711,7 +1840,7 @@ window.CoreLibrary.widgetModule = function () {
 
 
       /**
-       * Widget api method for navigating to a live event.
+       * Widget api method for navigating to a live event
        * @param {number} eventId
        */
       navigateToLiveEvent: function navigateToLiveEvent(eventId) {
@@ -1720,7 +1849,7 @@ window.CoreLibrary.widgetModule = function () {
 
 
       /**
-       * Widget api method for navigating to a prelive event.
+       * Widget api method for navigating to a prelive event
        * @param {number} eventId
        */
       navigateToEvent: function navigateToEvent(eventId) {
@@ -1729,7 +1858,7 @@ window.CoreLibrary.widgetModule = function () {
 
 
       /**
-       * Widget api method for navigating to a filter.
+       * Widget api method for navigating to a filter
        * @param {String} filterParams
        */
       navigateToFilter: function navigateToFilter(filterParams) {
@@ -1741,7 +1870,7 @@ window.CoreLibrary.widgetModule = function () {
 
 
       /**
-       * Widget api method for navigating to a live events.
+       * Widget api method for navigating to a live events
        */
       navigateToLiveEvents: function navigateToLiveEvents() {
          this.navigateClient(['in-play']);
@@ -1749,7 +1878,7 @@ window.CoreLibrary.widgetModule = function () {
 
 
       /**
-       * Uses widget api to add outcomes to betslip.
+       * Uses widget api to add outcomes to betslip
        * @param {Array|Object} outcomes
        * @param {Array|Object} stakes
        * @param {String} updateMode
@@ -1798,7 +1927,7 @@ window.CoreLibrary.widgetModule = function () {
 
 
       /**
-       * Removes outcomes from betslip via widget api.
+       * Removes outcomes from betslip via widget api
        * @param {Array|Object} outcomes
        */
       removeOutcomeFromBetslip: function removeOutcomeFromBetslip(outcomes) {
@@ -1820,7 +1949,7 @@ window.CoreLibrary.widgetModule = function () {
 
 
       /**
-       * Widget api method for requesting betslip outcome.
+       * Widget api method for requesting betslip outcome
        */
       requestBetslipOutcomes: function requestBetslipOutcomes() {
          this.api.request(this.api.BETSLIP_OUTCOMES);
@@ -1828,7 +1957,7 @@ window.CoreLibrary.widgetModule = function () {
 
 
       /**
-       * Widget api method for requesting page info.
+       * Widget api method for requesting page info
        */
       requestPageInfo: function requestPageInfo() {
          this.api.request(this.api.PAGE_INFO);
@@ -1836,7 +1965,7 @@ window.CoreLibrary.widgetModule = function () {
 
 
       /**
-       * Widget api method for requesting widget args.
+       * Widget api method for requesting widget args
        */
       requestWidgetArgs: function requestWidgetArgs() {
          this.api.request(this.api.WIDGET_ARGS);
@@ -1844,7 +1973,7 @@ window.CoreLibrary.widgetModule = function () {
 
 
       /**
-       * Widget api method for requesting client config.
+       * Widget api method for requesting client config
        */
       requestClientConfig: function requestClientConfig() {
          this.api.request(this.api.CLIENT_CONFIG);
@@ -1852,7 +1981,7 @@ window.CoreLibrary.widgetModule = function () {
 
 
       /**
-       * Widget api method for requesting odds format.
+       * Widget api method for requesting odds format
        */
       requestOddsFormat: function requestOddsFormat() {
          this.api.request(this.api.CLIENT_ODDS_FORMAT);
@@ -1860,7 +1989,7 @@ window.CoreLibrary.widgetModule = function () {
 
 
       /**
-       * Widget api method for requesting american odds.
+       * Widget api method for requesting american odds
        * @param  {Number}odds
        * @returns {Promise}
        */
@@ -1876,7 +2005,7 @@ window.CoreLibrary.widgetModule = function () {
 
 
       /**
-       * Widget api method for requesting fractional odds.
+       * Widget api method for requesting fractional odds
        * @param {Number} odds
        * @returns {Promise}
        */
@@ -1892,7 +2021,7 @@ window.CoreLibrary.widgetModule = function () {
 
 
       /**
-       * Widget api method for navigating client to hash path.
+       * Widget api method for navigating client to hash path
        * @param {String|Array} destination
        */
       navigateClient: function navigateClient(destination) {
@@ -1915,11 +2044,6 @@ window.CoreLibrary.widgetModule = function () {
 
 'use strict';
 
-/**
- * header-component dom attribute
- * @module HeaderComponent
- * @type {{static: string[], template: (function()), initialize: (function(*, *))}}
- */
 (function () {
    'use strict';
 
@@ -1928,17 +2052,18 @@ window.CoreLibrary.widgetModule = function () {
     * @param title
     * @param cssClasses
     * @param scope
-    * @param collapsible
+    * @param collapsable
     * @param startCollapsed
     * @constructor
+    * @private
     */
 
-   var HeaderController = function HeaderController(title, cssClasses, scope, collapsible, startCollapsed) {
+   var HeaderController = function HeaderController(title, cssClasses, scope, collapsable, startCollapsed) {
       var headerHeight = 36;
       undefined.title = title;
       undefined.cssClasses = cssClasses + ' KambiWidget-font kw-header l-flexbox l-align-center l-pl-16';
 
-      if (collapsible) {
+      if (collapsable) {
          scope.collapsed = startCollapsed;
          if (scope.collapsed) {
             CoreLibrary.widgetModule.enableWidgetTransition(false);
@@ -1961,18 +2086,22 @@ window.CoreLibrary.widgetModule = function () {
    };
 
    /**
-    * @mixin header-component
+    * Component that creates a header for the widget that can optionally
+    * collapse the widget by cliking on it
+    * @mixin component header-component
     * @example
-    * <div header-component>
-    * @type {{static: string[], template: (function(): string), initialize: (function(*, *): HeaderController)}}
+    * <header-component title='Title'>
+    * @property {Boolean} collapsable if true clickin on header will collapse the widget
+    * @property {Boolean} collapsed if true the widget starts collapsed
+    * @property {String} css-classes classes to add to the header
     */
    rivets.components['header-component'] = {
       static: ['collapsable', 'collapsed', 'css-classes'],
 
       /**
        * Returns header template.
-       * @memberOf module:HeaderComponent#
        * @returns {string}
+       * @private
        */
       template: function template() {
          return '\n            <header rv-class="cssClasses" rv-style="style" rv-on-click="click">{title | translate}</header>\n         ';
@@ -1981,10 +2110,10 @@ window.CoreLibrary.widgetModule = function () {
 
       /**
        * Initializes the rivets component.
-       * @memberOf module:HeaderComponent#
        * @param {element} el DOM element to be binded
        * @param {object} attributes DOM attributes
        * @returns {HeaderController}
+       * @private
        */
       initialize: function initialize(el, attributes) {
          var cssClasses = attributes['css-classes'];
@@ -1992,9 +2121,9 @@ window.CoreLibrary.widgetModule = function () {
             cssClasses = '';
          }
 
-         var collapsible = false;
-         if (attributes.collapsible === 'true') {
-            collapsible = true;
+         var collapsable = false;
+         if (attributes.collapsable === 'true') {
+            collapsable = true;
          }
 
          var startCollapsed = false;
@@ -2002,7 +2131,7 @@ window.CoreLibrary.widgetModule = function () {
             startCollapsed = true;
          }
 
-         return new HeaderController(attributes.title, cssClasses, this.view.models, collapsible, startCollapsed);
+         return new HeaderController(attributes.title, cssClasses, this.view.models, collapsable, startCollapsed);
       }
    };
 })();
@@ -2010,9 +2139,6 @@ window.CoreLibrary.widgetModule = function () {
 
 'use strict';
 
-/**
- * @module OutcomeComponent
- */
 (function () {
    'use strict';
 
@@ -2025,9 +2151,10 @@ window.CoreLibrary.widgetModule = function () {
     *     outcome-attr="outcome"
     *     event-attr="event">
     * </outcome-component-no-label>
-    * @mixin outcome-suspended
+    * @mixin binder outcome-suspended
     * @param {element} el
     * @param {boolean} property
+    * @private
     */
 
    rivets.binders['outcome-suspended'] = function (el, property) {
@@ -2048,9 +2175,10 @@ window.CoreLibrary.widgetModule = function () {
     *     outcome-attr="outcome"
     *     event-attr="event">
     * </outcome-component-no-label>
-    * @mixin outcome-selected
+    * @mixin binder outcome-selected
     * @param {element} el
     * @param {boolean} property
+    * @private
     */
    rivets.binders['outcome-selected'] = function (el, property) {
       var cssClass = 'KambiWidget-outcome--selected';
@@ -2066,6 +2194,7 @@ window.CoreLibrary.widgetModule = function () {
     * Outcome view controller.
     * @param {object} attributes Attributes
     * @memberOf module:OutcomeComponent#
+    * @private
     */
    var OutcomeViewController = function OutcomeViewController(attributes) {
       var _this = this;
@@ -2101,6 +2230,7 @@ window.CoreLibrary.widgetModule = function () {
        * Toggle outcomes.
        * @param event
        * @param scope
+       * @private
        */
       this.toggleOutcome = function (event, scope) {
          if (scope.selected === false) {
@@ -2113,6 +2243,7 @@ window.CoreLibrary.widgetModule = function () {
       /**
        * Returns label.
        * If data contains 'customLabel' it will return that custom value
+       * @private
        */
       this.getLabel = function () {
          if (_this.data.customLabel) {
@@ -2131,6 +2262,7 @@ window.CoreLibrary.widgetModule = function () {
       /**
        * Returns Odds format.
        * @returns {*}
+       * @private
        */
       this.getOddsFormat = function () {
          switch (_this.coreLibraryConfig.oddsFormat) {
@@ -2145,21 +2277,23 @@ window.CoreLibrary.widgetModule = function () {
    };
 
    /**
-    * Outcome component.
+    * Outcome component
     * @example
     * <outcome-component
     *    rv-each-outcome="betoffer.outcomes"
     *    outcome-attr="outcome"
     *    event-attr="event">
     * </outcome-component>
-    * @mixin outcome-component
-    * @type {{template: (function()), initialize: (function(*, *=))}}
+    * @mixin component outcome-component
+    * @property {Object} outcome-attr An (single) outcome object
+    * @property {Object} event-attr The event itself
+    * @property {String} customLabel Optional, custom label to show
     */
    rivets.components['outcome-component'] = {
-
       /**
        * Returns the template.
        * @returns {string}
+       * @private
        */
 
       template: function template() {
@@ -2172,6 +2306,7 @@ window.CoreLibrary.widgetModule = function () {
        * @param el
        * @param attributes
        * @returns {*}
+       * @private
        */
       initialize: function initialize(el, attributes) {
          if (attributes.outcomeAttr == null) {
@@ -2189,14 +2324,15 @@ window.CoreLibrary.widgetModule = function () {
     * <outcome-component-no-label
     *     outcome-attr="outcome" event-attr="event">
     * </outcome-component-no-label>
-    * @mixin outcome-component-no-label
-    * @type {{template: (function()), initialize: (function(*, *=))}}
+    * @mixin component outcome-component-no-label
+    * @property {Object} outcome-attr An (single) outcome object
+    * @property {Object} event-attr The event itself
     */
    rivets.components['outcome-component-no-label'] = {
-
       /**
-       * Template outcome-component-no-label.
+       * Template outcome-component-no-label
        * @returns {string}
+       * @private
        */
 
       template: function template() {
@@ -2209,6 +2345,7 @@ window.CoreLibrary.widgetModule = function () {
        * @param el
        * @param attributes
        * @returns {OutcomeViewController}
+       * @private
        */
       initialize: function initialize(el, attributes) {
          return new OutcomeViewController(attributes);
@@ -2219,11 +2356,13 @@ window.CoreLibrary.widgetModule = function () {
 
 'use strict';
 
-/**
- * @module PaginationComponent
- */
 (function () {
    'use strict';
+
+   /**
+    * Component used for creating number-based pagination
+    * @class PaginationComponent
+    */
 
    CoreLibrary.PaginationComponent = CoreLibrary.Component.subclass({
       htmlTemplate: '<div class="kw-pagination l-flexbox l-pack-center l-align-center">' + '<span rv-on-click="previousPage" rv-class-disabled="firstPage"' + 'class="kw-page-link kw-pagination-arrow">' + '<i class="icon-angle-left"></i>' + '</span>' + '<span rv-each-page="pages" rv-on-click="page.clickEvent" rv-class-kw-active-page="page.selected"' + 'class="kw-page-link l-pack-center l-align-center" >' + '{page.text}' + '</span>' + '<span rv-on-click="nextPage" rv-class-disabled="lastPage"' + 'class="kw-page-link kw-pagination-arrow">' + '<i class="icon-angle-right"></i>' + '</span>' + '</div>',
@@ -2235,6 +2374,7 @@ window.CoreLibrary.widgetModule = function () {
        * @param {string} scopeKey scope key - will be used to create a copy
        * @param {number} pageSize Pagination page size
        * @param {number} maxVisiblePages Max visible pages
+       * @memberof PaginationComponent
        */
       constructor: function constructor(htmlElement, mainComponentScope, scopeKey, pageSize, maxVisiblePages) {
          var _this = this;
@@ -2275,6 +2415,7 @@ window.CoreLibrary.widgetModule = function () {
 
       /**
        * Empties the currentPageArray.
+       * @memberof PaginationComponent
        */
       clearArray: function clearArray() {
          this.currentPageArray.splice(0, this.currentPageArray.length);
@@ -2283,7 +2424,8 @@ window.CoreLibrary.widgetModule = function () {
 
       /**
        * Get current page.
-       * @returns {*|number}
+       * @returns {number}
+       * @memberof PaginationComponent
        */
       getCurrentPage: function getCurrentPage() {
          return this.scope.currentPage;
@@ -2293,6 +2435,7 @@ window.CoreLibrary.widgetModule = function () {
       /**
        * Sets currentPage variable.
        * @param {number} pageNumber Set a certain page as current one
+       * @memberof PaginationComponent
        */
       setCurrentPage: function setCurrentPage(pageNumber) {
          if (pageNumber === this.getCurrentPage()) {
@@ -2309,6 +2452,7 @@ window.CoreLibrary.widgetModule = function () {
       /**
        * Returns the number of pages.
        * @returns {number}
+       * @memberof PaginationComponent
        */
       getNumberOfPages: function getNumberOfPages() {
          return Math.ceil(this.originalArray.length / this.pageSize);
@@ -2318,6 +2462,7 @@ window.CoreLibrary.widgetModule = function () {
       /**
        * Method for displaying next page.
        * @returns {*|number}
+       * @memberof PaginationComponent
        */
       nextPage: function nextPage() {
          if (this.getCurrentPage() < this.getNumberOfPages() - 1) {
@@ -2330,6 +2475,7 @@ window.CoreLibrary.widgetModule = function () {
       /**
        * Method for displaying previous page.
        * @returns {*|number}
+       * @memberof PaginationComponent
        */
       previousPage: function previousPage() {
          if (this.getCurrentPage() > 0) {
@@ -2341,6 +2487,8 @@ window.CoreLibrary.widgetModule = function () {
 
       /**
        * Changes the _scopeKey array to match the current page elements.
+       * @memberof PaginationComponent
+       * @private
        */
       adaptArray: function adaptArray() {
          this.clearArray();
@@ -2362,6 +2510,8 @@ window.CoreLibrary.widgetModule = function () {
 
       /**
        * Renders the component.
+       * @memberof PaginationComponent
+       * @private
        */
       init: function init() {
          this.render();
@@ -2370,6 +2520,8 @@ window.CoreLibrary.widgetModule = function () {
 
       /**
        * Updates the scope.pages value which is used to render the page numbers and arrows.
+       * @memberof PaginationComponent
+       * @private
        */
       render: function render() {
          this.scope.pages = [];
