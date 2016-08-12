@@ -888,6 +888,33 @@
     * Component base class that should be inherited to create widgets
     * @class Component
     * @abstract
+    * @example
+   HTML:
+   <html>
+   <head>
+      ...
+   </head>
+   <body>
+      <span>{args.title}</span>
+      <br />
+      <span>{date}</span>
+      ...
+   </body>
+   </html>
+   var Widget = CoreLibrary.Component.subclass({
+    defaultArgs: {
+      title: 'Title!'
+   },
+    constructor () {
+      CoreLibrary.Component.apply(this, arguments);
+   },
+    init () {
+      this.scope.date = (new Date()).toString();
+   }
+   });
+   var widget = new Widget({
+   rootElement: 'html'
+   });
     */
    CoreLibrary.Component = Stapes.subclass({
 
@@ -2321,9 +2348,11 @@ window.CoreLibrary.widgetModule = function () {
    /**
     * Outcome component without label.
     * @example
-    * <outcome-component-no-label
-    *     outcome-attr="outcome" event-attr="event">
-    * </outcome-component-no-label>
+    * <outcome-component
+    *    rv-each-outcome="betoffer.outcomes"
+    *    outcome-attr="outcome"
+    *    event-attr="event">
+    * </outcome-component>
     * @mixin component outcome-component-no-label
     * @property {Object} outcome-attr An (single) outcome object
     * @property {Object} event-attr The event itself
@@ -2361,19 +2390,38 @@ window.CoreLibrary.widgetModule = function () {
 
    /**
     * Component used for creating number-based pagination
+    * @example
+   HTML:
+   <body>
+   <!-- note that we need an _ in _events, scope.events is the original array,
+   _events is the array just with the elements of this page-->
+   <div rv-each-event="_events">
+      <span>{event.name}</span>
+   </div>
+   ...
+   <!--Footer-->
+   <footer class="kw-footer">
+      <div id="pagination" class="kw-pagination l-flexbox l-pack-center l-align-center"></div>
+   </footer>
+   </body>
+   init() {
+   ...
+   this.scope.events = [...];
+   this.pagination = new CoreLibrary.PaginationComponent('#pagination', this.scope, 'events', 5);
+   }
     * @class PaginationComponent
     */
 
    CoreLibrary.PaginationComponent = CoreLibrary.Component.subclass({
-      htmlTemplate: '<div class="kw-pagination l-flexbox l-pack-center l-align-center">' + '<span rv-on-click="previousPage" rv-class-disabled="firstPage"' + 'class="kw-page-link kw-pagination-arrow">' + '<i class="icon-angle-left"></i>' + '</span>' + '<span rv-each-page="pages" rv-on-click="page.clickEvent" rv-class-kw-active-page="page.selected"' + 'class="kw-page-link l-pack-center l-align-center" >' + '{page.text}' + '</span>' + '<span rv-on-click="nextPage" rv-class-disabled="lastPage"' + 'class="kw-page-link kw-pagination-arrow">' + '<i class="icon-angle-right"></i>' + '</span>' + '</div>',
+      htmlTemplate: '\n      <div class="kw-pagination l-flexbox l-pack-center l-align-center">\n         <span\n               rv-on-click="previousPage"\n               rv-class-disabled="firstPage"\n               class="kw-page-link kw-pagination-arrow">\n            <i class="icon-angle-left"></i>\n         </span>\n         <span\n               rv-each-page="pages"\n               rv-on-click="page.clickEvent"\n               rv-class-kw-active-page="page.selected"\n               class="kw-page-link l-pack-center l-align-center">\n            {page.text}\n         </span>\n         <span\n               rv-on-click="nextPage"\n               rv-class-disabled="lastPage"\n               class="kw-page-link kw-pagination-arrow">\n               <i class="icon-angle-right"></i>\n         </span>\n      </div>\n      ',
 
       /**
        * Constructor method.
-       * @param {string} htmlElement Html element to be attached to
+       * @param {string} htmlElement HTML element to place the controller (pagination buttons) in
        * @param {object} mainComponentScope The scope object of the widget
-       * @param {string} scopeKey scope key - will be used to create a copy
-       * @param {number} pageSize Pagination page size
-       * @param {number} maxVisiblePages Max visible pages
+       * @param {string} scopeKey scope key - they attribute name in the scope object to paginate on
+       * @param {number} pageSize Number of elements per page
+       * @param {number} maxVisiblePages Maximum visible pages in the controller
        * @memberof PaginationComponent
        */
       constructor: function constructor(htmlElement, mainComponentScope, scopeKey, pageSize, maxVisiblePages) {
@@ -2416,6 +2464,7 @@ window.CoreLibrary.widgetModule = function () {
       /**
        * Empties the currentPageArray.
        * @memberof PaginationComponent
+       * @private
        */
       clearArray: function clearArray() {
          this.currentPageArray.splice(0, this.currentPageArray.length);
@@ -2461,7 +2510,7 @@ window.CoreLibrary.widgetModule = function () {
 
       /**
        * Method for displaying next page.
-       * @returns {*|number}
+       * @returns {Number}
        * @memberof PaginationComponent
        */
       nextPage: function nextPage() {
@@ -2474,7 +2523,7 @@ window.CoreLibrary.widgetModule = function () {
 
       /**
        * Method for displaying previous page.
-       * @returns {*|number}
+       * @returns {Number}
        * @memberof PaginationComponent
        */
       previousPage: function previousPage() {

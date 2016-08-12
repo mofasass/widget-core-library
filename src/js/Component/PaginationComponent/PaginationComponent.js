@@ -4,31 +4,60 @@
 
    /**
     * Component used for creating number-based pagination
+    * @example
+HTML:
+<body>
+   <!-- note that we need an _ in _events, scope.events is the original array,
+   _events is the array just with the elements of this page-->
+   <div rv-each-event="_events">
+      <span>{event.name}</span>
+   </div>
+   ...
+   <!--Footer-->
+   <footer class="kw-footer">
+      <div id="pagination" class="kw-pagination l-flexbox l-pack-center l-align-center"></div>
+   </footer>
+</body>
+
+init() {
+   ...
+   this.scope.events = [...];
+   this.pagination = new CoreLibrary.PaginationComponent('#pagination', this.scope, 'events', 5);
+}
     * @class PaginationComponent
     */
    CoreLibrary.PaginationComponent = CoreLibrary.Component.subclass({
-      htmlTemplate: '<div class="kw-pagination l-flexbox l-pack-center l-align-center">' +
-      '<span rv-on-click="previousPage" rv-class-disabled="firstPage"' +
-      'class="kw-page-link kw-pagination-arrow">' +
-      '<i class="icon-angle-left"></i>' +
-      '</span>' +
-      '<span rv-each-page="pages" rv-on-click="page.clickEvent" rv-class-kw-active-page="page.selected"' +
-      'class="kw-page-link l-pack-center l-align-center" >' +
-      '{page.text}' +
-      '</span>' +
-      '<span rv-on-click="nextPage" rv-class-disabled="lastPage"' +
-      'class="kw-page-link kw-pagination-arrow">' +
-      '<i class="icon-angle-right"></i>' +
-      '</span>' +
-      '</div>',
+      htmlTemplate: `
+      <div class="kw-pagination l-flexbox l-pack-center l-align-center">
+         <span
+               rv-on-click="previousPage"
+               rv-class-disabled="firstPage"
+               class="kw-page-link kw-pagination-arrow">
+            <i class="icon-angle-left"></i>
+         </span>
+         <span
+               rv-each-page="pages"
+               rv-on-click="page.clickEvent"
+               rv-class-kw-active-page="page.selected"
+               class="kw-page-link l-pack-center l-align-center">
+            {page.text}
+         </span>
+         <span
+               rv-on-click="nextPage"
+               rv-class-disabled="lastPage"
+               class="kw-page-link kw-pagination-arrow">
+               <i class="icon-angle-right"></i>
+         </span>
+      </div>
+      `,
 
       /**
        * Constructor method.
-       * @param {string} htmlElement Html element to be attached to
+       * @param {string} htmlElement HTML element to place the controller (pagination buttons) in
        * @param {object} mainComponentScope The scope object of the widget
-       * @param {string} scopeKey scope key - will be used to create a copy
-       * @param {number} pageSize Pagination page size
-       * @param {number} maxVisiblePages Max visible pages
+       * @param {string} scopeKey scope key - they attribute name in the scope object to paginate on
+       * @param {number} pageSize Number of elements per page
+       * @param {number} maxVisiblePages Maximum visible pages in the controller
        * @memberof PaginationComponent
        */
       constructor ( htmlElement, mainComponentScope, scopeKey, pageSize, maxVisiblePages ) {
@@ -68,6 +97,7 @@
       /**
        * Empties the currentPageArray.
        * @memberof PaginationComponent
+       * @private
        */
       clearArray () {
          this.currentPageArray.splice(0, this.currentPageArray.length);
@@ -109,7 +139,7 @@
 
       /**
        * Method for displaying next page.
-       * @returns {*|number}
+       * @returns {Number}
        * @memberof PaginationComponent
        */
       nextPage () {
@@ -121,7 +151,7 @@
 
       /**
        * Method for displaying previous page.
-       * @returns {*|number}
+       * @returns {Number}
        * @memberof PaginationComponent
        */
       previousPage () {

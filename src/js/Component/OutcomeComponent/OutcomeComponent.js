@@ -199,9 +199,11 @@
    /**
     * Outcome component without label.
     * @example
-    * <outcome-component-no-label
-    *     outcome-attr="outcome" event-attr="event">
-    * </outcome-component-no-label>
+    * <outcome-component
+    *    rv-each-outcome="betoffer.outcomes"
+    *    outcome-attr="outcome"
+    *    event-attr="event">
+    * </outcome-component>
     * @mixin component outcome-component-no-label
     * @property {Object} outcome-attr An (single) outcome object
     * @property {Object} event-attr The event itself

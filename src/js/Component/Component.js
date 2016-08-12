@@ -17,6 +17,39 @@
     * Component base class that should be inherited to create widgets
     * @class Component
     * @abstract
+    * @example
+HTML:
+<html>
+   <head>
+      ...
+   </head>
+   <body>
+      <span>{args.title}</span>
+      <br />
+      <span>{date}</span>
+      ...
+   </body>
+</html>
+
+
+var Widget = CoreLibrary.Component.subclass({
+
+   defaultArgs: {
+      title: 'Title!'
+   },
+
+   constructor () {
+      CoreLibrary.Component.apply(this, arguments);
+   },
+
+   init () {
+      this.scope.date = (new Date()).toString();
+   }
+});
+
+var widget = new Widget({
+   rootElement: 'html'
+});
     */
    CoreLibrary.Component = Stapes.subclass({
 
