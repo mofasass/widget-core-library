@@ -41,7 +41,8 @@
    /**
     * Component that creates a header for the widget that can optionally
     * collapse the widget by cliking on it
-    * @mixin component header-component
+    * @memberof rivets
+    * @mixin component "header-component"
     * @example
     * <header-component title='Title'>
     * @property {Boolean} collapsable if true clickin on header will collapse the widget

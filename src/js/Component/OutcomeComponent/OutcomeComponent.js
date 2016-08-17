@@ -10,7 +10,8 @@
     *     outcome-attr="outcome"
     *     event-attr="event">
     * </outcome-component-no-label>
-    * @mixin binder outcome-suspended
+    * @memberof rivets
+    * @mixin binder "outcome-suspended"
     * @param {element} el
     * @param {boolean} property
     * @private
@@ -33,7 +34,8 @@
     *     outcome-attr="outcome"
     *     event-attr="event">
     * </outcome-component-no-label>
-    * @mixin binder outcome-selected
+    * @memberof rivets
+    * @mixin binder "outcome-selected"
     * @param {element} el
     * @param {boolean} property
     * @private
@@ -140,7 +142,8 @@
     *    outcome-attr="outcome"
     *    event-attr="event">
     * </outcome-component>
-    * @mixin component outcome-component
+    * @memberof rivets
+    * @mixin component "outcome-component"
     * @property {Object} outcome-attr An (single) outcome object
     * @property {Object} event-attr The event itself
     * @property {String} customLabel Optional, custom label to show
@@ -204,7 +207,8 @@
     *    outcome-attr="outcome"
     *    event-attr="event">
     * </outcome-component>
-    * @mixin component outcome-component-no-label
+    * @memberof rivets
+    * @mixin component "outcome-component-no-label"
     * @property {Object} outcome-attr An (single) outcome object
     * @property {Object} event-attr The event itself
     */
