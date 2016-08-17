@@ -1102,6 +1102,7 @@ window.CoreLibrary.offeringModule = function () {
        * @param {number|string} groupId Group id
        * @returns {Promise}
        */
+
       getGroupEvents: function getGroupEvents(groupId) {
          var requesPath = '/event/group/' + groupId + '.json';
          return this.doRequest(requesPath);
@@ -1311,6 +1312,15 @@ window.CoreLibrary.offeringModule = function () {
 
 
       /**
+       * Request the highlight resource which is what is shown under "Popular" in the Sportsbook
+       * @returns {Promise}
+       */
+      getHighlight: function getHighlight() {
+         return this.doRequest('/group/highlight.json');
+      },
+
+
+      /**
        * @deprecated
        * @param {number|string} eventId The event id we need to fetch
        * @returns {*}
@@ -1503,6 +1513,7 @@ window.CoreLibrary.utilModule = function () {
        * @param {Array} B Second array
        * @returns {Array}
        */
+
       diffArray: function diffArray(A, B) {
          var map = {},
              C = [];
@@ -1630,8 +1641,8 @@ window.CoreLibrary.widgetModule = function () {
        * @type {object}
        * @private
        */
-      api: {
-         // placeholders for when not running inside iframe
+      api: { // placeholders for when not running inside iframe
+
          requestSetup: function requestSetup() {},
          request: function request() {},
          set: function set() {},
@@ -2114,7 +2125,8 @@ window.CoreLibrary.widgetModule = function () {
    /**
     * Component that creates a header for the widget that can optionally
     * collapse the widget by cliking on it
-    * @mixin component header-component
+    * @memberof rivets
+    * @mixin component "header-component"
     * @example
     * <header-component title='Title'>
     * @property {Boolean} collapsable if true clickin on header will collapse the widget
@@ -2177,7 +2189,8 @@ window.CoreLibrary.widgetModule = function () {
     *     outcome-attr="outcome"
     *     event-attr="event">
     * </outcome-component-no-label>
-    * @mixin binder outcome-suspended
+    * @memberof rivets
+    * @mixin binder "outcome-suspended"
     * @param {element} el
     * @param {boolean} property
     * @private
@@ -2201,7 +2214,8 @@ window.CoreLibrary.widgetModule = function () {
     *     outcome-attr="outcome"
     *     event-attr="event">
     * </outcome-component-no-label>
-    * @mixin binder outcome-selected
+    * @memberof rivets
+    * @mixin binder "outcome-selected"
     * @param {element} el
     * @param {boolean} property
     * @private
@@ -2310,7 +2324,8 @@ window.CoreLibrary.widgetModule = function () {
     *    outcome-attr="outcome"
     *    event-attr="event">
     * </outcome-component>
-    * @mixin component outcome-component
+    * @memberof rivets
+    * @mixin component "outcome-component"
     * @property {Object} outcome-attr An (single) outcome object
     * @property {Object} event-attr The event itself
     * @property {String} customLabel Optional, custom label to show
@@ -2321,6 +2336,7 @@ window.CoreLibrary.widgetModule = function () {
        * @returns {string}
        * @private
        */
+
       template: function template() {
          return '\n            <button\n                  rv-on-click="toggleOutcome"\n                  rv-disabled="betOffer.suspended | == true"\n                  rv-outcome-selected="selected"\n                  rv-outcome-suspended="betOffer.suspended"\n                  type="button"\n                  role="button"\n                  class="KambiWidget-outcome kw-link l-flex-1">\n               <div class="KambiWidget-outcome__flexwrap">\n                  <div class="KambiWidget-outcome__label-wrapper">\n                     <span\n                           class="KambiWidget-outcome__label"\n                           rv-text="getLabel < data.outcomeAttr.odds data.eventAttr">\n                     </span>\n                     <span class="KambiWidget-outcome__line"></span>\n                  </div>\n               <div class="KambiWidget-outcome__odds-wrapper">\n                  <span\n                        class="KambiWidget-outcome__odds"\n                        rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat">\n                  </span>\n               </div>\n            </button>\n         ';
       },
@@ -2351,7 +2367,8 @@ window.CoreLibrary.widgetModule = function () {
     *    outcome-attr="outcome"
     *    event-attr="event">
     * </outcome-component>
-    * @mixin component outcome-component-no-label
+    * @memberof rivets
+    * @mixin component "outcome-component-no-label"
     * @property {Object} outcome-attr An (single) outcome object
     * @property {Object} event-attr The event itself
     */
@@ -2361,6 +2378,7 @@ window.CoreLibrary.widgetModule = function () {
        * @returns {string}
        * @private
        */
+
       template: function template() {
          return '\n            <button\n                  rv-on-click="toggleOutcome"\n                  rv-disabled="betOffer.suspended | == true"\n                  rv-outcome-selected="selected"\n                  rv-outcome-suspended="betOffer.suspended"\n                  type="button"\n                  role="button"\n                  class="KambiWidget-outcome kw-link">\n               <div class="l-flexbox l-pack-center">\n                  <div class="KambiWidget-outcome__odds-wrapper">\n                     <span class="KambiWidget-outcome__odds" rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat" ></span>\n                  </div>\n               </div>\n            </button>\n         ';
       },
