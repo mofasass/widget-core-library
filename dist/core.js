@@ -1102,7 +1102,6 @@ window.CoreLibrary.offeringModule = function () {
        * @param {number|string} groupId Group id
        * @returns {Promise}
        */
-
       getGroupEvents: function getGroupEvents(groupId) {
          var requesPath = '/event/group/' + groupId + '.json';
          return this.doRequest(requesPath);
@@ -1504,7 +1503,6 @@ window.CoreLibrary.utilModule = function () {
        * @param {Array} B Second array
        * @returns {Array}
        */
-
       diffArray: function diffArray(A, B) {
          var map = {},
              C = [];
@@ -1632,8 +1630,8 @@ window.CoreLibrary.widgetModule = function () {
        * @type {object}
        * @private
        */
-      api: { // placeholders for when not running inside iframe
-
+      api: {
+         // placeholders for when not running inside iframe
          requestSetup: function requestSetup() {},
          request: function request() {},
          set: function set() {},
@@ -1833,7 +1831,8 @@ window.CoreLibrary.widgetModule = function () {
 
       /**
        * tries to adapt the widget iframe height to match the content
-       * Only works if the <html> and <body> tags don't have height: 100%
+       *
+       * Only works if the html and body tags don't have height: 100%
        * styling rule
        */
       adaptWidgetHeight: function adaptWidgetHeight() {
@@ -2322,7 +2321,6 @@ window.CoreLibrary.widgetModule = function () {
        * @returns {string}
        * @private
        */
-
       template: function template() {
          return '\n            <button\n                  rv-on-click="toggleOutcome"\n                  rv-disabled="betOffer.suspended | == true"\n                  rv-outcome-selected="selected"\n                  rv-outcome-suspended="betOffer.suspended"\n                  type="button"\n                  role="button"\n                  class="KambiWidget-outcome kw-link l-flex-1">\n               <div class="KambiWidget-outcome__flexwrap">\n                  <div class="KambiWidget-outcome__label-wrapper">\n                     <span\n                           class="KambiWidget-outcome__label"\n                           rv-text="getLabel < data.outcomeAttr.odds data.eventAttr">\n                     </span>\n                     <span class="KambiWidget-outcome__line"></span>\n                  </div>\n               <div class="KambiWidget-outcome__odds-wrapper">\n                  <span\n                        class="KambiWidget-outcome__odds"\n                        rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat">\n                  </span>\n               </div>\n            </button>\n         ';
       },
@@ -2363,7 +2361,6 @@ window.CoreLibrary.widgetModule = function () {
        * @returns {string}
        * @private
        */
-
       template: function template() {
          return '\n            <button\n                  rv-on-click="toggleOutcome"\n                  rv-disabled="betOffer.suspended | == true"\n                  rv-outcome-selected="selected"\n                  rv-outcome-suspended="betOffer.suspended"\n                  type="button"\n                  role="button"\n                  class="KambiWidget-outcome kw-link">\n               <div class="l-flexbox l-pack-center">\n                  <div class="KambiWidget-outcome__odds-wrapper">\n                     <span class="KambiWidget-outcome__odds" rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat" ></span>\n                  </div>\n               </div>\n            </button>\n         ';
       },

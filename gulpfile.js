@@ -26,6 +26,14 @@ var gulp = require('gulp'),
 
    jsdoc = require('gulp-jsdoc3'),
 
+   awspublish = require('gulp-awspublish'),
+
+   mergeStream = require('merge-stream'),
+
+   rename = require('gulp-rename'),
+
+   awsSdk = require('aws-sdk'),
+
    supportedLanguages = [
       'cs_CZ',
       'da_DK',
@@ -79,6 +87,8 @@ var paths = {
    }
 };
 
+var packageJSON = JSON.parse(fs.readFileSync('package.json'));
+
 gulp.task('clean-temp', function () {
    return del.sync(transpileDir);
 });
@@ -127,6 +137,9 @@ gulp.task('fetch-translations', function () {
       .pipe(gulp.dest('./src/i18n/'));
 });
 
+/**
+ * Generates the jsdoc documentation
+ */
 gulp.task('documentation', function(cb) {
    del.sync('./docs/');
    gulp.src([
@@ -136,14 +149,44 @@ gulp.task('documentation', function(cb) {
       .pipe(jsdoc(cb));
 });
 
+
+var publishDocs = function(awsPath) {
+   var publisher = awspublish.create({
+      'region': 'eu-west-1',
+      'params': {
+         'Bucket': 'kambi-widgets.globalmouth.com'
+      }
+   });
+
+   return gulp.src(['./docs/gen/**/*'])
+      .pipe(rename(function (path) {
+         path.dirname = awsPath + path.dirname;
+      }))
+      .pipe(publisher.publish({}, {}))
+      .pipe(publisher.cache())
+      .pipe(awspublish.reporter());
+};
+
+/**
+ * Publishes the jsdoc documentation to S3 under bucket
+ * 'kambi-widgets.globalmouth.com' publishes twice, once under the
+ * project version number and once under 'latest'
+ */
+gulp.task('publish-documentation', ['documentation'], function() {
+   console.log('\n\nPublishing documentation');
+   var stream1 = publishDocs('/docs/' + packageJSON.version + '/');
+   var stream2 = publishDocs('/docs/latest/');
+   return mergeStream(stream1, stream2);
+});
+
 /**
 * Compiles all js files using Babel
 */
-gulp.task('compile-babel', [], function () {
+gulp.task('compile-babel', function () {
    var sourceRootMap = function (file) {
       return '../' + path.relative(file.history[0], paths.js.source) + paths.js.sourceRoot;
    };
-   var apiVersion = JSON.parse(fs.readFileSync('package.json'))['kambi-widget-api-version'];
+   var apiVersion = packageJSON['kambi-widget-api-version'];
    return gulp.src(paths.js.source + '/**/*.js')
       .pipe(replace(/\'{{expectedApiVersion}}\'/g, '\'' + apiVersion + '\''))
       .pipe(jshint('.jshintrc'))

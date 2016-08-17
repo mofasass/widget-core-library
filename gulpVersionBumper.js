@@ -65,6 +65,10 @@
       });
    });
 
+   gulp.task('version-bump-docs', ['version-bump-git-push'], function() {
+      return gulp.start('publish-documentation');
+   });
+
    var bumpVersion = function (type) {
       return gulp.src('./package.json')
          .pipe(bump({ type: type }))
@@ -75,28 +79,28 @@
       return bumpVersion('minor');
    });
    gulp.task('version-bump-minor', ['version-bump-minor2'], function () {
-      return gulp.start('version-bump-git-push');
+      return gulp.start('version-bump-docs');
    });
 
    gulp.task('version-bump-major2', function () {
       return bumpVersion('major');
    });
    gulp.task('version-bump-major', ['version-bump-major2'], function () {
-      return gulp.start('version-bump-git-push');
+      return gulp.start('version-bump-docs');
    });
 
    gulp.task('version-bump-patch2', function () {
       return bumpVersion('patch');
    });
    gulp.task('version-bump-patch', ['version-bump-patch2'], function () {
-      return gulp.start('version-bump-git-push');
+      return gulp.start('version-bump-docs');
    });
 
    gulp.task('version-bump-prerelease2', function () {
       return bumpVersion('prerelease');
    });
    gulp.task('version-bump-prerelease', ['version-bump-prerelease2'], function () {
-      return gulp.start('version-bump-git-push');
+      return gulp.start('version-bump-docs');
    });
 
 }).call(this);

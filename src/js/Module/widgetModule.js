@@ -211,7 +211,8 @@ window.CoreLibrary.widgetModule = (() => {
 
       /**
        * tries to adapt the widget iframe height to match the content
-       * Only works if the <html> and <body> tags don't have height: 100%
+       *
+       * Only works if the html and body tags don't have height: 100%
        * styling rule
        */
       adaptWidgetHeight () {
