@@ -22,7 +22,7 @@ window.CoreLibrary.offeringModule = (() => {
        * @param {Number|String} groupId Group id
        * @returns {Promise}
        */
-      getGroup (groupId) {
+      getGroup ( groupId ) {
          var requesPath = '/group/' + groupId + '.json';
          return this.doRequest(requesPath);
       },
@@ -199,6 +199,14 @@ window.CoreLibrary.offeringModule = (() => {
                delete res.events;
                return res;
             });
+      },
+
+      /**
+       * Request the highlight resource which is what is shown under "Popular" in the Sportsbook
+       * @returns {Promise}
+       */
+      getHighlight (){
+         return this.doRequest('/group/highlight.json');
       },
 
       /**
