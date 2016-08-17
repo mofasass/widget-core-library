@@ -87,8 +87,6 @@ var paths = {
    }
 };
 
-var packageJSON = JSON.parse(fs.readFileSync('package.json'));
-
 gulp.task('clean-temp', function () {
    return del.sync(transpileDir);
 });
@@ -174,7 +172,8 @@ var publishDocs = function(awsPath) {
  */
 gulp.task('publish-documentation', ['documentation'], function() {
    console.log('\n\nPublishing documentation');
-   var stream1 = publishDocs('/docs/' + packageJSON.version + '/');
+   var version = JSON.parse(fs.readFileSync('package.json'))['version'];
+   var stream1 = publishDocs('/docs/' + version + '/');
    var stream2 = publishDocs('/docs/latest/');
    return mergeStream(stream1, stream2);
 });
@@ -186,7 +185,7 @@ gulp.task('compile-babel', function () {
    var sourceRootMap = function (file) {
       return '../' + path.relative(file.history[0], paths.js.source) + paths.js.sourceRoot;
    };
-   var apiVersion = packageJSON['kambi-widget-api-version'];
+   var apiVersion = JSON.parse(fs.readFileSync('package.json'))['kambi-widget-api-version'];
    return gulp.src(paths.js.source + '/**/*.js')
       .pipe(replace(/\'{{expectedApiVersion}}\'/g, '\'' + apiVersion + '\''))
       .pipe(jshint('.jshintrc'))
