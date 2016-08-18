@@ -205,7 +205,7 @@ window.CoreLibrary.offeringModule = (() => {
        * Request the highlight resource which is what is shown under "Popular" in the Sportsbook
        * @returns {Promise}
        */
-      getHighlight (){
+      getHighlight () {
          return this.doRequest('/group/highlight.json');
       },
 
