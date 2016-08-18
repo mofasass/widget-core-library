@@ -143,8 +143,37 @@ gulp.task('documentation', function(cb) {
    gulp.src([
          'README.md',
          './src/js/**/*.js',
-      ], {read: false})
-      .pipe(jsdoc(cb));
+      ], {
+         read: false,
+      })
+      .pipe(jsdoc({
+         "tags": {
+            "allowUnknownTags": true
+         },
+         "source": {
+            "excludePattern": "(^|\\/|\\\\)_"
+         },
+         "opts": {
+            "destination": "./docs/",
+            "tutorials": "./tutorials/",
+            "tutorial": "./tutorials/"
+         },
+         "plugins": [
+            "plugins/markdown"
+         ],
+         "templates": {
+            "cleverLinks": false,
+            "monospaceLinks": false,
+            "default": {
+               "outputSourceFiles": true
+            },
+            "path": "ink-docstrap",
+            "theme": "cerulean",
+            "navType": "vertical",
+            "linenums": true,
+            "dateFormat": "MMMM Do YYYY, h:mm:ss a"
+         }
+      },cb));
 });
 
 
@@ -156,7 +185,7 @@ var publishDocs = function(awsPath) {
       }
    });
 
-   return gulp.src(['./docs/gen/**/*'])
+   return gulp.src(['./docs/**/*'])
       .pipe(rename(function (path) {
          path.dirname = awsPath + path.dirname;
       }))
