@@ -134,9 +134,6 @@ window.CoreLibrary.widgetModule = (() => {
                console.debug('User logged in', response.data);
                this.events.emit('USER:LOGGED_IN', response.data);
                break;
-            case 'Setup':
-               this.events.emit('Setup response', response.data);
-               break;
             default:
                // Unhandled response
                console.info('Unhandled response type: ' + response.type);

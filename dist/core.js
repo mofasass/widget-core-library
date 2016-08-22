@@ -1756,9 +1756,6 @@ window.CoreLibrary.widgetModule = function () {
                void 0;
                this.events.emit('USER:LOGGED_IN', response.data);
                break;
-            case 'Setup':
-               this.events.emit('Setup response', response.data);
-               break;
             default:
                // Unhandled response
                void 0;
