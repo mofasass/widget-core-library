@@ -991,43 +991,47 @@
 
          var args = {};
 
-         var coreLibraryPromise;
-         if (CoreLibrary.apiReady === true) {
-            coreLibraryPromise = new Promise(function (resolve, reject) {
+         var getSelfFulfillingPromise = function getSelfFulfillingPromise() {
+            return new Promise(function (resolve) {
                resolve();
             });
-         } else {
-            coreLibraryPromise = new Promise(function (resolve, reject) {
-               CoreLibrary.init().then(function (widgetArgs) {
-                  if (widgetArgs == null) {
-                     widgetArgs = {};
-                  }
-                  var apiVersion = CoreLibrary.widgetModule.api.VERSION;
-                  if (apiVersion == null) {
-                     apiVersion = '1.0.0.13';
-                  }
-                  _this.scope.widgetCss = '//c3-static.kambi.com/sb-mobileclient/widget-api/' + apiVersion + '/resources/css/' + CoreLibrary.config.customer + '/' + CoreLibrary.config.offering + '/widgets.css';
+         };
 
-                  var externalArgsUrl = widgetArgs.externalArgsUrl || _this.defaultArgs.externalArgsUrl;
-                  if (externalArgsUrl != null) {
-                     CoreLibrary.getData(externalArgsUrl).then(function (externalArgs) {
-                        args = mergeObjs(_this.defaultArgs, widgetArgs, externalArgs);
-                        resolve();
-                     }).catch(function (err) {
-                        void 0;
-                        args = mergeObjs(_this.defaultArgs, widgetArgs);
-                        resolve();
-                     });
-                  } else {
-                     args = mergeObjs(_this.defaultArgs, widgetArgs);
-                     resolve();
-                  }
+         // promise that waits for the core library to be ready
+         var coreLibraryPromise = function coreLibraryPromise() {
+            if (CoreLibrary.apiReady === true) {
+               return getSelfFulfillingPromise();
+            }
+            return CoreLibrary.init();
+         };
+
+         // setts scope.widgetCss to load the operator-specific stylesheets
+         var handleWidgetCss = function handleWidgetCss() {
+            var apiVersion = CoreLibrary.widgetModule.api.VERSION;
+            if (apiVersion == null) {
+               apiVersion = CoreLibrary.expectedApiVersion;
+            }
+            _this.scope.widgetCss = '//c3-static.kambi.com/sb-mobileclient/widget-api/' + apiVersion + '/resources/css/' + CoreLibrary.config.customer + '/' + CoreLibrary.config.offering + '/widgets.css';
+         };
+
+         // loads the external arguments provided in args.externalArgsUrl
+         var externalArgsPromise = function externalArgsPromise(widgetArgs) {
+            var externalArgsUrl = widgetArgs.externalArgsUrl || _this.defaultArgs.externalArgsUrl;
+            if (externalArgsUrl != null) {
+               return CoreLibrary.getData(externalArgsUrl).then(function (externalArgs) {
+                  args = mergeObjs(_this.defaultArgs, widgetArgs, externalArgs);
+               }).catch(function (err) {
+                  void 0;
+                  args = mergeObjs(_this.defaultArgs, widgetArgs);
                });
-            });
-         }
+            } else {
+               args = mergeObjs(_this.defaultArgs, widgetArgs);
+               return getSelfFulfillingPromise();
+            }
+         };
 
-         return coreLibraryPromise.then(function () {
-            // applying conditionalArgs (see #KSBWI-653)
+         // applying conditionalArgs as specified by args.conditionalArgs (see #KSBWI-653)
+         var handleConditionalArgs = function handleConditionalArgs() {
             if (args.conditionalArgs != null) {
                args.conditionalArgs.forEach(function (carg) {
                   var apply = true;
@@ -1054,6 +1058,47 @@
                   }
                });
             }
+         };
+
+         // handles custom CSS stylesheet as specified by args.customCssUrl and args.customCssUrlFallback
+         var handleCustomCss = function handleCustomCss(customCssUrl, customCssUrlFallback) {
+            if (customCssUrl == null) {
+               return;
+            }
+            if (customCssUrlFallback == null) {
+               customCssUrlFallback = '';
+            }
+
+            Object.keys(CoreLibrary.config).forEach(function (key) {
+               var regex = new RegExp('{' + key + '}', 'g');
+               var value = CoreLibrary.config[key];
+               customCssUrl = customCssUrl.replace(regex, value);
+               customCssUrlFallback = customCssUrlFallback.replace(regex, value);
+            });
+
+            // we don't need to wait for this promise to keep working because it is only stylesheets
+            fetch(customCssUrl).then(function (response) {
+               // file actually exists
+               if (response.status >= 200 && response.status < 300) {
+                  _this.scope.customCss = customCssUrl;
+               } else {
+                  _this.scope.customCss = customCssUrlFallback;
+               }
+            }).catch(function (error) {
+               _this.scope.customCss = customCssUrlFallback;
+               void 0;
+            });
+         };
+
+         return coreLibraryPromise().then(function (widgetArgs) {
+            if (widgetArgs == null) {
+               widgetArgs = {};
+            }
+            handleWidgetCss();
+            return externalArgsPromise(widgetArgs);
+         }).then(function () {
+            handleConditionalArgs();
+            handleCustomCss(args.customCssUrl, args.customCssUrlFallback);
 
             _this.scope.args = args;
 
@@ -1061,14 +1106,7 @@
                _this.rootElement = document.querySelector(_this.rootElement);
             }
 
-            for (var i = 0; i < _this.rootElement.attributes.length; ++i) {
-               var at = _this.rootElement.attributes[i];
-               if (at.name.indexOf('data-') === 0) {
-                  var name = at.name.slice(5); // removes the 'data-' from the string
-                  _this.scope[name] = at.value;
-               }
-            }
-
+            // if htmlTemplate is defined place that as HTML inside rootElement
             if (typeof _this.htmlTemplate === 'string') {
                if (_this.htmlTemplate.length < 100 && window[_this.htmlTemplate] != null) {
                   _this.rootElement.innerHTML = window[_this.htmlTemplate];

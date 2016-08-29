@@ -125,78 +125,123 @@ var widget = new Widget({
 
          var args = {};
 
-         var coreLibraryPromise;
-         if ( CoreLibrary.apiReady === true ) {
-            coreLibraryPromise = new Promise(( resolve, reject ) => {
+         var getSelfFulfillingPromise = () => {
+            return new Promise((resolve) => {
                resolve();
             });
-         } else {
-            coreLibraryPromise = new Promise(( resolve, reject ) => {
-               CoreLibrary.init()
-                  .then(( widgetArgs ) => {
-                     if ( widgetArgs == null ) {
-                        widgetArgs = {};
-                     }
-                     var apiVersion = CoreLibrary.widgetModule.api.VERSION;
-                     if ( apiVersion == null ) {
-                        apiVersion = '1.0.0.13';
-                     }
-                     this.scope.widgetCss = '//c3-static.kambi.com/sb-mobileclient/widget-api/' +
-                        apiVersion +
-                        '/resources/css/' +
-                        CoreLibrary.config.customer +
-                        '/' +
-                        CoreLibrary.config.offering +
-                        '/widgets.css';
+         };
 
-                     var externalArgsUrl = widgetArgs.externalArgsUrl || this.defaultArgs.externalArgsUrl;
-                     if (externalArgsUrl != null) {
-                        CoreLibrary.getData(externalArgsUrl)
-                           .then((externalArgs) => {
-                              args = mergeObjs(this.defaultArgs, widgetArgs, externalArgs);
-                              resolve();
-                           }).catch((err) => {
-                              console.log('Unable to load or parse external args');
-                              args = mergeObjs(this.defaultArgs, widgetArgs);
-                              resolve();
-                           });
-                     } else {
-                        args = mergeObjs(this.defaultArgs, widgetArgs);
-                        resolve();
-                     }
+         // promise that waits for the core library to be ready
+         var coreLibraryPromise = () => {
+            if ( CoreLibrary.apiReady === true ) {
+               return getSelfFulfillingPromise();
+            }
+            return CoreLibrary.init();
+         };
+
+         // setts scope.widgetCss to load the operator-specific stylesheets
+         var handleWidgetCss = () => {
+            var apiVersion = CoreLibrary.widgetModule.api.VERSION;
+            if ( apiVersion == null ) {
+               apiVersion = CoreLibrary.expectedApiVersion;
+            }
+            this.scope.widgetCss = '//c3-static.kambi.com/sb-mobileclient/widget-api/' +
+               apiVersion +
+               '/resources/css/' +
+               CoreLibrary.config.customer +
+               '/' +
+               CoreLibrary.config.offering +
+               '/widgets.css';
+         };
+
+         // loads the external arguments provided in args.externalArgsUrl
+         var externalArgsPromise = (widgetArgs) => {
+            var externalArgsUrl = widgetArgs.externalArgsUrl || this.defaultArgs.externalArgsUrl;
+            if (externalArgsUrl != null) {
+               return CoreLibrary.getData(externalArgsUrl)
+                  .then((externalArgs) => {
+                     args = mergeObjs(this.defaultArgs, widgetArgs, externalArgs);
+                  }).catch((err) => {
+                     console.log('Unable to load or parse external args');
+                     args = mergeObjs(this.defaultArgs, widgetArgs);
                   });
+            } else {
+               args = mergeObjs(this.defaultArgs, widgetArgs);
+               return getSelfFulfillingPromise();
+            }
+         };
+
+         // applying conditionalArgs as specified by args.conditionalArgs (see #KSBWI-653)
+         var handleConditionalArgs = () => {
+            if (args.conditionalArgs != null) {
+               args.conditionalArgs.forEach((carg) => {
+                  var apply = true;
+                  if (carg.clientConfig != null) {
+                     Object.keys(carg.clientConfig).forEach((key) => {
+                        if (CoreLibrary.config[key] !== carg.clientConfig[key]) {
+                           apply = false;
+                        }
+                     });
+                  }
+
+                  if (carg.pageInfo != null) {
+                     Object.keys(carg.pageInfo).forEach((key) => {
+                        if (CoreLibrary.pageInfo[key] !== carg.pageInfo[key]) {
+                           apply = false;
+                        }
+                     });
+                  }
+
+                  if (apply) {
+                     console.log('Applying conditional arguments:');
+                     console.log(carg.args);
+                     args = mergeObjs(args, carg.args);
+                  }
+               });
+            }
+         };
+
+         // handles custom CSS stylesheet as specified by args.customCssUrl and args.customCssUrlFallback
+         var handleCustomCss = (customCssUrl, customCssUrlFallback) => {
+            if (customCssUrl == null) {
+               return;
+            }
+            if (customCssUrlFallback == null) {
+               customCssUrlFallback = '';
+            }
+
+            Object.keys(CoreLibrary.config).forEach((key) => {
+               var regex = new RegExp('{' + key + '}', 'g');
+               var value = CoreLibrary.config[key];
+               customCssUrl = customCssUrl.replace(regex, value);
+               customCssUrlFallback = customCssUrlFallback.replace(regex, value);
             });
-         }
 
-         return coreLibraryPromise
-            .then(() => {
-               // applying conditionalArgs (see #KSBWI-653)
-               if (args.conditionalArgs != null) {
-                  args.conditionalArgs.forEach((carg) => {
-                     var apply = true;
-                     if (carg.clientConfig != null) {
-                        Object.keys(carg.clientConfig).forEach((key) => {
-                           if (CoreLibrary.config[key] !== carg.clientConfig[key]) {
-                              apply = false;
-                           }
-                        });
-                     }
+            // we don't need to wait for this promise to keep working because it is only stylesheets
+            fetch(customCssUrl)
+               .then(( response ) => {
+                  // file actually exists
+                  if ( response.status >= 200 && response.status < 300 ) {
+                     this.scope.customCss = customCssUrl;
+                  } else {
+                     this.scope.customCss = customCssUrlFallback;
+                  }
+               }).catch(( error ) => {
+                  this.scope.customCss = customCssUrlFallback;
+                  console.debug('Error fetching custom css');
+               });
+         };
 
-                     if (carg.pageInfo != null) {
-                        Object.keys(carg.pageInfo).forEach((key) => {
-                           if (CoreLibrary.pageInfo[key] !== carg.pageInfo[key]) {
-                              apply = false;
-                           }
-                        });
-                     }
-
-                     if (apply) {
-                        console.log('Applying conditional arguments:');
-                        console.log(carg.args);
-                        args = mergeObjs(args, carg.args);
-                     }
-                  });
+         return coreLibraryPromise()
+            .then(( widgetArgs ) => {
+               if ( widgetArgs == null ) {
+                  widgetArgs = {};
                }
+               handleWidgetCss();
+               return externalArgsPromise(widgetArgs);
+            }).then(() => {
+               handleConditionalArgs();
+               handleCustomCss(args.customCssUrl, args.customCssUrlFallback);
 
                this.scope.args = args;
 
@@ -204,14 +249,7 @@ var widget = new Widget({
                   this.rootElement = document.querySelector(this.rootElement);
                }
 
-               for ( var i = 0; i < this.rootElement.attributes.length; ++i ) {
-                  var at = this.rootElement.attributes[i];
-                  if ( at.name.indexOf('data-') === 0 ) {
-                     var name = at.name.slice(5); // removes the 'data-' from the string
-                     this.scope[name] = at.value;
-                  }
-               }
-
+               // if htmlTemplate is defined place that as HTML inside rootElement
                if ( typeof this.htmlTemplate === 'string' ) {
                   if ( this.htmlTemplate.length < 100 && window[this.htmlTemplate] != null ) {
                      this.rootElement.innerHTML = window[this.htmlTemplate];
