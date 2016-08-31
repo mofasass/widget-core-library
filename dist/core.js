@@ -1061,7 +1061,7 @@
          };
 
          // handles custom CSS stylesheet as specified by args.customCssUrl and args.customCssUrlFallback
-         var handleCustomCss = function handleCustomCss(customCssUrl, customCssUrlFallback) {
+         var customCssPromise = function customCssPromise(customCssUrl, customCssUrlFallback) {
             if (customCssUrl == null) {
                return;
             }
@@ -1076,17 +1076,41 @@
                customCssUrlFallback = customCssUrlFallback.replace(regex, value);
             });
 
-            // we don't need to wait for this promise to keep working because it is only stylesheets
-            fetch(customCssUrl).then(function (response) {
+            var fetchFallback = function fetchFallback() {
+               return fetch(customCssUrlFallback).then(function (response) {
+                  if (response.status >= 200 && response.status < 300) {
+                     _this.scope.customCss = customCssUrlFallback;
+                  } else {
+                     void 0;
+                  }
+                  return response;
+               }).catch(function (error) {
+                  void 0;
+                  return error;
+               });
+            };
+
+            return fetch(customCssUrl).then(function (response) {
                // file actually exists
                if (response.status >= 200 && response.status < 300) {
                   _this.scope.customCss = customCssUrl;
                } else {
-                  _this.scope.customCss = customCssUrlFallback;
+                  if (customCssUrlFallback !== '') {
+                     void 0;
+                     return fetchFallback();
+                  } else {
+                     void 0;
+                     return response;
+                  }
                }
+               return response;
             }).catch(function (error) {
-               _this.scope.customCss = customCssUrlFallback;
+               if (customCssUrlFallback !== '') {
+                  void 0;
+                  return fetchFallback();
+               }
                void 0;
+               return error;
             });
          };
 
@@ -1098,7 +1122,12 @@
             return externalArgsPromise(widgetArgs);
          }).then(function () {
             handleConditionalArgs();
-            handleCustomCss(args.customCssUrl, args.customCssUrlFallback);
+
+            // we don't need to wait for this promise (like we do
+            // with externalArgsPromise) to call
+            // the widget init() function because it just adds
+            // a stylesheet to the page
+            _this.customCssPromise = customCssPromise(args.customCssUrl, args.customCssUrlFallback);
 
             _this.scope.args = args;
 
@@ -1428,12 +1457,54 @@ window.CoreLibrary.statisticsModule = function () {
       },
 
       /**
+       * Requests league table statistics data from api.
+       * @param {String} filter a league filter
+       * @returns {Promise}
+       */
+      getLeagueTableStatistics: function getLeagueTableStatistics(filter) {
+         // Remove url parameters from filter
+         filter = filter.match(/[^?]*/)[0];
+
+         // Removing trailing and starting slashes if present
+         if (filter[filter.length - 1] === '/') {
+            filter = filter.slice(0, -1);
+         }
+         if (filter[0] === '/') {
+            filter = filter.slice(1);
+         }
+         return CoreLibrary.getData(this.config.baseApiUrl + CoreLibrary.config.offering + '/leaguetable/' + filter + '.json');
+      },
+
+
+      /**
+       * Requests H2H statistics data from api.
+       * @param {String|Number} eventId
+       * @returns {Promise}
+       */
+      getHeadToHeadStatistics: function getHeadToHeadStatistics(eventId) {
+         return CoreLibrary.getData(this.config.baseApiUrl + CoreLibrary.config.offering + '/h2h/event/' + eventId + '.json');
+      },
+
+
+      /**
+       * Requests TPI statistics data from api.
+       * @param {String|Number} eventId
+       * @returns {Promise}
+       */
+      getTeamPerformanceStatistics: function getTeamPerformanceStatistics(eventId) {
+         return CoreLibrary.getData(this.config.baseApiUrl + CoreLibrary.config.offering + '/tpi/event/' + eventId + '.json');
+      },
+
+
+      /**
        * Requests statistics data from api.
        * @param {String} type
        * @param {String} filter
        * @returns {Promise}
+       * @deprecated
        */
       getStatistics: function getStatistics(type, filter) {
+         void 0;
          // Remove url parameters from filter
          filter = filter.match(/[^?]*/)[0];
 

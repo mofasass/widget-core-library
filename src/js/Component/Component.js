@@ -202,7 +202,7 @@ var widget = new Widget({
          };
 
          // handles custom CSS stylesheet as specified by args.customCssUrl and args.customCssUrlFallback
-         var handleCustomCss = (customCssUrl, customCssUrlFallback) => {
+         var customCssPromise = (customCssUrl, customCssUrlFallback) => {
             if (customCssUrl == null) {
                return;
             }
@@ -217,18 +217,43 @@ var widget = new Widget({
                customCssUrlFallback = customCssUrlFallback.replace(regex, value);
             });
 
-            // we don't need to wait for this promise to keep working because it is only stylesheets
-            fetch(customCssUrl)
+            var fetchFallback = () => {
+               return fetch(customCssUrlFallback)
+                  .then(( response ) => {
+                     if ( response.status >= 200 && response.status < 300 ) {
+                        this.scope.customCss = customCssUrlFallback;
+                     } else {
+                        console.debug('Error fetching custom css fallback');
+                     }
+                     return response;
+                  }).catch(( error ) => {
+                     console.debug('Error fetching custom css fallback');
+                     return error;
+                  });
+            };
+
+            return fetch(customCssUrl)
                .then(( response ) => {
                   // file actually exists
                   if ( response.status >= 200 && response.status < 300 ) {
                      this.scope.customCss = customCssUrl;
                   } else {
-                     this.scope.customCss = customCssUrlFallback;
+                     if (customCssUrlFallback !== '') {
+                        console.debug('Error fetching custom css, trying fallback');
+                        return fetchFallback();
+                     } else {
+                        console.debug('Error fetching custom css, no fallback present');
+                        return response;
+                     }
                   }
+                  return response;
                }).catch(( error ) => {
-                  this.scope.customCss = customCssUrlFallback;
-                  console.debug('Error fetching custom css');
+                  if (customCssUrlFallback !== '') {
+                     console.debug('Error fetching custom css, trying fallback');
+                     return fetchFallback();
+                  }
+                  console.debug('Error fetching custom css, no fallback present');
+                  return error;
                });
          };
 
@@ -241,7 +266,12 @@ var widget = new Widget({
                return externalArgsPromise(widgetArgs);
             }).then(() => {
                handleConditionalArgs();
-               handleCustomCss(args.customCssUrl, args.customCssUrlFallback);
+
+               // we don't need to wait for this promise (like we do
+               // with externalArgsPromise) to call
+               // the widget init() function because it just adds
+               // a stylesheet to the page
+               this.customCssPromise = customCssPromise(args.customCssUrl, args.customCssUrlFallback);
 
                this.scope.args = args;
 
