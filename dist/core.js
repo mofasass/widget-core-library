@@ -884,6 +884,20 @@
       return ret;
    };
 
+   // replaces expressions like "{customer}" from the provided string
+   // to the value the have in the CoreLibrary.config object
+   var replaceConfigParameters = function replaceConfigParameters(str) {
+      if (str == null) {
+         return str;
+      }
+      Object.keys(CoreLibrary.config).forEach(function (key) {
+         var regex = new RegExp('{' + key + '}', 'g');
+         var value = CoreLibrary.config[key];
+         str = str.replace(regex, value);
+      });
+      return str;
+   };
+
    /**
     * Component base class that should be inherited to create widgets
     * @class Component
@@ -1014,9 +1028,12 @@
             _this.scope.widgetCss = '//c3-static.kambi.com/sb-mobileclient/widget-api/' + apiVersion + '/resources/css/' + CoreLibrary.config.customer + '/' + CoreLibrary.config.offering + '/widgets.css';
          };
 
-         // loads the external arguments provided in args.externalArgsUrl
+         // loads the external arguments provided in args.externalArgsUrl or externalArgsUrlFallback
          var externalArgsPromise = function externalArgsPromise(widgetArgs) {
             var externalArgsUrl = widgetArgs.externalArgsUrl || _this.defaultArgs.externalArgsUrl;
+            var externalArgsUrlFallback = widgetArgs.externalArgsUrlFallback || _this.defaultArgs.externalArgsUrlFallback;
+            externalArgsUrl = replaceConfigParameters(externalArgsUrl);
+            externalArgsUrlFallback = replaceConfigParameters(externalArgsUrlFallback);
             if (externalArgsUrl != null) {
                return CoreLibrary.getData(externalArgsUrl).then(function (externalArgs) {
                   args = mergeObjs(_this.defaultArgs, widgetArgs, externalArgs);
@@ -1069,20 +1086,12 @@
                customCssUrlFallback = '';
             }
 
-            Object.keys(CoreLibrary.config).forEach(function (key) {
-               var regex = new RegExp('{' + key + '}', 'g');
-               var value = CoreLibrary.config[key];
-               customCssUrl = customCssUrl.replace(regex, value);
-               customCssUrlFallback = customCssUrlFallback.replace(regex, value);
-            });
+            customCssUrl = replaceConfigParameters(customCssUrl);
+            customCssUrlFallback = replaceConfigParameters(customCssUrlFallback);
 
             var fetchFallback = function fetchFallback() {
-               return fetch(customCssUrlFallback).then(function (response) {
-                  if (response.status >= 200 && response.status < 300) {
-                     _this.scope.customCss = customCssUrlFallback;
-                  } else {
-                     void 0;
-                  }
+               return CoreLibrary.getFile(customCssUrlFallback).then(function (response) {
+                  _this.scope.customCss = customCssUrlFallback;
                   return response;
                }).catch(function (error) {
                   void 0;
@@ -1090,19 +1099,8 @@
                });
             };
 
-            return fetch(customCssUrl).then(function (response) {
-               // file actually exists
-               if (response.status >= 200 && response.status < 300) {
-                  _this.scope.customCss = customCssUrl;
-               } else {
-                  if (customCssUrlFallback !== '') {
-                     void 0;
-                     return fetchFallback();
-                  } else {
-                     void 0;
-                     return response;
-                  }
-               }
+            return CoreLibrary.getFile(customCssUrl).then(function (response) {
+               _this.scope.customCss = customCssUrl;
                return response;
             }).catch(function (error) {
                if (customCssUrlFallback !== '') {

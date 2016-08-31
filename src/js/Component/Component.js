@@ -13,6 +13,20 @@
       return ret;
    };
 
+   // replaces expressions like "{customer}" from the provided string
+   // to the value the have in the CoreLibrary.config object
+   var replaceConfigParameters = (str) => {
+      if (str == null) {
+         return str;
+      }
+      Object.keys(CoreLibrary.config).forEach((key) => {
+         var regex = new RegExp('{' + key + '}', 'g');
+         var value = CoreLibrary.config[key];
+         str = str.replace(regex, value);
+      });
+      return str;
+   };
+
    /**
     * Component base class that should be inherited to create widgets
     * @class Component
@@ -154,9 +168,12 @@ var widget = new Widget({
                '/widgets.css';
          };
 
-         // loads the external arguments provided in args.externalArgsUrl
+         // loads the external arguments provided in args.externalArgsUrl or externalArgsUrlFallback
          var externalArgsPromise = (widgetArgs) => {
             var externalArgsUrl = widgetArgs.externalArgsUrl || this.defaultArgs.externalArgsUrl;
+            var externalArgsUrlFallback = widgetArgs.externalArgsUrlFallback || this.defaultArgs.externalArgsUrlFallback;
+            externalArgsUrl = replaceConfigParameters(externalArgsUrl);
+            externalArgsUrlFallback = replaceConfigParameters(externalArgsUrlFallback);
             if (externalArgsUrl != null) {
                return CoreLibrary.getData(externalArgsUrl)
                   .then((externalArgs) => {
@@ -210,21 +227,13 @@ var widget = new Widget({
                customCssUrlFallback = '';
             }
 
-            Object.keys(CoreLibrary.config).forEach((key) => {
-               var regex = new RegExp('{' + key + '}', 'g');
-               var value = CoreLibrary.config[key];
-               customCssUrl = customCssUrl.replace(regex, value);
-               customCssUrlFallback = customCssUrlFallback.replace(regex, value);
-            });
+            customCssUrl = replaceConfigParameters(customCssUrl);
+            customCssUrlFallback = replaceConfigParameters(customCssUrlFallback);
 
             var fetchFallback = () => {
-               return fetch(customCssUrlFallback)
+               return CoreLibrary.getFile(customCssUrlFallback)
                   .then(( response ) => {
-                     if ( response.status >= 200 && response.status < 300 ) {
-                        this.scope.customCss = customCssUrlFallback;
-                     } else {
-                        console.debug('Error fetching custom css fallback');
-                     }
+                     this.scope.customCss = customCssUrlFallback;
                      return response;
                   }).catch(( error ) => {
                      console.debug('Error fetching custom css fallback');
@@ -232,20 +241,9 @@ var widget = new Widget({
                   });
             };
 
-            return fetch(customCssUrl)
+            return CoreLibrary.getFile(customCssUrl)
                .then(( response ) => {
-                  // file actually exists
-                  if ( response.status >= 200 && response.status < 300 ) {
-                     this.scope.customCss = customCssUrl;
-                  } else {
-                     if (customCssUrlFallback !== '') {
-                        console.debug('Error fetching custom css, trying fallback');
-                        return fetchFallback();
-                     } else {
-                        console.debug('Error fetching custom css, no fallback present');
-                        return response;
-                     }
-                  }
+                  this.scope.customCss = customCssUrl;
                   return response;
                }).catch(( error ) => {
                   if (customCssUrlFallback !== '') {
