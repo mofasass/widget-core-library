@@ -210,7 +210,7 @@ window.CoreLibrary.offeringModule = (() => {
             .then((highlights) => {
                // sorting based on sortOrder
                if ( Array.isArray(highlights.groups) ) {
-                  return highlights.groups.sort(( a, b ) => {
+                  highlights.groups.sort(( a, b ) => {
                      if ( parseInt(a.sortOrder, 10) > parseInt(b.sortOrder, 10) ) {
                         return 1;
                      }
@@ -219,9 +219,8 @@ window.CoreLibrary.offeringModule = (() => {
                      }
                      return 0;
                   });
-               } else {
-                  return highlights;
                }
+               return highlights;
             });
       },
 

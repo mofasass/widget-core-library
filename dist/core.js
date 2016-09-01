@@ -1383,7 +1383,7 @@ window.CoreLibrary.offeringModule = function () {
          return this.doRequest('/group/highlight.json').then(function (highlights) {
             // sorting based on sortOrder
             if (Array.isArray(highlights.groups)) {
-               return highlights.groups.sort(function (a, b) {
+               highlights.groups.sort(function (a, b) {
                   if (parseInt(a.sortOrder, 10) > parseInt(b.sortOrder, 10)) {
                      return 1;
                   }
@@ -1392,9 +1392,8 @@ window.CoreLibrary.offeringModule = function () {
                   }
                   return 0;
                });
-            } else {
-               return highlights;
             }
+            return highlights;
          });
       },
 
