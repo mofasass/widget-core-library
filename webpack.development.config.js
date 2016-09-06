@@ -4,14 +4,14 @@ const webpack = require('webpack');
 
 module.exports = {
    entry: {
-      app: ["./src/js/coreLibrary.js"]
+      core: ["./src/js/coreLibrary.js"]
    },
    module: {
       preLoaders: [
          {
             test: /.js$/, // include .js files
             exclude: /node_modules/, // exclude any and all files in the node_modules folder
-            loader: "jshint-loader"
+            loader: 'jshint-loader'
          }
       ],
       loaders: [{
@@ -21,19 +21,22 @@ module.exports = {
          query: {
             presets: ['es2015']
          }
+      }, {
+         test: /.sass$/,
+         exclude: /node_modules/,
+         loader: 'sass-loader',
       }]
    },
    devtool: 'source-map',
    output: {
       path: path.resolve(__dirname, "dist"),
       publicPath: "/dist/",
-      filename: "core.js"
+      filename: "[name].js"
    },
    devServer: {
       contentBase: "./dist",
    },
-   plugins: [
-   ],
+   plugins: [],
    resolve: {
       extensions: ['', '.js', '.json']
    }
