@@ -8,11 +8,7 @@ module.exports = {
    },
    module: {
       preLoaders: [
-         {
-            test: /.js$/,
-            exclude: /node_modules/,
-            loader: 'jshint-loader'
-         }
+         {test: /.js$/, exclude: /node_modules/, loader: 'jshint-loader'}
       ],
       loaders: [
          {test: /\.svg/, loader: 'svg-url-loader'},
@@ -23,7 +19,8 @@ module.exports = {
             loader: 'url-loader?importLoaders=1&limit=100000'
          },
          {test: /\.ttf$|\.eot$/, loader: 'file', query: {name: 'font/[hash].[ext]'},},
-         {test: /\.scss$/, loaders: ['style', 'css?sourceMap', 'sass?sourceMap']}]
+         {test: /\.scss$/, loaders: ['style', 'css?sourceMap', 'sass?sourceMap']},
+         {test: /\.json$/, loader: 'json'}]
    },
    devtool: 'source-map',
    output: {
@@ -32,7 +29,7 @@ module.exports = {
       filename: '[name].js'
    },
    devServer: {
-      contentBase: "./dist",
+      contentBase: './dist'
    },
    sassLoader: {
       includePaths: [path.resolve(__dirname, './src/scss')]

@@ -1,18 +1,14 @@
 var path = require('path');
-var plugins = require('webpack-load-plugins')();
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 const webpack = require('webpack');
 
 module.exports = {
    entry: {
-      'core.min' : ['./src/index.js']
+      'core.min': ['./src/index.js']
    },
    module: {
       preLoaders: [
-         {
-            test: /.js$/,
-            exclude: /node_modules/,
-            loader: 'jshint-loader'
-         }
+         { test: /.js$/, exclude: /node_modules/, loader: 'jshint-loader' }
       ],
       loaders: [
          {test: /\.svg/, loader: 'svg-url-loader'},
@@ -23,6 +19,7 @@ module.exports = {
             loader: 'url-loader?importLoaders=1&limit=100000'
          },
          {test: /\.ttf$|\.eot$/, loader: 'file', query: {name: 'font/[hash].[ext]'},},
+         {test: /\.json$/, loader: 'json'},
          {test: /\.scss$/, loaders: ['style', 'css', 'sass']}]
    },
    output: {
@@ -30,9 +27,17 @@ module.exports = {
       publicPath: '/dist/',
       filename: '[name].js'
    },
-   devServer: {
-      contentBase: "./dist",
-   },
+   plugins: [
+      new webpack.optimize.CommonsChunkPlugin('common.js'),
+      new webpack.optimize.DedupePlugin(),
+      new webpack.optimize.UglifyJsPlugin({
+         compressor: {
+            warnings: true,
+         },
+      }),
+      new webpack.optimize.OccurrenceOrderPlugin(),
+      new webpack.optimize.AggressiveMergingPlugin()
+   ],
    sassLoader: {
       includePaths: [path.resolve(__dirname, './src/scss')]
    },
