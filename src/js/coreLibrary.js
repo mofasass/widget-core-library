@@ -1,3 +1,10 @@
+require('./Module/offeringModule');
+require('./Module/statisticsModule');
+require('./Module/translationModule');
+require('./Module/utilModule');
+require('./Module/widgetModule');
+require('./Component/Component');
+
 (() => {
    'use strict';
    // Set Sightglass root adapter.

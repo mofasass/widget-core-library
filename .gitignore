@@ -4,6 +4,7 @@ node_modules
 .sass-cache/
 docs
 *.map
+dist
 bower_components
 /src/transpiled
 /.project

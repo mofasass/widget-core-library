@@ -1,3 +1,7 @@
+require('./HeaderComponent/HeaderComponent');
+require('./OutcomeComponent/OutcomeComponent');
+require('./PaginationComponent/PaginationComponent');
+
 (() => {
    'use strict';
 
@@ -227,3 +231,4 @@ var widget = new Widget({
       }
    });
 })();
+
