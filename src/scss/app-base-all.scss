@@ -1,7 +1,6 @@
 // Widget scss common library.
 // These are the ground styles for all widgets
-@import 'compass/reset';
-@import 'compass/css3';
+@import '~compass-mixins';
 // Base variables. Can be used in lower levels
 @import 'includes/variables-base';
 // Mixins

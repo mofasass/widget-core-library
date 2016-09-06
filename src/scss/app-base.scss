@@ -1,7 +1,6 @@
 // Widget scss common library.
 // Only mixins and variables are exposed
-@import 'compass/reset';
-@import 'compass/css3';
+@import '~compass-mixins';
 // Base variables. Can be used in lower levels
 @import 'includes/variables-base';
 // Mixins

@@ -4,38 +4,39 @@ const webpack = require('webpack');
 
 module.exports = {
    entry: {
-      app: ["./src/js/coreLibrary.js"]
+      'core.min' : ['./src/index.js']
    },
    module: {
       preLoaders: [
          {
-            test: /.js$/, // include .js files
-            exclude: /node_modules/, // exclude any and all files in the node_modules folder
-            loader: "jshint-loader"
+            test: /.js$/,
+            exclude: /node_modules/,
+            loader: 'jshint-loader'
          }
       ],
-      loaders: [{
-         test: /.js$/,
-         exclude: /node_modules/,
-         loader: 'babel-loader',
-         query: {
-            presets: ['es2015']
-         }
-      }]
+      loaders: [
+         {test: /\.svg/, loader: 'svg-url-loader'},
+         {test: /.js$/, exclude: /node_modules/, loader: 'babel-loader', query: {presets: ['es2015']}},
+         {
+            test: /\.(jpe|jpg|woff|woff2|eot|ttf|svg)(\?.*$|$)/,
+            exclude: /node_modules/,
+            loader: 'url-loader?importLoaders=1&limit=100000'
+         },
+         {test: /\.ttf$|\.eot$/, loader: 'file', query: {name: 'font/[hash].[ext]'},},
+         {test: /\.scss$/, loaders: ['style', 'css', 'sass']}]
    },
    output: {
-      path: path.resolve(__dirname, "dist"),
-      publicPath: "/dist/",
-      filename: "core.min.js"
+      path: path.resolve(__dirname, 'dist'),
+      publicPath: '/dist/',
+      filename: '[name].js'
    },
    devServer: {
-      contentBase: "./build",
+      contentBase: "./dist",
    },
-   plugins: [
-      new webpack.optimize.UglifyJsPlugin({
-         compress: {
-            warnings: false
-         }
-      })
-   ]
+   sassLoader: {
+      includePaths: [path.resolve(__dirname, './src/scss')]
+   },
+   resolve: {
+      extensions: ['', '.js', '.json', '.scss']
+   }
 };
