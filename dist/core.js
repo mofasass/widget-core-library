@@ -1236,7 +1236,7 @@ window.CoreLibrary.offeringModule = function () {
        */
       adaptV2Event: function adaptV2Event(event) {
          // v3 and v2 event objects are almost the same
-         // only a few attributes we don't are different
+         // only a few attributes we don't use are different
       },
 
 
@@ -1380,7 +1380,21 @@ window.CoreLibrary.offeringModule = function () {
        * @returns {Promise}
        */
       getHighlight: function getHighlight() {
-         return this.doRequest('/group/highlight.json');
+         return this.doRequest('/group/highlight.json').then(function (highlights) {
+            // sorting based on sortOrder
+            if (Array.isArray(highlights.groups)) {
+               highlights.groups.sort(function (a, b) {
+                  if (parseInt(a.sortOrder, 10) > parseInt(b.sortOrder, 10)) {
+                     return 1;
+                  }
+                  if (parseInt(a.sortOrder, 10) < parseInt(b.sortOrder, 10)) {
+                     return -1;
+                  }
+                  return 0;
+               });
+            }
+            return highlights;
+         });
       },
 
 
@@ -1753,7 +1767,67 @@ window.CoreLibrary.widgetModule = function () {
          set: function set() {},
          remove: function remove() {},
          createUrl: function createUrl() {},
-         createFilterUrl: function createFilterUrl() {}
+         createFilterUrl: function createFilterUrl(terms, urlBase) {
+            urlBase = urlBase || 'filter';
+
+            var segments = terms.filter(function (term) {
+               return term.indexOf('/') === 0;
+            }).reduce(function (segments, term) {
+               var coords = [];
+
+               term.replace(/\/+$/, '').split('/').slice(1).forEach(function (termKey, i) {
+                  if (!(i in segments)) {
+                     segments[i] = [];
+                  }
+
+                  var pointer = segments[i];
+
+                  if (i > 0) {
+                     coords.forEach(function (coord) {
+                        for (var j = 0; j <= coord; j++) {
+                           if (pointer[j] == null) {
+                              pointer.push(j === coord ? [] : 'all');
+                           }
+                        }
+                        pointer = pointer[coord];
+                     });
+                  }
+
+                  if (pointer.indexOf(termKey) === -1) {
+                     pointer.push(termKey);
+                  }
+
+                  coords[i] = pointer.length - 1;
+
+                  return coords[i];
+               });
+
+               return segments;
+            }, []);
+
+            var route = '#' + urlBase.replace(/.*?#/, '').replace(/^\//, '');
+            route += segments.reduce(function (str, segment) {
+               return str + '/' + JSON.stringify(segment).slice(1, -1);
+            }, '').replace(/"/g, '').replace(/(,all)+(\/|\]|$)/g, '$2');
+
+            for (var i = 0; i <= segments.length; i++) {
+               route = route.replace(/\[([^,\]]*)\]/g, '$1');
+            }
+
+            var attributes = terms.filter(function (term) {
+               return term.indexOf('/') !== 0;
+            }).join(',');
+
+            if (attributes) {
+               for (var j = 0; j < 4 - segments.length; j++) {
+                  route += '/all';
+               }
+
+               route += '/' + attributes;
+            }
+
+            return route.match(/filter$/) ? route + '/all' : route;
+         }
       },
 
       /**

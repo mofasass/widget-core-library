@@ -76,7 +76,7 @@ window.CoreLibrary.offeringModule = (() => {
        */
       adaptV2Event ( event ) {
          // v3 and v2 event objects are almost the same
-         // only a few attributes we don't are different
+         // only a few attributes we don't use are different
       },
 
       /**
@@ -206,7 +206,22 @@ window.CoreLibrary.offeringModule = (() => {
        * @returns {Promise}
        */
       getHighlight () {
-         return this.doRequest('/group/highlight.json');
+         return this.doRequest('/group/highlight.json')
+            .then((highlights) => {
+               // sorting based on sortOrder
+               if ( Array.isArray(highlights.groups) ) {
+                  highlights.groups.sort(( a, b ) => {
+                     if ( parseInt(a.sortOrder, 10) > parseInt(b.sortOrder, 10) ) {
+                        return 1;
+                     }
+                     if ( parseInt(a.sortOrder, 10) < parseInt(b.sortOrder, 10) ) {
+                        return -1;
+                     }
+                     return 0;
+                  });
+               }
+               return highlights;
+            });
       },
 
       /**
