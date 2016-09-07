@@ -19,15 +19,17 @@ module.exports = {
          },
          {test: /\.ttf$|\.eot$/, loader: 'file', query: {name: 'font/[hash].[ext]'},},
          {test: /\.json$/, loader: 'json'},
-         {test: /\.scss$/, loaders: ['style', 'css', 'sass']}]
+         {test: /\.scss$/, loaders: ['css', 'sass']}]
    },
    output: {
       path: path.resolve(__dirname, 'dist'),
       publicPath: '/dist/',
+      library: 'widget-core-library',
+      libraryTarget: 'umd',
+      umdNamedDefine: true,
       filename: '[name].js'
    },
    plugins: [
-      new webpack.optimize.CommonsChunkPlugin('common.js'),
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin({
          compressor: {

@@ -1,7 +1,3 @@
-// Widget scss common library.
-// Only mixins and variables are exposed
 @import '~compass-mixins';
-// Base variables. Can be used in lower levels
 @import 'includes/variables-base';
-// Mixins
 @import 'includes/mixins-base';

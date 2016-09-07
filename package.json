@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rm -rf ./dist",
     "build:dev": "webpack --config webpack.development.config.js --verbose --display-modules",
-    "build:prod": "webpack --config webpack.production.config.js -p --verbose --display-modules",
+    "build:prod": "webpack --config webpack.production.config.js --verbose --display-modules",
     "watch": "webpack-dev-server --hot --inline --config webpack.development.config.js --verbose --display-modules"
   },
   "repository": {

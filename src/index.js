@@ -1,5 +1,10 @@
 import './js/coreLibrary';
+import './js/Component/Component';
+import './js/Component/HeaderComponent/HeaderComponent';
+import './js/Component/OutcomeComponent/OutcomeComponent';
+import './js/Component/PaginationComponent/PaginationComponent';
+import './js/Module/offeringModule';
+import './js/Module/offeringModule';
 import './scss/app-base-all';
 import './scss/app-base';
 import './scss/app-base-icons';
-import './i18n/locals';
