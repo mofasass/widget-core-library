@@ -12,6 +12,9 @@
       this.data = attributes;
       this.scrollerParent = element;
       this.scrollerParent.className += 'kw-pagination l-flexbox';
+      this.showLeftNav = false;
+      this.showRightNav = false;
+      this.scrollStart = 0;
 
       this.currentPage = this.data.currentPage || 0;
       this.maxItemsPerPage = this.data.maxItemsPerPage ? this.data.maxItemsPerPage : 1;
@@ -20,25 +23,20 @@
       this.includeIcons = this.data.includeIcons != null ? this.data.includeIcons : false;
       this.tabTextKey = this.data.tabTextKey != null ? this.data.tabTextKey : false;
       this.minTabWidth = this.data.minTabWidth != null ? this.data.minTabWidth : '17.85%';
-      this.pageItem = this.data.pageItemClass ? this.data.pageItemClass : '.kw-page-link';
+      this.pageItemClass = '.kw-page-link';
 
       parentScope['_' + this.data.scopeKey] = [];
       this.originalArray = parentScope[this.data.scopeKey] || [];
       this.currentPageArray = parentScope['_' + this.data.scopeKey];
 
-      this.showLeftNav = false;
-      this.showRightNav = false;
-      this.scrollStart = 0;
-
       this.getScroller = () => {
          this.scroller = document.getElementById('kw-scroll-component');
          if ( this.scroller ) {
             this.scrollerParentWidth = this.scrollerParent.offsetWidth;
-            this.scrollerItems = this.scroller.querySelectorAll(this.pageItem);
+            this.scrollerItems = this.scroller.querySelectorAll(this.pageItemClass);
             this.scrollerItemWidth = this.scrollerItems.length ? this.scrollerItems[0].offsetWidth : 0;
             this.scrollerWidth = this.scrollerItemWidth * this.scrollerItems.length + 16 * 2;
             this.enabled = this.scrollerWidth > this.scrollerParentWidth;
-            console.log(this.enabled);
          }
       };
 
