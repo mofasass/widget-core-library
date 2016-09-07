@@ -1,5 +1,6 @@
 var path = require('path');
 const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
    entry: {
@@ -7,7 +8,7 @@ module.exports = {
    },
    module: {
       preLoaders: [
-         { test: /.js$/, exclude: /node_modules/, loader: 'jshint-loader' }
+         {test: /.js$/, exclude: /node_modules/, loader: 'jshint-loader'}
       ],
       loaders: [
          {test: /\.svg/, loader: 'svg-url-loader'},
@@ -37,7 +38,14 @@ module.exports = {
          },
       }),
       new webpack.optimize.OccurrenceOrderPlugin(),
-      new webpack.optimize.AggressiveMergingPlugin()
+      new webpack.optimize.AggressiveMergingPlugin(),
+      new CopyWebpackPlugin([{
+         from: './src/i18n',
+         to: 'i18n'
+      }, {
+         from: './src/scss',
+         to: 'scss'
+      }])
    ],
    sassLoader: {
       includePaths: [path.resolve(__dirname, './src/scss')]

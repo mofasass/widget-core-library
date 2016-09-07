@@ -27,6 +27,7 @@
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.14.0",
     "changelog": "latest",
+    "copy-webpack-plugin": "^3.0.1",
     "css-loader": "^0.25.0",
     "del": "^2.0.2",
     "documentation": "^4.0.0-beta9",
