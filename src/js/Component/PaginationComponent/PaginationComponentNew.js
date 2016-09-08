@@ -15,15 +15,15 @@
       this.showLeftNav = false;
       this.showRightNav = false;
       this.scrollStart = 0;
+      this.maxItemsPerPage = 1;
+      this.pageItemClass = '.kw-page-link';
 
       this.currentPage = this.data.currentPage || 0;
-      this.maxItemsPerPage = this.data.maxItemsPerPage ? this.data.maxItemsPerPage : 1;
       this.maxVisibleTabs = this.data.maxVisibleTabs ? this.data.maxVisibleTabs : 5;
       this.paginationScrollable = this.data.type && this.data.type === 'scrollable';
       this.includeIcons = this.data.includeIcons != null ? this.data.includeIcons : false;
       this.tabTextKey = this.data.tabTextKey != null ? this.data.tabTextKey : false;
       this.minTabWidth = this.data.minTabWidth != null ? this.data.minTabWidth : '17.85%';
-      this.pageItemClass = '.kw-page-link';
 
       parentScope['_' + this.data.scopeKey] = [];
       this.originalArray = parentScope[this.data.scopeKey] || [];
@@ -197,7 +197,7 @@
 
    rivets.components['pagination-component'] = {
 
-      static: ['scopeKey', 'maxItemsPerPage', 'type', 'includeIcons', 'tabTextKey', 'minTabWidth', 'pageItemClass'],
+      static: ['scopeKey', 'maxItemsPerPage', 'type', 'includeIcons', 'tabTextKey', 'minTabWidth'],
 
       /**
        * Template pagination
