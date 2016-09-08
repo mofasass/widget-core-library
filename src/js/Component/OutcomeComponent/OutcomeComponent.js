@@ -1,4 +1,6 @@
-(() => {
+import rivets from 'rivets';
+
+export default (() => {
    'use strict';
 
    /**

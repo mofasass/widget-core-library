@@ -2,7 +2,7 @@
   "name": "widget-core-library",
   "version": "2.8.2",
   "description": "",
-  "main": "dist/js/app.js",
+  "main": "dist/core.min.js",
   "scripts": {
     "clean": "rm -rf ./dist",
     "build:dev": "webpack --config webpack.development.config.js --verbose --display-modules",
@@ -51,6 +51,7 @@
     "gulp-strip-debug": "^1.0.2",
     "jsdoc": "^3.4.0",
     "jshint-loader": "^0.8.3",
+    "json-loader": "^0.5.4",
     "merge-stream": "^1.0.0",
     "node-sass": "^3.9.3",
     "sass-loader": "^4.0.1",
@@ -59,14 +60,17 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.13.2",
     "webpack-dashboard": "^0.1.8",
+    "webpack-dev-server": "^1.15.1",
     "webpack-init": "^0.1.1",
     "webpack-load-plugins": "^0.1.2",
     "webpack-validator": "^2.2.7"
   },
   "dependencies": {
     "compass-mixins": "^0.12.10",
-    "json-loader": "^0.5.4",
-    "webpack-dev-server": "^1.15.1"
+    "es6-promise": "^3.2.1",
+    "fetch": "^1.1.0",
+    "rivets": "^0.9.4",
+    "stapes": "^1.0.0"
   },
   "kambi-widget-api-version": "1.0.0.13"
 }
