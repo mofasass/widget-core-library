@@ -1,3 +1,5 @@
+import widgetModule from './../../Module/widgetModule';
+
 /**
  * Header Controller
  * @param title
@@ -16,9 +18,9 @@ var HeaderController = (title, cssClasses, scope, collapsable, startCollapsed) =
    if (collapsable) {
       scope.collapsed = startCollapsed;
       if (scope.collapsed) {
-         CoreLibrary.widgetModule.enableWidgetTransition(false);
-         CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
-         CoreLibrary.widgetModule.enableWidgetTransition(true);
+         widgetModule.enableWidgetTransition(false);
+         widgetModule.setWidgetHeight(headerHeight);
+         widgetModule.enableWidgetTransition(true);
       }
 
       this.cssClasses += ' KambiWidget-header';
@@ -27,9 +29,9 @@ var HeaderController = (title, cssClasses, scope, collapsable, startCollapsed) =
       this.click = (ev, controller) => {
          scope.collapsed = !scope.collapsed;
          if (scope.collapsed) {
-            CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
+            widgetModule.setWidgetHeight(headerHeight);
          } else {
-            CoreLibrary.widgetModule.adaptWidgetHeight();
+            widgetModule.adaptWidgetHeight();
          }
       };
    }

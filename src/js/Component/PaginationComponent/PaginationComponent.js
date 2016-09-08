@@ -1,4 +1,4 @@
-import CoreLibrary from '../../coreLibrary';
+import Component from '../Component';
 
 /**
  * Component used for creating number-based pagination
@@ -25,7 +25,7 @@ import CoreLibrary from '../../coreLibrary';
  * @class PaginationComponent
  */
 
-export default CoreLibrary.Component.subclass({
+export default Component.subclass({
    htmlTemplate: `
       <div class="kw-pagination l-flexbox l-pack-center l-align-center">
          <span
@@ -60,7 +60,7 @@ export default CoreLibrary.Component.subclass({
     * @memberof PaginationComponent
     */
    constructor (htmlElement, mainComponentScope, scopeKey, pageSize, maxVisiblePages) {
-      CoreLibrary.Component.apply(this, [{
+      Component.apply(this, [{
          rootElement: htmlElement
       }]);
       this.scopeKey = scopeKey;
