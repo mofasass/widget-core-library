@@ -209,7 +209,7 @@
             <div rv-show="showLeftNav" class="kw-scroll-left l-flexbox l-align-center" rv-on-click="previousPage">
                <i class="icon-angle-left"></i>
             </div>
-            <div class="kw-scroll-container KambiWidget-font" 
+            <div class="kw-scroll-container KambiWidget-font"
                rv-class-l-ml-16="paginationScrollable"
                rv-class-l-mr-16="paginationScrollable">
                <div id="kw-scroll-component" class="kw-scroll-inner l-flexbox l-pack-justify l-flex-1 l-align-stretch"

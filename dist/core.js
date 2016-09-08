@@ -2262,65 +2262,48 @@ window.CoreLibrary.widgetModule = function () {
 
    /**
     * Header Controller
-    * @param title
-    * @param cssClasses
-    * @param scope
-    * @param collapsable
-    * @param startCollapsed
+    *
+    * @param {String} leftText Left aligned text
+    * @param {String} rightText Right aligned text
+    * @param {String} leftTextCssClass CSS class(es) to add to left text
+    * @param {String} rightTextCssClass CSS class(es) to add to right text
     * @constructor
     * @private
     */
 
-   var HeaderController = function HeaderController(title, cssClasses, scope, collapsable, startCollapsed) {
-      var headerHeight = 36;
-      undefined.title = title;
-      undefined.cssClasses = cssClasses + ' KambiWidget-font kw-header l-flexbox l-align-center l-pl-16';
-
-      if (collapsable) {
-         scope.collapsed = startCollapsed;
-         if (scope.collapsed) {
-            CoreLibrary.widgetModule.enableWidgetTransition(false);
-            CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
-            CoreLibrary.widgetModule.enableWidgetTransition(true);
-         }
-
-         undefined.cssClasses += ' KambiWidget-header';
-         undefined.style = 'cursor: pointer;';
-
-         undefined.click = function (ev, controller) {
-            scope.collapsed = !scope.collapsed;
-            if (scope.collapsed) {
-               CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
-            } else {
-               CoreLibrary.widgetModule.adaptWidgetHeight();
-            }
-         };
-      }
+   var HeaderController = function HeaderController(leftText, rightText, leftTextCssClass, rightTextCssClass) {
+      this.leftText = leftText;
+      this.rightText = rightText;
+      this.leftTextCssClass = 'kw-header-left-text' + (leftTextCssClass ? ' ' + leftTextCssClass : '');
+      this.rightTextCssClass = 'kw-header-right-text' + (rightTextCssClass ? ' ' + rightTextCssClass : '');
    };
 
    /**
-    * Component that creates a header for the widget that can optionally
-    * collapse the widget by cliking on it
+    * Component that creates a header with left and/or right aligned text.
+    *
     * @memberof rivets
     * @mixin component "header-component"
     * @example
-    * <header-component title='Title'>
-    * @property {Boolean} collapsable if true clickin on header will collapse the widget
-    * @property {Boolean} collapsed if true the widget starts collapsed
-    * @property {String} css-classes classes to add to the header
+    * <header-component left-text="Left title" right-text="Right title" left-text-css-class="left-txt" right-text-css-class="right-txt">
+    * @property {String} left-text Left aligned text
+    * @property {String} right-text Right aligned text
+    * @property {String} left-text-css-class CSS class(es) to add to left text
+    * @property {String} right-text-css-class CSS class(es) to add to right text
     */
    rivets.components['header-component'] = {
-      static: ['collapsable', 'collapsed', 'css-classes'],
+      /**
+       * Defines static properties.
+       */
+      static: ['leftTextCssClass', 'rightTextCssClass'],
 
       /**
        * Returns header template.
-       * @returns {string}
+       * @returns {String}
        * @private
        */
       template: function template() {
-         return '\n            <header rv-class="cssClasses" rv-style="style" rv-on-click="click">{title | translate}</header>\n         ';
+         return '\n            <header class="kw-header l-pl-16 l-pr-16">\n               <div rv-show="leftText" rv-class="leftTextCssClass" rv-text="leftText"></div>\n               <div rv-show="rightText" rv-class="rightTextCssClass" rv-text="rightText"></div>\n            </header>\n         ';
       },
-
 
       /**
        * Initializes the rivets component.
@@ -2330,26 +2313,519 @@ window.CoreLibrary.widgetModule = function () {
        * @private
        */
       initialize: function initialize(el, attributes) {
-         var cssClasses = attributes['css-classes'];
-         if (cssClasses == null) {
-            cssClasses = '';
-         }
-
-         var collapsable = false;
-         if (attributes.collapsable === 'true') {
-            collapsable = true;
-         }
-
-         var startCollapsed = false;
-         if (attributes.collapsed === 'true') {
-            startCollapsed = true;
-         }
-
-         return new HeaderController(attributes.title, cssClasses, this.view.models, collapsable, startCollapsed);
+         return new HeaderController(attributes.leftText, attributes.rightText, attributes.leftTextCssClass, attributes.rightTextCssClass);
       }
    };
 })();
 //# sourceMappingURL=HeaderComponent.js.map
+
+'use strict';
+
+(function () {
+   'use strict';
+
+   /**
+    * Icon Header Controller
+    *
+    * @param {String} title Title to be displayed on header
+    * @param {String} subtitle Subtitle to be displayed on header
+    * @param {String} iconCssClass Header icon CSS class
+    * @constructor
+    * @private
+    */
+
+   var IconHeaderController = function IconHeaderController(title, subtitle, iconCssClass) {
+      this.title = title;
+      this.subtitle = subtitle;
+      this.iconCssClass = iconCssClass ? 'kw-icon-header-logo ' + iconCssClass : null;
+   };
+
+   /**
+    * Component that creates a header for the widget that can optionally have a subtitle and an icon.
+    *
+    * @memberof rivets
+    * @mixin component "icon-header-component"
+    * @example
+    * <icon-header-component title='Title' subtitle='Subtitle' icon-css-class='icon-class'>
+    * @property {String} title Title to be displayed on header
+    * @property {String} subtitle Subtitle to be displayed on header
+    * @property {String} icon-css-class Header icon CSS class
+    */
+   rivets.components['icon-header-component'] = {
+      /**
+       * Defines static properties.
+       */
+      static: ['iconCssClass'],
+
+      /**
+       * Returns header template.
+       * @returns {String}
+       * @private
+       */
+      template: function template() {
+         return '\n            <header class="KambiWidget-card-border-color KambiWidget-font kw-icon-header l-flexbox l-align-center l-pl-16">\n               <div rv-if="iconCssClass" rv-class="iconCssClass"></div>\n               <div class="kw-icon-header-text-container">\n                  <div class="kw-icon-header-title text-truncate" rv-text="title"></div>\n                  <div rv-if="subtitle" class="kw-icon-header-subtitle text-truncate" rv-text="subtitle"></div>\n               </div>\n            </header>\n         ';
+      },
+
+      /**
+       * Initializes the rivets component.
+       * @param {element} el DOM element to be binded
+       * @param {object} attributes DOM attributes
+       * @returns {IconHeaderController}
+       * @private
+       */
+      initialize: function initialize(el, attributes) {
+         return new IconHeaderController(attributes.title, attributes.subtitle, attributes.iconCssClass);
+      }
+   };
+})();
+//# sourceMappingURL=IconHeaderComponent.js.map
+
+'use strict';
+
+(function () {
+   'use strict';
+
+   /**
+    * Component used for creating number-based pagination
+    * @example
+   HTML:
+   <body>
+   <!-- note that we need an _ in _events, scope.events is the original array,
+   _events is the array just with the elements of this page-->
+   <div rv-each-event="_events">
+      <span>{event.name}</span>
+   </div>
+   ...
+   <!--Footer-->
+   <footer class="kw-footer">
+      <div id="pagination" class="kw-pagination l-flexbox l-pack-center l-align-center"></div>
+   </footer>
+   </body>
+   init() {
+   ...
+   this.scope.events = [...];
+   this.pagination = new CoreLibrary.PaginationComponent('#pagination', this.scope, 'events', 5);
+   }
+    * @class PaginationComponent
+    */
+
+   CoreLibrary.PaginationComponent = CoreLibrary.Component.subclass({
+      htmlTemplate: '\n      <div class="kw-pagination l-flexbox l-pack-center l-align-center">\n         <span\n               rv-on-click="previousPage"\n               rv-class-disabled="firstPage"\n               class="kw-page-link kw-pagination-arrow">\n            <i class="icon-angle-left"></i>\n         </span>\n         <span\n               rv-each-page="pages"\n               rv-on-click="page.clickEvent"\n               rv-class-kw-active-page="page.selected"\n               class="kw-page-link l-pack-center l-align-center">\n            {page.text}\n         </span>\n         <span\n               rv-on-click="nextPage"\n               rv-class-disabled="lastPage"\n               class="kw-page-link kw-pagination-arrow">\n               <i class="icon-angle-right"></i>\n         </span>\n      </div>\n      ',
+
+      /**
+       * Constructor method.
+       * @param {string} htmlElement HTML element to place the controller (pagination buttons) in
+       * @param {object} mainComponentScope The scope object of the widget
+       * @param {string} scopeKey scope key - they attribute name in the scope object to paginate on
+       * @param {number} pageSize Number of elements per page
+       * @param {number} maxVisiblePages Maximum visible pages in the controller
+       * @memberof PaginationComponent
+       */
+      constructor: function constructor(htmlElement, mainComponentScope, scopeKey, pageSize, maxVisiblePages) {
+         var _this = this;
+
+         CoreLibrary.Component.apply(this, [{
+            rootElement: htmlElement
+         }]);
+         this.scopeKey = scopeKey;
+         this.pageSize = pageSize ? pageSize : 3;
+         this.maxVisiblePages = maxVisiblePages ? maxVisiblePages : 5;
+         this.scope.currentPage = 0;
+         this.scope.firstPage = true;
+         this.scope.lastPage = false;
+
+         /*
+          creates a new array with name _scopeKey
+          the component should use this array when it wants only the data
+          of the currentPage
+          */
+         mainComponentScope['_' + scopeKey] = [];
+         this.originalArray = mainComponentScope[scopeKey];
+         this.currentPageArray = mainComponentScope['_' + scopeKey];
+
+         // watching for changes in the original array
+         sightglass(mainComponentScope, scopeKey, function () {
+            _this.originalArray = mainComponentScope[scopeKey];
+            _this.setCurrentPage(0);
+            _this.clearArray();
+            _this.adaptArray();
+         });
+
+         this.scope.nextPage = this.nextPage.bind(this);
+         this.scope.previousPage = this.previousPage.bind(this);
+
+         this.adaptArray();
+      },
+
+
+      /**
+       * Empties the currentPageArray.
+       * @memberof PaginationComponent
+       * @private
+       */
+      clearArray: function clearArray() {
+         this.currentPageArray.splice(0, this.currentPageArray.length);
+      },
+
+
+      /**
+       * Get current page.
+       * @returns {number}
+       * @memberof PaginationComponent
+       */
+      getCurrentPage: function getCurrentPage() {
+         return this.scope.currentPage;
+      },
+
+
+      /**
+       * Sets currentPage variable.
+       * @param {number} pageNumber Set a certain page as current one
+       * @memberof PaginationComponent
+       */
+      setCurrentPage: function setCurrentPage(pageNumber) {
+         if (pageNumber === this.getCurrentPage()) {
+            return;
+         }
+         if (pageNumber < 0 || pageNumber >= this.getNumberOfPages()) {
+            throw new Error('Invalid page number');
+         }
+         this.scope.currentPage = pageNumber;
+         this.adaptArray();
+      },
+
+
+      /**
+       * Returns the number of pages.
+       * @returns {number}
+       * @memberof PaginationComponent
+       */
+      getNumberOfPages: function getNumberOfPages() {
+         return Math.ceil(this.originalArray.length / this.pageSize);
+      },
+
+
+      /**
+       * Method for displaying next page.
+       * @returns {Number}
+       * @memberof PaginationComponent
+       */
+      nextPage: function nextPage() {
+         if (this.getCurrentPage() < this.getNumberOfPages() - 1) {
+            this.setCurrentPage(this.getCurrentPage() + 1);
+         }
+         return this.getCurrentPage();
+      },
+
+
+      /**
+       * Method for displaying previous page.
+       * @returns {Number}
+       * @memberof PaginationComponent
+       */
+      previousPage: function previousPage() {
+         if (this.getCurrentPage() > 0) {
+            this.setCurrentPage(this.getCurrentPage() - 1);
+         }
+         return this.getCurrentPage();
+      },
+
+
+      /**
+       * Changes the _scopeKey array to match the current page elements.
+       * @memberof PaginationComponent
+       * @private
+       */
+      adaptArray: function adaptArray() {
+         this.clearArray();
+         var startItem = this.getCurrentPage() * this.pageSize;
+         var endItem = startItem + this.pageSize;
+         if (endItem >= this.originalArray.length) {
+            endItem = this.originalArray.length;
+         }
+         for (var i = startItem; i < endItem; ++i) {
+            this.currentPageArray.push(this.originalArray[i]);
+         }
+
+         this.scope.firstPage = this.getCurrentPage() === 0;
+         this.scope.lastPage = this.getCurrentPage() === this.getNumberOfPages() - 1;
+
+         this.render();
+      },
+
+
+      /**
+       * Renders the component.
+       * @memberof PaginationComponent
+       * @private
+       */
+      init: function init() {
+         this.render();
+      },
+
+
+      /**
+       * Updates the scope.pages value which is used to render the page numbers and arrows.
+       * @memberof PaginationComponent
+       * @private
+       */
+      render: function render() {
+         this.scope.pages = [];
+         var startPage = this.getCurrentPage() - 2;
+         if (this.getCurrentPage() + 2 >= this.getNumberOfPages()) {
+            var startPage = this.getNumberOfPages() - 5;
+         }
+         if (startPage < 0) {
+            startPage = 0;
+         }
+         var i = startPage;
+         var numberOfPagesVisible = 0;
+         while (i < this.getNumberOfPages() && numberOfPagesVisible < 5) {
+            this.scope.pages.push({
+               text: i + 1 + '',
+               number: i,
+               selected: i === this.getCurrentPage(),
+               clickEvent: this.setCurrentPage.bind(this, i) // calls setCurrentPage with i as a parameter
+            });
+            ++i;
+            ++numberOfPagesVisible;
+         }
+      }
+   });
+})();
+//# sourceMappingURL=PaginationComponent.js.map
+
+'use strict';
+
+(function () {
+   'use strict';
+
+   /**
+    *
+    * @param element
+    * @param attributes
+    * @param parentScope
+    * @constructor
+    */
+
+   var PaginationComponent = function PaginationComponent(element, attributes, parentScope) {
+      var _this = this;
+
+      this.data = attributes;
+      this.scrollerParent = element;
+      this.scrollerParent.className += 'kw-pagination l-flexbox';
+      this.showLeftNav = false;
+      this.showRightNav = false;
+      this.scrollStart = 0;
+
+      this.currentPage = this.data.currentPage || 0;
+      this.maxItemsPerPage = this.data.maxItemsPerPage ? this.data.maxItemsPerPage : 1;
+      this.maxVisibleTabs = this.data.maxVisibleTabs ? this.data.maxVisibleTabs : 5;
+      this.paginationScrollable = this.data.type && this.data.type === 'scrollable';
+      this.includeIcons = this.data.includeIcons != null ? this.data.includeIcons : false;
+      this.tabTextKey = this.data.tabTextKey != null ? this.data.tabTextKey : false;
+      this.minTabWidth = this.data.minTabWidth != null ? this.data.minTabWidth : '17.85%';
+      this.pageItemClass = '.kw-page-link';
+
+      parentScope['_' + this.data.scopeKey] = [];
+      this.originalArray = parentScope[this.data.scopeKey] || [];
+      this.currentPageArray = parentScope['_' + this.data.scopeKey];
+
+      this.getScroller = function () {
+         _this.scroller = document.getElementById('kw-scroll-component');
+         if (_this.scroller) {
+            _this.scrollerParentWidth = _this.scrollerParent.offsetWidth;
+            _this.scrollerItems = _this.scroller.querySelectorAll(_this.pageItemClass);
+            _this.scrollerItemWidth = _this.scrollerItems.length ? _this.scrollerItems[0].offsetWidth : 0;
+            _this.scrollerWidth = _this.scrollerItemWidth * _this.scrollerItems.length + 16 * 2;
+            _this.enabled = _this.scrollerWidth > _this.scrollerParentWidth;
+         }
+      };
+
+      this.getCurrentPage = function () {
+         return _this.currentPage;
+      };
+
+      this.getNumberOfPages = function () {
+         return Math.ceil(_this.originalArray.length / _this.maxItemsPerPage);
+      };
+
+      this.nextPage = function () {
+         _this.doScroll('right');
+         return _this.getCurrentPage();
+      };
+
+      this.previousPage = function () {
+         _this.doScroll('left');
+         return _this.getCurrentPage();
+      };
+
+      this.handleClass = function (dir, end) {
+         _this.showLeftNav = _this.showRightNav = _this.enabled;
+         if (_this.enabled && dir === 'right' && end) {
+            _this.showLeftNav = true;
+            _this.showRightNav = !_this.showLeftNav;
+         } else if (_this.enabled && dir === 'left' && end) {
+            _this.showLeftNav = false;
+            _this.showRightNav = !_this.showLeftNav;
+         }
+      };
+
+      this.onClick = function (pageNumber) {
+         _this.adaptArray();
+         _this.setCurrentPage(pageNumber);
+         _this.doScroll(null, pageNumber);
+      };
+
+      this.doScroll = function (dir, index) {
+         _this.getScroller();
+         _this.handleClass();
+         _this.scroller.scrollLeft = _this.scrollerWidth * ((index + 1) / _this.scrollerItems.length) - _this.scrollerItemWidth;
+         if (!_this.enabled) {
+            return false;
+         }
+         if (dir === 'left') {
+            _this.scrollStart += _this.scrollerItemWidth * 2;
+         } else if (index >= 0) {
+            _this.scrollStart = index * -1 * _this.scrollerItemWidth + (_this.scrollerParentWidth / 2 - _this.scrollerItemWidth / 2);
+         } else {
+            _this.scrollStart -= _this.scrollerItemWidth * 2;
+         }
+
+         if (_this.scrollStart >= 0) {
+            _this.scrollStart = 0;
+            _this.handleClass('left', true);
+         } else if (_this.scrollStart * -1 >= _this.scrollerWidth - _this.scrollerParentWidth) {
+            _this.scrollStart = (_this.scrollerWidth - _this.scrollerParentWidth) * -1;
+            _this.handleClass('right', true);
+         }
+
+         _this.doTranslate();
+      };
+
+      this.doTranslate = function (coordX) {
+         _this.scrollStart = coordX >= 0 ? coordX : _this.scrollStart;
+         var translate = 'translate3d(' + _this.scrollStart + 'px, 0, 0)';
+         _this.scroller.style.transform = translate;
+         _this.scroller.style.webkitTransform = translate;
+         _this.scroller.style.MozTransform = translate;
+      };
+
+      this.setCurrentPage = function (pageNumber) {
+         if (pageNumber === _this.getCurrentPage()) {
+            return;
+         }
+         if (pageNumber < 0 || pageNumber >= _this.getNumberOfPages()) {
+            throw new Error('Invalid page number');
+         }
+         _this.currentPage = pageNumber;
+      };
+
+      this.clearArray = function () {
+         if (_this.currentPageArray) {
+            _this.currentPageArray.splice(0, _this.currentPageArray.length);
+         }
+      };
+
+      this.adaptArray = function () {
+         _this.clearArray();
+         var startItem = _this.getCurrentPage() * _this.maxItemsPerPage;
+         var endItem = startItem + _this.maxItemsPerPage;
+         if (endItem >= _this.originalArray.length) {
+            endItem = _this.originalArray.length;
+         }
+         for (var i = startItem; i < endItem; ++i) {
+            _this.currentPageArray.push(_this.originalArray[i]);
+         }
+         _this.render();
+      };
+
+      this.render = function () {
+         _this.pages = [];
+         var maxVisibleTabs = _this.maxVisibleTabs,
+             currentPage = _this.getCurrentPage(),
+             pageCount = _this.getNumberOfPages(),
+             startPage = 0,
+             endPage = pageCount;
+
+         // if ( maxVisibleTabs < pageCount ) {
+         //    // Keep active page in middle by adjusting start and end
+         //    startPage = Math.max(currentPage - Math.ceil(maxVisibleTabs / 3), 0);
+         //    endPage = startPage + maxVisibleTabs;
+         //    // Shift the list start and end
+         //    if ( endPage > pageCount ) {
+         //       endPage = pageCount;
+         //       startPage = endPage - maxVisibleTabs;
+         //    }
+         // }
+
+         for (var i = startPage; i <= endPage - 1; i++) {
+            var page = {
+               text: _this.originalArray[i].event.sport,
+               number: i,
+               selected: i === _this.getCurrentPage(),
+               clickEvent: _this.onClick.bind(_this, i) // calls setCurrentPage with i as a parameter
+            };
+            if (_this.tabTextKey && _this.originalArray[i].hasOwnProperty(_this.tabTextKey)) {
+               page.text = _this.originalArray[i][_this.tabTextKey];
+            }
+            if (_this.includeIcons) {
+               page.iconClass = 'kw-custom-logo-' + _this.composeObject(_this.originalArray[i], _this.includeIcons).toLowerCase();
+            }
+            _this.pages.push(page);
+         }
+      };
+
+      this.composeObject = function (object, path) {
+         var i = 0,
+             strPath = path.split('.'),
+             len = strPath.length;
+         for (; i < len; i++) {
+            object = object[strPath[i]];
+         }
+         return object;
+      };
+
+      sightglass(this, 'currentPage', function () {
+         _this.setCurrentPage(_this.currentPage);
+         _this.adaptArray();
+         if (_this.paginationScrollable) {
+            _this.onClick(_this.currentPage);
+         }
+      });
+
+      sightglass(parentScope, this.data.scopeKey, function () {
+         _this.originalArray = parentScope[_this.data.scopeKey];
+      });
+   };
+
+   rivets.components['pagination-component'] = {
+
+      static: ['scopeKey', 'maxItemsPerPage', 'type', 'includeIcons', 'tabTextKey', 'minTabWidth', 'pageItemClass'],
+
+      /**
+       * Template pagination
+       * @returns {string}
+       * @private
+       */
+      template: function template() {
+         return '\n            <div rv-show="showLeftNav" class="kw-scroll-left l-flexbox l-align-center" rv-on-click="previousPage">\n               <i class="icon-angle-left"></i>\n            </div>\n            <div class="kw-scroll-container KambiWidget-font"\n               rv-class-l-ml-16="paginationScrollable"\n               rv-class-l-mr-16="paginationScrollable">\n               <div id="kw-scroll-component" class="kw-scroll-inner l-flexbox l-pack-justify l-flex-1 l-align-stretch"\n               rv-class-kw-pagination-scrollable="paginationScrollable">\n                        <span rv-each-page="pages" rv-on-click="page.clickEvent" rv-class-kw-active-page="page.selected"\n                           rv-style-min-width="minTabWidth"\n                              class="KambiWidget-card-border-color kw-page-link l-flexbox l-vertical l-pack-center l-align-center l-flex-1">\n                           <span rv-show="includeIcons" rv-class="\'kw-sports-logo \' | + page.iconClass"></span>\n                           <span rv-class-kw-sports-text="includeIcons" rv-text="page.text"></span>\n                           <span class="KambiWidget-primary-background-color kw-custom-border"></span>\n                        </span>\n               </div>\n            </div>\n            <div rv-show="showRightNav" class="kw-scroll-right l-flexbox l-align-center l-pack-end" rv-on-click="nextPage">\n               <i class="icon-angle-right"></i>\n            </div>\n         ';
+      },
+
+
+      /**
+       * Initialize outcome-component-no-label.
+       * @param el
+       * @param attributes
+       * @returns {PaginationComponent}
+       * @private
+       */
+      initialize: function initialize(el, attributes) {
+         return new PaginationComponent(el, attributes, this.view.models);
+      }
+   };
+})();
+//# sourceMappingURL=PaginationComponentNew.js.map
 
 'use strict';
 
@@ -2571,218 +3047,3 @@ window.CoreLibrary.widgetModule = function () {
    };
 })();
 //# sourceMappingURL=OutcomeComponent.js.map
-
-'use strict';
-
-(function () {
-   'use strict';
-
-   /**
-    * Component used for creating number-based pagination
-    * @example
-   HTML:
-   <body>
-   <!-- note that we need an _ in _events, scope.events is the original array,
-   _events is the array just with the elements of this page-->
-   <div rv-each-event="_events">
-      <span>{event.name}</span>
-   </div>
-   ...
-   <!--Footer-->
-   <footer class="kw-footer">
-      <div id="pagination" class="kw-pagination l-flexbox l-pack-center l-align-center"></div>
-   </footer>
-   </body>
-   init() {
-   ...
-   this.scope.events = [...];
-   this.pagination = new CoreLibrary.PaginationComponent('#pagination', this.scope, 'events', 5);
-   }
-    * @class PaginationComponent
-    */
-
-   CoreLibrary.PaginationComponent = CoreLibrary.Component.subclass({
-      htmlTemplate: '\n      <div class="kw-pagination l-flexbox l-pack-center l-align-center">\n         <span\n               rv-on-click="previousPage"\n               rv-class-disabled="firstPage"\n               class="kw-page-link kw-pagination-arrow">\n            <i class="icon-angle-left"></i>\n         </span>\n         <span\n               rv-each-page="pages"\n               rv-on-click="page.clickEvent"\n               rv-class-kw-active-page="page.selected"\n               class="kw-page-link l-pack-center l-align-center">\n            {page.text}\n         </span>\n         <span\n               rv-on-click="nextPage"\n               rv-class-disabled="lastPage"\n               class="kw-page-link kw-pagination-arrow">\n               <i class="icon-angle-right"></i>\n         </span>\n      </div>\n      ',
-
-      /**
-       * Constructor method.
-       * @param {string} htmlElement HTML element to place the controller (pagination buttons) in
-       * @param {object} mainComponentScope The scope object of the widget
-       * @param {string} scopeKey scope key - they attribute name in the scope object to paginate on
-       * @param {number} pageSize Number of elements per page
-       * @param {number} maxVisiblePages Maximum visible pages in the controller
-       * @memberof PaginationComponent
-       */
-      constructor: function constructor(htmlElement, mainComponentScope, scopeKey, pageSize, maxVisiblePages) {
-         var _this = this;
-
-         CoreLibrary.Component.apply(this, [{
-            rootElement: htmlElement
-         }]);
-         this.scopeKey = scopeKey;
-         this.pageSize = pageSize ? pageSize : 3;
-         this.maxVisiblePages = maxVisiblePages ? maxVisiblePages : 5;
-         this.scope.currentPage = 0;
-         this.scope.firstPage = true;
-         this.scope.lastPage = false;
-
-         /*
-          creates a new array with name _scopeKey
-          the component should use this array when it wants only the data
-          of the currentPage
-          */
-         mainComponentScope['_' + scopeKey] = [];
-         this.originalArray = mainComponentScope[scopeKey];
-         this.currentPageArray = mainComponentScope['_' + scopeKey];
-
-         // watching for changes in the original array
-         sightglass(mainComponentScope, scopeKey, function () {
-            _this.originalArray = mainComponentScope[scopeKey];
-            _this.setCurrentPage(0);
-            _this.clearArray();
-            _this.adaptArray();
-         });
-
-         this.scope.nextPage = this.nextPage.bind(this);
-         this.scope.previousPage = this.previousPage.bind(this);
-
-         this.adaptArray();
-      },
-
-
-      /**
-       * Empties the currentPageArray.
-       * @memberof PaginationComponent
-       * @private
-       */
-      clearArray: function clearArray() {
-         this.currentPageArray.splice(0, this.currentPageArray.length);
-      },
-
-
-      /**
-       * Get current page.
-       * @returns {number}
-       * @memberof PaginationComponent
-       */
-      getCurrentPage: function getCurrentPage() {
-         return this.scope.currentPage;
-      },
-
-
-      /**
-       * Sets currentPage variable.
-       * @param {number} pageNumber Set a certain page as current one
-       * @memberof PaginationComponent
-       */
-      setCurrentPage: function setCurrentPage(pageNumber) {
-         if (pageNumber === this.getCurrentPage()) {
-            return;
-         }
-         if (pageNumber < 0 || pageNumber >= this.getNumberOfPages()) {
-            throw new Error('Invalid page number');
-         }
-         this.scope.currentPage = pageNumber;
-         this.adaptArray();
-      },
-
-
-      /**
-       * Returns the number of pages.
-       * @returns {number}
-       * @memberof PaginationComponent
-       */
-      getNumberOfPages: function getNumberOfPages() {
-         return Math.ceil(this.originalArray.length / this.pageSize);
-      },
-
-
-      /**
-       * Method for displaying next page.
-       * @returns {Number}
-       * @memberof PaginationComponent
-       */
-      nextPage: function nextPage() {
-         if (this.getCurrentPage() < this.getNumberOfPages() - 1) {
-            this.setCurrentPage(this.getCurrentPage() + 1);
-         }
-         return this.getCurrentPage();
-      },
-
-
-      /**
-       * Method for displaying previous page.
-       * @returns {Number}
-       * @memberof PaginationComponent
-       */
-      previousPage: function previousPage() {
-         if (this.getCurrentPage() > 0) {
-            this.setCurrentPage(this.getCurrentPage() - 1);
-         }
-         return this.getCurrentPage();
-      },
-
-
-      /**
-       * Changes the _scopeKey array to match the current page elements.
-       * @memberof PaginationComponent
-       * @private
-       */
-      adaptArray: function adaptArray() {
-         this.clearArray();
-         var startItem = this.getCurrentPage() * this.pageSize;
-         var endItem = startItem + this.pageSize;
-         if (endItem >= this.originalArray.length) {
-            endItem = this.originalArray.length;
-         }
-         for (var i = startItem; i < endItem; ++i) {
-            this.currentPageArray.push(this.originalArray[i]);
-         }
-
-         this.scope.firstPage = this.getCurrentPage() === 0;
-         this.scope.lastPage = this.getCurrentPage() === this.getNumberOfPages() - 1;
-
-         this.render();
-      },
-
-
-      /**
-       * Renders the component.
-       * @memberof PaginationComponent
-       * @private
-       */
-      init: function init() {
-         this.render();
-      },
-
-
-      /**
-       * Updates the scope.pages value which is used to render the page numbers and arrows.
-       * @memberof PaginationComponent
-       * @private
-       */
-      render: function render() {
-         this.scope.pages = [];
-         var startPage = this.getCurrentPage() - 2;
-         if (this.getCurrentPage() + 2 >= this.getNumberOfPages()) {
-            var startPage = this.getNumberOfPages() - 5;
-         }
-         if (startPage < 0) {
-            startPage = 0;
-         }
-         var i = startPage;
-         var numberOfPagesVisible = 0;
-         while (i < this.getNumberOfPages() && numberOfPagesVisible < 5) {
-            this.scope.pages.push({
-               text: i + 1 + '',
-               number: i,
-               selected: i === this.getCurrentPage(),
-               clickEvent: this.setCurrentPage.bind(this, i) // calls setCurrentPage with i as a parameter
-            });
-            ++i;
-            ++numberOfPagesVisible;
-         }
-      }
-   });
-})();
-//# sourceMappingURL=PaginationComponent.js.map

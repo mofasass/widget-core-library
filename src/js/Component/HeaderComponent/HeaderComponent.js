@@ -1,65 +1,52 @@
-(() => {
+(function () {
    'use strict';
 
    /**
     * Header Controller
-    * @param title
-    * @param cssClasses
-    * @param scope
-    * @param collapsable
-    * @param startCollapsed
+    *
+    * @param {String} leftText Left aligned text
+    * @param {String} rightText Right aligned text
+    * @param {String} leftTextCssClass CSS class(es) to add to left text
+    * @param {String} rightTextCssClass CSS class(es) to add to right text
     * @constructor
     * @private
     */
-   var HeaderController = ( title, cssClasses, scope, collapsable, startCollapsed ) => {
-      var headerHeight = 36;
-      this.title = title;
-      this.cssClasses = cssClasses + ' KambiWidget-font kw-header l-flexbox l-align-center l-pl-16';
-
-      if ( collapsable ) {
-         scope.collapsed = startCollapsed;
-         if ( scope.collapsed ) {
-            CoreLibrary.widgetModule.enableWidgetTransition(false);
-            CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
-            CoreLibrary.widgetModule.enableWidgetTransition(true);
-         }
-
-         this.cssClasses += ' KambiWidget-header';
-         this.style = 'cursor: pointer;';
-
-         this.click = ( ev, controller ) => {
-            scope.collapsed = !scope.collapsed;
-            if ( scope.collapsed ) {
-               CoreLibrary.widgetModule.setWidgetHeight(headerHeight);
-            } else {
-               CoreLibrary.widgetModule.adaptWidgetHeight();
-            }
-         };
-      }
+   var HeaderController = function ( leftText, rightText, leftTextCssClass, rightTextCssClass ) {
+      this.leftText = leftText;
+      this.rightText = rightText;
+      this.leftTextCssClass = 'kw-header-left-text' + (leftTextCssClass ? ` ${leftTextCssClass}` : '');
+      this.rightTextCssClass = 'kw-header-right-text' + (rightTextCssClass ? ` ${rightTextCssClass}` : '');
    };
 
    /**
-    * Component that creates a header for the widget that can optionally
-    * collapse the widget by cliking on it
+    * Component that creates a header with left and/or right aligned text.
+    *
     * @memberof rivets
     * @mixin component "header-component"
     * @example
-    * <header-component title='Title'>
-    * @property {Boolean} collapsable if true clickin on header will collapse the widget
-    * @property {Boolean} collapsed if true the widget starts collapsed
-    * @property {String} css-classes classes to add to the header
+    * <header-component left-text="Left title" right-text="Right title" left-text-css-class="left-txt" right-text-css-class="right-txt">
+    * @property {String} left-text Left aligned text
+    * @property {String} right-text Right aligned text
+    * @property {String} left-text-css-class CSS class(es) to add to left text
+    * @property {String} right-text-css-class CSS class(es) to add to right text
     */
    rivets.components['header-component'] = {
-      static: ['collapsable', 'collapsed', 'css-classes'],
+      /**
+       * Defines static properties.
+       */
+      static: ['leftTextCssClass', 'rightTextCssClass'],
 
       /**
        * Returns header template.
-       * @returns {string}
+       * @returns {String}
        * @private
        */
-      template () {
+      template: function () {
          return `
-            <header rv-class="cssClasses" rv-style="style" rv-on-click="click">{title | translate}</header>
+            <header class="kw-header l-pl-16 l-pr-16">
+               <div rv-show="leftText" rv-class="leftTextCssClass" rv-text="leftText"></div>
+               <div rv-show="rightText" rv-class="rightTextCssClass" rv-text="rightText"></div>
+            </header>
          `;
       },
 
@@ -70,23 +57,13 @@
        * @returns {HeaderController}
        * @private
        */
-      initialize ( el, attributes ) {
-         var cssClasses = attributes['css-classes'];
-         if ( cssClasses == null ) {
-            cssClasses = '';
-         }
-
-         var collapsable = false;
-         if ( attributes.collapsable === 'true' ) {
-            collapsable = true;
-         }
-
-         var startCollapsed = false;
-         if ( attributes.collapsed === 'true' ) {
-            startCollapsed = true;
-         }
-
-         return new HeaderController(attributes.title, cssClasses, this.view.models, collapsable, startCollapsed);
+      initialize: function ( el, attributes ) {
+         return new HeaderController(
+            attributes.leftText,
+            attributes.rightText,
+            attributes.leftTextCssClass,
+            attributes.rightTextCssClass
+         );
       }
    };
 })();
