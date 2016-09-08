@@ -1,4 +1,5 @@
 import rivets from 'rivets';
+import widgetModule from '../../Module/widgetModule';
 
 export default (() => {
    'use strict';
@@ -73,15 +74,15 @@ export default (() => {
       }
 
       if ( this.data.outcomeAttr != null ) {
-         if ( CoreLibrary.widgetModule.betslipIds.indexOf(this.data.outcomeAttr.id) !== -1 ) {
+         if (widgetModule.betslipIds.indexOf(this.data.outcomeAttr.id) !== -1 ) {
             this.selected = true;
          }
 
-         CoreLibrary.widgetModule.events.on('OUTCOME:ADDED:' + this.data.outcomeAttr.id, ( data, event ) => {
+         widgetModule.events.on('OUTCOME:ADDED:' + this.data.outcomeAttr.id, ( data, event ) => {
             this.selected = true;
          });
 
-         CoreLibrary.widgetModule.events.on('OUTCOME:REMOVED:' + this.data.outcomeAttr.id, ( data, event ) => {
+         widgetModule.events.on('OUTCOME:REMOVED:' + this.data.outcomeAttr.id, ( data, event ) => {
             this.selected = false;
          });
       }
@@ -94,9 +95,9 @@ export default (() => {
        */
       this.toggleOutcome = ( event, scope ) => {
          if ( scope.selected === false ) {
-            CoreLibrary.widgetModule.addOutcomeToBetslip(scope.data.outcomeAttr.id);
+            widgetModule.addOutcomeToBetslip(scope.data.outcomeAttr.id);
          } else {
-            CoreLibrary.widgetModule.removeOutcomeFromBetslip(scope.data.outcomeAttr.id);
+            widgetModule.removeOutcomeFromBetslip(scope.data.outcomeAttr.id);
          }
       };
 

@@ -70,6 +70,7 @@
     "es6-promise": "^3.2.1",
     "fetch": "^1.1.0",
     "rivets": "^0.9.4",
+    "sightglass": "^0.2.6",
     "stapes": "^1.0.0"
   },
   "kambi-widget-api-version": "1.0.0.13"
