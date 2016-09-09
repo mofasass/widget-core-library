@@ -1,6 +1,5 @@
 import Component from './Component/Component';
 import PaginationComponent from './Component/PaginationComponent/PaginationComponent';
-import HeaderComponent from './Component/HeaderComponent/HeaderComponent';
 import offeringModule from './Module/offeringModule';
 import statisticsModule from './Module/statisticsModule';
 import translationModule from './Module/translationModule';
@@ -8,7 +7,6 @@ import utilModule from './Module/utilModule';
 import widgetModule from './Module/widgetModule';
 import sightglass from 'sightglass';
 import rivets from 'rivets';
-
 
 /**
  * Main module that holds the other modules as well as widget
@@ -31,39 +29,55 @@ function parseJSON(response) {
 }
 
 function checkBrowser() {
+
    var ua = window.navigator.userAgent;
+
    var getFirstMatch = function (regex) {
       var match = ua.match(regex);
       return (match && match.length > 1 && match[1]) || '';
    };
 
-   var browser = null;
-   var browserVersion = null;
    var versionIdentifier = getFirstMatch(/version\/(\d+(\.\d+)?)/i);
 
    if (/android/i.test(ua)) {
-      browser = 'android';
-      browserVersion = versionIdentifier;
+      return {
+         browser: 'android',
+         browserVersion : versionIdentifier
+      };
    } else if (/(ipod|iphone|ipad)/i.test(ua)) {
-      browser = 'ios';
-      browserVersion = getFirstMatch(/(?:mxios)[\s\/](\d+(?:\.\d+)+)/i);
+      return {
+         browser: 'ios',
+         browserVersion: getFirstMatch(/(?:mxios)[\s\/](\d+(?:\.\d+)+)/i)
+      };
    } else if (/msie|trident/i.test(ua)) {
-      browser = 'internet-explorer';
-      browserVersion = getFirstMatch(/(?:msie |rv:)(\d+(\.\d+)?)/i);
+      return {
+         browser: 'internet-explorer',
+         browserVersion: getFirstMatch(/(?:msie |rv:)(\d+(\.\d+)?)/i)
+      };
    } else if (/chrome|crios|crmo/i.test(ua)) {
-      browser = 'chrome';
-      browserVersion = getFirstMatch(/(?:chrome|crios|crmo)\/(\d+(\.\d+)?)/i);
+      return {
+         browser: 'chrome',
+         browserVersion: getFirstMatch(/(?:chrome|crios|crmo)\/(\d+(\.\d+)?)/i)
+      };
    } else if (/safari|applewebkit/i.test(ua)) {
-      browser = 'safari';
-      browserVersion = versionIdentifier;
+      return {
+         browser: 'safari',
+         browserVersion : versionIdentifier
+      };
    } else if (/chrome.+? edge/i.test(ua)) {
-      browser = 'microsoft-edge';
-      browserVersion = getFirstMatch(/edge\/(\d+(\.\d+)?)/i);
+      return {
+         browser: 'microsoft-edge',
+         browserVersion: getFirstMatch(/edge\/(\d+(\.\d+)?)/i)
+      };
    } else if (/firefox|iceweasel|fxios/i.test(ua)) {
-      browser = 'firefox';
-      browserVersion = getFirstMatch(/(?:firefox|iceweasel|fxios)[ \/](\d+(\.\d+)?)/i);
+      return {
+         browser: 'firefox',
+         browserVersion: getFirstMatch(/(?:firefox|iceweasel|fxios)[ \/](\d+(\.\d+)?)/i)
+      };
    }
 }
+
+initRivets();
 
 function initRivets() {
    sightglass.adapters = rivets.adapters;
@@ -456,21 +470,23 @@ export default {
     * @memberof module:CoreLibrary
     * @type {String}
     */
-   browser: browser,
+   browser: checkBrowser().browser,
 
    /**
     * Browser version.
     * @memberof module:CoreLibrary
     * @type {String}
     */
-   browserVersion: browserVersion,
+   browserVersion: checkBrowser().browserVersion,
+
+   Component: Component,
 
    /**
     * Expected Kambi API version to use
     * @type {String}
     * @private
     */
-   expectedApiVersion: '{{expectedApiVersion}}', // this value is replaced with the API version number during the compilation step
+   expectedApiVersion: '1.0.0.13', // this value is replaced with the API version number during the compilation step
 
    /**
     * Development flag
@@ -575,6 +591,8 @@ export default {
       pageTrackingPath: '',
       pageType: ''
    },
+
+   PaginationComponent: PaginationComponent,
 
    /**
     * api versions object.
