@@ -1,0 +1,24 @@
+//Base widget styles.
+//Do not use colors here.
+//Use the theme css file instead
+
+.kw-card {
+}
+
+.kw-header {
+   font-size: 12px;
+   line-height: 36px;
+   min-height: 37px;
+   overflow: hidden;
+   position: relative;
+}
+
+.kw-collapsible-header {
+   font-size: 14px;
+}
+
+.kw-footer {
+   //@include border-radius(0 0 2px 2px);
+   //@extend .kw-card;
+   text-align: center;
+}

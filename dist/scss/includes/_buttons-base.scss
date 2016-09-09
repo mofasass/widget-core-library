@@ -1,0 +1,48 @@
+//Buttons
+//
+//Do not use colors attributes here.
+//Use the theme css file instead
+//
+// Styleguide buttons
+
+// .kw-btn
+//
+// Default button class. Apply colors and extra styling in each widget
+//
+// :hover - Subtle hover highlight. Colors set in each widget scss
+// .selected - Selected class. Colors set in each widget scss
+// .disabled - Disabled class
+//
+// Markup:
+// <button class="kw-btn {{modifier_class}}">Button</button>
+//
+// Styleguide buttons.kwbtn
+.kw-btn {
+   @include border-radius(2px);
+   @include transition(background-color ease-out .2s, color ease-out .2s);
+   font-size: 12px;
+   line-height: 20px;
+   margin: 5px 5px 5px 0;
+   padding: 7px 10px;
+
+   &:last-child {
+      margin-right: 0;
+   }
+
+   &:hover {
+      cursor: pointer;
+   }
+}
+
+// .kw-link
+//
+// Simulates a link, sets cursor to pointer
+//
+//
+// Markup:
+// <div class="kw-link {{modifier_class}}">Button</div>
+//
+// Styleguide buttons.kwlink
+.kw-link {
+   cursor: pointer;
+}

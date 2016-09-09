@@ -1,0 +1,112 @@
+//Layout helpers
+//
+//Layout helpers containing classes related to flexbox
+//
+// Styleguide layout-base
+
+// .l-flexbox
+//
+// Flexbox display
+//
+// Markup:
+// <div class="l-flexbox"></div>
+//
+// Styleguide layout-base.l-flexbox
+.l-flexbox {
+   @include flexbox();
+}
+
+// Box orientation - horizontal, row
+.l-horizontal {
+   @include box-orient(row);
+}
+
+// Box orientation - vertical, column
+.l-vertical {
+   @include box-orient(column);
+}
+
+// Align start - flex-start
+.l-align-start {
+   @include box-align(flex-start);
+}
+
+// Align start - center
+.l-align-center {
+   @include box-align(center);
+}
+
+// Align end - flex-end
+.l-align-end {
+   @include box-align(flex-end);
+}
+
+// Align stretch - stretch
+.l-align-stretch {
+   @include box-align(stretch);
+}
+
+// Pack start - flex-start
+.l-pack-start {
+   @include box-pack(flex-start);
+}
+
+// Pack center - center
+.l-pack-center {
+   @include box-pack(center);
+}
+
+// Pack end - flex-end
+.l-pack-end {
+   @include box-pack(flex-end);
+}
+
+// Pack justify - space-between
+.l-pack-justify {
+   @include box-pack(space-between);
+}
+
+// Flex values - 1
+.l-flexed,
+.l-flex-1 {
+   @include flex(1);
+}
+
+// Flex values - 2
+.l-flex-2 {
+   @include flex(2);
+}
+
+// Flex values - 3
+.l-flex-3 {
+   @include flex(3);
+}
+
+// Flex values - 4
+.l-flex-4 {
+   @include flex(4);
+}
+
+// Flex values - 5
+.l-flex-5 {
+   @include flex(5);
+}
+
+// Selector for all l-flex-* classes, fixes flex for Firefox
+[class*="l-flex-"] {
+   min-width: 1px; // Firefox needs this
+}
+
+// Expander class helper
+.l-expander {
+   height: 100%;
+   position: relative;
+   width: 100%;
+}
+
+// Adds the text ellipsis
+.text-truncate {
+   @include text-truncate();
+}
+
+

@@ -1,0 +1,24 @@
+//Margin and padding Layout helpers
+//
+//Margin and padding layout classes
+//
+// Styleguide layout-margins-base
+
+$mp-positions: (
+      ('', ''),
+      ('t', '-top'),
+      ('r', '-right'),
+      ('b', '-bottom'),
+      ('l', '-left')
+);
+
+@each $margin in $margins {
+   @each $posLabel, $position in $mp-positions {
+      .l-m#{$posLabel}-#{$margin} {
+         margin#{$position}: $margin + px;
+      }
+      .l-p#{$posLabel}-#{$margin} {
+         padding#{$position}: $margin + px;
+      }
+   }
+}

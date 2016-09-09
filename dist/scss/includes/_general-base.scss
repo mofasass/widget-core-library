@@ -1,0 +1,59 @@
+//General styles.
+//Do not use colors here.
+//Use the theme css file instead
+
+// Cloak class
+[rv-cloak] {
+   @include transition(opacity .5s ease-out);
+   opacity: 0;
+}
+
+* {
+   -webkit-text-size-adjust: 100%;
+}
+
+* {
+   -webkit-tap-highlight-color: transparent;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   -o-user-select: none;
+   user-select: none;
+   -webkit-touch-callout: none;
+   touch-callout: none;
+}
+
+*, *:after, *:before {
+   box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   -webkit-box-sizing: border-box;
+}
+
+body, html, * {
+   font-family: 'kambi-roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+   font-size: 12px;
+   line-height: 24px;
+}
+
+body, html {
+   margin: 0;
+   padding: 0;
+   width: 100%;
+}
+
+html {
+   min-width: 100%;
+   width: 1px;
+}
+
+a {
+   text-decoration: none;
+}
+
+strong {
+   font-weight: bold;
+
+   &.stronger {
+      font-weight: bolder;
+   }
+}

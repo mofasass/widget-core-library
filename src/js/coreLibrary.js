@@ -42,7 +42,7 @@ function checkBrowser() {
    if (/android/i.test(ua)) {
       return {
          browser: 'android',
-         browserVersion : versionIdentifier
+         browserVersion: versionIdentifier
       };
    } else if (/(ipod|iphone|ipad)/i.test(ua)) {
       return {
@@ -62,7 +62,7 @@ function checkBrowser() {
    } else if (/safari|applewebkit/i.test(ua)) {
       return {
          browser: 'safari',
-         browserVersion : versionIdentifier
+         browserVersion: versionIdentifier
       };
    } else if (/chrome.+? edge/i.test(ua)) {
       return {
