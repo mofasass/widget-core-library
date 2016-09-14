@@ -1,6 +1,3 @@
-body {
-}
-
 a {
    color: $color-4-2-card-text;
 }
@@ -25,10 +22,9 @@ a {
    border-top: solid 1px $color-4-1-card-border;
 }
 
-// Buttons styles
 .kw-btn {
    background-color: white;
-   border: 1px solid #EEE;
+   border: 1px solid #eee;
    color: $color-4-2-card-supportive-text;
 }
 
@@ -55,22 +51,16 @@ a {
 }
 
 .kw-btn.selected .kw-event-outcome-label {
+   @include opacity(.85);
    color: white;
-   opacity: 0.85;
 }
 
-.kw-event:after {
+.kw-event::after {
    background-color: $color-4-1-card-border;
 }
 
 .kw-event:hover {
    background-color: $color-4-1-card-background-hover;
-}
-
-.kw-event-outcome-odds {
-}
-
-.kw-event-path {
 }
 
 .kw-page-link.kw-active-page, .kw-page-link:hover {

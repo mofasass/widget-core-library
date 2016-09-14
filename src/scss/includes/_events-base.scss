@@ -4,7 +4,7 @@
    min-height: 115px;
    position: relative;
 
-   &:after {
+   &::after {
       bottom: -1px;
       content: '';
       height: 1px;
@@ -15,7 +15,7 @@
    }
 
    &:last-child {
-      &:after {
+      &::after {
          height: 0;
       }
    }
@@ -49,7 +49,8 @@
    overflow: hidden;
 }
 
-.kw-event-outcome-odds, .kw-event-outcome-label {
+.kw-event-outcome-odds,
+.kw-event-outcome-label {
    width: 0;
 }
 

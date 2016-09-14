@@ -1,12 +1,12 @@
 $margins: 6 8 12 16 20 24 32;
 
 $color-2-2-primary-background: #00c1de;
-$color-2-2-primary-background-hover: #E6F9FC;
+$color-2-2-primary-background-hover: #e6f9fc;
 $color-4-1-card-background: #fff;
 $color-4-1-card-background-hover: #f0f0f0;
 $color-4-2-card-supportive-text: #999;
 $color-4-2-card-text: #333;
-$color-4-1-card-border: #EAEAEA;
+$color-4-1-card-border: #eaeaea;
 
 $screen-xss: 320px;
 $screen-xs: 480px;
@@ -26,14 +26,14 @@ $screens: (
       ($screen-xlg, xlg)
 );
 
-$icomoon-font-path: "fonts" !default;
+$icomoon-font-path: 'fonts' !default;
 
-$icon-search: "\f002";
-$icon-repeat: "\f01e";
-$icon-rotate-right: "\f01e";
-$icon-plus: "\f067";
-$icon-caret-down: "\f0d7";
-$icon-angle-left: "\f104";
-$icon-angle-right: "\f105";
-$icon-angle-up: "\f106";
-$icon-angle-down: "\f107";
+$icon-search: '\f002';
+$icon-repeat: '\f01e';
+$icon-rotate-right: '\f01e';
+$icon-plus: '\f067';
+$icon-caret-down: '\f0d7';
+$icon-angle-left: '\f104';
+$icon-angle-right: '\f105';
+$icon-angle-up: '\f106';
+$icon-angle-down: '\f107';
