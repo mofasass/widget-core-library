@@ -1,37 +1,21 @@
 'use strict';
 
-var gulp = require('gulp'),
 
-   download = require('gulp-download-stream'),
-
+var download = require('gulp-download-stream'),
    replace = require('gulp-replace'),
-
    del = require('del'),
-
    path = require('path'),
-
    jshint = require('gulp-jshint'),
-
    fs = require('fs'),
-
    babel = require('gulp-babel'),
-
    sourcemaps = require('gulp-sourcemaps'),
-
    stripDebug = require('gulp-strip-debug'),
-
    concat = require('gulp-concat'),
-
    jscs = require('gulp-jscs'),
-
    jsdoc = require('gulp-jsdoc3'),
-
    awspublish = require('gulp-awspublish'),
-
    mergeStream = require('merge-stream'),
-
    rename = require('gulp-rename'),
-
    awsSdk = require('aws-sdk'),
 
    supportedLanguages = [
@@ -115,11 +99,11 @@ gulp.task('watch', [], function () {
 });
 
 /**
-* Fetches the i18n strings from Kambi into /src/i18n/. Deletes existing locales before fetching
-*/
+ * Fetches the i18n strings from Kambi into /src/i18n/. Deletes existing locales before fetching
+ */
 gulp.task('fetch-translations', function () {
    var supportedLanguagesFiles = [];
-   supportedLanguages.forEach(function ( locale ) {
+   supportedLanguages.forEach(function (locale) {
       supportedLanguagesFiles.push({
          file: locale + '.json',
          url: 'https://ctd-static.kambi.com/development/bc/html5-client/gm-develop/kambi/1.280.1.0/locale/' + locale + '/locale.js'
@@ -138,25 +122,25 @@ gulp.task('fetch-translations', function () {
 /**
  * Generates the jsdoc documentation
  */
-gulp.task('documentation', function(cb) {
+gulp.task('documentation', function (cb) {
    del.sync('./docs/');
    gulp.src([
-         'README.md',
-         './src/js/**/*.js',
-      ], {
-         read: false,
-      })
+      'README.md',
+      './src/js/**/*.js',
+   ], {
+      read: false,
+   })
       .pipe(jsdoc({
-         "tags": {
+         'tags': {
             "allowUnknownTags": true
          },
-         "source": {
-            "excludePattern": "(^|\\/|\\\\)_"
+         'source': {
+            'excludePattern': "(^|\\/|\\\\)_"
          },
          "opts": {
-            "destination": "./docs/",
-            "tutorials": "./tutorials/",
-            "tutorial": "./tutorials/"
+            'destination': './docs/',
+            'tutorials': './tutorials/',
+            'tutorial': './tutorials/'
          },
          "plugins": [
             "plugins/markdown"
@@ -173,11 +157,11 @@ gulp.task('documentation', function(cb) {
             "linenums": true,
             "dateFormat": "MMMM Do YYYY, h:mm:ss a"
          }
-      },cb));
+      }, cb));
 });
 
 
-var publishDocs = function(awsPath) {
+var publishDocs = function (awsPath) {
    var publisher = awspublish.create({
       'region': 'eu-west-1',
       'params': {
@@ -199,7 +183,7 @@ var publishDocs = function(awsPath) {
  * 'kambi-widgets.globalmouth.com' publishes twice, once under the
  * project version number and once under 'latest'
  */
-gulp.task('publish-documentation', ['documentation'], function() {
+gulp.task('publish-documentation', ['documentation'], function () {
    console.log('\n\nPublishing documentation');
    var version = JSON.parse(fs.readFileSync('package.json'))['version'];
    var stream1 = publishDocs('/docs/' + version + '/');
@@ -208,8 +192,8 @@ gulp.task('publish-documentation', ['documentation'], function() {
 });
 
 /**
-* Compiles all js files using Babel
-*/
+ * Compiles all js files using Babel
+ */
 gulp.task('compile-babel', function () {
    var sourceRootMap = function (file) {
       return '../' + path.relative(file.history[0], paths.js.source) + paths.js.sourceRoot;

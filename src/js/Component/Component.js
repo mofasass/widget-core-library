@@ -1,6 +1,6 @@
 import Stapes from 'stapes';
-import CoreLibrary from '../coreLibrary';
 import rivets from 'rivets';
+import CoreLibrary from '../coreLibrary';
 
 var mergeObjs = (...objs) => {
    var ret = {};
@@ -61,7 +61,6 @@ export default Stapes.subclass({
        * Method that should contain the widget initialization logic
        * This method is only called after the API is ready
        */
-      this.init; // jshint ignore:line
 
       if (options == null) {
          options = {};
@@ -83,11 +82,11 @@ export default Stapes.subclass({
 
       var coreLibraryPromise;
       if (CoreLibrary.apiReady === true) {
-         coreLibraryPromise = new Promise((resolve, reject) => {
+         coreLibraryPromise = new Promise((resolve) => {
             resolve();
          });
       } else {
-         coreLibraryPromise = new Promise((resolve, reject) => {
+         coreLibraryPromise = new Promise((resolve) => {
             CoreLibrary.init()
                .then((widgetArgs) => {
                   if (widgetArgs == null) {
@@ -111,11 +110,11 @@ export default Stapes.subclass({
                         .then((externalArgs) => {
                            args = mergeObjs(this.defaultArgs, widgetArgs, externalArgs);
                            resolve();
-                        }).catch((err) => {
-                        console.log('Unable to load or parse external args');
-                        args = mergeObjs(this.defaultArgs, widgetArgs);
-                        resolve();
-                     });
+                        }).catch(() => {
+                           console.log('Unable to load or parse external args');
+                           args = mergeObjs(this.defaultArgs, widgetArgs);
+                           resolve();
+                        });
                   } else {
                      args = mergeObjs(this.defaultArgs, widgetArgs);
                      resolve();

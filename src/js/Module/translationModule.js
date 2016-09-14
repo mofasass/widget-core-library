@@ -1,3 +1,4 @@
+import CoreLibrary from '../coreLibrary';
 /**
  * Module with internationalization methods
  * @module translationModule

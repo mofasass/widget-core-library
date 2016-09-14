@@ -1,17 +1,10 @@
-//Base theme styles.
-//Use this for colors
-
-// General styles
 body {
-   //background-color: white;
-   //color: $color-4-2-card-text;
 }
 
 a {
    color: $color-4-2-card-text;
 }
 
-// Main card styles
 .kw-card {
    background-color: $color-4-1-card-background;
 }
@@ -66,7 +59,6 @@ a {
    opacity: 0.85;
 }
 
-// Widget events styles
 .kw-event:after {
    background-color: $color-4-1-card-border;
 }
@@ -76,14 +68,11 @@ a {
 }
 
 .kw-event-outcome-odds {
-   //color: $color-4-2-card-text;
 }
 
 .kw-event-path {
-   //color: $color-4-2-card-supportive-text;
 }
 
-// Pagination plugin styles
 .kw-page-link.kw-active-page, .kw-page-link:hover {
    background-color: $color-4-1-card-background-hover;
 }

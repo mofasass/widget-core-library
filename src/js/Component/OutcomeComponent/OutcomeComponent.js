@@ -1,5 +1,6 @@
 import rivets from 'rivets';
 import widgetModule from '../../Module/widgetModule';
+import * as CoreLibrary from '../../coreLibrary';
 
 export default (() => {
    'use strict';

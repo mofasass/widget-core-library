@@ -1,3 +1,5 @@
+import sightglass from 'sightglass';
+import rivets from 'rivets';
 import Component from './Component/Component';
 import PaginationComponent from './Component/PaginationComponent/PaginationComponent';
 import offeringModule from './Module/offeringModule';
@@ -5,8 +7,6 @@ import statisticsModule from './Module/statisticsModule';
 import translationModule from './Module/translationModule';
 import utilModule from './Module/utilModule';
 import widgetModule from './Module/widgetModule';
-import sightglass from 'sightglass';
-import rivets from 'rivets';
 
 /**
  * Main module that holds the other modules as well as widget
@@ -76,8 +76,6 @@ function checkBrowser() {
       };
    }
 }
-
-initRivets();
 
 function initRivets() {
    sightglass.adapters = rivets.adapters;
@@ -356,7 +354,7 @@ function initRivets() {
          var properties = [];
          for (var key in obj) {
             if (obj.hasOwnProperty(key)) {
-               properties.push({key: key, value: obj[key]});
+               properties.push({ key: key, value: obj[key] });
             }
          }
          return properties;
@@ -463,6 +461,8 @@ function initRivets() {
       }
    };
 }
+
+initRivets();
 
 export default {
    /**

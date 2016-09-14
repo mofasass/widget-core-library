@@ -1,3 +1,4 @@
+import * as sightglass from 'sightglass';
 import Component from '../Component';
 
 /**

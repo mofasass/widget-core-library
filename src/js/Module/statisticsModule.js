@@ -1,3 +1,5 @@
+import CoreLibrary from '../coreLibrary';
+
 /**
  * Module to access statistics data
  * @module statisticsModule

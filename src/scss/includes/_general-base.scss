@@ -1,8 +1,3 @@
-//General styles.
-//Do not use colors here.
-//Use the theme css file instead
-
-// Cloak class
 [rv-cloak] {
    @include transition(opacity .5s ease-out);
    opacity: 0;

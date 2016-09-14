@@ -1,3 +1,5 @@
+import * as CoreLibrary from '../coreLibrary';
+
 /**
  * Module with methods to request data from the offering API
  * @module offeringModule
@@ -247,8 +249,8 @@ export default {
             requestParams.nocache = Date.now();
          }
          requestUrl += '?' + Object.keys(requestParams).map(function (k) {
-               return encodeURIComponent(k) + '=' + encodeURIComponent(requestParams[k]);
-            }).join('&');
+            return encodeURIComponent(k) + '=' + encodeURIComponent(requestParams[k]);
+         }).join('&');
 
          return CoreLibrary.getData(requestUrl);
       }

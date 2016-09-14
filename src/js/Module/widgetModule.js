@@ -6,6 +6,7 @@
 
 import Stapes from 'stapes';
 import utilModule from './utilModule';
+import CoreLibrary from '../coreLibrary';
 
 var Module = Stapes.subclass();
 
@@ -16,7 +17,8 @@ export default {
     * @private
     */
    api: { // placeholders for when not running inside iframe
-      requestSetup () {},
+      requestSetup () {
+      },
       request () {
       },
       set () {
@@ -337,7 +339,7 @@ export default {
       } else {
          arrOutcomes.push(outcomes);
       }
-      var data = {outcomes: arrOutcomes};
+      var data = { outcomes: arrOutcomes };
 
       // Add tracking name if it's set
       if (CoreLibrary.widgetTrackingName != null) {
@@ -388,7 +390,7 @@ export default {
     * @returns {Promise}
     */
    requestOddsAsAmerican (odds) {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
          this.api.requestOddsAsAmerican(odds, (americanOdds) => {
             resolve(americanOdds);
          });
@@ -401,7 +403,7 @@ export default {
     * @returns {Promise}
     */
    requestOddsAsFractional (odds) {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
          this.api.requestOddsAsFractional(odds, (fractionalOdds) => {
             resolve(fractionalOdds);
          });
