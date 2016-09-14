@@ -1,17 +1,7 @@
-//Base theme styles.
-//Use this for colors
-
-// General styles
-body {
-   //background-color: white;
-   //color: $color-4-2-card-text;
-}
-
 a {
    color: $color-4-2-card-text;
 }
 
-// Main card styles
 .kw-card {
    background-color: $color-4-1-card-background;
 }
@@ -32,10 +22,9 @@ a {
    border-top: solid 1px $color-4-1-card-border;
 }
 
-// Buttons styles
 .kw-btn {
    background-color: white;
-   border: 1px solid #EEE;
+   border: 1px solid #eee;
    color: $color-4-2-card-supportive-text;
 }
 
@@ -62,12 +51,11 @@ a {
 }
 
 .kw-btn.selected .kw-event-outcome-label {
+   @include opacity(.85);
    color: white;
-   opacity: 0.85;
 }
 
-// Widget events styles
-.kw-event:after {
+.kw-event::after {
    background-color: $color-4-1-card-border;
 }
 
@@ -75,15 +63,6 @@ a {
    background-color: $color-4-1-card-background-hover;
 }
 
-.kw-event-outcome-odds {
-   //color: $color-4-2-card-text;
-}
-
-.kw-event-path {
-   //color: $color-4-2-card-supportive-text;
-}
-
-// Pagination plugin styles
 .kw-page-link.kw-active-page, .kw-page-link:hover {
    background-color: $color-4-1-card-background-hover;
 }

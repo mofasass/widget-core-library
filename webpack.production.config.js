@@ -1,3 +1,7 @@
+var path = require('path');
+var webpack = require('webpack');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
+
 module.exports = {
    entry: {
       'core.min': ['./src/index.js']
@@ -7,7 +11,7 @@ module.exports = {
          { test: /\.svg/, loader: 'svg-url-loader' },
          { test: /.js$/, exclude: /node_modules/, loader: 'babel-loader', query: { presets: ['es2015'] } },
          {
-            test: /\.(jpe|jpg|woff|woff2|eot|ttf|svg)(\?.*$|$)/,
+            test: /\.(jpeg|jpg|woff|woff2|eot|ttf|svg)(\?.*$|$)/,
             exclude: /node_modules/,
             loader: 'url-loader?importLoaders=1&limit=100000'
          },
@@ -40,9 +44,6 @@ module.exports = {
          to: 'scss'
       }])
    ],
-   sassLoader: {
-      includePaths: [path.resolve(__dirname, './src/scss')]
-   },
    resolve: {
       extensions: ['', '.js', '.json', '.scss']
    }

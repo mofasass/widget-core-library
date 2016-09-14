@@ -1,29 +1,12 @@
-//Events
-//
-//Events base layout.
-//Do not use colors here.
-//Use the theme css file instead
-//
-// Styleguide events
-
-// .kw-event
-//
-// Event container main class. Uses a fixed height (115px)
-//
-// Markup:
-// <div class="kw-event"></div>
-//
-// Styleguide events.kwevent
-
 .kw-event {
    border-bottom: 1px solid transparent;
    height: 115px;
    min-height: 115px;
    position: relative;
 
-   &:after {
+   &::after {
       bottom: -1px;
-      content: "";
+      content: '';
       height: 1px;
       left: 15px;
       position: absolute;
@@ -32,35 +15,12 @@
    }
 
    &:last-child {
-      &:after {
+      &::after {
          height: 0;
       }
    }
 }
 
-// .kw-event-outcome
-//
-// Event outcome extends the `.kw-btn` class.
-//
-// Markup:
-// <button class="kw-event-outcome {{modifier_class}}">Button</button>
-//
-// :hover - Subtle hover highlight. Colors set in each widget scss
-// .selected - Selected class. Colors set in each widget scss
-//
-// Styleguide events.kweventoutcome
-.kw-event-outcome {
-   //@extend .kw-btn;
-}
-
-// .kw-event-name
-//
-// Event name class, sets a font size and line height (12, 1.4). Direct children are flexed: `flex: 0 1 auto;`
-//
-// Markup:
-// <div class="kw-event-name"></div>
-//
-// Styleguide events.kweventname
 .kw-event-name {
    cursor: pointer;
    font-size: 12px;
@@ -72,41 +32,7 @@
    }
 }
 
-// .kw-event-path
-//
-// Event path class, sets a font size and line height (12, 1.4). Direct children are flexed: `flex: 0 1 auto;`
-//
-// Markup:
-// <div class="kw-event-name-container l-flexbox l-vertical l-pack-center l-flex-3">
-//<!--Competitors-->
-//<div class="kw-event-name l-flexbox" ng-click="navigateToLiveEvent(liveEvent.event.id)">
-//<div class="l-flexbox">
-//<span class="text-truncate ng-binding">Barys Astana</span>
-//</div>
-//<div class="kw-event-name-divider l-pl-5 l-pr-5">-</div>
-//<div class="l-flexbox">
-//<span class="text-truncate ng-binding">Salavat Ulaev Ufa</span>
-//</div>
-//</div>
-//<!--Event path-->
-//<div class="kw-event-path l-flexbox">
-//<!-- ngRepeat: p in liveEvent.event.path --><div class="l-flexbox ng-scope" ng-repeat="p in liveEvent.event.path" style="max-width: 50%">
-//<span class="kw-event-path-name l-flexbox l-flex-3">
-//<span class="text-truncate ng-binding">Ice Hockey</span>
-//</span>
-//<!-- ngIf: !$last --><span ng-if="!$last" class="kw-event-path-divider l-pl-5 l-pr-5 ng-binding ng-scope">/</span><!-- end ngIf: !$last -->
-//</div><!-- end ngRepeat: p in liveEvent.event.path --><div class="l-flexbox ng-scope" ng-repeat="p in liveEvent.event.path" style="max-width: 50%">
-//<span class="kw-event-path-name l-flexbox l-flex-3">
-//<span class="text-truncate ng-binding">KHL</span>
-//</span>
-//<!-- ngIf: !$last -->
-//</div><!-- end ngRepeat: p in liveEvent.event.path -->
-//</div>
-//</div>
-//
-// Styleguide events.kweventpath
 .kw-event-path {
-   //font-family: "roboto", sans-serif;
    font-size: 12px;
    line-height: 1.4;
 
@@ -114,24 +40,20 @@
       @include flex(0 1 auto);
 
       &:last-child {
-         display: inline-block;
+         @include inline-block();
       }
    }
 }
 
-// Event path name
 .kw-event-path-name {
    overflow: hidden;
 }
 
-
-
-// Fix for safari, when flex used
-.kw-event-outcome-odds, .kw-event-outcome-label {
-   width: 0; // Safari f*cker fix
+.kw-event-outcome-odds,
+.kw-event-outcome-label {
+   width: 0;
 }
 
-// Flex fix for Firefox
 .kw-event-name-container {
-   min-width: 50%; // Mostly fix for Firefox
+   min-width: 50%;
 }

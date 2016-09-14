@@ -1,10 +1,14 @@
 var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
    entry: {
       core: ['./src/index.js']
    },
    module: {
+      preLoaders: [
+         { test: /.js$/, exclude: /node_modules/, loader: 'eslint-loader' }
+      ],
       loaders: [
          { test: /\.svg/, loader: 'svg-url-loader' },
          { test: /.js$/, exclude: /node_modules/, loader: 'babel-loader', query: { presets: ['es2015'] } },
@@ -17,6 +21,9 @@ module.exports = {
          { test: /\.scss$/, loaders: ['style', 'css?sourceMap', 'sass?sourceMap'] },
          { test: /\.json$/, loader: 'json' }]
    },
+   eslint: {
+      configFile: '.eslintrc'
+   },
    devtool: 'source-map',
    output: {
       path: path.resolve(__dirname, 'dist'),
@@ -25,9 +32,6 @@ module.exports = {
    },
    devServer: {
       contentBase: './dist'
-   },
-   sassLoader: {
-      includePaths: [path.resolve(__dirname, './src/scss')]
    },
    resolve: {
       extensions: ['', '.js', '.json', '.scss']
