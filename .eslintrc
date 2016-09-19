@@ -25,6 +25,7 @@
     "webpack-load-plugins": true
   },
   "rules":{
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": false, "optionalDependencies": false, "peerDependencies": false}],
     "array-callback-return": 0,
     "arrow-body-style": 0,
     "arrow-spacing": 0,
