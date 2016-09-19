@@ -864,295 +864,6 @@
 
 'use strict';
 
-(function () {
-   'use strict';
-
-   // shallow merges objects together into a new object, right-most parameters have precedence
-
-   var mergeObjs = function mergeObjs() {
-      for (var _len = arguments.length, objs = Array(_len), _key = 0; _key < _len; _key++) {
-         objs[_key] = arguments[_key];
-      }
-
-      var ret = {};
-      objs.forEach(function (obj) {
-         obj = obj || {};
-         Object.keys(obj).forEach(function (key) {
-            ret[key] = obj[key];
-         });
-      });
-      return ret;
-   };
-
-   // replaces expressions like "{customer}" from the provided string
-   // to the value the have in the CoreLibrary.config object
-   var replaceConfigParameters = function replaceConfigParameters(str) {
-      if (str == null) {
-         return str;
-      }
-      Object.keys(CoreLibrary.config).forEach(function (key) {
-         var regex = new RegExp('{' + key + '}', 'g');
-         var value = CoreLibrary.config[key];
-         str = str.replace(regex, value);
-      });
-      return str;
-   };
-
-   /**
-    * Component base class that should be inherited to create widgets
-    * @class Component
-    * @abstract
-    * @example
-   HTML:
-   <html>
-   <head>
-      ...
-   </head>
-   <body>
-      <span>{args.title}</span>
-      <br />
-      <span>{date}</span>
-      ...
-   </body>
-   </html>
-   var Widget = CoreLibrary.Component.subclass({
-    defaultArgs: {
-      title: 'Title!'
-   },
-    constructor () {
-      CoreLibrary.Component.apply(this, arguments);
-   },
-    init () {
-      this.scope.date = (new Date()).toString();
-   }
-   });
-   var widget = new Widget({
-   rootElement: 'html'
-   });
-    */
-   CoreLibrary.Component = Stapes.subclass({
-
-      /**
-       * Object with default values from args if they are not present in
-       * the Kambi API provided ones.
-       * @static
-       * @type {Object}
-       * @memberof Component
-       */
-      defaultArgs: {},
-
-      /**
-       * If present, this value is appended to rootElement with the innerHTML DOM call
-       * essentially parsing the the text as HTML.
-       * @static
-       * @type {String}
-       * @memberof Component
-       */
-      htmlTemplate: null,
-
-      /**
-       * Stapes Constructor method
-       * @param {object} options
-       * @param {HTMLElement|String} options.rootElement an HTML element or a
-       * CSS selector for the HTMLElement.
-       * This element will be the "root" of the rivets scope
-       * @returns {Promise}
-       * @memberof Component
-       */
-      constructor: function constructor(options) {
-         var _this = this;
-
-         /**
-          * object to be used in the HTML templates for data binding
-          * @type {Object}
-          */
-         this.scope = {};
-
-         /**
-          * Rivets view object, binds this.scope to this.rootElement.
-          * @type {Object}
-          */
-         this.view = null;
-
-         /**
-          * HTML element to in which rivets.bind will be called,
-          * if string uses document.querySelector to get the element
-          * @type {HTMLElement}
-          */
-         this.rootElement = null;
-
-         /**
-          * Method that should contain the widget initialization logic
-          * This method is only called after the API is ready
-          */
-         this.init; // jshint ignore:line
-
-         if (options == null) {
-            options = {};
-         }
-
-         // setting options that can be received in the constructor
-         var optionsKeys = ['defaultArgs', 'rootElement'];
-         optionsKeys.forEach(function (key) {
-            if (typeof options[key] !== 'undefined') {
-               _this[key] = options[key];
-            }
-         });
-
-         if (this.rootElement == null) {
-            throw new Error('options.rootElement not set, please pass a HTMLElement or a CSS selector');
-         }
-
-         var args = {};
-
-         var getSelfFulfillingPromise = function getSelfFulfillingPromise() {
-            return new Promise(function (resolve) {
-               resolve();
-            });
-         };
-
-         // promise that waits for the core library to be ready
-         var coreLibraryPromise = function coreLibraryPromise() {
-            if (CoreLibrary.apiReady === true) {
-               return getSelfFulfillingPromise();
-            }
-            return CoreLibrary.init();
-         };
-
-         // setts scope.widgetCss to load the operator-specific stylesheets
-         var handleWidgetCss = function handleWidgetCss() {
-            var apiVersion = CoreLibrary.widgetModule.api.VERSION;
-            if (apiVersion == null) {
-               apiVersion = CoreLibrary.expectedApiVersion;
-            }
-            _this.scope.widgetCss = '//c3-static.kambi.com/sb-mobileclient/widget-api/' + apiVersion + '/resources/css/' + CoreLibrary.config.customer + '/' + CoreLibrary.config.offering + '/widgets.css';
-         };
-
-         // loads the external arguments provided in args.externalArgsUrl or externalArgsUrlFallback
-         var externalArgsPromise = function externalArgsPromise(widgetArgs) {
-            var externalArgsUrl = widgetArgs.externalArgsUrl || _this.defaultArgs.externalArgsUrl;
-            var externalArgsUrlFallback = widgetArgs.externalArgsUrlFallback || _this.defaultArgs.externalArgsUrlFallback;
-            externalArgsUrl = replaceConfigParameters(externalArgsUrl);
-            externalArgsUrlFallback = replaceConfigParameters(externalArgsUrlFallback);
-            if (externalArgsUrl != null) {
-               return CoreLibrary.getData(externalArgsUrl).then(function (externalArgs) {
-                  args = mergeObjs(_this.defaultArgs, widgetArgs, externalArgs);
-               }).catch(function (err) {
-                  void 0;
-                  args = mergeObjs(_this.defaultArgs, widgetArgs);
-               });
-            } else {
-               args = mergeObjs(_this.defaultArgs, widgetArgs);
-               return getSelfFulfillingPromise();
-            }
-         };
-
-         // applying conditionalArgs as specified by args.conditionalArgs (see #KSBWI-653)
-         var handleConditionalArgs = function handleConditionalArgs() {
-            if (args.conditionalArgs != null) {
-               args.conditionalArgs.forEach(function (carg) {
-                  var apply = true;
-                  if (carg.clientConfig != null) {
-                     Object.keys(carg.clientConfig).forEach(function (key) {
-                        if (CoreLibrary.config[key] !== carg.clientConfig[key]) {
-                           apply = false;
-                        }
-                     });
-                  }
-
-                  if (carg.pageInfo != null) {
-                     Object.keys(carg.pageInfo).forEach(function (key) {
-                        if (CoreLibrary.pageInfo[key] !== carg.pageInfo[key]) {
-                           apply = false;
-                        }
-                     });
-                  }
-
-                  if (apply) {
-                     void 0;
-                     void 0;
-                     args = mergeObjs(args, carg.args);
-                  }
-               });
-            }
-         };
-
-         // handles custom CSS stylesheet as specified by args.customCssUrl and args.customCssUrlFallback
-         var customCssPromise = function customCssPromise(customCssUrl, customCssUrlFallback) {
-            if (customCssUrl == null) {
-               return;
-            }
-            if (customCssUrlFallback == null) {
-               customCssUrlFallback = '';
-            }
-
-            customCssUrl = replaceConfigParameters(customCssUrl);
-            customCssUrlFallback = replaceConfigParameters(customCssUrlFallback);
-
-            var fetchFallback = function fetchFallback() {
-               return CoreLibrary.getFile(customCssUrlFallback).then(function (response) {
-                  _this.scope.customCss = customCssUrlFallback;
-                  return response;
-               }).catch(function (error) {
-                  void 0;
-                  return error;
-               });
-            };
-
-            return CoreLibrary.getFile(customCssUrl).then(function (response) {
-               _this.scope.customCss = customCssUrl;
-               return response;
-            }).catch(function (error) {
-               if (customCssUrlFallback !== '') {
-                  void 0;
-                  return fetchFallback();
-               }
-               void 0;
-               return error;
-            });
-         };
-
-         return coreLibraryPromise().then(function (widgetArgs) {
-            if (widgetArgs == null) {
-               widgetArgs = {};
-            }
-            handleWidgetCss();
-            return externalArgsPromise(widgetArgs);
-         }).then(function () {
-            handleConditionalArgs();
-
-            // we don't need to wait for this promise (like we do
-            // with externalArgsPromise) to call
-            // the widget init() function because it just adds
-            // a stylesheet to the page
-            _this.customCssPromise = customCssPromise(args.customCssUrl, args.customCssUrlFallback);
-
-            _this.scope.args = args;
-
-            if (typeof _this.rootElement === 'string') {
-               _this.rootElement = document.querySelector(_this.rootElement);
-            }
-
-            // if htmlTemplate is defined place that as HTML inside rootElement
-            if (typeof _this.htmlTemplate === 'string') {
-               if (_this.htmlTemplate.length < 100 && window[_this.htmlTemplate] != null) {
-                  _this.rootElement.innerHTML = window[_this.htmlTemplate];
-               } else {
-                  _this.rootElement.innerHTML = _this.htmlTemplate;
-               }
-            }
-
-            _this.view = rivets.bind(_this.rootElement, _this.scope);
-
-            _this.init();
-         });
-      }
-   });
-})();
-//# sourceMappingURL=Component.js.map
-
-'use strict';
-
 /**
  * Module with methods to request data from the offering API
  * @module offeringModule
@@ -2260,6 +1971,295 @@ window.CoreLibrary.widgetModule = function () {
 (function () {
    'use strict';
 
+   // shallow merges objects together into a new object, right-most parameters have precedence
+
+   var mergeObjs = function mergeObjs() {
+      for (var _len = arguments.length, objs = Array(_len), _key = 0; _key < _len; _key++) {
+         objs[_key] = arguments[_key];
+      }
+
+      var ret = {};
+      objs.forEach(function (obj) {
+         obj = obj || {};
+         Object.keys(obj).forEach(function (key) {
+            ret[key] = obj[key];
+         });
+      });
+      return ret;
+   };
+
+   // replaces expressions like "{customer}" from the provided string
+   // to the value the have in the CoreLibrary.config object
+   var replaceConfigParameters = function replaceConfigParameters(str) {
+      if (str == null) {
+         return str;
+      }
+      Object.keys(CoreLibrary.config).forEach(function (key) {
+         var regex = new RegExp('{' + key + '}', 'g');
+         var value = CoreLibrary.config[key];
+         str = str.replace(regex, value);
+      });
+      return str;
+   };
+
+   /**
+    * Component base class that should be inherited to create widgets
+    * @class Component
+    * @abstract
+    * @example
+   HTML:
+   <html>
+   <head>
+      ...
+   </head>
+   <body>
+      <span>{args.title}</span>
+      <br />
+      <span>{date}</span>
+      ...
+   </body>
+   </html>
+   var Widget = CoreLibrary.Component.subclass({
+    defaultArgs: {
+      title: 'Title!'
+   },
+    constructor () {
+      CoreLibrary.Component.apply(this, arguments);
+   },
+    init () {
+      this.scope.date = (new Date()).toString();
+   }
+   });
+   var widget = new Widget({
+   rootElement: 'html'
+   });
+    */
+   CoreLibrary.Component = Stapes.subclass({
+
+      /**
+       * Object with default values from args if they are not present in
+       * the Kambi API provided ones.
+       * @static
+       * @type {Object}
+       * @memberof Component
+       */
+      defaultArgs: {},
+
+      /**
+       * If present, this value is appended to rootElement with the innerHTML DOM call
+       * essentially parsing the the text as HTML.
+       * @static
+       * @type {String}
+       * @memberof Component
+       */
+      htmlTemplate: null,
+
+      /**
+       * Stapes Constructor method
+       * @param {object} options
+       * @param {HTMLElement|String} options.rootElement an HTML element or a
+       * CSS selector for the HTMLElement.
+       * This element will be the "root" of the rivets scope
+       * @returns {Promise}
+       * @memberof Component
+       */
+      constructor: function constructor(options) {
+         var _this = this;
+
+         /**
+          * object to be used in the HTML templates for data binding
+          * @type {Object}
+          */
+         this.scope = {};
+
+         /**
+          * Rivets view object, binds this.scope to this.rootElement.
+          * @type {Object}
+          */
+         this.view = null;
+
+         /**
+          * HTML element to in which rivets.bind will be called,
+          * if string uses document.querySelector to get the element
+          * @type {HTMLElement}
+          */
+         this.rootElement = null;
+
+         /**
+          * Method that should contain the widget initialization logic
+          * This method is only called after the API is ready
+          */
+         this.init; // jshint ignore:line
+
+         if (options == null) {
+            options = {};
+         }
+
+         // setting options that can be received in the constructor
+         var optionsKeys = ['defaultArgs', 'rootElement'];
+         optionsKeys.forEach(function (key) {
+            if (typeof options[key] !== 'undefined') {
+               _this[key] = options[key];
+            }
+         });
+
+         if (this.rootElement == null) {
+            throw new Error('options.rootElement not set, please pass a HTMLElement or a CSS selector');
+         }
+
+         var args = {};
+
+         var getSelfFulfillingPromise = function getSelfFulfillingPromise() {
+            return new Promise(function (resolve) {
+               resolve();
+            });
+         };
+
+         // promise that waits for the core library to be ready
+         var coreLibraryPromise = function coreLibraryPromise() {
+            if (CoreLibrary.apiReady === true) {
+               return getSelfFulfillingPromise();
+            }
+            return CoreLibrary.init();
+         };
+
+         // setts scope.widgetCss to load the operator-specific stylesheets
+         var handleWidgetCss = function handleWidgetCss() {
+            var apiVersion = CoreLibrary.widgetModule.api.VERSION;
+            if (apiVersion == null) {
+               apiVersion = CoreLibrary.expectedApiVersion;
+            }
+            _this.scope.widgetCss = '//c3-static.kambi.com/sb-mobileclient/widget-api/' + apiVersion + '/resources/css/' + CoreLibrary.config.customer + '/' + CoreLibrary.config.offering + '/widgets.css';
+         };
+
+         // loads the external arguments provided in args.externalArgsUrl or externalArgsUrlFallback
+         var externalArgsPromise = function externalArgsPromise(widgetArgs) {
+            var externalArgsUrl = widgetArgs.externalArgsUrl || _this.defaultArgs.externalArgsUrl;
+            var externalArgsUrlFallback = widgetArgs.externalArgsUrlFallback || _this.defaultArgs.externalArgsUrlFallback;
+            externalArgsUrl = replaceConfigParameters(externalArgsUrl);
+            externalArgsUrlFallback = replaceConfigParameters(externalArgsUrlFallback);
+            if (externalArgsUrl != null) {
+               return CoreLibrary.getData(externalArgsUrl).then(function (externalArgs) {
+                  args = mergeObjs(_this.defaultArgs, widgetArgs, externalArgs);
+               }).catch(function (err) {
+                  void 0;
+                  args = mergeObjs(_this.defaultArgs, widgetArgs);
+               });
+            } else {
+               args = mergeObjs(_this.defaultArgs, widgetArgs);
+               return getSelfFulfillingPromise();
+            }
+         };
+
+         // applying conditionalArgs as specified by args.conditionalArgs (see #KSBWI-653)
+         var handleConditionalArgs = function handleConditionalArgs() {
+            if (args.conditionalArgs != null) {
+               args.conditionalArgs.forEach(function (carg) {
+                  var apply = true;
+                  if (carg.clientConfig != null) {
+                     Object.keys(carg.clientConfig).forEach(function (key) {
+                        if (CoreLibrary.config[key] !== carg.clientConfig[key]) {
+                           apply = false;
+                        }
+                     });
+                  }
+
+                  if (carg.pageInfo != null) {
+                     Object.keys(carg.pageInfo).forEach(function (key) {
+                        if (CoreLibrary.pageInfo[key] !== carg.pageInfo[key]) {
+                           apply = false;
+                        }
+                     });
+                  }
+
+                  if (apply) {
+                     void 0;
+                     void 0;
+                     args = mergeObjs(args, carg.args);
+                  }
+               });
+            }
+         };
+
+         // handles custom CSS stylesheet as specified by args.customCssUrl and args.customCssUrlFallback
+         var customCssPromise = function customCssPromise(customCssUrl, customCssUrlFallback) {
+            if (customCssUrl == null) {
+               return;
+            }
+            if (customCssUrlFallback == null) {
+               customCssUrlFallback = '';
+            }
+
+            customCssUrl = replaceConfigParameters(customCssUrl);
+            customCssUrlFallback = replaceConfigParameters(customCssUrlFallback);
+
+            var fetchFallback = function fetchFallback() {
+               return CoreLibrary.getFile(customCssUrlFallback).then(function (response) {
+                  _this.scope.customCss = customCssUrlFallback;
+                  return response;
+               }).catch(function (error) {
+                  void 0;
+                  return error;
+               });
+            };
+
+            return CoreLibrary.getFile(customCssUrl).then(function (response) {
+               _this.scope.customCss = customCssUrl;
+               return response;
+            }).catch(function (error) {
+               if (customCssUrlFallback !== '') {
+                  void 0;
+                  return fetchFallback();
+               }
+               void 0;
+               return error;
+            });
+         };
+
+         return coreLibraryPromise().then(function (widgetArgs) {
+            if (widgetArgs == null) {
+               widgetArgs = {};
+            }
+            handleWidgetCss();
+            return externalArgsPromise(widgetArgs);
+         }).then(function () {
+            handleConditionalArgs();
+
+            // we don't need to wait for this promise (like we do
+            // with externalArgsPromise) to call
+            // the widget init() function because it just adds
+            // a stylesheet to the page
+            _this.customCssPromise = customCssPromise(args.customCssUrl, args.customCssUrlFallback);
+
+            _this.scope.args = args;
+
+            if (typeof _this.rootElement === 'string') {
+               _this.rootElement = document.querySelector(_this.rootElement);
+            }
+
+            // if htmlTemplate is defined place that as HTML inside rootElement
+            if (typeof _this.htmlTemplate === 'string') {
+               if (_this.htmlTemplate.length < 100 && window[_this.htmlTemplate] != null) {
+                  _this.rootElement.innerHTML = window[_this.htmlTemplate];
+               } else {
+                  _this.rootElement.innerHTML = _this.htmlTemplate;
+               }
+            }
+
+            _this.view = rivets.bind(_this.rootElement, _this.scope);
+
+            _this.init();
+         });
+      }
+   });
+})();
+//# sourceMappingURL=Component.js.map
+
+'use strict';
+
+(function () {
+   'use strict';
+
    /**
     * Header Controller
     *
@@ -2379,6 +2379,227 @@ window.CoreLibrary.widgetModule = function () {
    };
 })();
 //# sourceMappingURL=IconHeaderComponent.js.map
+
+'use strict';
+
+(function () {
+   'use strict';
+
+   /**
+    * Outcome suspended binder.
+    * Adds 'KambiWidget-outcome--suspended' class to attached element
+    * @example
+    * <outcome-component
+    *     rv-outcome-suspended="suspended"
+    *     outcome-attr="outcome"
+    *     event-attr="event">
+    * </outcome-component-no-label>
+    * @memberof rivets
+    * @mixin binder "outcome-suspended"
+    * @param {element} el
+    * @param {boolean} property
+    * @private
+    */
+
+   rivets.binders['outcome-suspended'] = function (el, property) {
+      var cssClass = 'KambiWidget-outcome--suspended';
+      if (property === true) {
+         el.classList.add(cssClass);
+      } else {
+         el.classList.remove(cssClass);
+      }
+   };
+
+   /**
+    * Outcome selected binder.
+    * Adds 'KambiWidget-outcome--selected' class to attached element
+    * @example
+    * <outcome-component
+    *     rv-outcome-selected="selected"
+    *     outcome-attr="outcome"
+    *     event-attr="event">
+    * </outcome-component-no-label>
+    * @memberof rivets
+    * @mixin binder "outcome-selected"
+    * @param {element} el
+    * @param {boolean} property
+    * @private
+    */
+   rivets.binders['outcome-selected'] = function (el, property) {
+      var cssClass = 'KambiWidget-outcome--selected';
+
+      if (property === true) {
+         el.classList.add(cssClass);
+      } else {
+         el.classList.remove(cssClass);
+      }
+   };
+
+   /**
+    * Outcome view controller.
+    * @param {object} attributes Attributes
+    * @memberOf module:OutcomeComponent#
+    * @private
+    */
+   var OutcomeViewController = function OutcomeViewController(attributes) {
+      var _this = this;
+
+      this.data = attributes;
+      this.selected = false;
+      this.label = '';
+      this.coreLibraryConfig = CoreLibrary.config;
+
+      if (this.data.eventAttr != null && this.data.eventAttr.betOffers != null) {
+         this.betOffer = this.data.eventAttr.betOffers.filter(function (betOffer) {
+            if (betOffer.id === _this.data.outcomeAttr.betOfferId) {
+               return true;
+            }
+         })[0];
+      }
+
+      if (this.data.outcomeAttr != null) {
+         if (CoreLibrary.widgetModule.betslipIds.indexOf(this.data.outcomeAttr.id) !== -1) {
+            this.selected = true;
+         }
+
+         CoreLibrary.widgetModule.events.on('OUTCOME:ADDED:' + this.data.outcomeAttr.id, function (data, event) {
+            _this.selected = true;
+         });
+
+         CoreLibrary.widgetModule.events.on('OUTCOME:REMOVED:' + this.data.outcomeAttr.id, function (data, event) {
+            _this.selected = false;
+         });
+      }
+
+      /**
+       * Toggle outcomes.
+       * @param event
+       * @param scope
+       * @private
+       */
+      this.toggleOutcome = function (event, scope) {
+         if (scope.selected === false) {
+            CoreLibrary.widgetModule.addOutcomeToBetslip(scope.data.outcomeAttr.id);
+         } else {
+            CoreLibrary.widgetModule.removeOutcomeFromBetslip(scope.data.outcomeAttr.id);
+         }
+      };
+
+      /**
+       * Returns label.
+       * If data contains 'customLabel' it will return that custom value
+       * @private
+       */
+      this.getLabel = function () {
+         if (_this.data.customLabel) {
+            return _this.data.customLabel;
+         }
+
+         if (_this.data.outcomeAttr != null) {
+            if (_this.data.eventAttr != null) {
+               return CoreLibrary.utilModule.getOutcomeLabel(_this.data.outcomeAttr, _this.data.eventAttr);
+            } else {
+               return _this.data.outcomeAttr.label;
+            }
+         }
+      };
+
+      /**
+       * Returns Odds format.
+       * @returns {*}
+       * @private
+       */
+      this.getOddsFormat = function () {
+         switch (_this.coreLibraryConfig.oddsFormat) {
+            case 'fractional':
+               return _this.data.outcomeAttr.oddsFractional;
+            case 'american':
+               return _this.data.outcomeAttr.oddsAmerican;
+            default:
+               return CoreLibrary.utilModule.getOddsDecimalValue(_this.data.outcomeAttr.odds / 1000);
+         }
+      };
+   };
+
+   /**
+    * Outcome component
+    * @example
+    * <outcome-component
+    *    rv-each-outcome="betoffer.outcomes"
+    *    outcome-attr="outcome"
+    *    event-attr="event">
+    * </outcome-component>
+    * @memberof rivets
+    * @mixin component "outcome-component"
+    * @property {Object} outcome-attr An (single) outcome object
+    * @property {Object} event-attr The event itself
+    * @property {String} customLabel Optional, custom label to show
+    */
+   rivets.components['outcome-component'] = {
+      /**
+       * Returns the template.
+       * @returns {string}
+       * @private
+       */
+      template: function template() {
+         return '\n            <button\n                  rv-on-click="toggleOutcome"\n                  rv-disabled="betOffer.suspended | == true"\n                  rv-outcome-selected="selected"\n                  rv-outcome-suspended="betOffer.suspended"\n                  type="button"\n                  role="button"\n                  class="KambiWidget-outcome kw-link l-flex-1">\n               <div class="KambiWidget-outcome__flexwrap">\n                  <div class="KambiWidget-outcome__label-wrapper">\n                     <span\n                           class="KambiWidget-outcome__label"\n                           rv-text="getLabel < data.outcomeAttr.odds data.eventAttr">\n                     </span>\n                     <span class="KambiWidget-outcome__line"></span>\n                  </div>\n               <div class="KambiWidget-outcome__odds-wrapper">\n                  <span\n                        class="KambiWidget-outcome__odds"\n                        rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat">\n                  </span>\n               </div>\n            </button>\n         ';
+      },
+
+
+      /**
+       * Initialize.
+       * @param el
+       * @param attributes
+       * @returns {*}
+       * @private
+       */
+      initialize: function initialize(el, attributes) {
+         if (attributes.outcomeAttr == null) {
+            return false;
+         }
+         el.classList.add('l-flexbox');
+         el.classList.add('l-flex-1');
+         return new OutcomeViewController(attributes);
+      }
+   };
+
+   /**
+    * Outcome component without label.
+    * @example
+    * <outcome-component
+    *    rv-each-outcome="betoffer.outcomes"
+    *    outcome-attr="outcome"
+    *    event-attr="event">
+    * </outcome-component>
+    * @memberof rivets
+    * @mixin component "outcome-component-no-label"
+    * @property {Object} outcome-attr An (single) outcome object
+    * @property {Object} event-attr The event itself
+    */
+   rivets.components['outcome-component-no-label'] = {
+      /**
+       * Template outcome-component-no-label
+       * @returns {string}
+       * @private
+       */
+      template: function template() {
+         return '\n            <button\n                  rv-on-click="toggleOutcome"\n                  rv-disabled="betOffer.suspended | == true"\n                  rv-outcome-selected="selected"\n                  rv-outcome-suspended="betOffer.suspended"\n                  type="button"\n                  role="button"\n                  class="KambiWidget-outcome kw-link l-flex-1">\n               <div class="l-flexbox l-pack-center">\n                  <div class="KambiWidget-outcome__odds-wrapper">\n                     <span class="KambiWidget-outcome__odds" rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat" ></span>\n                  </div>\n               </div>\n            </button>\n         ';
+      },
+
+
+      /**
+       * Initialize outcome-component-no-label.
+       * @param el
+       * @param attributes
+       * @returns {OutcomeViewController}
+       * @private
+       */
+      initialize: function initialize(el, attributes) {
+         return new OutcomeViewController(attributes);
+      }
+   };
+})();
+//# sourceMappingURL=OutcomeComponent.js.map
 
 'use strict';
 
@@ -2617,15 +2838,15 @@ window.CoreLibrary.widgetModule = function () {
       this.showLeftNav = false;
       this.showRightNav = false;
       this.scrollStart = 0;
+      this.maxItemsPerPage = 1;
+      this.pageItemClass = '.kw-page-link';
 
       this.currentPage = this.data.currentPage || 0;
-      this.maxItemsPerPage = this.data.maxItemsPerPage ? this.data.maxItemsPerPage : 1;
       this.maxVisibleTabs = this.data.maxVisibleTabs ? this.data.maxVisibleTabs : 5;
       this.paginationScrollable = this.data.type && this.data.type === 'scrollable';
       this.includeIcons = this.data.includeIcons != null ? this.data.includeIcons : false;
       this.tabTextKey = this.data.tabTextKey != null ? this.data.tabTextKey : false;
       this.minTabWidth = this.data.minTabWidth != null ? this.data.minTabWidth : '17.85%';
-      this.pageItemClass = '.kw-page-link';
 
       parentScope['_' + this.data.scopeKey] = [];
       this.originalArray = parentScope[this.data.scopeKey] || [];
@@ -2801,7 +3022,7 @@ window.CoreLibrary.widgetModule = function () {
 
    rivets.components['pagination-component'] = {
 
-      static: ['scopeKey', 'maxItemsPerPage', 'type', 'includeIcons', 'tabTextKey', 'minTabWidth', 'pageItemClass'],
+      static: ['scopeKey', 'maxItemsPerPage', 'type', 'includeIcons', 'tabTextKey', 'minTabWidth'],
 
       /**
        * Template pagination
@@ -2826,224 +3047,3 @@ window.CoreLibrary.widgetModule = function () {
    };
 })();
 //# sourceMappingURL=PaginationComponentNew.js.map
-
-'use strict';
-
-(function () {
-   'use strict';
-
-   /**
-    * Outcome suspended binder.
-    * Adds 'KambiWidget-outcome--suspended' class to attached element
-    * @example
-    * <outcome-component
-    *     rv-outcome-suspended="suspended"
-    *     outcome-attr="outcome"
-    *     event-attr="event">
-    * </outcome-component-no-label>
-    * @memberof rivets
-    * @mixin binder "outcome-suspended"
-    * @param {element} el
-    * @param {boolean} property
-    * @private
-    */
-
-   rivets.binders['outcome-suspended'] = function (el, property) {
-      var cssClass = 'KambiWidget-outcome--suspended';
-      if (property === true) {
-         el.classList.add(cssClass);
-      } else {
-         el.classList.remove(cssClass);
-      }
-   };
-
-   /**
-    * Outcome selected binder.
-    * Adds 'KambiWidget-outcome--selected' class to attached element
-    * @example
-    * <outcome-component
-    *     rv-outcome-selected="selected"
-    *     outcome-attr="outcome"
-    *     event-attr="event">
-    * </outcome-component-no-label>
-    * @memberof rivets
-    * @mixin binder "outcome-selected"
-    * @param {element} el
-    * @param {boolean} property
-    * @private
-    */
-   rivets.binders['outcome-selected'] = function (el, property) {
-      var cssClass = 'KambiWidget-outcome--selected';
-
-      if (property === true) {
-         el.classList.add(cssClass);
-      } else {
-         el.classList.remove(cssClass);
-      }
-   };
-
-   /**
-    * Outcome view controller.
-    * @param {object} attributes Attributes
-    * @memberOf module:OutcomeComponent#
-    * @private
-    */
-   var OutcomeViewController = function OutcomeViewController(attributes) {
-      var _this = this;
-
-      this.data = attributes;
-      this.selected = false;
-      this.label = '';
-      this.coreLibraryConfig = CoreLibrary.config;
-
-      if (this.data.eventAttr != null && this.data.eventAttr.betOffers != null) {
-         this.betOffer = this.data.eventAttr.betOffers.filter(function (betOffer) {
-            if (betOffer.id === _this.data.outcomeAttr.betOfferId) {
-               return true;
-            }
-         })[0];
-      }
-
-      if (this.data.outcomeAttr != null) {
-         if (CoreLibrary.widgetModule.betslipIds.indexOf(this.data.outcomeAttr.id) !== -1) {
-            this.selected = true;
-         }
-
-         CoreLibrary.widgetModule.events.on('OUTCOME:ADDED:' + this.data.outcomeAttr.id, function (data, event) {
-            _this.selected = true;
-         });
-
-         CoreLibrary.widgetModule.events.on('OUTCOME:REMOVED:' + this.data.outcomeAttr.id, function (data, event) {
-            _this.selected = false;
-         });
-      }
-
-      /**
-       * Toggle outcomes.
-       * @param event
-       * @param scope
-       * @private
-       */
-      this.toggleOutcome = function (event, scope) {
-         if (scope.selected === false) {
-            CoreLibrary.widgetModule.addOutcomeToBetslip(scope.data.outcomeAttr.id);
-         } else {
-            CoreLibrary.widgetModule.removeOutcomeFromBetslip(scope.data.outcomeAttr.id);
-         }
-      };
-
-      /**
-       * Returns label.
-       * If data contains 'customLabel' it will return that custom value
-       * @private
-       */
-      this.getLabel = function () {
-         if (_this.data.customLabel) {
-            return _this.data.customLabel;
-         }
-
-         if (_this.data.outcomeAttr != null) {
-            if (_this.data.eventAttr != null) {
-               return CoreLibrary.utilModule.getOutcomeLabel(_this.data.outcomeAttr, _this.data.eventAttr);
-            } else {
-               return _this.data.outcomeAttr.label;
-            }
-         }
-      };
-
-      /**
-       * Returns Odds format.
-       * @returns {*}
-       * @private
-       */
-      this.getOddsFormat = function () {
-         switch (_this.coreLibraryConfig.oddsFormat) {
-            case 'fractional':
-               return _this.data.outcomeAttr.oddsFractional;
-            case 'american':
-               return _this.data.outcomeAttr.oddsAmerican;
-            default:
-               return CoreLibrary.utilModule.getOddsDecimalValue(_this.data.outcomeAttr.odds / 1000);
-         }
-      };
-   };
-
-   /**
-    * Outcome component
-    * @example
-    * <outcome-component
-    *    rv-each-outcome="betoffer.outcomes"
-    *    outcome-attr="outcome"
-    *    event-attr="event">
-    * </outcome-component>
-    * @memberof rivets
-    * @mixin component "outcome-component"
-    * @property {Object} outcome-attr An (single) outcome object
-    * @property {Object} event-attr The event itself
-    * @property {String} customLabel Optional, custom label to show
-    */
-   rivets.components['outcome-component'] = {
-      /**
-       * Returns the template.
-       * @returns {string}
-       * @private
-       */
-      template: function template() {
-         return '\n            <button\n                  rv-on-click="toggleOutcome"\n                  rv-disabled="betOffer.suspended | == true"\n                  rv-outcome-selected="selected"\n                  rv-outcome-suspended="betOffer.suspended"\n                  type="button"\n                  role="button"\n                  class="KambiWidget-outcome kw-link l-flex-1">\n               <div class="KambiWidget-outcome__flexwrap">\n                  <div class="KambiWidget-outcome__label-wrapper">\n                     <span\n                           class="KambiWidget-outcome__label"\n                           rv-text="getLabel < data.outcomeAttr.odds data.eventAttr">\n                     </span>\n                     <span class="KambiWidget-outcome__line"></span>\n                  </div>\n               <div class="KambiWidget-outcome__odds-wrapper">\n                  <span\n                        class="KambiWidget-outcome__odds"\n                        rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat">\n                  </span>\n               </div>\n            </button>\n         ';
-      },
-
-
-      /**
-       * Initialize.
-       * @param el
-       * @param attributes
-       * @returns {*}
-       * @private
-       */
-      initialize: function initialize(el, attributes) {
-         if (attributes.outcomeAttr == null) {
-            return false;
-         }
-         el.classList.add('l-flexbox');
-         el.classList.add('l-flex-1');
-         return new OutcomeViewController(attributes);
-      }
-   };
-
-   /**
-    * Outcome component without label.
-    * @example
-    * <outcome-component
-    *    rv-each-outcome="betoffer.outcomes"
-    *    outcome-attr="outcome"
-    *    event-attr="event">
-    * </outcome-component>
-    * @memberof rivets
-    * @mixin component "outcome-component-no-label"
-    * @property {Object} outcome-attr An (single) outcome object
-    * @property {Object} event-attr The event itself
-    */
-   rivets.components['outcome-component-no-label'] = {
-      /**
-       * Template outcome-component-no-label
-       * @returns {string}
-       * @private
-       */
-      template: function template() {
-         return '\n            <button\n                  rv-on-click="toggleOutcome"\n                  rv-disabled="betOffer.suspended | == true"\n                  rv-outcome-selected="selected"\n                  rv-outcome-suspended="betOffer.suspended"\n                  type="button"\n                  role="button"\n                  class="KambiWidget-outcome kw-link">\n               <div class="l-flexbox l-pack-center">\n                  <div class="KambiWidget-outcome__odds-wrapper">\n                     <span class="KambiWidget-outcome__odds" rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat" ></span>\n                  </div>\n               </div>\n            </button>\n         ';
-      },
-
-
-      /**
-       * Initialize outcome-component-no-label.
-       * @param el
-       * @param attributes
-       * @returns {OutcomeViewController}
-       * @private
-       */
-      initialize: function initialize(el, attributes) {
-         return new OutcomeViewController(attributes);
-      }
-   };
-})();
-//# sourceMappingURL=OutcomeComponent.js.map
