@@ -1,6 +1,6 @@
 {
   "name": "widget-core-library",
-  "version": "KSBWI-710",
+  "version": "2.13.0",
   "description": "",
   "main": "dist/core.min.js",
   "scripts": {
