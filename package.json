@@ -29,7 +29,7 @@
     "jsdoc": "^3.4.0",
     "merge-stream": "^1.0.0",
     "node-sass": "^3.9.3",
-    "widget-build-tools": "git+ssh://git@github.com:kambi-sportsbook-widgets/widget-build-tools.git#8e0200a"
+    "widget-build-tools": "git+ssh://git@github.com:kambi-sportsbook-widgets/widget-build-tools.git#01e0b93"
   },
   "dependencies": {
     "compass-mixins": "^0.12.10",
