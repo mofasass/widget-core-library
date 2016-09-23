@@ -31,7 +31,8 @@ module.exports = {
       filename: '[name].js'
    },
    devServer: {
-      contentBase: './dist'
+      contentBase: './dist',
+      port: 9000
    },
    resolve: {
       extensions: ['', '.js', '.json', '.scss']
