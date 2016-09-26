@@ -19,6 +19,7 @@ module.exports = {
          { test: /\.json$/, loader: 'json' },
          { test: /\.scss$/, loaders: ['css', 'sass'] }]
    },
+   devtool: 'source-map',
    output: {
       path: path.resolve(__dirname, 'dist'),
       publicPath: '/dist/',
