@@ -101,23 +101,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _PaginationComponent2 = _interopRequireDefault(_PaginationComponent);
 	
-	var _offeringModule = __webpack_require__(9);
+	var _OutcomeComponent = __webpack_require__(9);
+	
+	var _OutcomeComponent2 = _interopRequireDefault(_OutcomeComponent);
+	
+	var _offeringModule = __webpack_require__(13);
 	
 	var _offeringModule2 = _interopRequireDefault(_offeringModule);
 	
-	var _statisticsModule = __webpack_require__(10);
+	var _statisticsModule = __webpack_require__(14);
 	
 	var _statisticsModule2 = _interopRequireDefault(_statisticsModule);
 	
-	var _translationModule = __webpack_require__(11);
+	var _translationModule = __webpack_require__(12);
 	
 	var _translationModule2 = _interopRequireDefault(_translationModule);
 	
-	var _utilModule = __webpack_require__(12);
+	var _utilModule = __webpack_require__(11);
 	
 	var _utilModule2 = _interopRequireDefault(_utilModule);
 	
-	var _widgetModule = __webpack_require__(13);
+	var _widgetModule = __webpack_require__(10);
 	
 	var _widgetModule2 = _interopRequireDefault(_widgetModule);
 	
@@ -639,6 +643,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    * @memberOf module:CoreLibrary
 	    */
 	   statisticsModule: _statisticsModule2.default,
+	
+	   /**
+	    * translationModule
+	    * @type {Object}
+	    * @memberOf module:CoreLibrary
+	    */
+	   translationModule: _translationModule2.default,
 	
 	   /**
 	    * Api ready flag
@@ -2661,285 +2672,248 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = function () {
-	   'use strict';
+	// shallow merges objects together into a new object, right-most parameters have precedence
+	var mergeObjs = function mergeObjs() {
+	   for (var _len = arguments.length, objs = Array(_len), _key = 0; _key < _len; _key++) {
+	      objs[_key] = arguments[_key];
+	   }
 	
-	   // shallow merges objects together into a new object, right-most parameters have precedence
-	
-	   var mergeObjs = function mergeObjs() {
-	      for (var _len = arguments.length, objs = Array(_len), _key = 0; _key < _len; _key++) {
-	         objs[_key] = arguments[_key];
-	      }
-	
-	      var ret = {};
-	      objs.forEach(function (obj) {
-	         obj = obj || {};
-	         Object.keys(obj).forEach(function (key) {
-	            ret[key] = obj[key];
-	         });
+	   var ret = {};
+	   objs.forEach(function (obj) {
+	      obj = obj || {};
+	      Object.keys(obj).forEach(function (key) {
+	         ret[key] = obj[key];
 	      });
-	      return ret;
-	   };
+	   });
+	   return ret;
+	};
 	
-	   // replaces expressions like "{customer}" from the provided string
-	   // to the value the have in the CoreLibrary.config object
-	   var replaceConfigParameters = function replaceConfigParameters(str) {
-	      if (str == null) {
-	         return str;
-	      }
-	      Object.keys(_coreLibrary2.default.config).forEach(function (key) {
-	         var regex = new RegExp('{' + key + '}', 'g');
-	         var value = _coreLibrary2.default.config[key];
-	         str = str.replace(regex, value);
-	      });
+	// replaces expressions like "{customer}" from the provided string
+	// to the value the have in the CoreLibrary.config object
+	var replaceConfigParameters = function replaceConfigParameters(str) {
+	   if (str == null) {
 	      return str;
-	   };
+	   }
+	   Object.keys(_coreLibrary2.default.config).forEach(function (key) {
+	      var regex = new RegExp('{' + key + '}', 'g');
+	      var value = _coreLibrary2.default.config[key];
+	      str = str.replace(regex, value);
+	   });
+	   return str;
+	};
+	
+	exports.default = _stapes2.default.subclass({
 	
 	   /**
-	    * Component base class that should be inherited to create widgets
-	    * @class Component
-	    * @abstract
-	    * @example
-	    HTML:
-	    <html>
-	    <head>
-	    ...
-	    </head>
-	    <body>
-	    <span>{args.title}</span>
-	    <br />
-	    <span>{date}</span>
-	    ...
-	    </body>
-	    </html>
-	      var Widget = CoreLibrary.Component.subclass({
-	    defaultArgs: {
-	      title: 'Title!'
-	   },
-	    constructor () {
-	      CoreLibrary.Component.apply(this, arguments);
-	   },
-	    init () {
-	      this.scope.date = (new Date()).toString();
-	   }
-	   });
-	     var widget = new Widget({
-	   rootElement: 'html'
-	   });
+	    * Object with default values from args if they are not present in
+	    * the Kambi API provided ones.
+	    * @static
+	    * @type {Object}
+	    * @memberof Component
 	    */
-	   _coreLibrary2.default.Component = _stapes2.default.subclass({
+	   defaultArgs: {},
+	
+	   /**
+	    * If present, this value is appended to rootElement with the innerHTML DOM call
+	    * essentially parsing the the text as HTML.
+	    * @static
+	    * @type {String}
+	    * @memberof Component
+	    */
+	   htmlTemplate: null,
+	
+	   /**
+	    * Stapes Constructor method
+	    * @param {object} options
+	    * @param {HTMLElement|String} options.rootElement an HTML element or a
+	    * CSS selector for the HTMLElement.
+	    * This element will be the "root" of the rivets scope
+	    * @returns {Promise}
+	    * @memberof Component
+	    */
+	   constructor: function constructor(options) {
+	      var _this = this;
 	
 	      /**
-	       * Object with default values from args if they are not present in
-	       * the Kambi API provided ones.
-	       * @static
+	       * object to be used in the HTML templates for data binding
 	       * @type {Object}
-	       * @memberof Component
 	       */
-	      defaultArgs: {},
+	      this.scope = {};
 	
 	      /**
-	       * If present, this value is appended to rootElement with the innerHTML DOM call
-	       * essentially parsing the the text as HTML.
-	       * @static
-	       * @type {String}
-	       * @memberof Component
+	       * Rivets view object, binds this.scope to this.rootElement.
+	       * @type {Object}
 	       */
-	      htmlTemplate: null,
+	      this.view = null;
 	
 	      /**
-	       * Stapes Constructor method
-	       * @param {object} options
-	       * @param {HTMLElement|String} options.rootElement an HTML element or a
-	       * CSS selector for the HTMLElement.
-	       * This element will be the "root" of the rivets scope
-	       * @returns {Promise}
-	       * @memberof Component
+	       * HTML element to in which rivets.bind will be called,
+	       * if string uses document.querySelector to get the element
+	       * @type {HTMLElement}
 	       */
-	      constructor: function constructor(options) {
-	         var _this = this;
+	      this.rootElement = null;
 	
-	         /**
-	          * object to be used in the HTML templates for data binding
-	          * @type {Object}
-	          */
-	         this.scope = {};
+	      if (options == null) {
+	         options = {};
+	      }
 	
-	         /**
-	          * Rivets view object, binds this.scope to this.rootElement.
-	          * @type {Object}
-	          */
-	         this.view = null;
-	
-	         /**
-	          * HTML element to in which rivets.bind will be called,
-	          * if string uses document.querySelector to get the element
-	          * @type {HTMLElement}
-	          */
-	         this.rootElement = null;
-	
-	         if (options == null) {
-	            options = {};
+	      // setting options that can be received in the constructor
+	      var optionsKeys = ['defaultArgs', 'rootElement'];
+	      optionsKeys.forEach(function (key) {
+	         if (typeof options[key] !== 'undefined') {
+	            _this[key] = options[key];
 	         }
+	      });
 	
-	         // setting options that can be received in the constructor
-	         var optionsKeys = ['defaultArgs', 'rootElement'];
-	         optionsKeys.forEach(function (key) {
-	            if (typeof options[key] !== 'undefined') {
-	               _this[key] = options[key];
-	            }
+	      if (this.rootElement == null) {
+	         throw new Error('options.rootElement not set, please pass a HTMLElement or a CSS selector');
+	      }
+	
+	      var args = {};
+	
+	      var getSelfFulfillingPromise = function getSelfFulfillingPromise() {
+	         return new Promise(function (resolve) {
+	            resolve();
 	         });
+	      };
 	
-	         if (this.rootElement == null) {
-	            throw new Error('options.rootElement not set, please pass a HTMLElement or a CSS selector');
+	      // promise that waits for the core library to be ready
+	      var coreLibraryPromise = function coreLibraryPromise() {
+	         if (_coreLibrary2.default.apiReady === true) {
+	            return getSelfFulfillingPromise();
+	         }
+	         return _coreLibrary2.default.init();
+	      };
+	
+	      // setts scope.widgetCss to load the operator-specific stylesheets
+	      var handleWidgetCss = function handleWidgetCss() {
+	         var apiVersion = _coreLibrary2.default.widgetModule.api.VERSION;
+	         if (apiVersion == null) {
+	            apiVersion = _coreLibrary2.default.expectedApiVersion;
+	         }
+	         _this.scope.widgetCss = '//c3-static.kambi.com/sb-mobileclient/widget-api/' + apiVersion + '/resources/css/' + _coreLibrary2.default.config.customer + '/' + _coreLibrary2.default.config.offering + '/widgets.css';
+	      };
+	
+	      // loads the external arguments provided in args.externalArgsUrl or externalArgsUrlFallback
+	      var externalArgsPromise = function externalArgsPromise(widgetArgs) {
+	         var externalArgsUrl = widgetArgs.externalArgsUrl || _this.defaultArgs.externalArgsUrl;
+	         var externalArgsUrlFallback = widgetArgs.externalArgsUrlFallback || _this.defaultArgs.externalArgsUrlFallback;
+	         externalArgsUrl = replaceConfigParameters(externalArgsUrl);
+	         externalArgsUrlFallback = replaceConfigParameters(externalArgsUrlFallback);
+	         if (externalArgsUrl != null) {
+	            return _coreLibrary2.default.getData(externalArgsUrl).then(function (externalArgs) {
+	               args = mergeObjs(_this.defaultArgs, widgetArgs, externalArgs);
+	            }).catch(function () {
+	               console.log('Unable to load or parse external args');
+	               args = mergeObjs(_this.defaultArgs, widgetArgs);
+	            });
+	         } else {
+	            args = mergeObjs(_this.defaultArgs, widgetArgs);
+	            return getSelfFulfillingPromise();
+	         }
+	      };
+	
+	      // applying conditionalArgs as specified by args.conditionalArgs (see #KSBWI-653)
+	      var handleConditionalArgs = function handleConditionalArgs() {
+	         if (args.conditionalArgs != null) {
+	            args.conditionalArgs.forEach(function (carg) {
+	               var apply = true;
+	               if (carg.clientConfig != null) {
+	                  Object.keys(carg.clientConfig).forEach(function (key) {
+	                     if (_coreLibrary2.default.config[key] !== carg.clientConfig[key]) {
+	                        apply = false;
+	                     }
+	                  });
+	               }
+	
+	               if (carg.pageInfo != null) {
+	                  Object.keys(carg.pageInfo).forEach(function (key) {
+	                     if (_coreLibrary2.default.pageInfo[key] !== carg.pageInfo[key]) {
+	                        apply = false;
+	                     }
+	                  });
+	               }
+	
+	               if (apply) {
+	                  console.log('Applying conditional arguments:');
+	                  console.log(carg.args);
+	                  args = mergeObjs(args, carg.args);
+	               }
+	            });
+	         }
+	      };
+	
+	      // handles custom CSS stylesheet as specified by args.customCssUrl and args.customCssUrlFallback
+	      var customCssPromise = function customCssPromise(customCssUrl, customCssUrlFallback) {
+	         if (customCssUrl == null) {
+	            return;
+	         }
+	         if (customCssUrlFallback == null) {
+	            customCssUrlFallback = '';
 	         }
 	
-	         var args = {};
+	         customCssUrl = replaceConfigParameters(customCssUrl);
+	         customCssUrlFallback = replaceConfigParameters(customCssUrlFallback);
 	
-	         var getSelfFulfillingPromise = function getSelfFulfillingPromise() {
-	            return new Promise(function (resolve) {
-	               resolve();
-	            });
-	         };
-	
-	         // promise that waits for the core library to be ready
-	         var coreLibraryPromise = function coreLibraryPromise() {
-	            if (_coreLibrary2.default.apiReady === true) {
-	               return getSelfFulfillingPromise();
-	            }
-	            return _coreLibrary2.default.init();
-	         };
-	
-	         // setts scope.widgetCss to load the operator-specific stylesheets
-	         var handleWidgetCss = function handleWidgetCss() {
-	            var apiVersion = _coreLibrary2.default.widgetModule.api.VERSION;
-	            if (apiVersion == null) {
-	               apiVersion = _coreLibrary2.default.expectedApiVersion;
-	            }
-	            _this.scope.widgetCss = '//c3-static.kambi.com/sb-mobileclient/widget-api/' + apiVersion + '/resources/css/' + _coreLibrary2.default.config.customer + '/' + _coreLibrary2.default.config.offering + '/widgets.css';
-	         };
-	
-	         // loads the external arguments provided in args.externalArgsUrl or externalArgsUrlFallback
-	         var externalArgsPromise = function externalArgsPromise(widgetArgs) {
-	            var externalArgsUrl = widgetArgs.externalArgsUrl || _this.defaultArgs.externalArgsUrl;
-	            var externalArgsUrlFallback = widgetArgs.externalArgsUrlFallback || _this.defaultArgs.externalArgsUrlFallback;
-	            externalArgsUrl = replaceConfigParameters(externalArgsUrl);
-	            externalArgsUrlFallback = replaceConfigParameters(externalArgsUrlFallback);
-	            if (externalArgsUrl != null) {
-	               return _coreLibrary2.default.getData(externalArgsUrl).then(function (externalArgs) {
-	                  args = mergeObjs(_this.defaultArgs, widgetArgs, externalArgs);
-	               }).catch(function () {
-	                  console.log('Unable to load or parse external args');
-	                  args = mergeObjs(_this.defaultArgs, widgetArgs);
-	               });
-	            } else {
-	               args = mergeObjs(_this.defaultArgs, widgetArgs);
-	               return getSelfFulfillingPromise();
-	            }
-	         };
-	
-	         // applying conditionalArgs as specified by args.conditionalArgs (see #KSBWI-653)
-	         var handleConditionalArgs = function handleConditionalArgs() {
-	            if (args.conditionalArgs != null) {
-	               args.conditionalArgs.forEach(function (carg) {
-	                  var apply = true;
-	                  if (carg.clientConfig != null) {
-	                     Object.keys(carg.clientConfig).forEach(function (key) {
-	                        if (_coreLibrary2.default.config[key] !== carg.clientConfig[key]) {
-	                           apply = false;
-	                        }
-	                     });
-	                  }
-	
-	                  if (carg.pageInfo != null) {
-	                     Object.keys(carg.pageInfo).forEach(function (key) {
-	                        if (_coreLibrary2.default.pageInfo[key] !== carg.pageInfo[key]) {
-	                           apply = false;
-	                        }
-	                     });
-	                  }
-	
-	                  if (apply) {
-	                     console.log('Applying conditional arguments:');
-	                     console.log(carg.args);
-	                     args = mergeObjs(args, carg.args);
-	                  }
-	               });
-	            }
-	         };
-	
-	         // handles custom CSS stylesheet as specified by args.customCssUrl and args.customCssUrlFallback
-	         var customCssPromise = function customCssPromise(customCssUrl, customCssUrlFallback) {
-	            if (customCssUrl == null) {
-	               return;
-	            }
-	            if (customCssUrlFallback == null) {
-	               customCssUrlFallback = '';
-	            }
-	
-	            customCssUrl = replaceConfigParameters(customCssUrl);
-	            customCssUrlFallback = replaceConfigParameters(customCssUrlFallback);
-	
-	            var fetchFallback = function fetchFallback() {
-	               return _coreLibrary2.default.getFile(customCssUrlFallback).then(function (response) {
-	                  _this.scope.customCss = customCssUrlFallback;
-	                  return response;
-	               }).catch(function (error) {
-	                  console.debug('Error fetching custom css fallback');
-	                  return error;
-	               });
-	            };
-	
-	            return _coreLibrary2.default.getFile(customCssUrl).then(function (response) {
-	               _this.scope.customCss = customCssUrl;
+	         var fetchFallback = function fetchFallback() {
+	            return _coreLibrary2.default.getFile(customCssUrlFallback).then(function (response) {
+	               _this.scope.customCss = customCssUrlFallback;
 	               return response;
 	            }).catch(function (error) {
-	               if (customCssUrlFallback !== '') {
-	                  console.debug('Error fetching custom css, trying fallback');
-	                  return fetchFallback();
-	               }
-	               console.debug('Error fetching custom css, no fallback present');
+	               console.debug('Error fetching custom css fallback');
 	               return error;
 	            });
 	         };
 	
-	         return coreLibraryPromise().then(function (widgetArgs) {
-	            if (widgetArgs == null) {
-	               widgetArgs = {};
+	         return _coreLibrary2.default.getFile(customCssUrl).then(function (response) {
+	            _this.scope.customCss = customCssUrl;
+	            return response;
+	         }).catch(function (error) {
+	            if (customCssUrlFallback !== '') {
+	               console.debug('Error fetching custom css, trying fallback');
+	               return fetchFallback();
 	            }
-	            handleWidgetCss();
-	            return externalArgsPromise(widgetArgs);
-	         }).then(function () {
-	            handleConditionalArgs();
-	
-	            // we don't need to wait for this promise (like we do
-	            // with externalArgsPromise) to call
-	            // the widget init() function because it just adds
-	            // a stylesheet to the page
-	            _this.customCssPromise = customCssPromise(args.customCssUrl, args.customCssUrlFallback);
-	
-	            _this.scope.args = args;
-	
-	            if (typeof _this.rootElement === 'string') {
-	               _this.rootElement = document.querySelector(_this.rootElement);
-	            }
-	
-	            // if htmlTemplate is defined place that as HTML inside rootElement
-	            if (typeof _this.htmlTemplate === 'string') {
-	               if (_this.htmlTemplate.length < 100 && window[_this.htmlTemplate] != null) {
-	                  _this.rootElement.innerHTML = window[_this.htmlTemplate];
-	               } else {
-	                  _this.rootElement.innerHTML = _this.htmlTemplate;
-	               }
-	            }
-	
-	            _this.view = _rivets2.default.bind(_this.rootElement, _this.scope);
-	
-	            _this.init();
+	            console.debug('Error fetching custom css, no fallback present');
+	            return error;
 	         });
-	      }
-	   });
-	}();
+	      };
+	
+	      return coreLibraryPromise().then(function (widgetArgs) {
+	         if (widgetArgs == null) {
+	            widgetArgs = {};
+	         }
+	         handleWidgetCss();
+	         return externalArgsPromise(widgetArgs);
+	      }).then(function () {
+	         handleConditionalArgs();
+	
+	         // we don't need to wait for this promise (like we do
+	         // with externalArgsPromise) to call
+	         // the widget init() function because it just adds
+	         // a stylesheet to the page
+	         _this.customCssPromise = customCssPromise(args.customCssUrl, args.customCssUrlFallback);
+	
+	         _this.scope.args = args;
+	
+	         if (typeof _this.rootElement === 'string') {
+	            _this.rootElement = document.querySelector(_this.rootElement);
+	         }
+	
+	         // if htmlTemplate is defined place that as HTML inside rootElement
+	         if (typeof _this.htmlTemplate === 'string') {
+	            if (_this.htmlTemplate.length < 100 && window[_this.htmlTemplate] != null) {
+	               _this.rootElement.innerHTML = window[_this.htmlTemplate];
+	            } else {
+	               _this.rootElement.innerHTML = _this.htmlTemplate;
+	            }
+	         }
+	
+	         _this.view = _rivets2.default.bind(_this.rootElement, _this.scope);
+	
+	         _this.init();
+	      });
+	   }
+	});
 
 /***/ },
 /* 7 */
@@ -3806,628 +3780,240 @@ return /******/ (function(modules) { // webpackBootstrap
 	   value: true
 	});
 	
+	var _rivets = __webpack_require__(4);
+	
+	var _rivets2 = _interopRequireDefault(_rivets);
+	
+	var _widgetModule = __webpack_require__(10);
+	
+	var _widgetModule2 = _interopRequireDefault(_widgetModule);
+	
 	var _coreLibrary = __webpack_require__(2);
 	
 	var _coreLibrary2 = _interopRequireDefault(_coreLibrary);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	/**
-	 * Module with methods to request data from the offering API
-	 * @module offeringModule
-	 * @memberof CoreLibrary
-	 */
-	
-	exports.default = {
+	exports.default = function () {
+	   'use strict';
 	
 	   /**
-	    * Get group events
-	    * @param {number|string} groupId Group id
-	    * @returns {Promise}
-	    */
-	   getGroupEvents: function getGroupEvents(groupId) {
-	      var requesPath = '/event/group/' + groupId + '.json';
-	      return this.doRequest(requesPath);
-	   },
-	
-	
-	   /**
-	    * Get group information.
-	    * @param {Number|String} groupId Group id
-	    * @returns {Promise}
-	    */
-	   getGroup: function getGroup(groupId) {
-	      var requesPath = '/group/' + groupId + '.json';
-	      return this.doRequest(requesPath);
-	   },
-	
-	
-	   /**
-	    * Get events by filter
-	    * @param {String} filter Filter string, eg: football
-	    * @param {Object} params Request relevant parameters
-	    * @returns {Promise}
-	    */
-	   getEventsByFilter: function getEventsByFilter(filter, params) {
-	      // Todo: Update this method once documentation is available
-	      var requestPath = '/listView/' + filter;
-	      return this.doRequest(requestPath, params, 'v3');
-	   },
-	
-	
-	   /**
-	    * Normalizes v2 api betoffers
-	    * @param {Object} betOffer Betoffer object we get from api
+	    * Outcome suspended binder.
+	    * Adds 'KambiWidget-outcome--suspended' class to attached element
+	    * @example
+	    * <outcome-component
+	    *     rv-outcome-suspended="suspended"
+	    *     outcome-attr="outcome"
+	    *     event-attr="event">
+	    * </outcome-component-no-label>
+	    * @memberof rivets
+	    * @mixin binder "outcome-suspended"
+	    * @param {element} el
+	    * @param {boolean} property
 	    * @private
 	    */
-	   adaptV2BetOffer: function adaptV2BetOffer(betOffer) {
-	      if (betOffer.suspended === true) {
-	         betOffer.open = false;
+	
+	   _rivets2.default.binders['outcome-suspended'] = function (el, property) {
+	      var cssClass = 'KambiWidget-outcome--suspended';
+	      if (property === true) {
+	         el.classList.add(cssClass);
+	      } else {
+	         el.classList.remove(cssClass);
 	      }
-	   },
-	
+	   };
 	
 	   /**
-	    * Normalizes the v2 api response
-	    * @param {Object} liveData Livedata object we get from api
+	    * Outcome selected binder.
+	    * Adds 'KambiWidget-outcome--selected' class to attached element
+	    * @example
+	    * <outcome-component
+	    *     rv-outcome-selected="selected"
+	    *     outcome-attr="outcome"
+	    *     event-attr="event">
+	    * </outcome-component-no-label>
+	    * @memberof rivets
+	    * @mixin binder "outcome-selected"
+	    * @param {element} el
+	    * @param {boolean} property
 	    * @private
 	    */
-	   adaptV2LiveData: function adaptV2LiveData(liveData) {
-	      if (liveData != null && liveData.statistics != null) {
-	         var statistics = liveData.statistics;
-	         if (statistics.sets != null) {
-	            statistics.setBasedStats = statistics.sets;
-	            delete statistics.sets;
-	         }
+	   _rivets2.default.binders['outcome-selected'] = function (el, property) {
+	      var cssClass = 'KambiWidget-outcome--selected';
 	
-	         if (statistics.football != null) {
-	            statistics.footballStats = statistics.football;
-	            delete statistics.football;
-	         }
+	      if (property === true) {
+	         el.classList.add(cssClass);
+	      } else {
+	         el.classList.remove(cssClass);
 	      }
-	   },
-	
-	
-	   /**
-	    * Normalizes the v2 event object
-	    * @private
-	    */
-	   adaptV2Event: function adaptV2Event(event) {
-	      // v3 and v2 event objects are almost the same
-	      // only a few attributes we don't use are different
-	   },
-	
+	   };
 	
 	   /**
-	    * Get live event data only, eg: match statistics, score, macthClock
-	    * @param {Number|String} eventId The event id we need to fetch
-	    * @returns {Promise}
+	    * Outcome view controller.
+	    * @param {object} attributes Attributes
+	    * @memberOf module:OutcomeComponent#
 	    * @private
 	    */
-	   getLiveEventData: function getLiveEventData(eventId) {
+	   var OutcomeViewController = function OutcomeViewController(attributes) {
 	      var _this = this;
 	
-	      var requestPath = '/event/' + eventId + '/livedata.json';
-	      return this.doRequest(requestPath, null, null, true).then(function (res) {
-	         _this.adaptV2LiveData(res);
-	         return res;
-	      });
-	   },
+	      this.data = attributes;
+	      this.selected = false;
+	      this.label = '';
+	      this.coreLibraryConfig = _coreLibrary2.default.config;
 	
-	
-	   /**
-	    * Get all live events
-	    * @returns {Promise}
-	    * @private
-	    */
-	   getLiveEvents: function getLiveEvents() {
-	      var _this2 = this;
-	
-	      var requestPath = '/event/live/open.json';
-	      return this.doRequest(requestPath, null, null, true).then(function (res) {
-	         if (res.error != null) {
-	            return res;
-	         }
-	         var events = res.liveEvents;
-	         res.events = events;
-	         res.events.forEach(_this2.adaptV2Event);
-	         delete res.liveEvents;
-	         delete res.group;
-	         events.forEach(function (e) {
-	            e.betOffers = [];
-	            if (e.mainBetOffer != null) {
-	               _this2.adaptV2BetOffer(e.mainBetOffer);
-	               e.betOffers.push(e.mainBetOffer);
-	               delete e.mainBetOffer;
+	      if (this.data.eventAttr != null && this.data.eventAttr.betOffers != null) {
+	         this.betOffer = this.data.eventAttr.betOffers.filter(function (betOffer) {
+	            if (betOffer.id === _this.data.outcomeAttr.betOfferId) {
+	               return true;
 	            }
-	            _this2.adaptV2LiveData(e.liveData);
-	         });
-	         return res;
-	      });
-	   },
-	
-	
-	   /**
-	    * Returns a live event
-	    * @param {Number|String} eventId The event id we need to fetch
-	    * @returns {Promise}
-	    */
-	   getLiveEvent: function getLiveEvent(eventId) {
-	      var _this3 = this;
-	
-	      var requestPath = '/betoffer/live/event/' + eventId + '.json';
-	      return this.doRequest(requestPath, null, null, true).then(function (res) {
-	         res.betOffers = res.betoffers;
-	         delete res.betoffers;
-	         res.betOffers.forEach(_this3.adaptV2BetOffer);
-	         res.event = res.events[0];
-	         _this3.adaptV2Event(res.event);
-	         delete res.events;
-	         return res;
-	      });
-	   },
-	
-	
-	   /**
-	    * Get live events by filter
-	    * @param {String} filter Filter string
-	    * @returns {Promise}
-	    */
-	   getLiveEventsByFilter: function getLiveEventsByFilter(filter) {
-	      var _this4 = this;
-	
-	      // Todo: implement a filter request when the offering API supports it
-	      filter = filter.replace(/\/$/, '');
-	
-	      var filterTerms = filter.split('/');
-	      filterTerms = filterTerms.slice(0, 3);
-	
-	      var requestPath = '/listView/all/all/all/all/in-play/';
-	
-	      return new Promise(function (resolve, reject) {
-	         _this4.doRequest(requestPath, null, 'v3').then(function (response) {
-	            var result = {
-	               events: []
-	            },
-	                i = 0,
-	                len = response.events.length;
-	            for (; i < len; ++i) {
-	               var j = 0,
-	                   termLen = response.events[i].event.path.length,
-	                   addEvent = true;
-	               if (termLen > filterTerms.length) {
-	                  termLen = filterTerms.length;
-	               }
-	               for (; j < termLen; ++j) {
-	                  if (filterTerms[j] !== 'all' && response.events[i].event.path[j].termKey !== filterTerms[j]) {
-	                     addEvent = false;
-	                  }
-	               }
-	               if (addEvent) {
-	                  result.events.push(response.events[i]);
-	               }
-	            }
-	            resolve(result);
-	         });
-	      });
-	   },
-	
-	
-	   /**
-	    * Requests and event from api
-	    * @param {String} eventId The event id we need to fetch
-	    * @returns {Promise}
-	    */
-	   getEvent: function getEvent(eventId) {
-	      var _this5 = this;
-	
-	      return this.doRequest('/betoffer/event/' + eventId + '.json').then(function (res) {
-	         res.betOffers = res.betoffers;
-	         delete res.betoffers;
-	         res.betOffers.forEach(_this5.adaptV2BetOffer);
-	         res.event = res.events[0];
-	         _this5.adaptV2Event(res.event);
-	         delete res.events;
-	         return res;
-	      });
-	   },
-	
-	
-	   /**
-	    * Request the highlight resource which is what is shown under "Popular" in the Sportsbook
-	    * @returns {Promise}
-	    */
-	   getHighlight: function getHighlight() {
-	      return this.doRequest('/group/highlight.json').then(function (highlights) {
-	         // sorting based on sortOrder
-	         if (Array.isArray(highlights.groups)) {
-	            highlights.groups.sort(function (a, b) {
-	               if (parseInt(a.sortOrder, 10) > parseInt(b.sortOrder, 10)) {
-	                  return 1;
-	               }
-	               if (parseInt(a.sortOrder, 10) < parseInt(b.sortOrder, 10)) {
-	                  return -1;
-	               }
-	               return 0;
-	            });
-	         }
-	         return highlights;
-	      });
-	   },
-	
-	
-	   /**
-	    * @deprecated
-	    * @param {number|string} eventId The event id we need to fetch
-	    * @returns {*}
-	    */
-	   getEventBetoffers: function getEventBetoffers(eventId) {
-	      console.warn('getEventBetoffers is deprecated, use getEvent instead');
-	      return this.getEvent.apply(this, arguments);
-	   },
-	
-	
-	   /**
-	    * Makes a request to provided path
-	    * @param {string} requestPath
-	    * @param {object} params
-	    * @param {number|string} version
-	    * @param {boolean} noCache
-	    * @returns {Promise}
-	    */
-	   doRequest: function doRequest(requestPath, params, version, noCache) {
-	      if (_coreLibrary2.default.config.offering == null) {
-	         console.warn('The offering has not been set, is the right widget api version loaded?');
-	      } else {
-	         var apiUrl = _coreLibrary2.default.config.apiBaseUrl.replace('{apiVersion}', version != null ? version : _coreLibrary2.default.config.version);
-	         var requestUrl = apiUrl + _coreLibrary2.default.config.offering + requestPath;
-	         var overrideParams = params || {};
-	         var requestParams = {
-	            lang: overrideParams.locale || _coreLibrary2.default.config.locale,
-	            market: overrideParams.market || _coreLibrary2.default.config.market,
-	            client_id: overrideParams.client_id || _coreLibrary2.default.config.client_id,
-	            include: overrideParams.include || '',
-	            betOffers: overrideParams.betOffers || 'COMBINED',
-	            categoryGroup: overrideParams.categoryGroup || 'COMBINED',
-	            displayDefault: overrideParams.displayDefault || true
-	         };
-	         if (noCache === true) {
-	            requestParams.nocache = Date.now();
-	         }
-	         requestUrl += '?' + Object.keys(requestParams).map(function (k) {
-	            return encodeURIComponent(k) + '=' + encodeURIComponent(requestParams[k]);
-	         }).join('&');
-	
-	         return _coreLibrary2.default.getData(requestUrl);
+	         })[0];
 	      }
-	   }
-	};
+	
+	      if (this.data.outcomeAttr != null) {
+	         if (_widgetModule2.default.betslipIds.indexOf(this.data.outcomeAttr.id) !== -1) {
+	            this.selected = true;
+	         }
+	
+	         _widgetModule2.default.events.on('OUTCOME:ADDED:' + this.data.outcomeAttr.id, function (data, event) {
+	            _this.selected = true;
+	         });
+	
+	         _widgetModule2.default.events.on('OUTCOME:REMOVED:' + this.data.outcomeAttr.id, function (data, event) {
+	            _this.selected = false;
+	         });
+	      }
+	
+	      /**
+	       * Toggle outcomes.
+	       * @param event
+	       * @param scope
+	       * @private
+	       */
+	      this.toggleOutcome = function (event, scope) {
+	         if (scope.selected === false) {
+	            _widgetModule2.default.addOutcomeToBetslip(scope.data.outcomeAttr.id);
+	         } else {
+	            _widgetModule2.default.removeOutcomeFromBetslip(scope.data.outcomeAttr.id);
+	         }
+	      };
+	
+	      /**
+	       * Returns label.
+	       * If data contains 'customLabel' it will return that custom value
+	       * @private
+	       */
+	      this.getLabel = function () {
+	         if (_this.data.customLabel) {
+	            return _this.data.customLabel;
+	         }
+	
+	         if (_this.data.outcomeAttr != null) {
+	            if (_this.data.eventAttr != null) {
+	               return _coreLibrary2.default.utilModule.getOutcomeLabel(_this.data.outcomeAttr, _this.data.eventAttr);
+	            } else {
+	               return _this.data.outcomeAttr.label;
+	            }
+	         }
+	      };
+	
+	      /**
+	       * Returns Odds format.
+	       * @returns {*}
+	       * @private
+	       */
+	      this.getOddsFormat = function () {
+	         switch (_this.coreLibraryConfig.oddsFormat) {
+	            case 'fractional':
+	               return _this.data.outcomeAttr.oddsFractional;
+	            case 'american':
+	               return _this.data.outcomeAttr.oddsAmerican;
+	            default:
+	               return _coreLibrary2.default.utilModule.getOddsDecimalValue(_this.data.outcomeAttr.odds / 1000);
+	         }
+	      };
+	   };
+	
+	   /**
+	    * Outcome component
+	    * @example
+	    * <outcome-component
+	    *    rv-each-outcome="betoffer.outcomes"
+	    *    outcome-attr="outcome"
+	    *    event-attr="event">
+	    * </outcome-component>
+	    * @memberof rivets
+	    * @mixin component "outcome-component"
+	    * @property {Object} outcome-attr An (single) outcome object
+	    * @property {Object} event-attr The event itself
+	    * @property {String} customLabel Optional, custom label to show
+	    */
+	   _rivets2.default.components['outcome-component'] = {
+	      /**
+	       * Returns the template.
+	       * @returns {string}
+	       * @private
+	       */
+	      template: function template() {
+	         return '\n            <button\n                  rv-on-click="toggleOutcome"\n                  rv-disabled="betOffer.suspended | == true"\n                  rv-outcome-selected="selected"\n                  rv-outcome-suspended="betOffer.suspended"\n                  type="button"\n                  role="button"\n                  class="KambiWidget-outcome kw-link l-flex-1">\n               <div class="KambiWidget-outcome__flexwrap">\n                  <div class="KambiWidget-outcome__label-wrapper">\n                     <span\n                           class="KambiWidget-outcome__label"\n                           rv-text="getLabel < data.outcomeAttr.odds data.eventAttr">\n                     </span>\n                     <span class="KambiWidget-outcome__line"></span>\n                  </div>\n               <div class="KambiWidget-outcome__odds-wrapper">\n                  <span\n                        class="KambiWidget-outcome__odds"\n                        rv-text="getOddsFormat | call data.outcomeAttr.odds coreLibraryConfig.oddsFormat">\n                  </span>\n               </div>\n            </button>\n         ';
+	      },
+	
+	
+	      /**
+	       * Initialize.
+	       * @param el
+	       * @param attributes
+	       * @returns {*}
+	       * @private
+	       */
+	      initialize: function initialize(el, attributes) {
+	         if (attributes.outcomeAttr == null) {
+	            return false;
+	         }
+	         el.classList.add('l-flexbox');
+	         el.classList.add('l-flex-1');
+	         return new OutcomeViewController(attributes);
+	      }
+	   };
+	
+	   /**
+	    * Outcome component without label.
+	    * @example
+	    * <outcome-component
+	    *    rv-each-outcome="betoffer.outcomes"
+	    *    outcome-attr="outcome"
+	    *    event-attr="event">
+	    * </outcome-component>
+	    * @memberof rivets
+	    * @mixin component "outcome-component-no-label"
+	    * @property {Object} outcome-attr An (single) outcome object
+	    * @property {Object} event-attr The event itself
+	    */
+	   _rivets2.default.components['outcome-component-no-label'] = {
+	      /**
+	       * Template outcome-component-no-label
+	       * @returns {string}
+	       * @private
+	       */
+	      template: function template() {
+	         return '\n            <button\n                  rv-on-click="toggleOutcome"\n                  rv-disabled="betOffer.suspended | == true"\n                  rv-outcome-selected="selected"\n                  rv-outcome-suspended="betOffer.suspended"\n                  type="button"\n                  role="button"\n                  class="KambiWidget-outcome kw-link l-flex-1">\n               <div class="l-flexbox l-pack-center">\n                  <div class="KambiWidget-outcome__odds-wrapper">\n                     <span class="KambiWidget-outcome__odds" rv-text="getOddsFormat | call data.outcomeAttr.odds coreLibraryConfig.oddsFormat" ></span>\n                  </div>\n               </div>\n            </button>\n         ';
+	      },
+	
+	
+	      /**
+	       * Initialize outcome-component-no-label.
+	       * @param el
+	       * @param attributes
+	       * @returns {OutcomeViewController}
+	       * @private
+	       */
+	      initialize: function initialize(el, attributes) {
+	         return new OutcomeViewController(attributes);
+	      }
+	   };
+	}();
 
 /***/ },
 /* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	   value: true
-	});
-	
-	var _coreLibrary = __webpack_require__(2);
-	
-	var _coreLibrary2 = _interopRequireDefault(_coreLibrary);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	/**
-	 * Module to access statistics data
-	 * @module statisticsModule
-	 * @memberOf CoreLibrary
-	 */
-	
-	exports.default = {
-	
-	   /**
-	    * Configuration.
-	    * @type {Object}
-	    * @property {String} baseApiUrl
-	    */
-	   config: {
-	      baseApiUrl: 'https://api.kambi.com/statistics/api/'
-	   },
-	
-	   /**
-	    * Requests league table statistics data from api.
-	    * @param {String} filter a league filter
-	    * @returns {Promise}
-	    */
-	   getLeagueTableStatistics: function getLeagueTableStatistics(filter) {
-	      // Remove url parameters from filter
-	      filter = filter.match(/[^?]*/)[0];
-	
-	      // Removing trailing and starting slashes if present
-	      if (filter[filter.length - 1] === '/') {
-	         filter = filter.slice(0, -1);
-	      }
-	      if (filter[0] === '/') {
-	         filter = filter.slice(1);
-	      }
-	      return _coreLibrary2.default.getData(this.config.baseApiUrl + _coreLibrary2.default.config.offering + '/leaguetable/' + filter + '.json');
-	   },
-	
-	
-	   /**
-	    * Requests H2H statistics data from api.
-	    * @param {String|Number} eventId
-	    * @returns {Promise}
-	    */
-	   getHeadToHeadStatistics: function getHeadToHeadStatistics(eventId) {
-	      return _coreLibrary2.default.getData(this.config.baseApiUrl + _coreLibrary2.default.config.offering + '/h2h/event/' + eventId + '.json');
-	   },
-	
-	
-	   /**
-	    * Requests TPI statistics data from api.
-	    * @param {String|Number} eventId
-	    * @returns {Promise}
-	    */
-	   getTeamPerformanceStatistics: function getTeamPerformanceStatistics(eventId) {
-	      return _coreLibrary2.default.getData(this.config.baseApiUrl + _coreLibrary2.default.config.offering + '/tpi/event/' + eventId + '.json');
-	   },
-	
-	
-	   /**
-	    * Requests statistics data from api.
-	    * @param {String} type
-	    * @param {String} filter
-	    * @returns {Promise}
-	    * @deprecated
-	    */
-	   getStatistics: function getStatistics(type, filter) {
-	      console.warn('getStatistics is deprecated, please use one of the specific statistics methods');
-	      // Remove url parameters from filter
-	      filter = filter.match(/[^?]*/)[0];
-	
-	      // Remove trailing slash if present
-	      if (filter[filter.length - 1] === '/') {
-	         filter = filter.slice(0, -1);
-	      }
-	
-	      console.debug(this.config.baseApiUrl + _coreLibrary2.default.config.offering + '/' + type + '/' + filter + '.json');
-	      return _coreLibrary2.default.getData(this.config.baseApiUrl + _coreLibrary2.default.config.offering + '/' + type + '/' + filter + '.json');
-	   }
-	};
-
-/***/ },
-/* 11 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	   value: true
-	});
-	
-	var _coreLibrary = __webpack_require__(2);
-	
-	var _coreLibrary2 = _interopRequireDefault(_coreLibrary);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	/**
-	 * Module with internationalization methods
-	 * @module translationModule
-	 * @memberOf CoreLibrary
-	 */
-	exports.default = {
-	   /**
-	    * fetched from the i18n folder JSON files. Only the current
-	    * locale strings are fetched
-	    * @type {Object}
-	    */
-	   i18nStrings: {},
-	
-	   /**
-	    * Makes a request to fetch all locales strings.
-	    * The locale json file resides in CoreLibrary/i18n folder; it is populated with locales during build process
-	    * @param {String} locale Locale string, eg: sv_SE
-	    * @returns {Promise}
-	    * @private
-	    */
-	   fetchTranslations: function fetchTranslations(locale) {
-	      if (locale == null) {
-	         locale = 'en_GB';
-	      }
-	      var self = this;
-	      var path = 'i18n/';
-	      if (_coreLibrary2.default.development === true) {
-	         path = 'transpiled/i18n/';
-	      }
-	      return new Promise(function (resolve, reject) {
-	         window.CoreLibrary.getData(path + locale + '.json').then(function (response) {
-	            _coreLibrary2.default.translationModule.i18nStrings = response;
-	            resolve();
-	         }).catch(function (error) {
-	            if (locale !== 'en_GB') {
-	               console.debug('Could not load translations for ' + locale + ' falling back to en_GB');
-	               self.fetchTranslations('en_GB').then(resolve);
-	            } else {
-	               console.debug('Could not load translations for en_GB');
-	               console.trace(error);
-	               resolve();
-	            }
-	         });
-	      });
-	   },
-	
-	
-	   /**
-	    * Returns translated string based of a provided key.
-	    * @param {String} key Key to fetch translation for
-	    * @param {...String} args arguments to replace inside the translated string
-	    * @example
-	    * en_GB.json:
-	    * { "welcomeUserToPlace": "Welcome {0} to {1}" }
-	    * Javascriot:
-	    * getTranslation('welcomeUserToPlace', 'Daniel', 'Stadium') => 'Welcome Daniel to Stadium'
-	    * @returns {String}
-	    */
-	   getTranslation: function getTranslation(key) {
-	      if (this.i18nStrings[key] != null) {
-	         var str = this.i18nStrings[key];
-	
-	         for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-	            args[_key - 1] = arguments[_key];
-	         }
-	
-	         for (var i = 0; i < args.length; i++) {
-	            var replacement = args[i] || '';
-	            str = str.replace('{' + i + '}', replacement);
-	         }
-	         return str;
-	      }
-	      return key;
-	   }
-	};
-
-/***/ },
-/* 12 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	   value: true
-	});
-	
-	var _translationModule = __webpack_require__(11);
-	
-	var _translationModule2 = _interopRequireDefault(_translationModule);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	/**
-	 * Module with utility functions
-	 * @module utilModule
-	 * @memberOf CoreLibrary
-	 */
-	exports.default = {
-	
-	   /**
-	    * Util method for return unique items.
-	    * @param {Array} A First array
-	    * @param {Array} B Second array
-	    * @returns {Array}
-	    */
-	   diffArray: function diffArray(A, B) {
-	      var map = {},
-	          C = [];
-	
-	      for (var i = B.length; i--;) {
-	         map[B[i]] = null;
-	      } // any other value would do
-	
-	      for (var i = A.length; i--;) {
-	         if (!map.hasOwnProperty(A[i])) {
-	            C.push(A[i]);
-	         }
-	      }
-	      return C;
-	   },
-	
-	
-	   /**
-	    * Get decimal formatted odds.
-	    * @param {Number} odds Odds number
-	    * @returns {Number}
-	    */
-	   getOddsDecimalValue: function getOddsDecimalValue(odds) {
-	      if (odds < 100) {
-	         return odds.toFixed(2);
-	      } else if (odds < 1000) {
-	         return odds.toFixed(1);
-	      } else {
-	         return odds.toFixed(0);
-	      }
-	   },
-	
-	
-	   /**
-	    * Returns the outcome label translated.
-	    * @param {Object} outcome A betoffer outcome object
-	    * @param {Object} event Event object
-	    * @returns {string}
-	    */
-	   getOutcomeLabel: function getOutcomeLabel(outcome, event) {
-	      switch (outcome.type) {
-	         case 'OT_ONE':
-	            // Outcome has label 1. Applies to Threeway bet offers.
-	            return event.homeLabelCustom && event.homeLabelCustom !== '' ? event.homeLabelCustom : event.homeName;
-	         case 'OT_CROSS':
-	            // Outcome has label X. Applies to Threeway bet offers.
-	            return _translationModule2.default.getTranslation('draw');
-	         case 'OT_TWO':
-	            // Outcome has label 2. Applies to Threeway bet offers.
-	            return event.awayLabelCustom && event.awayLabelCustom !== '' ? event.awayLabelCustom : event.awayName;
-	         case 'OT_OVER':
-	            // The “Over” outcome in Over/Under bet offer.
-	            return outcome.label + ' ' + outcome.line / 1000;
-	         case 'OT_UNDER':
-	            // The “Under” outcome in Over/Under bet offer.
-	            return outcome.label + ' ' + outcome.line / 1000;
-	         // Todo: Impelement these responses with translations
-	         // case 'OT_ODD': //The “Odd” outcome in Odd/Even bet offer.
-	         // break;
-	         // case 'OT_EVEN': //The “Even” outcome in Odd/Even bet offer.
-	         // break;
-	         // case 'OT_ONE_ONE': //1-1 outcome in Halftime/fulltime bet offer.
-	         // break;
-	         // case 'OT_ONE_TWO': //1-2 outcome in Halftime/fulltime bet offer.
-	         // break;
-	         // case 'OT_ONE_CROSS': //1-X outcome in Halftime/fulltime bet offer.
-	         // break;
-	         // case 'OT_TWO_ONE': //2-1 outcome in Halftime/fulltime bet offer.
-	         // break;
-	         // case 'OT_TWO_TWO': //2-2 outcome in Halftime/fulltime bet offer.
-	         // break;
-	         // case 'OT_TWO_CROSS': //2-X outcome in Halftime/fulltime bet offer.
-	         // break;
-	         // case 'OT_CROSS_ONE': //X-1 outcome in Halftime/fulltime bet offer.
-	         // break;
-	         // case 'OT_CROSS_TWO': //X-2 outcome in Halftime/fulltime bet offer.
-	         // break;
-	         // case 'OT_CROSS_CROSS': //X-X outcome in Halftime/fulltime bet offer.
-	         // break;
-	         // case 'OT_ONE_OR_TWO': //1 or 2 outcome in Double Chance bet offer.
-	         // break;
-	         // case 'OT_ONE_OR_CROSS': //1 or X outcome in Double Chance bet offer.
-	         // break;
-	         // case 'OT_CROSS_OR_TWO': //X or 2 outcome in Double Chance bet offer.
-	         // break;
-	         // case 'OT_YES': //“Yes” outcome in Head To Head and Yes/No bet offer.
-	         // break;
-	         // case 'OT_NO': //“No” outcome in Head To Head and Yes/No bet offer.
-	         // break;
-	         // case 'OT_OTHER': //“Other results” outcome in Result bet offer.
-	         // break;
-	         // case 'OT_UNTYPED': //Outcome does not have type.
-	         // break;
-	         // case 'OT_WC_HOME': //Outcome has label Home Win. Applies to WinCast bet offers.
-	         // break;
-	         // case 'OT_WC_DRAW': //Outcome has label Draw. Applies to WinCast bet offers.
-	         // break;
-	         // case 'OT_WC_AWAY': //Outcome has label Away Win. Applies to WinCast bet offers.
-	         // break;
-	
-	         default:
-	            console.warn('Unhandled outcome type: ' + outcome.type, outcome);
-	            return outcome.label;
-	      }
-	   }
-	};
-
-/***/ },
-/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4440,7 +4026,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _stapes2 = _interopRequireDefault(_stapes);
 	
-	var _utilModule = __webpack_require__(12);
+	var _utilModule = __webpack_require__(11);
 	
 	var _utilModule2 = _interopRequireDefault(_utilModule);
 	
@@ -4955,6 +4541,633 @@ return /******/ (function(modules) { // webpackBootstrap
 	      } else {
 	         this.api.navigateClient(finalTarget);
 	      }
+	   }
+	};
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	   value: true
+	});
+	
+	var _translationModule = __webpack_require__(12);
+	
+	var _translationModule2 = _interopRequireDefault(_translationModule);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * Module with utility functions
+	 * @module utilModule
+	 * @memberOf CoreLibrary
+	 */
+	exports.default = {
+	
+	   /**
+	    * Util method for return unique items.
+	    * @param {Array} A First array
+	    * @param {Array} B Second array
+	    * @returns {Array}
+	    */
+	   diffArray: function diffArray(A, B) {
+	      var map = {},
+	          C = [];
+	
+	      for (var i = B.length; i--;) {
+	         map[B[i]] = null;
+	      } // any other value would do
+	
+	      for (var i = A.length; i--;) {
+	         if (!map.hasOwnProperty(A[i])) {
+	            C.push(A[i]);
+	         }
+	      }
+	      return C;
+	   },
+	
+	
+	   /**
+	    * Get decimal formatted odds.
+	    * @param {Number} odds Odds number
+	    * @returns {Number}
+	    */
+	   getOddsDecimalValue: function getOddsDecimalValue(odds) {
+	      if (odds < 100) {
+	         return odds.toFixed(2);
+	      } else if (odds < 1000) {
+	         return odds.toFixed(1);
+	      } else {
+	         return odds.toFixed(0);
+	      }
+	   },
+	
+	
+	   /**
+	    * Returns the outcome label translated.
+	    * @param {Object} outcome A betoffer outcome object
+	    * @param {Object} event Event object
+	    * @returns {string}
+	    */
+	   getOutcomeLabel: function getOutcomeLabel(outcome, event) {
+	      switch (outcome.type) {
+	         case 'OT_ONE':
+	            // Outcome has label 1. Applies to Threeway bet offers.
+	            return event.homeLabelCustom && event.homeLabelCustom !== '' ? event.homeLabelCustom : event.homeName;
+	         case 'OT_CROSS':
+	            // Outcome has label X. Applies to Threeway bet offers.
+	            return _translationModule2.default.getTranslation('draw');
+	         case 'OT_TWO':
+	            // Outcome has label 2. Applies to Threeway bet offers.
+	            return event.awayLabelCustom && event.awayLabelCustom !== '' ? event.awayLabelCustom : event.awayName;
+	         case 'OT_OVER':
+	            // The “Over” outcome in Over/Under bet offer.
+	            return outcome.label + ' ' + outcome.line / 1000;
+	         case 'OT_UNDER':
+	            // The “Under” outcome in Over/Under bet offer.
+	            return outcome.label + ' ' + outcome.line / 1000;
+	         // Todo: Impelement these responses with translations
+	         // case 'OT_ODD': //The “Odd” outcome in Odd/Even bet offer.
+	         // break;
+	         // case 'OT_EVEN': //The “Even” outcome in Odd/Even bet offer.
+	         // break;
+	         // case 'OT_ONE_ONE': //1-1 outcome in Halftime/fulltime bet offer.
+	         // break;
+	         // case 'OT_ONE_TWO': //1-2 outcome in Halftime/fulltime bet offer.
+	         // break;
+	         // case 'OT_ONE_CROSS': //1-X outcome in Halftime/fulltime bet offer.
+	         // break;
+	         // case 'OT_TWO_ONE': //2-1 outcome in Halftime/fulltime bet offer.
+	         // break;
+	         // case 'OT_TWO_TWO': //2-2 outcome in Halftime/fulltime bet offer.
+	         // break;
+	         // case 'OT_TWO_CROSS': //2-X outcome in Halftime/fulltime bet offer.
+	         // break;
+	         // case 'OT_CROSS_ONE': //X-1 outcome in Halftime/fulltime bet offer.
+	         // break;
+	         // case 'OT_CROSS_TWO': //X-2 outcome in Halftime/fulltime bet offer.
+	         // break;
+	         // case 'OT_CROSS_CROSS': //X-X outcome in Halftime/fulltime bet offer.
+	         // break;
+	         // case 'OT_ONE_OR_TWO': //1 or 2 outcome in Double Chance bet offer.
+	         // break;
+	         // case 'OT_ONE_OR_CROSS': //1 or X outcome in Double Chance bet offer.
+	         // break;
+	         // case 'OT_CROSS_OR_TWO': //X or 2 outcome in Double Chance bet offer.
+	         // break;
+	         // case 'OT_YES': //“Yes” outcome in Head To Head and Yes/No bet offer.
+	         // break;
+	         // case 'OT_NO': //“No” outcome in Head To Head and Yes/No bet offer.
+	         // break;
+	         // case 'OT_OTHER': //“Other results” outcome in Result bet offer.
+	         // break;
+	         // case 'OT_UNTYPED': //Outcome does not have type.
+	         // break;
+	         // case 'OT_WC_HOME': //Outcome has label Home Win. Applies to WinCast bet offers.
+	         // break;
+	         // case 'OT_WC_DRAW': //Outcome has label Draw. Applies to WinCast bet offers.
+	         // break;
+	         // case 'OT_WC_AWAY': //Outcome has label Away Win. Applies to WinCast bet offers.
+	         // break;
+	
+	         default:
+	            console.warn('Unhandled outcome type: ' + outcome.type, outcome);
+	            return outcome.label;
+	      }
+	   }
+	};
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	   value: true
+	});
+	
+	var _coreLibrary = __webpack_require__(2);
+	
+	var _coreLibrary2 = _interopRequireDefault(_coreLibrary);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * Module with internationalization methods
+	 * @module translationModule
+	 * @memberOf CoreLibrary
+	 */
+	exports.default = {
+	   /**
+	    * fetched from the i18n folder JSON files. Only the current
+	    * locale strings are fetched
+	    * @type {Object}
+	    */
+	   i18nStrings: {},
+	
+	   /**
+	    * Makes a request to fetch all locales strings.
+	    * The locale json file resides in CoreLibrary/i18n folder; it is populated with locales during build process
+	    * @param {String} locale Locale string, eg: sv_SE
+	    * @returns {Promise}
+	    * @private
+	    */
+	   fetchTranslations: function fetchTranslations(locale) {
+	      if (locale == null) {
+	         locale = 'en_GB';
+	      }
+	      var self = this;
+	      var path = 'i18n/';
+	      return new Promise(function (resolve, reject) {
+	         _coreLibrary2.default.getData(path + locale + '.json').then(function (response) {
+	            _coreLibrary2.default.translationModule.i18nStrings = response;
+	            resolve();
+	         }).catch(function (error) {
+	            if (locale !== 'en_GB') {
+	               console.debug('Could not load translations for ' + locale + ' falling back to en_GB');
+	               self.fetchTranslations('en_GB').then(resolve);
+	            } else {
+	               console.debug('Could not load translations for en_GB');
+	               console.trace(error);
+	               resolve();
+	            }
+	         });
+	      });
+	   },
+	
+	
+	   /**
+	    * Returns translated string based of a provided key.
+	    * @param {String} key Key to fetch translation for
+	    * @param {...String} args arguments to replace inside the translated string
+	    * @example
+	    * en_GB.json:
+	    * { "welcomeUserToPlace": "Welcome {0} to {1}" }
+	    * Javascriot:
+	    * getTranslation('welcomeUserToPlace', 'Daniel', 'Stadium') => 'Welcome Daniel to Stadium'
+	    * @returns {String}
+	    */
+	   getTranslation: function getTranslation(key) {
+	      if (this.i18nStrings[key] != null) {
+	         var str = this.i18nStrings[key];
+	
+	         for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	            args[_key - 1] = arguments[_key];
+	         }
+	
+	         for (var i = 0; i < args.length; i++) {
+	            var replacement = args[i] || '';
+	            str = str.replace('{' + i + '}', replacement);
+	         }
+	         return str;
+	      }
+	      return key;
+	   }
+	};
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	   value: true
+	});
+	
+	var _coreLibrary = __webpack_require__(2);
+	
+	var _coreLibrary2 = _interopRequireDefault(_coreLibrary);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * Module with methods to request data from the offering API
+	 * @module offeringModule
+	 * @memberof CoreLibrary
+	 */
+	
+	exports.default = {
+	
+	   /**
+	    * Get group events
+	    * @param {number|string} groupId Group id
+	    * @returns {Promise}
+	    */
+	   getGroupEvents: function getGroupEvents(groupId) {
+	      var requesPath = '/event/group/' + groupId + '.json';
+	      return this.doRequest(requesPath);
+	   },
+	
+	
+	   /**
+	    * Get group information.
+	    * @param {Number|String} groupId Group id
+	    * @returns {Promise}
+	    */
+	   getGroup: function getGroup(groupId) {
+	      var requesPath = '/group/' + groupId + '.json';
+	      return this.doRequest(requesPath);
+	   },
+	
+	
+	   /**
+	    * Get events by filter
+	    * @param {String} filter Filter string, eg: football
+	    * @param {Object} params Request relevant parameters
+	    * @returns {Promise}
+	    */
+	   getEventsByFilter: function getEventsByFilter(filter, params) {
+	      // Todo: Update this method once documentation is available
+	      var requestPath = '/listView/' + filter;
+	      return this.doRequest(requestPath, params, 'v3');
+	   },
+	
+	
+	   /**
+	    * Normalizes v2 api betoffers
+	    * @param {Object} betOffer Betoffer object we get from api
+	    * @private
+	    */
+	   adaptV2BetOffer: function adaptV2BetOffer(betOffer) {
+	      if (betOffer.suspended === true) {
+	         betOffer.open = false;
+	      }
+	   },
+	
+	
+	   /**
+	    * Normalizes the v2 api response
+	    * @param {Object} liveData Livedata object we get from api
+	    * @private
+	    */
+	   adaptV2LiveData: function adaptV2LiveData(liveData) {
+	      if (liveData != null && liveData.statistics != null) {
+	         var statistics = liveData.statistics;
+	         if (statistics.sets != null) {
+	            statistics.setBasedStats = statistics.sets;
+	            delete statistics.sets;
+	         }
+	
+	         if (statistics.football != null) {
+	            statistics.footballStats = statistics.football;
+	            delete statistics.football;
+	         }
+	      }
+	   },
+	
+	
+	   /**
+	    * Normalizes the v2 event object
+	    * @private
+	    */
+	   adaptV2Event: function adaptV2Event(event) {
+	      // v3 and v2 event objects are almost the same
+	      // only a few attributes we don't use are different
+	   },
+	
+	
+	   /**
+	    * Get live event data only, eg: match statistics, score, macthClock
+	    * @param {Number|String} eventId The event id we need to fetch
+	    * @returns {Promise}
+	    * @private
+	    */
+	   getLiveEventData: function getLiveEventData(eventId) {
+	      var _this = this;
+	
+	      var requestPath = '/event/' + eventId + '/livedata.json';
+	      return this.doRequest(requestPath, null, null, true).then(function (res) {
+	         _this.adaptV2LiveData(res);
+	         return res;
+	      });
+	   },
+	
+	
+	   /**
+	    * Get all live events
+	    * @returns {Promise}
+	    * @private
+	    */
+	   getLiveEvents: function getLiveEvents() {
+	      var _this2 = this;
+	
+	      var requestPath = '/event/live/open.json';
+	      return this.doRequest(requestPath, null, null, true).then(function (res) {
+	         if (res.error != null) {
+	            return res;
+	         }
+	         var events = res.liveEvents;
+	         res.events = events;
+	         res.events.forEach(_this2.adaptV2Event);
+	         delete res.liveEvents;
+	         delete res.group;
+	         events.forEach(function (e) {
+	            e.betOffers = [];
+	            if (e.mainBetOffer != null) {
+	               _this2.adaptV2BetOffer(e.mainBetOffer);
+	               e.betOffers.push(e.mainBetOffer);
+	               delete e.mainBetOffer;
+	            }
+	            _this2.adaptV2LiveData(e.liveData);
+	         });
+	         return res;
+	      });
+	   },
+	
+	
+	   /**
+	    * Returns a live event
+	    * @param {Number|String} eventId The event id we need to fetch
+	    * @returns {Promise}
+	    */
+	   getLiveEvent: function getLiveEvent(eventId) {
+	      var _this3 = this;
+	
+	      var requestPath = '/betoffer/live/event/' + eventId + '.json';
+	      return this.doRequest(requestPath, null, null, true).then(function (res) {
+	         res.betOffers = res.betoffers;
+	         delete res.betoffers;
+	         res.betOffers.forEach(_this3.adaptV2BetOffer);
+	         res.event = res.events[0];
+	         _this3.adaptV2Event(res.event);
+	         delete res.events;
+	         return res;
+	      });
+	   },
+	
+	
+	   /**
+	    * Get live events by filter
+	    * @param {String} filter Filter string
+	    * @returns {Promise}
+	    */
+	   getLiveEventsByFilter: function getLiveEventsByFilter(filter) {
+	      var _this4 = this;
+	
+	      // Todo: implement a filter request when the offering API supports it
+	      filter = filter.replace(/\/$/, '');
+	
+	      var filterTerms = filter.split('/');
+	      filterTerms = filterTerms.slice(0, 3);
+	
+	      var requestPath = '/listView/all/all/all/all/in-play/';
+	
+	      return new Promise(function (resolve, reject) {
+	         _this4.doRequest(requestPath, null, 'v3').then(function (response) {
+	            var result = {
+	               events: []
+	            },
+	                i = 0,
+	                len = response.events.length;
+	            for (; i < len; ++i) {
+	               var j = 0,
+	                   termLen = response.events[i].event.path.length,
+	                   addEvent = true;
+	               if (termLen > filterTerms.length) {
+	                  termLen = filterTerms.length;
+	               }
+	               for (; j < termLen; ++j) {
+	                  if (filterTerms[j] !== 'all' && response.events[i].event.path[j].termKey !== filterTerms[j]) {
+	                     addEvent = false;
+	                  }
+	               }
+	               if (addEvent) {
+	                  result.events.push(response.events[i]);
+	               }
+	            }
+	            resolve(result);
+	         });
+	      });
+	   },
+	
+	
+	   /**
+	    * Requests and event from api
+	    * @param {String} eventId The event id we need to fetch
+	    * @returns {Promise}
+	    */
+	   getEvent: function getEvent(eventId) {
+	      var _this5 = this;
+	
+	      return this.doRequest('/betoffer/event/' + eventId + '.json').then(function (res) {
+	         res.betOffers = res.betoffers;
+	         delete res.betoffers;
+	         res.betOffers.forEach(_this5.adaptV2BetOffer);
+	         res.event = res.events[0];
+	         _this5.adaptV2Event(res.event);
+	         delete res.events;
+	         return res;
+	      });
+	   },
+	
+	
+	   /**
+	    * Request the highlight resource which is what is shown under "Popular" in the Sportsbook
+	    * @returns {Promise}
+	    */
+	   getHighlight: function getHighlight() {
+	      return this.doRequest('/group/highlight.json').then(function (highlights) {
+	         // sorting based on sortOrder
+	         if (Array.isArray(highlights.groups)) {
+	            highlights.groups.sort(function (a, b) {
+	               if (parseInt(a.sortOrder, 10) > parseInt(b.sortOrder, 10)) {
+	                  return 1;
+	               }
+	               if (parseInt(a.sortOrder, 10) < parseInt(b.sortOrder, 10)) {
+	                  return -1;
+	               }
+	               return 0;
+	            });
+	         }
+	         return highlights;
+	      });
+	   },
+	
+	
+	   /**
+	    * @deprecated
+	    * @param {number|string} eventId The event id we need to fetch
+	    * @returns {*}
+	    */
+	   getEventBetoffers: function getEventBetoffers(eventId) {
+	      console.warn('getEventBetoffers is deprecated, use getEvent instead');
+	      return this.getEvent.apply(this, arguments);
+	   },
+	
+	
+	   /**
+	    * Makes a request to provided path
+	    * @param {string} requestPath
+	    * @param {object} params
+	    * @param {number|string} version
+	    * @param {boolean} noCache
+	    * @returns {Promise}
+	    */
+	   doRequest: function doRequest(requestPath, params, version, noCache) {
+	      if (_coreLibrary2.default.config.offering == null) {
+	         console.warn('The offering has not been set, is the right widget api version loaded?');
+	      } else {
+	         var apiUrl = _coreLibrary2.default.config.apiBaseUrl.replace('{apiVersion}', version != null ? version : _coreLibrary2.default.config.version);
+	         var requestUrl = apiUrl + _coreLibrary2.default.config.offering + requestPath;
+	         var overrideParams = params || {};
+	         var requestParams = {
+	            lang: overrideParams.locale || _coreLibrary2.default.config.locale,
+	            market: overrideParams.market || _coreLibrary2.default.config.market,
+	            client_id: overrideParams.client_id || _coreLibrary2.default.config.client_id,
+	            include: overrideParams.include || '',
+	            betOffers: overrideParams.betOffers || 'COMBINED',
+	            categoryGroup: overrideParams.categoryGroup || 'COMBINED',
+	            displayDefault: overrideParams.displayDefault || true
+	         };
+	         if (noCache === true) {
+	            requestParams.nocache = Date.now();
+	         }
+	         requestUrl += '?' + Object.keys(requestParams).map(function (k) {
+	            return encodeURIComponent(k) + '=' + encodeURIComponent(requestParams[k]);
+	         }).join('&');
+	
+	         return _coreLibrary2.default.getData(requestUrl);
+	      }
+	   }
+	};
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	   value: true
+	});
+	
+	var _coreLibrary = __webpack_require__(2);
+	
+	var _coreLibrary2 = _interopRequireDefault(_coreLibrary);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * Module to access statistics data
+	 * @module statisticsModule
+	 * @memberOf CoreLibrary
+	 */
+	
+	exports.default = {
+	
+	   /**
+	    * Configuration.
+	    * @type {Object}
+	    * @property {String} baseApiUrl
+	    */
+	   config: {
+	      baseApiUrl: 'https://api.kambi.com/statistics/api/'
+	   },
+	
+	   /**
+	    * Requests league table statistics data from api.
+	    * @param {String} filter a league filter
+	    * @returns {Promise}
+	    */
+	   getLeagueTableStatistics: function getLeagueTableStatistics(filter) {
+	      // Remove url parameters from filter
+	      filter = filter.match(/[^?]*/)[0];
+	
+	      // Removing trailing and starting slashes if present
+	      if (filter[filter.length - 1] === '/') {
+	         filter = filter.slice(0, -1);
+	      }
+	      if (filter[0] === '/') {
+	         filter = filter.slice(1);
+	      }
+	      return _coreLibrary2.default.getData(this.config.baseApiUrl + _coreLibrary2.default.config.offering + '/leaguetable/' + filter + '.json');
+	   },
+	
+	
+	   /**
+	    * Requests H2H statistics data from api.
+	    * @param {String|Number} eventId
+	    * @returns {Promise}
+	    */
+	   getHeadToHeadStatistics: function getHeadToHeadStatistics(eventId) {
+	      return _coreLibrary2.default.getData(this.config.baseApiUrl + _coreLibrary2.default.config.offering + '/h2h/event/' + eventId + '.json');
+	   },
+	
+	
+	   /**
+	    * Requests TPI statistics data from api.
+	    * @param {String|Number} eventId
+	    * @returns {Promise}
+	    */
+	   getTeamPerformanceStatistics: function getTeamPerformanceStatistics(eventId) {
+	      return _coreLibrary2.default.getData(this.config.baseApiUrl + _coreLibrary2.default.config.offering + '/tpi/event/' + eventId + '.json');
+	   },
+	
+	
+	   /**
+	    * Requests statistics data from api.
+	    * @param {String} type
+	    * @param {String} filter
+	    * @returns {Promise}
+	    * @deprecated
+	    */
+	   getStatistics: function getStatistics(type, filter) {
+	      console.warn('getStatistics is deprecated, please use one of the specific statistics methods');
+	      // Remove url parameters from filter
+	      filter = filter.match(/[^?]*/)[0];
+	
+	      // Remove trailing slash if present
+	      if (filter[filter.length - 1] === '/') {
+	         filter = filter.slice(0, -1);
+	      }
+	
+	      console.debug(this.config.baseApiUrl + _coreLibrary2.default.config.offering + '/' + type + '/' + filter + '.json');
+	      return _coreLibrary2.default.getData(this.config.baseApiUrl + _coreLibrary2.default.config.offering + '/' + type + '/' + filter + '.json');
 	   }
 	};
 

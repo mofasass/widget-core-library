@@ -2,6 +2,7 @@ import sightglass from 'sightglass';
 import rivets from 'rivets';
 import Component from './Component/Component';
 import PaginationComponent from './Component/PaginationComponent/PaginationComponent';
+import OutcomeComponent from './Component/OutcomeComponent/OutcomeComponent';
 import offeringModule from './Module/offeringModule';
 import statisticsModule from './Module/statisticsModule';
 import translationModule from './Module/translationModule';
@@ -522,6 +523,13 @@ export default {
     * @memberOf module:CoreLibrary
     */
    statisticsModule: statisticsModule,
+
+   /**
+    * translationModule
+    * @type {Object}
+    * @memberOf module:CoreLibrary
+    */
+   translationModule: translationModule,
 
    /**
     * Api ready flag

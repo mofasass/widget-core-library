@@ -25,11 +25,8 @@ export default {
       }
       var self = this;
       var path = 'i18n/';
-      if (CoreLibrary.development === true) {
-         path = 'transpiled/i18n/';
-      }
       return new Promise((resolve, reject) => {
-         window.CoreLibrary.getData(path + locale + '.json')
+         CoreLibrary.getData(path + locale + '.json')
             .then((response) => {
                CoreLibrary.translationModule.i18nStrings = response;
                resolve();

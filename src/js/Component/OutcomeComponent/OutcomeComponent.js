@@ -1,6 +1,6 @@
 import rivets from 'rivets';
 import widgetModule from '../../Module/widgetModule';
-import * as CoreLibrary from '../../coreLibrary';
+import CoreLibrary from '../../coreLibrary';
 
 export default (() => {
    'use strict';
@@ -179,7 +179,7 @@ export default (() => {
                <div class="KambiWidget-outcome__odds-wrapper">
                   <span
                         class="KambiWidget-outcome__odds"
-                        rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat">
+                        rv-text="getOddsFormat | call data.outcomeAttr.odds coreLibraryConfig.oddsFormat">
                   </span>
                </div>
             </button>
@@ -234,7 +234,7 @@ export default (() => {
                   class="KambiWidget-outcome kw-link l-flex-1">
                <div class="l-flexbox l-pack-center">
                   <div class="KambiWidget-outcome__odds-wrapper">
-                     <span class="KambiWidget-outcome__odds" rv-text="getOddsFormat < data.outcomeAttr.odds coreLibraryConfig.oddsFormat" ></span>
+                     <span class="KambiWidget-outcome__odds" rv-text="getOddsFormat | call data.outcomeAttr.odds coreLibraryConfig.oddsFormat" ></span>
                   </div>
                </div>
             </button>
