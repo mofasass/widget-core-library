@@ -1,9 +1,9 @@
-import CoreLibrary from '../coreLibrary';
+import coreLibrary from '../coreLibrary';
 
 /**
  * Module to access statistics data
  * @module statisticsModule
- * @memberOf CoreLibrary
+ * @memberOf coreLibrary
  */
 
 export default {
@@ -32,7 +32,7 @@ export default {
          filter = filter.slice(0, -1);
       }
 
-      console.debug(this.config.baseApiUrl + CoreLibrary.config.offering + '/' + type + '/' + filter + '.json');
-      return CoreLibrary.getData(this.config.baseApiUrl + CoreLibrary.config.offering + '/' + type + '/' + filter + '.json');
+      console.debug(this.config.baseApiUrl + coreLibrary.config.offering + '/' + type + '/' + filter + '.json');
+      return coreLibrary.getData(this.config.baseApiUrl + coreLibrary.config.offering + '/' + type + '/' + filter + '.json');
    }
 };

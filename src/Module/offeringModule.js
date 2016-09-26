@@ -1,9 +1,9 @@
-import * as CoreLibrary from '../coreLibrary';
+import coreLibrary from '../coreLibrary';
 
 /**
  * Module with methods to request data from the offering API
  * @module offeringModule
- * @memberof CoreLibrary
+ * @memberof coreLibrary
  */
 
 export default {
@@ -229,17 +229,18 @@ export default {
     * @returns {Promise}
     */
    doRequest (requestPath, params, version, noCache) {
-      if (CoreLibrary.config.offering == null) {
+      var config = coreLibrary.config;
+      if (config.offering == null) {
          console.warn('The offering has not been set, is the right widget api version loaded?');
       } else {
-         var apiUrl = CoreLibrary.config.apiBaseUrl.replace('{apiVersion}',
-            (version != null ? version : CoreLibrary.config.version));
-         var requestUrl = apiUrl + CoreLibrary.config.offering + requestPath;
+         var apiUrl = config.apiBaseUrl.replace('{apiVersion}',
+            (version != null ? version : config.version));
+         var requestUrl = apiUrl + config.offering + requestPath;
          var overrideParams = params || {};
          var requestParams = {
-            lang: overrideParams.locale || CoreLibrary.config.locale,
-            market: overrideParams.market || CoreLibrary.config.market,
-            client_id: overrideParams.client_id || CoreLibrary.config.client_id,
+            lang: overrideParams.locale || config.locale,
+            market: overrideParams.market || config.market,
+            client_id: overrideParams.client_id || config.client_id,
             include: overrideParams.include || '',
             betOffers: overrideParams.betOffers || 'COMBINED',
             categoryGroup: overrideParams.categoryGroup || 'COMBINED',
@@ -252,7 +253,7 @@ export default {
             return encodeURIComponent(k) + '=' + encodeURIComponent(requestParams[k]);
          }).join('&');
 
-         return CoreLibrary.getData(requestUrl);
+         return coreLibrary.getData(requestUrl);
       }
    }
 };

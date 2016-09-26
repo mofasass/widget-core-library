@@ -1,14 +1,11 @@
 /**
  * Module with methods to manipulate the widget and interact with the sportsbook
  * @module widgetModule
- * @memberOf CoreLibrary
+ * @memberOf coreLibrary
  */
 
-import Stapes from 'stapes';
 import utilModule from './utilModule';
-import CoreLibrary from '../coreLibrary';
-
-var Module = Stapes.subclass();
+import coreLibrary from '../coreLibrary';
 
 export default {
 
@@ -55,15 +52,15 @@ export default {
     *
     * @example
     *
-    * CoreLibrary.widgetModule.events
+    * coreLibrary.widgetModule.events
     *    .on('OUTCOME:ADDED:' + outcome.id,
     *       ( data, event ) => {
-       *          ...
-       *       });
+    *          ...
+    *       });
     *
     * @type {Object}
     */
-   events: new Module(),
+   events: null, // new Stapes.subclass(); TODO replace Stapes
 
    /**
     * @type {array}
@@ -116,21 +113,21 @@ export default {
             break;
          case this.api.WIDGET_ARGS:
             // We've received a response with the arguments set in the
-            CoreLibrary.setArgs(response.data);
+            coreLibrary.args = response.data;
             this.events.emit('WIDGET:ARGS', response.data);
             break;
          case this.api.PAGE_INFO:
             // Received page info response
-            CoreLibrary.setPageInfo(response.data);
+            coreLibrary.setPageInfo(response.data);
             this.events.emit('PAGE:INFO', response.data);
             break;
          case this.api.CLIENT_ODDS_FORMAT:
             // Received odds format response
-            CoreLibrary.setOddsFormat(response.data);
+            coreLibrary.setOddsFormat(response.data);
             this.events.emit('ODDS:FORMAT', response.data);
             break;
          case this.api.CLIENT_CONFIG:
-            CoreLibrary.setConfig(response.data);
+            coreLibrary.setConfig(response.data);
             this.events.emit('CLIENT:CONFIG', response.data);
             break;
          case this.api.USER_LOGGED_IN:
@@ -166,7 +163,7 @@ export default {
     * @returns {string}
     */
    createFilterUrl (destination) {
-      return this.api.createFilterUrl(destination, CoreLibrary.config.routeRoot);
+      return this.api.createFilterUrl(destination, coreLibrary.config.routeRoot);
    },
 
    /**
@@ -174,10 +171,10 @@ export default {
     * @returns {String}
     */
    getPageType () {
-      if (!CoreLibrary.pageInfo.pageType) {
+      if (!coreLibrary.pageInfo.pageType) {
          return '';
       }
-      var pageType = CoreLibrary.pageInfo.pageType;
+      var pageType = coreLibrary.pageInfo.pageType;
       switch (pageType) {
          case 'event':
             return '';
@@ -320,8 +317,8 @@ export default {
       }
 
       // Add tracking name if it's set
-      if (CoreLibrary.widgetTrackingName != null) {
-         data.name = CoreLibrary.widgetTrackingName;
+      if (coreLibrary.widgetTrackingName != null) {
+         data.name = coreLibrary.widgetTrackingName;
       }
 
       // Send the data to the widget this.api
@@ -342,8 +339,8 @@ export default {
       var data = { outcomes: arrOutcomes };
 
       // Add tracking name if it's set
-      if (CoreLibrary.widgetTrackingName != null) {
-         data.name = CoreLibrary.widgetTrackingName;
+      if (coreLibrary.widgetTrackingName != null) {
+         data.name = coreLibrary.widgetTrackingName;
       }
 
       this.api.set(this.api.BETSLIP_OUTCOMES_REMOVE, data);
@@ -417,13 +414,13 @@ export default {
    navigateClient (destination) {
       var finalTarget = '';
       if (typeof destination === 'string') {
-         finalTarget = '#' + CoreLibrary.config.routeRoot + destination;
+         finalTarget = '#' + coreLibrary.config.routeRoot + destination;
       } else if (Array.isArray(destination)) {
-         finalTarget = this.api.createFilterUrl(destination, CoreLibrary.config.routeRoot);
+         finalTarget = this.api.createFilterUrl(destination, coreLibrary.config.routeRoot);
       }
 
-      if (CoreLibrary.widgetTrackingName != null) {
-         this.api.navigateClient(finalTarget, CoreLibrary.widgetTrackingName);
+      if (coreLibrary.widgetTrackingName != null) {
+         this.api.navigateClient(finalTarget, coreLibrary.widgetTrackingName);
       } else {
          this.api.navigateClient(finalTarget);
       }

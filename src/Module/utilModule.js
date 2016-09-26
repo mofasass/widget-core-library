@@ -3,7 +3,7 @@ import translationModule from './translationModule';
 /**
  * Module with utility functions
  * @module utilModule
- * @memberOf CoreLibrary
+ * @memberOf coreLibrary
  */
 export default {
 

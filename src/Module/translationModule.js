@@ -1,8 +1,8 @@
-import CoreLibrary from '../coreLibrary';
+import coreLibrary from '../coreLibrary';
 /**
  * Module with internationalization methods
  * @module translationModule
- * @memberOf CoreLibrary
+ * @memberOf coreLibrary
  */
 export default {
    /**
@@ -14,7 +14,7 @@ export default {
 
    /**
     * Makes a request to fetch all locales strings.
-    * The locale json file resides in CoreLibrary/i18n folder; it is populated with locales during build process
+    * The locale json file resides in coreLibrary/i18n folder; it is populated with locales during build process
     * @param {String} locale Locale string, eg: sv_SE
     * @returns {Promise}
     * @private
@@ -25,13 +25,13 @@ export default {
       }
       var self = this;
       var path = 'i18n/';
-      if (CoreLibrary.development === true) {
+      if (coreLibrary.development === true) {
          path = 'transpiled/i18n/';
       }
       return new Promise((resolve, reject) => {
-         window.CoreLibrary.getData(path + locale + '.json')
+         coreLibrary.getData(path + locale + '.json')
             .then((response) => {
-               CoreLibrary.translationModule.i18nStrings = response;
+               this.i18nStrings = response;
                resolve();
             })
             .catch((error) => {

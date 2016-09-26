@@ -12,31 +12,16 @@
     "type": "git",
     "url": "git+ssh://github.com/kambi-sportsbook-widgets/widget-library.git"
   },
-  "author": "Michael Blom <michael@globalmouth.com>",
-  "contributors": [
-    "Daniel Hoffmann <daniel.hoffmann@globalmouth.com>",
-    "Andrei Teodorescu <andrei@globalmouth.com>",
-    "Michael Blom <michael@globalmouth.com>"
-  ],
   "private": false,
   "license": "MIT",
   "homepage": "https://github.com/kambi-sportsbook-widgets/widget-core-library#readme",
   "devDependencies": {
-    "changelog": "latest",
-    "del": "^2.0.2",
-    "documentation": "^4.0.0-beta9",
     "jsdoc": "^3.4.0",
-    "merge-stream": "^1.0.0",
-    "node-sass": "^3.9.3",
-    "widget-build-tools": "git+ssh://git@github.com:kambi-sportsbook-widgets/widget-build-tools.git#01e0b93"
+    "node-sass": "^3.9.3"
   },
   "dependencies": {
     "compass-mixins": "^0.12.10",
     "es6-promise": "^3.2.1",
-    "fetch": "^1.1.0",
-    "rivets": "^0.9.4",
-    "sightglass": "^0.2.6",
-    "stapes": "^1.0.0"
-  },
-  "kambi-widget-api-version": "1.0.0.13"
+    "whatwg-fetch": "^1.0.0"
+  }
 }
