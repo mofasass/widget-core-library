@@ -1,4 +1,14 @@
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define("widget-core-library", [], factory);
+	else if(typeof exports === 'object')
+		exports["widget-core-library"] = factory();
+	else
+		root["widget-core-library"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -2637,13 +2647,13 @@
 	   value: true
 	});
 	
-	var _stapes = __webpack_require__(7);
-	
-	var _stapes2 = _interopRequireDefault(_stapes);
-	
 	var _rivets = __webpack_require__(4);
 	
 	var _rivets2 = _interopRequireDefault(_rivets);
+	
+	var _stapes = __webpack_require__(7);
+	
+	var _stapes2 = _interopRequireDefault(_stapes);
 	
 	var _coreLibrary = __webpack_require__(2);
 	
@@ -2651,181 +2661,285 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var mergeObjs = function mergeObjs() {
-	   for (var _len = arguments.length, objs = Array(_len), _key = 0; _key < _len; _key++) {
-	      objs[_key] = arguments[_key];
-	   }
+	exports.default = function () {
+	   'use strict';
 	
-	   var ret = {};
-	   objs.forEach(function (obj) {
-	      obj = obj || {};
-	      Object.keys(obj).forEach(function (key) {
-	         ret[key] = obj[key];
+	   // shallow merges objects together into a new object, right-most parameters have precedence
+	
+	   var mergeObjs = function mergeObjs() {
+	      for (var _len = arguments.length, objs = Array(_len), _key = 0; _key < _len; _key++) {
+	         objs[_key] = arguments[_key];
+	      }
+	
+	      var ret = {};
+	      objs.forEach(function (obj) {
+	         obj = obj || {};
+	         Object.keys(obj).forEach(function (key) {
+	            ret[key] = obj[key];
+	         });
 	      });
+	      return ret;
+	   };
+	
+	   // replaces expressions like "{customer}" from the provided string
+	   // to the value the have in the CoreLibrary.config object
+	   var replaceConfigParameters = function replaceConfigParameters(str) {
+	      if (str == null) {
+	         return str;
+	      }
+	      Object.keys(_coreLibrary2.default.config).forEach(function (key) {
+	         var regex = new RegExp('{' + key + '}', 'g');
+	         var value = _coreLibrary2.default.config[key];
+	         str = str.replace(regex, value);
+	      });
+	      return str;
+	   };
+	
+	   /**
+	    * Component base class that should be inherited to create widgets
+	    * @class Component
+	    * @abstract
+	    * @example
+	    HTML:
+	    <html>
+	    <head>
+	    ...
+	    </head>
+	    <body>
+	    <span>{args.title}</span>
+	    <br />
+	    <span>{date}</span>
+	    ...
+	    </body>
+	    </html>
+	      var Widget = CoreLibrary.Component.subclass({
+	    defaultArgs: {
+	      title: 'Title!'
+	   },
+	    constructor () {
+	      CoreLibrary.Component.apply(this, arguments);
+	   },
+	    init () {
+	      this.scope.date = (new Date()).toString();
+	   }
 	   });
-	   return ret;
-	};
-	
-	exports.default = _stapes2.default.subclass({
-	
-	   /**
-	    * Object with default values from args if they are not present in
-	    * the Kambi API provided ones.
-	    * @static
-	    * @type {Object}
-	    * @memberof Component
+	     var widget = new Widget({
+	   rootElement: 'html'
+	   });
 	    */
-	   defaultArgs: {},
-	   /**
-	    * If present, this value is appended to rootElement with the innerHTML DOM call
-	    * essentially parsing the the text as HTML.
-	    * @static
-	    * @type {String}
-	    * @memberof Component
-	    */
-	   htmlTemplate: null,
-	   /**
-	    * Stapes Constructor method
-	    * @param {object} options
-	    * @param {HTMLElement|String} options.rootElement an HTML element or a
-	    * CSS selector for the HTMLElement.
-	    * This element will be the "root" of the rivets scope
-	    * @returns {Promise}
-	    * @memberof Component
-	    */
-	   constructor: function constructor(options) {
-	      var _this = this;
+	   _coreLibrary2.default.Component = _stapes2.default.subclass({
 	
 	      /**
-	       * object to be used in the HTML templates for data binding
+	       * Object with default values from args if they are not present in
+	       * the Kambi API provided ones.
+	       * @static
 	       * @type {Object}
+	       * @memberof Component
 	       */
-	      this.scope = {};
-	      /**
-	       * Rivets view object, binds this.scope to this.rootElement.
-	       * @type {Object}
-	       */
-	      this.view = null;
-	      /**
-	       * HTML element to in which rivets.bind will be called,
-	       * if string uses document.querySelector to get the element
-	       * @type {HTMLElement}
-	       */
-	      this.rootElement = null;
-	      /**
-	       * Method that should contain the widget initialization logic
-	       * This method is only called after the API is ready
-	       */
+	      defaultArgs: {},
 	
-	      if (options == null) {
-	         options = {};
-	      }
+	      /**
+	       * If present, this value is appended to rootElement with the innerHTML DOM call
+	       * essentially parsing the the text as HTML.
+	       * @static
+	       * @type {String}
+	       * @memberof Component
+	       */
+	      htmlTemplate: null,
 	
-	      // setting options that can be received in the constructor
-	      var optionsKeys = ['defaultArgs', 'rootElement'];
-	      optionsKeys.forEach(function (key) {
-	         if (typeof options[key] !== 'undefined') {
-	            _this[key] = options[key];
+	      /**
+	       * Stapes Constructor method
+	       * @param {object} options
+	       * @param {HTMLElement|String} options.rootElement an HTML element or a
+	       * CSS selector for the HTMLElement.
+	       * This element will be the "root" of the rivets scope
+	       * @returns {Promise}
+	       * @memberof Component
+	       */
+	      constructor: function constructor(options) {
+	         var _this = this;
+	
+	         /**
+	          * object to be used in the HTML templates for data binding
+	          * @type {Object}
+	          */
+	         this.scope = {};
+	
+	         /**
+	          * Rivets view object, binds this.scope to this.rootElement.
+	          * @type {Object}
+	          */
+	         this.view = null;
+	
+	         /**
+	          * HTML element to in which rivets.bind will be called,
+	          * if string uses document.querySelector to get the element
+	          * @type {HTMLElement}
+	          */
+	         this.rootElement = null;
+	
+	         if (options == null) {
+	            options = {};
 	         }
-	      });
 	
-	      if (this.rootElement == null) {
-	         throw new Error('options.rootElement not set, please pass a HTMLElement or a CSS selector');
-	      }
-	
-	      var args = {};
-	
-	      var coreLibraryPromise;
-	      if (_coreLibrary2.default.apiReady === true) {
-	         coreLibraryPromise = new Promise(function (resolve) {
-	            resolve();
+	         // setting options that can be received in the constructor
+	         var optionsKeys = ['defaultArgs', 'rootElement'];
+	         optionsKeys.forEach(function (key) {
+	            if (typeof options[key] !== 'undefined') {
+	               _this[key] = options[key];
+	            }
 	         });
-	      } else {
-	         coreLibraryPromise = new Promise(function (resolve) {
-	            _coreLibrary2.default.init().then(function (widgetArgs) {
-	               if (widgetArgs == null) {
-	                  widgetArgs = {};
-	               }
-	               var apiVersion = _coreLibrary2.default.widgetModule.api.VERSION;
-	               if (apiVersion == null) {
-	                  apiVersion = '1.0.0.13';
-	               }
-	               _this.scope.widgetCss = '//c3-static.kambi.com/sb-mobileclient/widget-api/' + apiVersion + '/resources/css/' + _coreLibrary2.default.config.customer + '/' + _coreLibrary2.default.config.offering + '/widgets.css';
 	
-	               var externalArgsUrl = widgetArgs.externalArgsUrl || _this.defaultArgs.externalArgsUrl;
-	               if (externalArgsUrl != null) {
-	                  _coreLibrary2.default.getData(externalArgsUrl).then(function (externalArgs) {
-	                     args = mergeObjs(_this.defaultArgs, widgetArgs, externalArgs);
-	                     resolve();
-	                  }).catch(function () {
-	                     console.log('Unable to load or parse external args');
-	                     args = mergeObjs(_this.defaultArgs, widgetArgs);
-	                     resolve();
-	                  });
-	               } else {
+	         if (this.rootElement == null) {
+	            throw new Error('options.rootElement not set, please pass a HTMLElement or a CSS selector');
+	         }
+	
+	         var args = {};
+	
+	         var getSelfFulfillingPromise = function getSelfFulfillingPromise() {
+	            return new Promise(function (resolve) {
+	               resolve();
+	            });
+	         };
+	
+	         // promise that waits for the core library to be ready
+	         var coreLibraryPromise = function coreLibraryPromise() {
+	            if (_coreLibrary2.default.apiReady === true) {
+	               return getSelfFulfillingPromise();
+	            }
+	            return _coreLibrary2.default.init();
+	         };
+	
+	         // setts scope.widgetCss to load the operator-specific stylesheets
+	         var handleWidgetCss = function handleWidgetCss() {
+	            var apiVersion = _coreLibrary2.default.widgetModule.api.VERSION;
+	            if (apiVersion == null) {
+	               apiVersion = _coreLibrary2.default.expectedApiVersion;
+	            }
+	            _this.scope.widgetCss = '//c3-static.kambi.com/sb-mobileclient/widget-api/' + apiVersion + '/resources/css/' + _coreLibrary2.default.config.customer + '/' + _coreLibrary2.default.config.offering + '/widgets.css';
+	         };
+	
+	         // loads the external arguments provided in args.externalArgsUrl or externalArgsUrlFallback
+	         var externalArgsPromise = function externalArgsPromise(widgetArgs) {
+	            var externalArgsUrl = widgetArgs.externalArgsUrl || _this.defaultArgs.externalArgsUrl;
+	            var externalArgsUrlFallback = widgetArgs.externalArgsUrlFallback || _this.defaultArgs.externalArgsUrlFallback;
+	            externalArgsUrl = replaceConfigParameters(externalArgsUrl);
+	            externalArgsUrlFallback = replaceConfigParameters(externalArgsUrlFallback);
+	            if (externalArgsUrl != null) {
+	               return _coreLibrary2.default.getData(externalArgsUrl).then(function (externalArgs) {
+	                  args = mergeObjs(_this.defaultArgs, widgetArgs, externalArgs);
+	               }).catch(function () {
+	                  console.log('Unable to load or parse external args');
 	                  args = mergeObjs(_this.defaultArgs, widgetArgs);
-	                  resolve();
+	               });
+	            } else {
+	               args = mergeObjs(_this.defaultArgs, widgetArgs);
+	               return getSelfFulfillingPromise();
+	            }
+	         };
+	
+	         // applying conditionalArgs as specified by args.conditionalArgs (see #KSBWI-653)
+	         var handleConditionalArgs = function handleConditionalArgs() {
+	            if (args.conditionalArgs != null) {
+	               args.conditionalArgs.forEach(function (carg) {
+	                  var apply = true;
+	                  if (carg.clientConfig != null) {
+	                     Object.keys(carg.clientConfig).forEach(function (key) {
+	                        if (_coreLibrary2.default.config[key] !== carg.clientConfig[key]) {
+	                           apply = false;
+	                        }
+	                     });
+	                  }
+	
+	                  if (carg.pageInfo != null) {
+	                     Object.keys(carg.pageInfo).forEach(function (key) {
+	                        if (_coreLibrary2.default.pageInfo[key] !== carg.pageInfo[key]) {
+	                           apply = false;
+	                        }
+	                     });
+	                  }
+	
+	                  if (apply) {
+	                     console.log('Applying conditional arguments:');
+	                     console.log(carg.args);
+	                     args = mergeObjs(args, carg.args);
+	                  }
+	               });
+	            }
+	         };
+	
+	         // handles custom CSS stylesheet as specified by args.customCssUrl and args.customCssUrlFallback
+	         var customCssPromise = function customCssPromise(customCssUrl, customCssUrlFallback) {
+	            if (customCssUrl == null) {
+	               return;
+	            }
+	            if (customCssUrlFallback == null) {
+	               customCssUrlFallback = '';
+	            }
+	
+	            customCssUrl = replaceConfigParameters(customCssUrl);
+	            customCssUrlFallback = replaceConfigParameters(customCssUrlFallback);
+	
+	            var fetchFallback = function fetchFallback() {
+	               return _coreLibrary2.default.getFile(customCssUrlFallback).then(function (response) {
+	                  _this.scope.customCss = customCssUrlFallback;
+	                  return response;
+	               }).catch(function (error) {
+	                  console.debug('Error fetching custom css fallback');
+	                  return error;
+	               });
+	            };
+	
+	            return _coreLibrary2.default.getFile(customCssUrl).then(function (response) {
+	               _this.scope.customCss = customCssUrl;
+	               return response;
+	            }).catch(function (error) {
+	               if (customCssUrlFallback !== '') {
+	                  console.debug('Error fetching custom css, trying fallback');
+	                  return fetchFallback();
 	               }
+	               console.debug('Error fetching custom css, no fallback present');
+	               return error;
 	            });
+	         };
+	
+	         return coreLibraryPromise().then(function (widgetArgs) {
+	            if (widgetArgs == null) {
+	               widgetArgs = {};
+	            }
+	            handleWidgetCss();
+	            return externalArgsPromise(widgetArgs);
+	         }).then(function () {
+	            handleConditionalArgs();
+	
+	            // we don't need to wait for this promise (like we do
+	            // with externalArgsPromise) to call
+	            // the widget init() function because it just adds
+	            // a stylesheet to the page
+	            _this.customCssPromise = customCssPromise(args.customCssUrl, args.customCssUrlFallback);
+	
+	            _this.scope.args = args;
+	
+	            if (typeof _this.rootElement === 'string') {
+	               _this.rootElement = document.querySelector(_this.rootElement);
+	            }
+	
+	            // if htmlTemplate is defined place that as HTML inside rootElement
+	            if (typeof _this.htmlTemplate === 'string') {
+	               if (_this.htmlTemplate.length < 100 && window[_this.htmlTemplate] != null) {
+	                  _this.rootElement.innerHTML = window[_this.htmlTemplate];
+	               } else {
+	                  _this.rootElement.innerHTML = _this.htmlTemplate;
+	               }
+	            }
+	
+	            _this.view = _rivets2.default.bind(_this.rootElement, _this.scope);
+	
+	            _this.init();
 	         });
 	      }
-	
-	      return coreLibraryPromise.then(function () {
-	         // applying conditionalArgs (see #KSBWI-653)
-	         if (args.conditionalArgs != null) {
-	            args.conditionalArgs.forEach(function (carg) {
-	               var apply = true;
-	               if (carg.clientConfig != null) {
-	                  Object.keys(carg.clientConfig).forEach(function (key) {
-	                     if (_coreLibrary2.default.config[key] !== carg.clientConfig[key]) {
-	                        apply = false;
-	                     }
-	                  });
-	               }
-	
-	               if (carg.pageInfo != null) {
-	                  Object.keys(carg.pageInfo).forEach(function (key) {
-	                     if (_coreLibrary2.default.pageInfo[key] !== carg.pageInfo[key]) {
-	                        apply = false;
-	                     }
-	                  });
-	               }
-	
-	               if (apply) {
-	                  console.log('Applying conditional arguments:');
-	                  console.log(carg.args);
-	                  args = mergeObjs(args, carg.args);
-	               }
-	            });
-	         }
-	
-	         _this.scope.args = args;
-	
-	         if (typeof _this.rootElement === 'string') {
-	            _this.rootElement = document.querySelector(_this.rootElement);
-	         }
-	
-	         for (var i = 0; i < _this.rootElement.attributes.length; ++i) {
-	            var at = _this.rootElement.attributes[i];
-	            if (at.name.indexOf('data-') === 0) {
-	               var name = at.name.slice(5); // removes the 'data-' from the string
-	               _this.scope[name] = at.value;
-	            }
-	         }
-	
-	         if (typeof _this.htmlTemplate === 'string') {
-	            if (_this.htmlTemplate.length < 100 && window[_this.htmlTemplate] != null) {
-	               _this.rootElement.innerHTML = window[_this.htmlTemplate];
-	            } else {
-	               _this.rootElement.innerHTML = _this.htmlTemplate;
-	            }
-	         }
-	
-	         _this.view = _rivets2.default.bind(_this.rootElement, _this.scope);
-	         _this.init();
-	      });
-	   }
-	});
+	   });
+	}();
 
 /***/ },
 /* 7 */
@@ -3694,9 +3808,9 @@
 	
 	var _coreLibrary = __webpack_require__(2);
 	
-	var CoreLibrary = _interopRequireWildcard(_coreLibrary);
+	var _coreLibrary2 = _interopRequireDefault(_coreLibrary);
 	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	/**
 	 * Module with methods to request data from the offering API
@@ -3780,7 +3894,7 @@
 	    */
 	   adaptV2Event: function adaptV2Event(event) {
 	      // v3 and v2 event objects are almost the same
-	      // only a few attributes we don't are different
+	      // only a few attributes we don't use are different
 	   },
 	
 	
@@ -3924,7 +4038,21 @@
 	    * @returns {Promise}
 	    */
 	   getHighlight: function getHighlight() {
-	      return this.doRequest('/group/highlight.json');
+	      return this.doRequest('/group/highlight.json').then(function (highlights) {
+	         // sorting based on sortOrder
+	         if (Array.isArray(highlights.groups)) {
+	            highlights.groups.sort(function (a, b) {
+	               if (parseInt(a.sortOrder, 10) > parseInt(b.sortOrder, 10)) {
+	                  return 1;
+	               }
+	               if (parseInt(a.sortOrder, 10) < parseInt(b.sortOrder, 10)) {
+	                  return -1;
+	               }
+	               return 0;
+	            });
+	         }
+	         return highlights;
+	      });
 	   },
 	
 	
@@ -3948,16 +4076,16 @@
 	    * @returns {Promise}
 	    */
 	   doRequest: function doRequest(requestPath, params, version, noCache) {
-	      if (CoreLibrary.config.offering == null) {
+	      if (_coreLibrary2.default.config.offering == null) {
 	         console.warn('The offering has not been set, is the right widget api version loaded?');
 	      } else {
-	         var apiUrl = CoreLibrary.config.apiBaseUrl.replace('{apiVersion}', version != null ? version : CoreLibrary.config.version);
-	         var requestUrl = apiUrl + CoreLibrary.config.offering + requestPath;
+	         var apiUrl = _coreLibrary2.default.config.apiBaseUrl.replace('{apiVersion}', version != null ? version : _coreLibrary2.default.config.version);
+	         var requestUrl = apiUrl + _coreLibrary2.default.config.offering + requestPath;
 	         var overrideParams = params || {};
 	         var requestParams = {
-	            lang: overrideParams.locale || CoreLibrary.config.locale,
-	            market: overrideParams.market || CoreLibrary.config.market,
-	            client_id: overrideParams.client_id || CoreLibrary.config.client_id,
+	            lang: overrideParams.locale || _coreLibrary2.default.config.locale,
+	            market: overrideParams.market || _coreLibrary2.default.config.market,
+	            client_id: overrideParams.client_id || _coreLibrary2.default.config.client_id,
 	            include: overrideParams.include || '',
 	            betOffers: overrideParams.betOffers || 'COMBINED',
 	            categoryGroup: overrideParams.categoryGroup || 'COMBINED',
@@ -3970,7 +4098,7 @@
 	            return encodeURIComponent(k) + '=' + encodeURIComponent(requestParams[k]);
 	         }).join('&');
 	
-	         return CoreLibrary.getData(requestUrl);
+	         return _coreLibrary2.default.getData(requestUrl);
 	      }
 	   }
 	};
@@ -4009,12 +4137,54 @@
 	   },
 	
 	   /**
+	    * Requests league table statistics data from api.
+	    * @param {String} filter a league filter
+	    * @returns {Promise}
+	    */
+	   getLeagueTableStatistics: function getLeagueTableStatistics(filter) {
+	      // Remove url parameters from filter
+	      filter = filter.match(/[^?]*/)[0];
+	
+	      // Removing trailing and starting slashes if present
+	      if (filter[filter.length - 1] === '/') {
+	         filter = filter.slice(0, -1);
+	      }
+	      if (filter[0] === '/') {
+	         filter = filter.slice(1);
+	      }
+	      return _coreLibrary2.default.getData(this.config.baseApiUrl + _coreLibrary2.default.config.offering + '/leaguetable/' + filter + '.json');
+	   },
+	
+	
+	   /**
+	    * Requests H2H statistics data from api.
+	    * @param {String|Number} eventId
+	    * @returns {Promise}
+	    */
+	   getHeadToHeadStatistics: function getHeadToHeadStatistics(eventId) {
+	      return _coreLibrary2.default.getData(this.config.baseApiUrl + _coreLibrary2.default.config.offering + '/h2h/event/' + eventId + '.json');
+	   },
+	
+	
+	   /**
+	    * Requests TPI statistics data from api.
+	    * @param {String|Number} eventId
+	    * @returns {Promise}
+	    */
+	   getTeamPerformanceStatistics: function getTeamPerformanceStatistics(eventId) {
+	      return _coreLibrary2.default.getData(this.config.baseApiUrl + _coreLibrary2.default.config.offering + '/tpi/event/' + eventId + '.json');
+	   },
+	
+	
+	   /**
 	    * Requests statistics data from api.
 	    * @param {String} type
 	    * @param {String} filter
 	    * @returns {Promise}
+	    * @deprecated
 	    */
 	   getStatistics: function getStatistics(type, filter) {
+	      console.warn('getStatistics is deprecated, please use one of the specific statistics methods');
 	      // Remove url parameters from filter
 	      filter = filter.match(/[^?]*/)[0];
 	
@@ -4299,7 +4469,67 @@
 	      set: function set() {},
 	      remove: function remove() {},
 	      createUrl: function createUrl() {},
-	      createFilterUrl: function createFilterUrl() {}
+	      createFilterUrl: function createFilterUrl(terms, urlBase) {
+	         urlBase = urlBase || 'filter';
+	
+	         var segments = terms.filter(function (term) {
+	            return term.indexOf('/') === 0;
+	         }).reduce(function (segments, term) {
+	            var coords = [];
+	
+	            term.replace(/\/+$/, '').split('/').slice(1).forEach(function (termKey, i) {
+	               if (!(i in segments)) {
+	                  segments[i] = [];
+	               }
+	
+	               var pointer = segments[i];
+	
+	               if (i > 0) {
+	                  coords.forEach(function (coord) {
+	                     for (var j = 0; j <= coord; j++) {
+	                        if (pointer[j] == null) {
+	                           pointer.push(j === coord ? [] : 'all');
+	                        }
+	                     }
+	                     pointer = pointer[coord];
+	                  });
+	               }
+	
+	               if (pointer.indexOf(termKey) === -1) {
+	                  pointer.push(termKey);
+	               }
+	
+	               coords[i] = pointer.length - 1;
+	
+	               return coords[i];
+	            });
+	
+	            return segments;
+	         }, []);
+	
+	         var route = '#' + urlBase.replace(/.*?#/, '').replace(/^\//, '');
+	         route += segments.reduce(function (str, segment) {
+	            return str + '/' + JSON.stringify(segment).slice(1, -1);
+	         }, '').replace(/"/g, '').replace(/(,all)+(\/|\]|$)/g, '$2');
+	
+	         for (var i = 0; i <= segments.length; i++) {
+	            route = route.replace(/\[([^,\]]*)\]/g, '$1');
+	         }
+	
+	         var attributes = terms.filter(function (term) {
+	            return term.indexOf('/') !== 0;
+	         }).join(',');
+	
+	         if (attributes) {
+	            for (var j = 0; j < 4 - segments.length; j++) {
+	               route += '/all';
+	            }
+	
+	            route += '/' + attributes;
+	         }
+	
+	         return route.match(/filter$/) ? route + '/all' : route;
+	      }
 	   },
 	
 	   /**
@@ -4729,5 +4959,7 @@
 	};
 
 /***/ }
-/******/ ]);
+/******/ ])
+});
+;
 //# sourceMappingURL=core.js.map
