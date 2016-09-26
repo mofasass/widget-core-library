@@ -1,4 +1,4 @@
-import * as CoreLibrary from '../coreLibrary';
+import CoreLibrary from '../coreLibrary';
 
 /**
  * Module with methods to request data from the offering API
