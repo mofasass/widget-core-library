@@ -1,39 +1,49 @@
 var path = require('path');
 var webpack = require('webpack');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
    entry: {
-      core: ['./src/index.js']
+      'core.min': ['./src/index.js']
    },
    module: {
-      preLoaders: [
-         { test: /.js$/, exclude: /node_modules/, loader: 'eslint-loader' }
-      ],
       loaders: [
          { test: /\.svg/, loader: 'svg-url-loader' },
          { test: /.js$/, exclude: /node_modules/, loader: 'babel-loader', query: { presets: ['es2015'] } },
          {
-            test: /\.(jpe|jpg|woff|woff2|eot|ttf|svg)(\?.*$|$)/,
+            test: /\.(jpeg|jpg|woff|woff2|eot|ttf|svg)(\?.*$|$)/,
             exclude: /node_modules/,
             loader: 'url-loader?importLoaders=1&limit=100000'
          },
          { test: /\.ttf$|\.eot$/, loader: 'file', query: { name: 'font/[hash].[ext]' }, },
-         { test: /\.scss$/, loaders: ['style', 'css?sourceMap', 'sass?sourceMap'] },
-         { test: /\.json$/, loader: 'json' }]
+         { test: /\.json$/, loader: 'json' },
+         { test: /\.scss$/, loaders: ['css', 'sass'] }]
    },
-   eslint: {
-      configFile: '.eslintrc'
-   },
-   devtool: 'source-map',
    output: {
       path: path.resolve(__dirname, 'dist'),
       publicPath: '/dist/',
+      library: 'widget-core-library',
+      libraryTarget: 'umd',
+      umdNamedDefine: true,
       filename: '[name].js'
    },
-   devServer: {
-      contentBase: './dist',
-      port: 9000
-   },
+   plugins: [
+      new webpack.optimize.DedupePlugin(),
+      new webpack.optimize.UglifyJsPlugin({
+         compressor: {
+            warnings: true,
+         }
+      }),
+      new webpack.optimize.OccurrenceOrderPlugin(),
+      new webpack.optimize.AggressiveMergingPlugin(),
+      new CopyWebpackPlugin([{
+         from: './src/i18n',
+         to: 'i18n'
+      }, {
+         from: './src/scss',
+         to: 'scss'
+      }])
+   ],
    resolve: {
       extensions: ['', '.js', '.json', '.scss']
    }
