@@ -2,7 +2,7 @@
   "name": "widget-core-library",
   "version": "2.14.0",
   "description": "",
-  "main": "dist/core.min.js",
+  "main": "dist/core.js",
   "scripts": {
     "clean": "rm -rf ./dist",
     "build:prod": "webpack --config webpack.production.config.js --verbose --display-modules",

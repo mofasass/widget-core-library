@@ -4,7 +4,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
    entry: {
-      'core.min': ['./src/index.js']
+      'core': ['./src/index.js']
    },
    module: {
       loaders: [
@@ -29,14 +29,6 @@ module.exports = {
       filename: '[name].js'
    },
    plugins: [
-      new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.UglifyJsPlugin({
-         compressor: {
-            warnings: true,
-         }
-      }),
-      new webpack.optimize.OccurrenceOrderPlugin(),
-      new webpack.optimize.AggressiveMergingPlugin(),
       new CopyWebpackPlugin([{
          from: './src/i18n',
          to: 'i18n'
