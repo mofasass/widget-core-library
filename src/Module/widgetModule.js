@@ -24,7 +24,63 @@ export default {
       },
       createUrl () {
       },
-      createFilterUrl () {
+      createFilterUrl (terms, urlBase) {
+         urlBase = urlBase || 'filter';
+
+         var segments = terms.filter(term => term.indexOf('/') === 0)
+            .reduce((segments, term) => {
+               var coords = [];
+
+               term.replace(/\/+$/, '').split('/').slice(1).forEach((termKey, i) => {
+                  if (!(i in segments)) {
+                     segments[i] = [];
+                  }
+
+                  var pointer = segments[i];
+
+                  if (i > 0) {
+                     coords.forEach((coord) => {
+                        for (var j = 0; j <= coord; j++) {
+                           if (pointer[j] == null) {
+                              pointer.push(j === coord ? [] : 'all');
+                           }
+                        }
+                        pointer = pointer[coord];
+                     });
+                  }
+
+                  if (pointer.indexOf(termKey) === -1) {
+                     pointer.push(termKey);
+                  }
+
+                  coords[i] = pointer.length - 1;
+
+                  return coords[i];
+               });
+
+               return segments;
+            }, []);
+
+         var route = '#' + urlBase.replace(/.*?#/, '').replace(/^\//, '');
+         route += segments.reduce((str, segment) => str + '/' + JSON.stringify(segment).slice(1, -1), '')
+            .replace(/"/g, '')
+            .replace(/(,all)+(\/|\]|$)/g, '$2');
+
+         for (var i = 0; i <= segments.length; i++) {
+            route = route.replace(/\[([^,\]]*)\]/g, '$1');
+         }
+
+         var attributes = terms.filter(term => term.indexOf('/') !== 0).join(',');
+
+         if (attributes) {
+            for (var j = 0; j < 4 - segments.length; j++) {
+               route += '/all';
+            }
+
+            route += '/' + attributes;
+         }
+
+         return route.match(/filter$/) ? route + '/all' : route;
       }
    },
 
