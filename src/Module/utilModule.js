@@ -1,4 +1,5 @@
 import translationModule from './translationModule';
+import coreLibrary from '../coreLibrary';
 
 /**
  * Module with utility functions
@@ -26,6 +27,22 @@ export default {
          }
       }
       return C;
+   },
+
+   /* Replaces expressions like "{customer}" from the provided string
+    * to the value the have in the coreLibrary.config object
+    */
+   replaceConfigParameters (str) {
+      if (str == null) {
+         return str;
+      }
+      const config = coreLibrary.config;
+      Object.keys(config).forEach((key) => {
+         var regex = new RegExp('{' + key + '}', 'g');
+         var value = config[key];
+         str = str.replace(regex, value);
+      });
+      return str;
    },
 
    /**

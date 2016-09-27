@@ -89,7 +89,7 @@ export default {
     * @type {String}
     * @private
     */
-   expectedApiVersion: '1.0.0.13',
+   expectedApiVersion: '1.0.0.14',
 
    /**
     * Development flag
@@ -178,15 +178,15 @@ export default {
     */
    _defaultArgs: {},
 
-   set defaultArgs (defaultArgs) {
-      /* eslint-disable no-underscore-dangle */
-      this._defaultArgs = defaultArgs;
-      /* eslint-enable no-underscore-dangle */
-   },
-
    get defaultArgs () {
       /* eslint-disable no-underscore-dangle */
       return this._defaultArgs;
+      /* eslint-enable no-underscore-dangle */
+   },
+
+   set defaultArgs (defaultArgs) {
+      /* eslint-disable no-underscore-dangle */
+      this._defaultArgs = defaultArgs;
       /* eslint-enable no-underscore-dangle */
    },
 
@@ -195,17 +195,50 @@ export default {
     * @memberOf module:coreLibrary
     * @private
     */
-   _args: {},
-
-   set args (args) {
-      /* eslint-disable no-underscore-dangle */
-      this._args = Object.assign({}, this._defaultArgs, args);
-      /* eslint-enable no-underscore-dangle */
-   },
+   _args: null,
 
    get args () {
       /* eslint-disable no-underscore-dangle */
       return this._args;
+      /* eslint-enable no-underscore-dangle */
+   },
+
+   set args (args) {
+      /* eslint-disable no-underscore-dangle */
+      if (this._args != null) {
+         throw Error('Do not override coreLibrary.args');
+      }
+      args = Object.assign({}, this.defaultArgs, args);
+
+      // Handling conditionalArgs
+      if (args.conditionalArgs != null) {
+         args.conditionalArgs.forEach((carg) => {
+            var apply = true;
+            if (carg.clientConfig != null) {
+               Object.keys(carg.clientConfig).forEach((key) => {
+                  if (CoreLibrary.config[key] !== carg.clientConfig[key]) {
+                     apply = false;
+                  }
+               });
+            }
+
+            if (carg.pageInfo != null) {
+               Object.keys(carg.pageInfo).forEach((key) => {
+                  if (CoreLibrary.pageInfo[key] !== carg.pageInfo[key]) {
+                     apply = false;
+                  }
+               });
+            }
+
+            if (apply) {
+               console.log('Applying conditional arguments:');
+               console.log(carg.args);
+               args = Object.assign(args, carg.args);
+            }
+         });
+      }
+
+      this._args = args
       /* eslint-enable no-underscore-dangle */
    },
 
@@ -287,76 +320,188 @@ export default {
     */
    init (defaultArgs) {
       this.defaultArgs = defaultArgs;
-      var applySetupData = (setupData) => {
-         this.args = setupData.arguments;
-         this.config = setupData.clientConfig;
-         this.pageInfo = setupData.pageInfo;
-         this.apiVersions = setupData.versions;
-      };
 
       return new Promise((resolve, reject) => {
-         if (window.KambiWidget) {
-            // For development purposes we might want to load a widget on it's own so we check if we are in an iframe, if not then load some fake data
-            if (window.self === window.top) {
-               console.warn(window.location.host + window.location.pathname + ' is being loaded as stand-alone');
-               // Load the mock config data
-               fetch('mockSetupData.json')
-                  .then(checkStatus)
-                  .then((response) => {
-                     return response.json();
-                  })
-                  .then((mockSetupData) => {
-                     // Output some debug info that could be helpful
-                     console.debug('Loaded mock setup data');
-                     console.debug(mockSetupData);
-                     // Apply the mock config data to the core
-                     applySetupData(mockSetupData);
-                     translationModule
-                        .fetchTranslations(mockSetupData.clientConfig.locale)
-                        .then(() => {
-                           resolve(mockSetupData['arguments']);
+         // injecting widget=api in the page
+         return this.getFile('https://c3-static.kambi.com/sb-mobileclient/widget-api/' + this.expectedApiVersion + '/kambi-widget-api.js')
+            .then((content) => {
+               const tag = document.createElement('script');
+               tag.setAttribute('id', 'widget-api');
+               tag.textContent = content;
+               const head = document.getElementsByTagName('head')[0];
+               // custom CSS should be the LAST CSS in the page
+               head.insertBefore(tag, head.lastChild);
+               return 'success';
+            }).catch((err) => {
+               console.error('Error loading widget api')
+               console.error(err);
+               reject();
+            })
+            .then(() => {
+               var applySetupData = (setupData) => {
+                  this.args = setupData.arguments;
+                  this.config = setupData.clientConfig;
+                  this.pageInfo = setupData.pageInfo;
+                  this.apiVersions = setupData.versions;
+
+                  const promises = [];
+                  promises.push(translationModule.fetchTranslations(setupData.clientConfig.locale));
+
+                  promises.push(this.injectOperatorCss(
+                        this.apiVersions.wapi,
+                        this.config.customer,
+                        this.config.offering));
+
+                  promises.push(this.injectCustomCss(
+                        this.args.customCssUrl,
+                        this.args.customCssUrlFallback));
+
+                  Promise.all(promises)
+                     .then(() => {
+                        resolve();
+                     })
+                     .catch((err) => {
+                        reject();
+                     });
+               };
+
+               if (window.KambiWidget) {
+                  // For development purposes we might want to load a widget on it's own so we check if we are in an iframe, if not then load some fake data
+                  if (window.self === window.top) {
+                     console.warn(window.location.host + window.location.pathname + ' is being loaded as stand-alone');
+                     // Load the mock config data
+                     this.getData('mockSetupData.json')
+                        .then((mockSetupData) => {
+                           // Output some debug info that could be helpful
+                           console.debug('Loaded mock setup data');
+                           console.debug(mockSetupData);
+                           // Apply the mock config data to the core
+                           applySetupData(mockSetupData);
+                        })
+                        .catch((error) => {
+                           console.debug('Failed to fetch mockSetupData');
+                           console.trace(error);
+                           reject();
                         });
-                  })
-                  .catch((error) => {
-                     console.debug('Failed to fetch mockSetupData');
-                     console.trace(error);
-                     reject();
+                  } else {
+                     window.KambiWidget.apiReady = (api) => {
+                        widgetModule.api = api;
+
+                        // Request the setup info from the widget api
+                        widgetModule.requestSetup((setupData) => {
+                           // TODO: Move this to widgets so we don't request them when not needed
+                           // Request the outcomes from the betslip so we can update our widget, also sets up a subscription for future betslip updates
+                           widgetModule.requestBetslipOutcomes();
+                           // Request the odds format that is set in the sportsbook, this also sets up a subscription for future odds format changes
+                           widgetModule.requestOddsFormat();
+
+                           // Apply the config data to the core
+                           applySetupData(setupData);
+                        });
+                     };
+                     // Setup the response handler for the widget api
+                     window.KambiWidget.receiveResponse = (dataObject) => {
+                        widgetModule.handleResponse(dataObject);
+                     };
+                  }
+               } else {
+                  console.warn('Kambi widget API not loaded');
+                  reject();
+               }
+            });
+      });
+   },
+
+   /**
+    * Dynamically creates a style tag and returns it
+    * @param id {String} the id to add to the tag
+    * @param content {String} text content of the tag (the styles)
+    * @returns HTMLElement the tag created
+    * @private
+    */
+   createStyleTag (id, content) {
+      const tag = document.createElement('style');
+      tag.setAttribute('id', id);
+      tag.textContent = content;
+      return tag;
+   },
+
+   /**
+    * Injects operator specific CSS based on widget API version,
+    * customer and offering
+    * @param wApiVersion {String|Null} If null will use expectedApiVersion
+    * @param customer {String}
+    * @param offering {String}
+    * @returns Promise when resolved the stylesheet has been successfully added to the page
+    * @private
+    */
+   injectOperatorCss (wApiVersion, customer, offering) {
+      if ( wApiVersion == null || wApiVersion === '') {
+         wApiVersion = this.expectedApiVersion;
+      }
+      const url = '//c3-static.kambi.com/sb-mobileclient/widget-api/' +
+         wApiVersion +
+         '/resources/css/' +
+         customer +
+         '/' +
+         offering +
+         '/widgets.css';
+      return this.getFile(url)
+         .then((content) => {
+            const tag = this.createStyleTag('operator-css', content);
+            const head = document.getElementsByTagName('head')[0];
+            // opereator CSS should be the FIRST CSS in the page
+            head.insertBefore(tag, head.firstChild);
+         })
+         .catch((err) => {
+            console.warn('Could not inject Operator CSS');
+         });
+   },
+
+   /**
+    * Injects stylesheet based on configuration parameters (coreLibrary.config)
+    * @param customCssUrl
+    * @param customCssUrlFallback Fallback if the first URL fetch fails
+    * @returns Promise when resolved the stylesheet has been successfully added to the page
+    */
+   injectCustomCss (customCssUrl, customCssUrlFallback) {
+      if (customCssUrl == null) {
+         return Promise.resolve('');
+      }
+      if (customCssUrlFallback == null) {
+         customCssUrlFallback = '';
+      }
+
+      customCssUrl = utilModule.replaceConfigParameters(customCssUrl);
+      customCssUrlFallback = utilModule.replaceConfigParameters(customCssUrlFallback);
+
+      const appendToHead = (content) => {
+         const tag = this.createStyleTag('custom-css', content);
+         const head = document.getElementsByTagName('head')[0];
+         // custom CSS should be the LAST CSS in the page
+         head.insertAfter(tag, head.lastChild);
+      };
+
+      return this.getFile(customCssUrl)
+         .then(( response ) => {
+            appendToHead(response);
+            return response;
+         }).catch(( error ) => {
+            if (customCssUrlFallback !== '') {
+               console.debug('Error fetching custom css, trying fallback');
+               return this.getFile(customCssUrlFallback)
+                  .then(( response ) => {
+                     appendToHead(response);
+                     return response;
+                  }).catch(( error ) => {
+                     console.debug('Error fetching custom css fallback');
+                     return error;
                   });
             } else {
-               window.KambiWidget.apiReady = (api) => {
-                  widgetModule.api = api;
-                  if (api.VERSION !== this.expectedApiVersion) {
-                     console.warn('Wrong Kambi API version loaded, expected: ' + this.expectedApiVersion + ' got: ' + api.VERSION);
-                  }
-
-                  // Request the setup info from the widget api
-                  widgetModule.requestSetup((setupData) => {
-                     // Apply the config data to the core
-                     applySetupData(setupData);
-
-                     // TODO: Move this to widgets so we don't request them when not needed
-                     // Request the outcomes from the betslip so we can update our widget, also sets up a subscription for future betslip updates
-                     widgetModule.requestBetslipOutcomes();
-                     // Request the odds format that is set in the sportsbook, this also sets up a subscription for future odds format changes
-                     widgetModule.requestOddsFormat();
-
-                     translationModule
-                        .fetchTranslations(setupData.clientConfig.locale)
-                        .then(() => {
-                           resolve(setupData['arguments']);
-                        });
-                  });
-               };
-               // Setup the response handler for the widget api
-               window.KambiWidget.receiveResponse = (dataObject) => {
-                  widgetModule.handleResponse(dataObject);
-               };
+               console.debug('Error fetching custom css, no fallback present');
+               return error;
             }
-         } else {
-            console.warn('Kambi widget API not loaded');
-            reject();
-         }
-      });
+         });
    },
 
    /**
@@ -387,6 +532,7 @@ export default {
    getFile (url) {
       return fetch(url)
          .then(checkStatus)
+         .then(content => content.text())
          .catch((error) => {
             console.debug('Error fetching file');
             console.trace(error);
