@@ -312,6 +312,12 @@ export default {
    widgetTrackingName: null,
 
    /**
+    * Promise that is resolved when all the CSS has finished loading
+    * @type Promise
+    */
+   cssLoadedPromise: null,
+
+   /**
     * Method that initializes on component construct, sets widget configurations.
     * Can load mock data if not loaded in an iframe.
     * @param defaultArgs
@@ -344,19 +350,22 @@ export default {
                   this.pageInfo = setupData.pageInfo;
                   this.apiVersions = setupData.versions;
 
-                  const promises = [];
-                  promises.push(translationModule.fetchTranslations(setupData.clientConfig.locale));
+                  const translationPromise = translationModule.fetchTranslations(setupData.clientConfig.locale);
 
-                  promises.push(this.injectOperatorCss(
+                  const operatorCssPromise = this.injectOperatorCss(
                         this.apiVersions.wapi,
                         this.config.customer,
-                        this.config.offering));
+                        this.config.offering);
 
-                  promises.push(this.injectCustomCss(
+                  const customCssPromise = this.injectCustomCss(
                         this.args.customCssUrl,
-                        this.args.customCssUrlFallback));
+                        this.args.customCssUrlFallback);
 
-                  Promise.all(promises)
+                  // most widgets don't need to wait for the CSS to be loaded
+                  // so we keep a promise instead of waiting for it
+                  this.cssLoadedPromise = Promise.all([operatorCssPromise, customCssPromise]);
+
+                  translationPromise
                      .then(() => {
                         resolve();
                      })
@@ -419,10 +428,12 @@ export default {
     * @returns HTMLElement the tag created
     * @private
     */
-   createStyleTag (id, content) {
-      const tag = document.createElement('style');
+   createStyleTag (id, url) {
+      const tag = document.createElement('link');
       tag.setAttribute('id', id);
-      tag.textContent = content;
+      tag.setAttribute('rel', 'stylesheet');
+      tag.setAttribute('type', 'text/css');
+      tag.setAttribute('href', url);
       return tag;
    },
 
@@ -448,7 +459,7 @@ export default {
          '/widgets.css';
       return this.getFile(url)
          .then((content) => {
-            const tag = this.createStyleTag('operator-css', content);
+            const tag = this.createStyleTag('operator-css', url);
             const head = document.getElementsByTagName('head')[0];
             // opereator CSS should be the FIRST CSS in the page
             head.insertBefore(tag, head.firstChild);
@@ -460,8 +471,9 @@ export default {
 
    /**
     * Injects stylesheet based on configuration parameters (coreLibrary.config)
-    * @param customCssUrl
-    * @param customCssUrlFallback Fallback if the first URL fetch fails
+    * Replaces expressions like "{customer}" in the strings provided
+    * @param customCssUrl {String}
+    * @param customCssUrlFallback {String} Fallback if the first URL fetch fails
     * @returns Promise when resolved the stylesheet has been successfully added to the page
     */
    injectCustomCss (customCssUrl, customCssUrlFallback) {
@@ -475,23 +487,23 @@ export default {
       customCssUrl = utilModule.replaceConfigParameters(customCssUrl);
       customCssUrlFallback = utilModule.replaceConfigParameters(customCssUrlFallback);
 
-      const appendToHead = (content) => {
-         const tag = this.createStyleTag('custom-css', content);
+      const appendToHead = (url) => {
+         const tag = this.createStyleTag('custom-css', url);
          const head = document.getElementsByTagName('head')[0];
          // custom CSS should be the LAST CSS in the page
-         head.insertAfter(tag, head.lastChild);
+         head.insertBefore(tag, null);
       };
 
       return this.getFile(customCssUrl)
          .then(( response ) => {
-            appendToHead(response);
+            appendToHead(customCssUrl);
             return response;
          }).catch(( error ) => {
             if (customCssUrlFallback !== '') {
                console.debug('Error fetching custom css, trying fallback');
                return this.getFile(customCssUrlFallback)
                   .then(( response ) => {
-                     appendToHead(response);
+                     appendToHead(customCssUrlFallback);
                      return response;
                   }).catch(( error ) => {
                      console.debug('Error fetching custom css fallback');
@@ -505,7 +517,7 @@ export default {
    },
 
    /**
-    * Makes an request using Fetch (polyfill) library.
+    * Makes a request using Fetch (polyfill) library.
     * @memberOf module:coreLibrary
     * @param {String} url
     * @returns {Promise}

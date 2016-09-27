@@ -2310,6 +2310,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	   widgetTrackingName: null,
 	
 	   /**
+	    * Promise that is resolved when all the CSS has finished loading
+	    * @type Promise
+	    */
+	   cssLoadedPromise: null,
+	
+	   /**
 	    * Method that initializes on component construct, sets widget configurations.
 	    * Can load mock data if not loaded in an iframe.
 	    * @param defaultArgs
@@ -2342,14 +2348,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	               _this.pageInfo = setupData.pageInfo;
 	               _this.apiVersions = setupData.versions;
 	
-	               var promises = [];
-	               promises.push(_translationModule2.default.fetchTranslations(setupData.clientConfig.locale));
+	               var translationPromise = _translationModule2.default.fetchTranslations(setupData.clientConfig.locale);
 	
-	               promises.push(_this.injectOperatorCss(_this.apiVersions.wapi, _this.config.customer, _this.config.offering));
+	               var operatorCssPromise = _this.injectOperatorCss(_this.apiVersions.wapi, _this.config.customer, _this.config.offering);
 	
-	               promises.push(_this.injectCustomCss(_this.args.customCssUrl, _this.args.customCssUrlFallback));
+	               var customCssPromise = _this.injectCustomCss(_this.args.customCssUrl, _this.args.customCssUrlFallback);
 	
-	               Promise.all(promises).then(function () {
+	               // most widgets don't need to wait for the CSS to be loaded
+	               // so we keep a promise instead of waiting for it
+	               _this.cssLoadedPromise = Promise.all([operatorCssPromise, customCssPromise]);
+	
+	               translationPromise.then(function () {
 	                  resolve();
 	               }).catch(function (err) {
 	                  reject();
@@ -2409,10 +2418,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    * @returns HTMLElement the tag created
 	    * @private
 	    */
-	   createStyleTag: function createStyleTag(id, content) {
-	      var tag = document.createElement('style');
+	   createStyleTag: function createStyleTag(id, url) {
+	      var tag = document.createElement('link');
 	      tag.setAttribute('id', id);
-	      tag.textContent = content;
+	      tag.setAttribute('rel', 'stylesheet');
+	      tag.setAttribute('type', 'text/css');
+	      tag.setAttribute('href', url);
 	      return tag;
 	   },
 	
@@ -2434,7 +2445,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      var url = '//c3-static.kambi.com/sb-mobileclient/widget-api/' + wApiVersion + '/resources/css/' + customer + '/' + offering + '/widgets.css';
 	      return this.getFile(url).then(function (content) {
-	         var tag = _this2.createStyleTag('operator-css', content);
+	         var tag = _this2.createStyleTag('operator-css', url);
 	         var head = document.getElementsByTagName('head')[0];
 	         // opereator CSS should be the FIRST CSS in the page
 	         head.insertBefore(tag, head.firstChild);
@@ -2446,8 +2457,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	   /**
 	    * Injects stylesheet based on configuration parameters (coreLibrary.config)
-	    * @param customCssUrl
-	    * @param customCssUrlFallback Fallback if the first URL fetch fails
+	    * Replaces expressions like "{customer}" in the strings provided
+	    * @param customCssUrl {String}
+	    * @param customCssUrlFallback {String} Fallback if the first URL fetch fails
 	    * @returns Promise when resolved the stylesheet has been successfully added to the page
 	    */
 	   injectCustomCss: function injectCustomCss(customCssUrl, customCssUrlFallback) {
@@ -2463,21 +2475,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	      customCssUrl = _utilModule2.default.replaceConfigParameters(customCssUrl);
 	      customCssUrlFallback = _utilModule2.default.replaceConfigParameters(customCssUrlFallback);
 	
-	      var appendToHead = function appendToHead(content) {
-	         var tag = _this3.createStyleTag('custom-css', content);
+	      var appendToHead = function appendToHead(url) {
+	         var tag = _this3.createStyleTag('custom-css', url);
 	         var head = document.getElementsByTagName('head')[0];
 	         // custom CSS should be the LAST CSS in the page
-	         head.insertAfter(tag, head.lastChild);
+	         head.insertBefore(tag, null);
 	      };
 	
 	      return this.getFile(customCssUrl).then(function (response) {
-	         appendToHead(response);
+	         appendToHead(customCssUrl);
 	         return response;
 	      }).catch(function (error) {
 	         if (customCssUrlFallback !== '') {
 	            console.debug('Error fetching custom css, trying fallback');
 	            return _this3.getFile(customCssUrlFallback).then(function (response) {
-	               appendToHead(response);
+	               appendToHead(customCssUrlFallback);
 	               return response;
 	            }).catch(function (error) {
 	               console.debug('Error fetching custom css fallback');
@@ -2492,7 +2504,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	   /**
-	    * Makes an request using Fetch (polyfill) library.
+	    * Makes a request using Fetch (polyfill) library.
 	    * @memberOf module:coreLibrary
 	    * @param {String} url
 	    * @returns {Promise}
