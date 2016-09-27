@@ -30,7 +30,7 @@ export default {
       createFilterUrl (terms, urlBase) {
          urlBase = urlBase || 'filter';
 
-         var segments = terms.filter((term) => term.indexOf('/') === 0)
+         var segments = terms.filter(term => term.indexOf('/') === 0)
             .reduce((segments, term) => {
                var coords = [];
 
@@ -73,7 +73,7 @@ export default {
             route = route.replace(/\[([^,\]]*)\]/g, '$1');
          }
 
-         var attributes = terms.filter((term) => term.indexOf('/') !== 0).join(',');
+         var attributes = terms.filter(term => term.indexOf('/') !== 0).join(',');
 
          if (attributes) {
             for (var j = 0; j < 4 - segments.length; j++) {
