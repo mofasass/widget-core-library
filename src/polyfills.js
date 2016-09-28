@@ -7,7 +7,6 @@ es6Promise.polyfill();
 if (typeof Object.assign != 'function') {
    (function () {
       Object.assign = function (target) {
-         'use strict';
          // We must check against these specific cases.
          if (target === undefined || target === null) {
             throw new TypeError('Cannot convert undefined or null to object');
@@ -34,7 +33,6 @@ if (typeof Object.assign != 'function') {
 if (!Array.prototype.find) {
    // eslint-disable-next-line
    Array.prototype.find = function(predicate) {
-      'use strict';
       if (this == null) {
          throw new TypeError('Array.prototype.find called on null or undefined');
       }

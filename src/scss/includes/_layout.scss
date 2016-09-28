@@ -1,0 +1,124 @@
+.l-flexbox {
+   @include flexbox();
+}
+
+.l-horizontal {
+   @include flex-direction(row);
+}
+
+.l-vertical {
+   @include flex-direction(column);
+}
+
+.l-align-start {
+   @include align-items(flex-start);
+}
+
+.l-align-center {
+   @include align-items(center);
+}
+
+.l-align-end {
+   @include align-items(flex-end);
+}
+
+.l-align-stretch {
+   @include align-items(stretch);
+}
+
+.l-align-baseline {
+   @include align-items(baseline);
+}
+
+.l-align-self-auto {
+   @include align-self(auto);
+}
+
+.l-align-self-start {
+   @include align-self(flex-start);
+}
+
+.l-align-self-center {
+   @include align-self(center);
+}
+
+.l-align-self-end {
+   @include align-self(flex-end);
+}
+
+.l-align-self-stretch {
+   @include align-self(stretch);
+}
+
+.l-align-self-baseline {
+   @include align-self(baseline);
+}
+
+.l-justify-start {
+   @include justify-content(flex-start);
+}
+
+.l-justify-center {
+   @include justify-content(center);
+}
+
+.l-justify-end {
+   @include justify-content(flex-end);
+}
+
+.l-justify-between {
+   @include justify-content(space-between);
+}
+
+.l-justify-around {
+   @include justify-content(space-around);
+}
+
+.l-flexed,
+.l-flex-1 {
+   @include flex(1);
+}
+
+.l-flex-2 {
+   @include flex(2);
+}
+
+.l-flex-3 {
+   @include flex(3);
+}
+
+.l-flex-4 {
+   @include flex(4);
+}
+
+.l-flex-5 {
+   @include flex(5);
+}
+
+.l-flex-6 {
+   @include flex(6);
+}
+
+.l-flex-7 {
+   @include flex(7);
+}
+
+.l-flex-8 {
+   @include flex(8);
+}
+
+.l-flex-9 {
+   @include flex(9);
+}
+
+.l-flex-10 {
+   @include flex(10);
+}
+
+[class*="l-flex-"] {
+   min-width: 1px; // Firefox needs this
+}
+
+.text-truncate {
+   @include text-truncate();
+}
