@@ -216,7 +216,7 @@ export default {
             var apply = true;
             if (carg.clientConfig != null) {
                Object.keys(carg.clientConfig).forEach((key) => {
-                  if (CoreLibrary.config[key] !== carg.clientConfig[key]) {
+                  if (this.config[key] !== carg.clientConfig[key]) {
                      apply = false;
                   }
                });
@@ -224,7 +224,7 @@ export default {
 
             if (carg.pageInfo != null) {
                Object.keys(carg.pageInfo).forEach((key) => {
-                  if (CoreLibrary.pageInfo[key] !== carg.pageInfo[key]) {
+                  if (this.pageInfo[key] !== carg.pageInfo[key]) {
                      apply = false;
                   }
                });
@@ -345,10 +345,10 @@ export default {
             })
             .then(() => {
                var applySetupData = (setupData) => {
-                  this.args = setupData.arguments;
                   this.config = setupData.clientConfig;
                   this.pageInfo = setupData.pageInfo;
                   this.apiVersions = setupData.versions;
+                  this.args = setupData.arguments;
 
                   const translationPromise = translationModule.fetchTranslations(setupData.clientConfig.locale);
 
