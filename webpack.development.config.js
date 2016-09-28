@@ -24,8 +24,7 @@ module.exports = {
       path: path.resolve(__dirname, 'dist'),
       publicPath: '/dist/',
       library: 'widget-core-library',
-      libraryTarget: 'umd',
-      umdNamedDefine: true,
+      libraryTarget: 'commonjs',
       filename: '[name].js'
    },
    plugins: [
