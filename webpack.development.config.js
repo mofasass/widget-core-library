@@ -24,7 +24,6 @@ module.exports = {
    output: {
       path: path.resolve(__dirname, 'dist'),
       publicPath: '/dist/',
-      library: 'widget-core-library',
       libraryTarget: 'commonjs',
       filename: '[name].js'
    },
