@@ -29,9 +29,6 @@ module.exports = {
    },
    plugins: [
       new CopyWebpackPlugin([{
-         from: './src/i18n',
-         to: 'i18n'
-      }, {
          from: './src/scss',
          to: 'scss'
       }])
