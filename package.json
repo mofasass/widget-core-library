@@ -32,7 +32,6 @@
   },
   "dependencies": {
     "compass-mixins": "^0.12.10",
-    "es6-promise": "^3.2.1",
-    "whatwg-fetch": "^1.0.0"
+    "es6-promise": "^3.2.1"
   }
 }

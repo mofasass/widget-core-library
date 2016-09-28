@@ -1,5 +1,4 @@
 import es6Promise from 'es6-promise'; // ES6 Promise polyfill
-import 'whatwg-fetch'; // ES6 Fetch API polyfill
 
 es6Promise.polyfill();
 
@@ -55,5 +54,40 @@ if (!Array.prototype.find) {
          }
       }
       return undefined;
+   };
+}
+
+// window.fetch polyfill
+// NOTE: supports only basic invocation and return simple response object
+if (typeof window.fetch !== 'function') {
+   window.fetch = function(input, init) {
+      if (!input.isPrototypeOf(String) && init) {
+         throw new Error('Not implemented');
+      }
+
+      return new Promise((resolve, reject) => {
+         const xhr = new XMLHttpRequest();
+
+         xhr.open('GET', input, true);
+
+         xhr.onload = function() {
+            const body = 'response' in xhr ? xhr.response : xhr.responseText;
+
+            const response = {
+               status: xhr.status,
+               statusText: xhr.statusText,
+               text: () => Promise.resolve(body),
+               json: () => Promise.resolve(JSON.parse(body))
+            };
+
+            resolve(response);
+         };
+
+         xhr.onerror = () => reject(new TypeError('Network request failed'));
+
+         xhr.ontimeout = () => reject(new TypeError('Network request failed'));
+
+         xhr.send();
+      });
    };
 }
