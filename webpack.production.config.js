@@ -23,15 +23,14 @@ module.exports = {
       path: path.resolve(__dirname, 'dist'),
       publicPath: '/dist/',
       library: 'widget-core-library',
-      libraryTarget: 'umd',
-      umdNamedDefine: true,
+      libraryTarget: 'commonjs',
       filename: '[name].js'
    },
    plugins: [
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin({
          compressor: {
-            warnings: true,
+            warnings: true
          }
       }),
       new webpack.optimize.OccurrenceOrderPlugin(),
