@@ -5,8 +5,8 @@
   "main": "dist/core.js",
   "scripts": {
     "clean": "rm -rf ./dist",
-    "build:dev": "webpack --watch --config webpack.development.config.js --verbose --display-modules",
-    "build:prod": "webpack --config webpack.production.config.js --verbose --display-modules"
+    "build:dev": "env NODE_ENV=development webpack --watch --config webpack.config.js --verbose --display-modules",
+    "build:prod": "env NODE_ENV=production webpack --config webpack.config.js --verbose --display-modules"
   },
   "repository": {
     "type": "git",
