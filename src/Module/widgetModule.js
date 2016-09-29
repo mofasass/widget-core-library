@@ -172,7 +172,7 @@ export default {
       };
 
       // api
-      return {subscribe, unsubscribe, publish};
+      return { subscribe, unsubscribe, publish };
    })(),
 
    /**
