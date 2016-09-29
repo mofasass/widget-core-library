@@ -92,13 +92,6 @@ export default {
    expectedApiVersion: '1.0.0.14',
 
    /**
-    * Development flag
-    * @type {Boolean}
-    * @memberOf module:coreLibrary
-    */
-   development: false,
-
-   /**
     * Config object
     * @type {Object}
     * @property {String} apiBaseUrl
