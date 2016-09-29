@@ -110,20 +110,70 @@ export default {
     *
     * coreLibrary.widgetModule.events
     *    .on('OUTCOME:ADDED:' + outcome.id,
-    *       ( data, event ) => {
+    *       ( data ) => {
     *          ...
     *       });
     *
     * @type {Object}
     */
-   events: { // new Stapes.subclass(); TODO replace Stapes
-      emit () {
+   events: (function() {
+      /**
+       * Map of events with handlers
+       * @type {object<string, function[]>}
+       */
+      const handlers = {};
 
-      },
-      subscribre () {
-         
-      }
-   },
+      /**
+       * Subscribes a handler to given event.
+       * @param {string} event Event name
+       * @param {function} handler Handler function
+       */
+      const subscribe = function(event, handler) {
+         if (handlers.hasOwnProperty(event)) {
+            handlers[event].push(handler);
+         } else {
+            handlers[event] = [handler];
+         }
+      };
+
+      /**
+       * Unsubscribes handler/all handlers from given event.
+       * @param {string} event Event name
+       * @param {function?} handler Optional handler function pointer
+       */
+      const unsubscribe = function(event, handler) {
+         if (handlers.hasOwnProperty(event)) {
+            // remove all handlers for given event
+            if (!handler) {
+               handlers[event] = [];
+               return;
+            }
+
+            // remove particular handler
+            const handlerIdx = handlers[event].indexOf(handler);
+
+            if (handlerIdx > -1) {
+               handlers[event].splice(handlerIdx, 1);
+            }
+         }
+      };
+
+      /**
+       * Emits an event with given arguments.
+       * @param {string} event Event name
+       * @param {...*} args Arguments for handlers
+       */
+      const publish = function(event, ...args) {
+         if (!handlers.hasOwnProperty(event)) {
+            return;
+         }
+
+         handlers[event].forEach(handler => handler.apply(undefined, args));
+      };
+
+      // api
+      return {subscribe, unsubscribe, publish};
+   })(),
 
    /**
     * @type {array}
@@ -140,7 +190,7 @@ export default {
       switch (response.type) {
          case this.api.WIDGET_HEIGHT:
             // We've received a height response
-            this.events.emit('WIDGET:HEIGHT', response.data);
+            this.events.publish('WIDGET:HEIGHT', response.data);
             break;
          case this.api.BETSLIP_OUTCOMES:
             // We've received a response with the outcomes currently in the betslip
@@ -161,44 +211,44 @@ export default {
             i = 0;
             len = removedIds.length;
             for (; i < len; ++i) {
-               this.events.emit('OUTCOME:REMOVED:' + removedIds[i]);
+               this.events.publish('OUTCOME:REMOVED:' + removedIds[i]);
             }
 
             // Emit events for each added id
             i = 0;
             len = addedIds.length;
             for (; i < len; ++i) {
-               this.events.emit('OUTCOME:ADDED:' + addedIds[i]);
+               this.events.publish('OUTCOME:ADDED:' + addedIds[i]);
             }
 
             // Emit a generic update in case we want to use that
-            this.events.emit('OUTCOMES:UPDATE', response.data);
+            this.events.publish('OUTCOMES:UPDATE', response.data);
             break;
          case this.api.WIDGET_ARGS:
             // We've received a response with the arguments set in the
             coreLibrary.args = response.data;
-            this.events.emit('WIDGET:ARGS', response.data);
+            this.events.publish('WIDGET:ARGS', response.data);
             break;
          case this.api.PAGE_INFO:
             // Received page info response
             coreLibrary.setPageInfo(response.data);
-            this.events.emit('PAGE:INFO', response.data);
+            this.events.publish('PAGE:INFO', response.data);
             break;
          case this.api.CLIENT_ODDS_FORMAT:
             // Received odds format response
             coreLibrary.setOddsFormat(response.data);
-            this.events.emit('ODDS:FORMAT', response.data);
+            this.events.publish('ODDS:FORMAT', response.data);
             break;
          case this.api.CLIENT_CONFIG:
             coreLibrary.setConfig(response.data);
-            this.events.emit('CLIENT:CONFIG', response.data);
+            this.events.publish('CLIENT:CONFIG', response.data);
             break;
          case this.api.USER_LOGGED_IN:
             console.debug('User logged in', response.data);
-            this.events.emit('USER:LOGGED_IN', response.data);
+            this.events.publish('USER:LOGGED_IN', response.data);
             break;
          case 'Setup':
-            this.events.emit('Setup response', response.data);
+            this.events.publish('Setup response', response.data);
             break;
          default:
             // Unhandled response

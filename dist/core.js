@@ -2856,11 +2856,11 @@
 	      var handlers = {};
 	
 	      /**
-	       * Registers handler to given event.
+	       * Subscribes a handler to given event.
 	       * @param {string} event Event name
 	       * @param {function} handler Handler function
 	       */
-	      var on = function on(event, handler) {
+	      var subscribe = function subscribe(event, handler) {
 	         if (handlers.hasOwnProperty(event)) {
 	            handlers[event].push(handler);
 	         } else {
@@ -2869,11 +2869,11 @@
 	      };
 	
 	      /**
-	       * Unregisters handler/all handlers from given event.
+	       * Unsubscribes handler/all handlers from given event.
 	       * @param {string} event Event name
 	       * @param {function?} handler Optional handler function pointer
 	       */
-	      var off = function off(event, handler) {
+	      var unsubscribe = function unsubscribe(event, handler) {
 	         if (handlers.hasOwnProperty(event)) {
 	            // remove all handlers for given event
 	            if (!handler) {
@@ -2895,7 +2895,7 @@
 	       * @param {string} event Event name
 	       * @param {...*} args Arguments for handlers
 	       */
-	      var emit = function emit(event) {
+	      var publish = function publish(event) {
 	         for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
 	            args[_key - 1] = arguments[_key];
 	         }
@@ -2910,7 +2910,7 @@
 	      };
 	
 	      // api
-	      return { on: on, off: off, emit: emit };
+	      return { subscribe: subscribe, unsubscribe: unsubscribe, publish: publish };
 	   }(),
 	
 	   /**
@@ -2928,7 +2928,7 @@
 	      switch (response.type) {
 	         case this.api.WIDGET_HEIGHT:
 	            // We've received a height response
-	            this.events.emit('WIDGET:HEIGHT', response.data);
+	            this.events.publish('WIDGET:HEIGHT', response.data);
 	            break;
 	         case this.api.BETSLIP_OUTCOMES:
 	            // We've received a response with the outcomes currently in the betslip
@@ -2950,44 +2950,44 @@
 	            i = 0;
 	            len = removedIds.length;
 	            for (; i < len; ++i) {
-	               this.events.emit('OUTCOME:REMOVED:' + removedIds[i]);
+	               this.events.publish('OUTCOME:REMOVED:' + removedIds[i]);
 	            }
 	
 	            // Emit events for each added id
 	            i = 0;
 	            len = addedIds.length;
 	            for (; i < len; ++i) {
-	               this.events.emit('OUTCOME:ADDED:' + addedIds[i]);
+	               this.events.publish('OUTCOME:ADDED:' + addedIds[i]);
 	            }
 	
 	            // Emit a generic update in case we want to use that
-	            this.events.emit('OUTCOMES:UPDATE', response.data);
+	            this.events.publish('OUTCOMES:UPDATE', response.data);
 	            break;
 	         case this.api.WIDGET_ARGS:
 	            // We've received a response with the arguments set in the
 	            _coreLibrary2.default.args = response.data;
-	            this.events.emit('WIDGET:ARGS', response.data);
+	            this.events.publish('WIDGET:ARGS', response.data);
 	            break;
 	         case this.api.PAGE_INFO:
 	            // Received page info response
 	            _coreLibrary2.default.setPageInfo(response.data);
-	            this.events.emit('PAGE:INFO', response.data);
+	            this.events.publish('PAGE:INFO', response.data);
 	            break;
 	         case this.api.CLIENT_ODDS_FORMAT:
 	            // Received odds format response
 	            _coreLibrary2.default.setOddsFormat(response.data);
-	            this.events.emit('ODDS:FORMAT', response.data);
+	            this.events.publish('ODDS:FORMAT', response.data);
 	            break;
 	         case this.api.CLIENT_CONFIG:
 	            _coreLibrary2.default.setConfig(response.data);
-	            this.events.emit('CLIENT:CONFIG', response.data);
+	            this.events.publish('CLIENT:CONFIG', response.data);
 	            break;
 	         case this.api.USER_LOGGED_IN:
 	            console.debug('User logged in', response.data);
-	            this.events.emit('USER:LOGGED_IN', response.data);
+	            this.events.publish('USER:LOGGED_IN', response.data);
 	            break;
 	         case 'Setup':
-	            this.events.emit('Setup response', response.data);
+	            this.events.publish('Setup response', response.data);
 	            break;
 	         default:
 	            // Unhandled response
