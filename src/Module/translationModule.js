@@ -25,9 +25,6 @@ export default {
       }
       var self = this;
       var path = 'i18n/';
-      if (coreLibrary.development === true) {
-         path = 'transpiled/i18n/';
-      }
       return new Promise((resolve, reject) => {
          coreLibrary.getData(path + locale + '.json')
             .then((response) => {
