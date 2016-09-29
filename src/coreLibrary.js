@@ -69,6 +69,35 @@ function checkBrowser() {
    }
 }
 
+/**
+ * Downloads a resource from given URL.
+ * @param {string} url URL of resource
+ * @returns {Promise.<{status: number, statusText: string, body: string}>}
+ */
+function download(url) {
+   return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+
+      xhr.open('GET', url, true);
+
+      xhr.onload = function() {
+         const response = {
+            status: xhr.status,
+            statusText: xhr.statusText,
+            body: 'response' in xhr ? xhr.response : xhr.responseText,
+         };
+
+         resolve(response);
+      };
+
+      xhr.onerror = () => reject(new TypeError('Network request failed'));
+
+      xhr.ontimeout = () => reject(new TypeError('Network request failed'));
+
+      xhr.send();
+   });
+}
+
 export default {
    /**
     * Name of the browser that is running the widget
@@ -516,11 +545,9 @@ export default {
     * @returns {Promise}
     */
    getData (url) {
-      return fetch(url)
+      return download(url)
          .then(checkStatus)
-         .then((response) => {
-            return response.json();
-         })
+         .then((response) => JSON.parse(response.body))
          .catch((error) => {
             console.debug('Error fetching data');
             console.trace(error);
@@ -535,9 +562,9 @@ export default {
     * @returns {Promise}
     */
    getFile (url) {
-      return fetch(url)
+      return download(url)
          .then(checkStatus)
-         .then(content => content.text())
+         .then(response => response.body)
          .catch((error) => {
             console.debug('Error fetching file');
             console.trace(error);

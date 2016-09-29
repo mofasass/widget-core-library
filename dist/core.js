@@ -161,49 +161,6 @@
 	      return undefined;
 	   };
 	}
-	
-	// window.fetch polyfill
-	// NOTE: supports only basic invocation and return simple response object
-	if (typeof window.fetch !== 'function') {
-	   window.fetch = function (input, init) {
-	      if (!input.isPrototypeOf(String) && init) {
-	         throw new Error('Not implemented');
-	      }
-	
-	      return new Promise(function (resolve, reject) {
-	         var xhr = new XMLHttpRequest();
-	
-	         xhr.open('GET', input, true);
-	
-	         xhr.onload = function () {
-	            var body = 'response' in xhr ? xhr.response : xhr.responseText;
-	
-	            var response = {
-	               status: xhr.status,
-	               statusText: xhr.statusText,
-	               text: function text() {
-	                  return Promise.resolve(body);
-	               },
-	               json: function json() {
-	                  return Promise.resolve(JSON.parse(body));
-	               }
-	            };
-	
-	            resolve(response);
-	         };
-	
-	         xhr.onerror = function () {
-	            return reject(new TypeError('Network request failed'));
-	         };
-	
-	         xhr.ontimeout = function () {
-	            return reject(new TypeError('Network request failed'));
-	         };
-	
-	         xhr.send();
-	      });
-	   };
-	}
 
 /***/ },
 /* 3 */
@@ -1654,6 +1611,39 @@
 	   }
 	}
 	
+	/**
+	 * Downloads a resource from given URL.
+	 * @param {string} url URL of resource
+	 * @returns {Promise.<{status: number, statusText: string, body: string}>}
+	 */
+	function download(url) {
+	   return new Promise(function (resolve, reject) {
+	      var xhr = new XMLHttpRequest();
+	
+	      xhr.open('GET', url, true);
+	
+	      xhr.onload = function () {
+	         var response = {
+	            status: xhr.status,
+	            statusText: xhr.statusText,
+	            body: 'response' in xhr ? xhr.response : xhr.responseText
+	         };
+	
+	         resolve(response);
+	      };
+	
+	      xhr.onerror = function () {
+	         return reject(new TypeError('Network request failed'));
+	      };
+	
+	      xhr.ontimeout = function () {
+	         return reject(new TypeError('Network request failed'));
+	      };
+	
+	      xhr.send();
+	   });
+	}
+	
 	exports.default = {
 	   /**
 	    * Name of the browser that is running the widget
@@ -2092,8 +2082,8 @@
 	    * @returns {Promise}
 	    */
 	   getData: function getData(url) {
-	      return fetch(url).then(checkStatus).then(function (response) {
-	         return response.json();
+	      return download(url).then(checkStatus).then(function (response) {
+	         return JSON.parse(response.body);
 	      }).catch(function (error) {
 	         console.debug('Error fetching data');
 	         console.trace(error);
@@ -2109,8 +2099,8 @@
 	    * @returns {Promise}
 	    */
 	   getFile: function getFile(url) {
-	      return fetch(url).then(checkStatus).then(function (content) {
-	         return content.text();
+	      return download(url).then(checkStatus).then(function (response) {
+	         return response.body;
 	      }).catch(function (error) {
 	         console.debug('Error fetching file');
 	         console.trace(error);
@@ -2852,17 +2842,76 @@
 	    *
 	    * coreLibrary.widgetModule.events
 	    *    .on('OUTCOME:ADDED:' + outcome.id,
-	    *       ( data, event ) => {
+	    *       ( data ) => {
 	    *          ...
 	    *       });
 	    *
 	    * @type {Object}
 	    */
-	   events: {
-	      // new Stapes.subclass(); TODO replace Stapes
-	      emit: function emit() {},
-	      subscribre: function subscribre() {}
-	   },
+	   events: function () {
+	      /**
+	       * Map of events with handlers
+	       * @type {object<string, function[]>}
+	       */
+	      var handlers = {};
+	
+	      /**
+	       * Registers handler to given event.
+	       * @param {string} event Event name
+	       * @param {function} handler Handler function
+	       */
+	      var on = function on(event, handler) {
+	         if (handlers.hasOwnProperty(event)) {
+	            handlers[event].push(handler);
+	         } else {
+	            handlers[event] = [handler];
+	         }
+	      };
+	
+	      /**
+	       * Unregisters handler/all handlers from given event.
+	       * @param {string} event Event name
+	       * @param {function?} handler Optional handler function pointer
+	       */
+	      var off = function off(event, handler) {
+	         if (handlers.hasOwnProperty(event)) {
+	            // remove all handlers for given event
+	            if (!handler) {
+	               handlers[event] = [];
+	               return;
+	            }
+	
+	            // remove particular handler
+	            var handlerIdx = handlers[event].indexOf(handler);
+	
+	            if (handlerIdx > -1) {
+	               handlers[event].splice(handlerIdx, 1);
+	            }
+	         }
+	      };
+	
+	      /**
+	       * Emits an event with given arguments.
+	       * @param {string} event Event name
+	       * @param {...*} args Arguments for handlers
+	       */
+	      var emit = function emit(event) {
+	         for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	            args[_key - 1] = arguments[_key];
+	         }
+	
+	         if (!handlers.hasOwnProperty(event)) {
+	            return;
+	         }
+	
+	         handlers[event].forEach(function (handler) {
+	            return handler.apply(undefined, args);
+	         });
+	      };
+	
+	      // api
+	      return { on: on, off: off, emit: emit };
+	   }(),
 	
 	   /**
 	    * @type {array}
