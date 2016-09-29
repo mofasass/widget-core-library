@@ -116,7 +116,14 @@ export default {
     *
     * @type {Object}
     */
-   events: null, // new Stapes.subclass(); TODO replace Stapes
+   events: { // new Stapes.subclass(); TODO replace Stapes
+      emit () {
+
+      },
+      subscribre () {
+         
+      }
+   },
 
    /**
     * @type {array}
