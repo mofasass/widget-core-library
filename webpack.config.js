@@ -45,9 +45,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = {
-   entry,
-   devtool,
-   plugins,
+   entry: entry,
+   devtool: devtool,
+   plugins: plugins,
    module: {
       loaders: [
          {
