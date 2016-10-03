@@ -8,13 +8,13 @@ if (process.env.NODE_ENV !== 'production'
    throw new Error('Environment variable NODE_ENV not set, please set it to either "production or "development"')
 }
 
-let entry = {
+var entry = {
    core: ['./src/index.js']
 };
 
-let devtool = 'source-map';
+var devtool = 'source-map';
 
-let plugins = [
+var plugins = [
    new webpack.DefinePlugin({
       'process.env': {
          NODE_ENV: process.env.NODE_ENV
