@@ -35,8 +35,16 @@ if (process.env.NODE_ENV === 'production') {
    plugins = plugins.concat([
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin({
-         compressor: {
-            warnings: true
+         compress: {
+            screw_ie8: true,
+            warnings: false
+         },
+         mangle: {
+            screw_ie8: true
+         },
+         output: {
+            comments: false,
+            screw_ie8: true
          }
       }),
       new webpack.optimize.OccurrenceOrderPlugin(),
