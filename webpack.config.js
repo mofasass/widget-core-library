@@ -1,20 +1,16 @@
 /* eslint-disable import/no-extraneous-dependencies */
-var path = require('path');
-var webpack = require('webpack');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 if (process.env.NODE_ENV !== 'production'
       && process.env.NODE_ENV !== 'development') {
    throw new Error('Environment variable NODE_ENV not set, please set it to either "production or "development"')
 }
 
-var entry = {
-   core: ['./src/index.js']
-};
+let devtool = 'source-map';
 
-var devtool = 'source-map';
-
-var plugins = [
+let plugins = [
    new webpack.DefinePlugin({
       'process.env': {
          NODE_ENV: process.env.NODE_ENV
@@ -28,10 +24,7 @@ var plugins = [
 
 // production-specific configuration
 if (process.env.NODE_ENV === 'production') {
-   entry = {
-      'core.min': ['./src/index.js']
-   }
-   devtool = null;
+   devtool = false;
    plugins = plugins.concat([
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin({
@@ -53,9 +46,11 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = {
-   entry: entry,
    devtool: devtool,
    plugins: plugins,
+   entry: {
+      core: ['./src/index.js']
+   },
    module: {
       loaders: [
          {
