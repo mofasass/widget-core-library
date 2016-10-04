@@ -5,7 +5,9 @@
   "main": "dist/core.js",
   "scripts": {
     "clean": "rm -rf ./dist",
+    "prestart": "npm run clean",
     "start": "env NODE_ENV=development webpack --watch --config webpack.config.js --verbose --display-modules",
+    "prebuild": "npm run clean",
     "build": "env NODE_ENV=production webpack --config webpack.config.js --verbose --display-modules"
   },
   "repository": {
