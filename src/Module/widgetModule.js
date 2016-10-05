@@ -413,7 +413,7 @@ export default {
 
       // Check if we got any stakes passed to use, add them to the data object if so
       if (stakes != null) {
-         if (stakes.isArray()) {
+         if (Array.isArray(stakes)) {
             data.stakes = stakes;
          } else {
             data.stakes = [stakes];
