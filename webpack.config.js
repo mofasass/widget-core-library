@@ -24,7 +24,6 @@ let plugins = [
 
 // production-specific configuration
 if (process.env.NODE_ENV === 'production') {
-   devtool = false;
    plugins = plugins.concat([
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin({
