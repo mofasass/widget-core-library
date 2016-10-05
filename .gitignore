@@ -7,3 +7,4 @@ docs
 bower_components
 /src/transpiled
 /.project
+.DS_Store
