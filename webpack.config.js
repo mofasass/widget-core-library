@@ -54,25 +54,12 @@ module.exports = {
    module: {
       loaders: [
          {
-            test: /\.svg/,
-            loader: 'svg-url-loader'
-         }, {
             test: /.js$/,
             exclude: /node_modules/,
             loader: 'babel-loader',
             query: {
                presets: ['es2015']
             }
-         }, {
-            test: /\.(jpeg|jpg|woff|woff2|eot|ttf|svg)(\?.*$|$)/,
-            exclude: /node_modules/,
-            loader: 'url-loader?importLoaders=1&limit=100000'
-         }, {
-            test: /\.ttf$|\.eot$/,
-            loader: 'file',
-            query: {
-               name: 'font/[hash].[ext]'
-            },
          }, {
             test: /\.json$/,
             loader: 'json'
