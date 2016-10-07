@@ -8,12 +8,10 @@ if (process.env.NODE_ENV !== 'production'
    throw new Error('Environment variable NODE_ENV not set, please set it to either "production or "development"')
 }
 
-let devtool = 'source-map';
-
 let plugins = [
    new webpack.DefinePlugin({
       'process.env': {
-         NODE_ENV: process.env.NODE_ENV
+         NODE_ENV: JSON.stringify(process.env.NODE_ENV)
       }
    }),
    new CopyWebpackPlugin([{
@@ -45,7 +43,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = {
-   devtool: devtool,
+   devtool: 'source-map',
    plugins: plugins,
    entry: {
       core: ['./src/index.js']
