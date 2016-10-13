@@ -18,12 +18,51 @@ export default {
    },
 
    /**
+    * Requests league table statistics data from api.
+    * @param {String} filter a league filter
+    * @returns {Promise}
+    */
+   getLeagueTableStatistics (filter) {
+      // Remove url parameters from filter
+      filter = filter.match(/[^?]*/)[0];
+
+      // Removing trailing and starting slashes if present
+      if ( filter[filter.length - 1] === '/' ) {
+         filter = filter.slice(0, -1);
+      }
+      if ( filter[0] === '/' ) {
+         filter = filter.slice(1);
+      }
+      return coreLibrary.getData(this.config.baseApiUrl + coreLibrary.config.offering + '/leaguetable/' + filter + '.json');
+   },
+
+   /**
+    * Requests H2H statistics data from api.
+    * @param {String|Number} eventId
+    * @returns {Promise}
+    */
+   getHeadToHeadStatistics (eventId) {
+      return coreLibrary.getData(this.config.baseApiUrl + coreLibrary.config.offering + '/h2h/event/' + eventId + '.json');
+   },
+
+   /**
+    * Requests TPI statistics data from api.
+    * @param {String|Number} eventId
+    * @returns {Promise}
+    */
+   getTeamPerformanceStatistics (eventId) {
+      return coreLibrary.getData(this.config.baseApiUrl + coreLibrary.config.offering + '/tpi/event/' + eventId + '.json');
+   },
+
+   /**
     * Requests statistics data from api.
     * @param {String} type
     * @param {String} filter
     * @returns {Promise}
+    * @deprecated
     */
-   getStatistics (type, filter) {
+   getStatistics ( type, filter ) {
+      console.warn('getStatistics is deprecated, please use one of the specific statistics methods');
       // Remove url parameters from filter
       filter = filter.match(/[^?]*/)[0];
 
@@ -35,4 +74,5 @@ export default {
       console.debug(this.config.baseApiUrl + coreLibrary.config.offering + '/' + type + '/' + filter + '.json');
       return coreLibrary.getData(this.config.baseApiUrl + coreLibrary.config.offering + '/' + type + '/' + filter + '.json');
    }
+
 };
