@@ -76,6 +76,8 @@ function checkBrowser() {
  */
 function download(url) {
    return new Promise((resolve, reject) => {
+      // fetch API is not supported in IE11 so we use
+      // old-school XMLHttpRequest
       const xhr = new XMLHttpRequest();
 
       xhr.open('GET', url, true);

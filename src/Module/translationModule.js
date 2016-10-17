@@ -1,6 +1,8 @@
 import coreLibrary from '../coreLibrary';
 /**
  * Module with internationalization methods
+ * Provides a very simple internationalization mechanism
+ * that is not relient in any library
  * @module translationModule
  * @memberOf coreLibrary
  */
@@ -13,8 +15,7 @@ export default {
    i18nStrings: {},
 
    /**
-    * Makes a request to fetch all locales strings.
-    * The locale json file resides in coreLibrary/i18n folder; it is populated with locales during build process
+    * Makes a request to fetch all the provided locale strings
     * @param {String} locale Locale string, eg: sv_SE
     * @returns {Promise}
     * @private
@@ -51,7 +52,7 @@ export default {
     * @example
     * en_GB.json:
     * { "welcomeUserToPlace": "Welcome {0} to {1}" }
-    * Javascriot:
+    * Javascript:
     * getTranslation('welcomeUserToPlace', 'Daniel', 'Stadium') => 'Welcome Daniel to Stadium'
     * @returns {String}
     */
