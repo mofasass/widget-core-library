@@ -4,15 +4,15 @@ import coreLibrary from '../coreLibrary';
 /**
  * Module with utility functions
  * @module utilModule
- * @memberOf coreLibrary
  */
 export default {
 
    /**
-    * Util method for return unique items.
+    * Util method for return unique items between arrays
     * @param {Array} A First array
     * @param {Array} B Second array
     * @returns {Array}
+    * @private
     */
    diffArray (A, B) {
       var map = {}, C = [];
@@ -31,6 +31,7 @@ export default {
 
    /* Replaces expressions like "{customer}" from the provided string
     * to the value the have in the coreLibrary.config object
+    * @param {String} str the string to replace the expressions in
     */
    replaceConfigParameters (str) {
       if (str == null) {

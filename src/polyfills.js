@@ -1,5 +1,9 @@
 import es6Promise from 'es6-promise'; // ES6 Promise polyfill
 
+/*
+File with polyfills we use in this project
+*/
+
 es6Promise.polyfill();
 
 // Object.assign polyfill

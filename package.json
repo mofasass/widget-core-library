@@ -8,7 +8,10 @@
     "prestart": "npm run clean",
     "start": "env NODE_ENV=development webpack --watch --config webpack.config.js --verbose --display-modules",
     "prebuild": "npm run clean",
-    "build": "env NODE_ENV=production webpack --config webpack.config.js --verbose --display-modules"
+    "build": "env NODE_ENV=production webpack --config webpack.config.js --verbose --display-modules",
+    "jsdoc": "rm -rf ./docs && jsdoc ./src/ -r -c jsdoc.conf.json -u ./tutorials/ -d ./docs/ -R ./README.md -t ./node_modules/ink-docstrap/template",
+    "preversion": "npm run jsdoc",
+    "jsdoc-help": "jsdoc --help"
   },
   "repository": {
     "type": "git",
@@ -28,7 +31,8 @@
     "eslint-plugin-import": "^1.16.0",
     "eslint-plugin-jsx-a11y": "^2.2.2",
     "eslint-plugin-react": "^6.3.0",
-    "jsdoc": "^3.4.0",
+    "ink-docstrap": "^1.3.0",
+    "jsdoc": "^3.4.2",
     "node-sass": "^3.9.3",
     "webpack": "^1.13.2"
   },

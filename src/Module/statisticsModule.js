@@ -1,17 +1,18 @@
 import coreLibrary from '../coreLibrary';
 
 /**
- * Module to access statistics data
+ * Module to access statistics API
+ * The statistics API has information concerning historical data of events (matches, competitions)
+ * All methods in this module return Promises that are resolved when the data is ready and throws errors (that can be handled with .catch()) on failure
  * @module statisticsModule
- * @memberOf coreLibrary
  */
 
 export default {
 
    /**
-    * Configuration.
+    * Configuration
     * @type {Object}
-    * @property {String} baseApiUrl
+    * @property {String} baseApiUrl the baseURL for statistics API requests
     */
    config: {
       baseApiUrl: 'https://api.kambi.com/statistics/api/'
@@ -19,7 +20,7 @@ export default {
 
    /**
     * Requests league table statistics data from api.
-    * @param {String} filter a league filter
+    * @param {String} filter a filter string to a competition. Example 'football/england/premier_league'
     * @returns {Promise}
     */
    getLeagueTableStatistics (filter) {
@@ -38,7 +39,7 @@ export default {
 
    /**
     * Requests H2H statistics data from api.
-    * @param {String|Number} eventId
+    * @param {String|Number} eventId id of a match
     * @returns {Promise}
     */
    getHeadToHeadStatistics (eventId) {
@@ -47,32 +48,10 @@ export default {
 
    /**
     * Requests TPI statistics data from api.
-    * @param {String|Number} eventId
+    * @param {String|Number} eventId id of a match
     * @returns {Promise}
     */
    getTeamPerformanceStatistics (eventId) {
       return coreLibrary.getData(this.config.baseApiUrl + coreLibrary.config.offering + '/tpi/event/' + eventId + '.json');
-   },
-
-   /**
-    * Requests statistics data from api.
-    * @param {String} type
-    * @param {String} filter
-    * @returns {Promise}
-    * @deprecated
-    */
-   getStatistics ( type, filter ) {
-      console.warn('getStatistics is deprecated, please use one of the specific statistics methods');
-      // Remove url parameters from filter
-      filter = filter.match(/[^?]*/)[0];
-
-      // Remove trailing slash if present
-      if (filter[filter.length - 1] === '/') {
-         filter = filter.slice(0, -1);
-      }
-
-      console.debug(this.config.baseApiUrl + coreLibrary.config.offering + '/' + type + '/' + filter + '.json');
-      return coreLibrary.getData(this.config.baseApiUrl + coreLibrary.config.offering + '/' + type + '/' + filter + '.json');
    }
-
 };

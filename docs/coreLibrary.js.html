@@ -1,4 +1,83 @@
-import offeringModule from './Module/offeringModule';
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Kambi Widgets Source: coreLibrary.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Kambi Widgets</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-coreLibrary.html">coreLibrary</a></li><li><a href="module-offeringModule.html">offeringModule</a></li><li><a href="module-statisticsModule.html">statisticsModule</a></li><li><a href="module-translationModule.html">translationModule</a></li><li><a href="module-utilModule.html">utilModule</a></li><li><a href="module-widgetModule.html">widgetModule</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="tutorials.list.html" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="tutorial-Building and Deploying Widgets.html">Building and Deploying Widgets</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			
+
+		<h1 class="page-title">Source: coreLibrary.js</h1>
+    
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">import offeringModule from './Module/offeringModule';
 import statisticsModule from './Module/statisticsModule';
 import translationModule from './Module/translationModule';
 import utilModule from './Module/utilModule';
@@ -11,7 +90,7 @@ import widgetModule from './Module/widgetModule';
  */
 
 function checkStatus(response) {
-   if (response.status >= 200 && response.status < 300) {
+   if (response.status >= 200 &amp;&amp; response.status &lt; 300) {
       return response;
    } else {
       var error = new Error(response.statusText);
@@ -26,7 +105,7 @@ function checkBrowser() {
 
    var getFirstMatch = function (regex) {
       var match = ua.match(regex);
-      return (match && match.length > 1 && match[1]) || '';
+      return (match &amp;&amp; match.length > 1 &amp;&amp; match[1]) || '';
    };
 
    var versionIdentifier = getFirstMatch(/version\/(\d+(\.\d+)?)/i);
@@ -72,7 +151,7 @@ function checkBrowser() {
 /*
  * Downloads a resource from given URL.
  * @param {string} url URL of resource
- * @returns {Promise.<{status: number, statusText: string, body: string}>}
+ * @returns {Promise.&lt;{status: number, statusText: string, body: string}>}
  */
 function download(url) {
    return new Promise((resolve, reject) => {
@@ -163,14 +242,14 @@ export default {
    set config (config) {
       /* eslint-disable no-underscore-dangle */
       for (var i in config) {
-         if (config.hasOwnProperty(i) && this._config.hasOwnProperty(i)) {
+         if (config.hasOwnProperty(i) &amp;&amp; this._config.hasOwnProperty(i)) {
             this._config[i] = config[i];
          }
       }
       // Make sure that the routeRoot is not null or undefined
       if (this._config.routeRoot == null) {
          this._config.routeRoot = '';
-      } else if (this._config.routeRoot.length > 0 &&
+      } else if (this._config.routeRoot.length > 0 &amp;&amp;
             this._config.routeRoot.slice(-1) !== '/') {
          // If the routeRoot is not empty we need to make sure it has a trailing slash
          this._config.routeRoot += '/';
@@ -214,7 +293,7 @@ export default {
     https://someurl.com/customcss/kambi/style.css
 
     * @property {String} customCssUrlFallback fallback if the fetching of customCssUrl fails
-    * @property {Array<Object>} conditionalArgs Optional, specify arguments to be applied based on some condition based in the values inside coreLibrary.config or coreLibrary.pageInfo
+    * @property {Array&lt;Object>} conditionalArgs Optional, specify arguments to be applied based on some condition based in the values inside coreLibrary.config or coreLibrary.pageInfo
     example:
 
     conditionalArgs: [
@@ -310,7 +389,7 @@ export default {
    set pageInfo (pageInfo) {
       /* eslint-disable no-underscore-dangle */
       // Check if the last character in the pageParam property is a slash, if not add it so we can use this property in filter requests
-      if (pageInfo.pageType === 'filter' && pageInfo.pageParam.substr(-1) !== '/') {
+      if (pageInfo.pageType === 'filter' &amp;&amp; pageInfo.pageParam.substr(-1) !== '/') {
          pageInfo.pageParam += '/';
       }
       this._pageInfo = pageInfo;
@@ -338,7 +417,7 @@ export default {
    set apiVersions (versions) {
       /* eslint-disable no-underscore-dangle */
       for (var i in versions) {
-         if (versions.hasOwnProperty(i) && this._apiVersions.hasOwnProperty(i)) {
+         if (versions.hasOwnProperty(i) &amp;&amp; this._apiVersions.hasOwnProperty(i)) {
             this._apiVersions[i] = versions[i];
          }
       }
@@ -598,3 +677,136 @@ export default {
       this.widgetTrackingName = name;
    }
 };
+</pre>
+    </article>
+</section>
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a>
+	
+		on Thu Oct 20th 2016
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>

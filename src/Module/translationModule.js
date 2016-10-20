@@ -1,10 +1,11 @@
 import coreLibrary from '../coreLibrary';
+
 /**
  * Module with internationalization methods
  * Provides a very simple internationalization mechanism
- * that is not relient in any library
+ * that is not relient in any library.
+ * The loading of the right internationalization JSON file is handled automatically
  * @module translationModule
- * @memberOf coreLibrary
  */
 export default {
    /**
@@ -15,7 +16,7 @@ export default {
    i18nStrings: {},
 
    /**
-    * Makes a request to fetch all the provided locale strings
+    * Makes a request to fetch the provided locale strings
     * @param {String} locale Locale string, eg: sv_SE
     * @returns {Promise}
     * @private
@@ -54,7 +55,7 @@ export default {
     * { "welcomeUserToPlace": "Welcome {0} to {1}" }
     * Javascript:
     * getTranslation('welcomeUserToPlace', 'Daniel', 'Stadium') => 'Welcome Daniel to Stadium'
-    * @returns {String}
+    * @returns {String} the localized string
     */
    getTranslation: function (key, ...args) {
       if (this.i18nStrings[key] != null) {

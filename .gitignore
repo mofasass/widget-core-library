@@ -2,7 +2,6 @@
 node_modules
 .awspublish-*
 .sass-cache/
-docs
 *.map
 bower_components
 /src/transpiled

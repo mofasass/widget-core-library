@@ -6,6 +6,17 @@ import translationModule from './Module/translationModule';
 import utilModule from './Module/utilModule';
 import widgetModule from './Module/widgetModule';
 
+if (window != null) {
+   window.WidgetCoreLibrary = {
+      coreLibrary,
+      offeringModule,
+      statisticsModule,
+      translationModule,
+      utilModule,
+      widgetModule
+   };
+}
+
 export {
    coreLibrary,
    offeringModule,
