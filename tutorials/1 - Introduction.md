@@ -37,7 +37,9 @@ The widget is an html-page loaded inside an iframe. By configuration using JavaS
 
   `npm run start`
 
-  - If the build was successful the widget will be running under `https://localhost:8080` after a few seconds. The server that hosts the widgets code runs under port 8080 and under the HTTPS protocol, which means you might get an HTTPS certificate error. See the section 2 - Development for more information.
+  - If the build was successful the widget will be running under `https://localhost:8080` after a few seconds. The server that hosts the widgets code runs under port 8080 and under the HTTPS protocol with a self-signed certificate, which means you might get an HTTPS certificate error unless you trust the certificate.
+
+See the section 2 - Development for more information.
 
 ### Building a Project for Production
 
@@ -46,3 +48,5 @@ The widget is an html-page loaded inside an iframe. By configuration using JavaS
  `npm run build`
 
  - If the build was successful after a few seconds the widgets code will be bundled inside the `/dist/` folder. All files of this folder should be deployed to whatever hosting solution you use. The sportsbook needs to point to the `index.html` file from this folder.
+
+See section 3 - Production Builds and Deployment for more information

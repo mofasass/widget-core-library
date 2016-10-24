@@ -30,7 +30,7 @@ export default {
    },
 
    /**
-    * Get events by filter
+    * Get events by filter, only returns the main betoffer for the event. To get all betoffers use getEvent() or getLiveEvent()
     * @param {String} filter Filter string, eg: football
     * @param {Object} params Request relevant parameters
     * @returns {Promise}
@@ -97,7 +97,7 @@ export default {
    },
 
    /**
-    * Get all live events
+    * Get all live events, only returns the main betoffer for the event. To get all betoffers use getEvent() or getLiveEvent()
     * @returns {Promise}
     * @private
     */
@@ -146,7 +146,7 @@ export default {
    },
 
    /**
-    * Get live events by filter
+    * Get live events by filter, only returns the main betoffer for the event. To get all betoffers use getEvent() or getLiveEvent()
     * @param {String} filter Filter string
     * @returns {Promise}
     */
