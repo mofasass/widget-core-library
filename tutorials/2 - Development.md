@@ -135,7 +135,7 @@ More information about exports and imports can be seen [here](https://developer.
 
 All widgets need to start by calling `coreLibrary.init()` and passing it the default arguments that the widget receives. These arguments can be overwritten by the Sportsbook (or inside `src/mockSetupData.json` arguments attribute when running the widget outside the sportsbook). `coreLibrary.init()` returns a `Promise` object which is a way to deal with asynchronous requests (all calls to fetch data in `kambi-widget-core-library` return `Promise`s).
 
-You can learn more about `Promise`s [here](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise). Examples about `Promise`s can also be seen in the `4 - Fetching Data` section.
+You can learn more about `Promise`s [here](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise). Examples about `Promise`s can also be seen in section `4 - Fetching Data`.
 
 ```javascript
 coreLibrary.init({
