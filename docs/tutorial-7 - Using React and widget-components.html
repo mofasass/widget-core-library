@@ -1,148 +1,167 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width">
-   <title>Kambi Widgets Tutorial: 7 - Using React and widget-components</title>
-   <!--[if lt IE 9]>
-   <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-   <![endif]-->
-   <link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
-   <link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Kambi Widgets Tutorial: 7 - Using React and widget-components</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
 </head>
+
 <body>
+
 <div class="navbar navbar-default navbar-fixed-top navbar-inverse">
-   <div class="container">
-      <div class="navbar-header">
-         <a class="navbar-brand" href="index.html">Kambi Widgets</a>
-         <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-         </button>
-      </div>
-      <div class="navbar-collapse collapse" id="topNavigation">
-         <ul class="nav navbar-nav">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Kambi Widgets</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-coreLibrary.html">coreLibrary</a></li><li><a href="module-offeringModule.html">offeringModule</a></li><li><a href="module-statisticsModule.html">statisticsModule</a></li><li><a href="module-translationModule.html">translationModule</a></li><li><a href="module-utilModule.html">utilModule</a></li><li><a href="module-widgetModule.html">widgetModule</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="tutorials.list.html" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="tutorial-1 - Introduction.html">1 - Introduction</a></li><li><a href="tutorial-2 - Development.html">2 - Development</a></li><li><a href="tutorial-3 - Production Builds and Deployment.html">3 - Production Builds and Deployment</a></li><li><a href="tutorial-4 - Fetching Data.html">4 - Fetching Data</a></li><li><a href="tutorial-5 - Sportsbook Interaction.html">5 - Sportsbook Interaction</a></li><li><a href="tutorial-6 - Internationalization.html">6 - Internationalization</a></li><li><a href="tutorial-7 - Using React and widget-components.html">7 - Using React and widget-components</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
 
-            <li class="dropdown">
-               <a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b
-                  class="caret"></b></a>
-               <ul class="dropdown-menu ">
-                  <li><a href="module-coreLibrary.html">coreLibrary</a></li>
-                  <li><a href="module-offeringModule.html">offeringModule</a></li>
-                  <li><a href="module-statisticsModule.html">statisticsModule</a></li>
-                  <li><a href="module-translationModule.html">translationModule</a></li>
-                  <li><a href="module-utilModule.html">utilModule</a></li>
-                  <li><a href="module-widgetModule.html">widgetModule</a></li>
-               </ul>
-            </li>
-
-            <li class="dropdown">
-               <a href="tutorials.list.html" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b
-                  class="caret"></b></a>
-               <ul class="dropdown-menu ">
-                  <li><a href="tutorial-1 - Introduction.html">1 - Introduction</a></li>
-                  <li><a href="tutorial-2 - Development.html">2 - Development</a></li>
-                  <li><a href="tutorial-3 - Production Builds and Deployment.html">3 - Production Builds and
-                     Deployment</a></li>
-                  <li><a href="tutorial-4 - Fetching Data.html">4 - Fetching Data</a></li>
-                  <li><a href="tutorial-5 - Widget API.html">5 - Widget API</a></li>
-                  <li><a href="tutorial-6 - Internationalization.html">6 - Internationalization</a></li>
-                  <li><a href="tutorial-7 - Using React and widget-components.html">7 - Using React and
-                     widget-components</a></li>
-               </ul>
-            </li>
-         </ul>
-         <div class="col-sm-3 col-md-3">
-            <form class="navbar-form" role="search">
-               <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
-                  <div class="input-group-btn">
-                     <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i>
-                     </button>
-                  </div>
-               </div>
-            </form>
-         </div>
-
-      </div>
-
-   </div>
 </div>
+</div>
+
+
 <div class="container" id="toc-content">
-   <div class="row">
-      <div class="col-md-12">
-         <div id="main">
-            <section class="tutorial-section">
-               <header>
-                  <h2>7 - Using React and widget-components</h2>
-               </header>
-               <article>
-                  <section class="tutorial-section">
-                     <article>
-                        <p>Widget-components is a collection of reusable components written with React framework.
-                           Currently the list involves following components: HeaderComponent and OutcomeComponent</p>
-                        <section>
-                           <h3>Pre-requisites</h3>
-                           You can start using widget-components by installing it as a dependency
-                           <code>npm install widget-components</code>
-                        </section>
-                        <section>
-                           <h3>Using components in a widget (i.e. OutcomeComponent)</h3>
-                           Open up the file where you would like to use the chosen component and add
-                           <code>import { ComponentName } from 'widget-components'</code>
-                           on top of the file. In order to properly use any of the components you need to follow
-                           instruction
-                           on the list of arguments that you need to supply.
-                           <p>For example <strong>OutcomeComponent</strong> have a three parameters that supply.
-                           <ul>
-                              <li>outcome (required)</li>
-                              <li>event</li>
-                              <li>withLabel</li>
-                              <li>customLabel</li>
-                           </ul>
-                           You now have the possibility to use this component with the following syntax
-                           <code>render() { return &#60OutcomeComponent argumentName={ argumentValue
-                              }&#62&#60/OutcomeComponent&#62
-                              }</code> when use inside other component or as a argument to <code>ReactDOM.render(&#60OutcomeComponent
-                           argumentName={ argumentValue }&#62&#60/OutcomeComponent&#62, htmlTag)</code>
-                        </section>
-                        <section>
-                           <h3>useRealReact flag</h3>
-                           You can specify <code>useRealReact</code> object in package.json to setup for which environment <a href="https://github.com/facebook/react">React</a> or <a href="https://github.com/Lucifier129/react-lite">React Lite</a> will be used. You can define different values for development and production environment.
-                           <code>{ development: [Boolean], production: [Boolean] }</code>.
-                           React version will be used for if is set to true otherwise React lite will be loaded.
-                        </section>
-                     </article>
-                  </section>
-               </article>
-            </section>
-         </div>
-      </div>
-      <div class="clearfix"></div>
-   </div>
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			<section class="tutorial-section">
+
+<header>
+    
+
+    <h2>7 - Using React and widget-components</h2>
+</header>
+
+<article>
+    <p>Widget-components is a collection of reusable components written with <a href="https://facebook.github.io/react/">React</a> framework. Currently the list involves following components: OutcomeButton</p>
+<h3>Pre-requisites</h3><p>You can start using widget-components by installing it as a dependency to the project by running:</p>
+<p><code>npm install kambi-widget-components</code></p>
+<p>JSX syntax works only in <code>.jsx</code> files, so index.js should import a <code>.jsx</code> file like this:</p>
+<pre class="prettyprint source lang-javascript"><code>import { ComponentName } from 'kambi-widget-components';
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+ReactDOM.render(
+   &lt;ComponentName
+      componentProp1=&quot;someValue&quot;
+      componentProp2={coreLibrary.args.someArgument}
+   />,
+   document.getElementById('root')
+);</code></pre><p>Note: <code>kambi-widget-components</code> also includes <code>react</code> and <code>react-dom</code> dependencies and as such they don't need to be installed in the project. You can also make your own components and have the whole widget be a React component if desired.</p>
+<p>At the top of the file. In order to properly use any of the components you need to follow instruction on the list of arguments that you need to supply.</p>
+<p>For example OutcomeButton has:</p>
+<ul>
+<li><p>outcome (required): a outcome object from the <code>offeringModule</code></p>
+</li>
+<li><p>event: a event object from the <code>offeringModule</code></p>
+</li>
+<li><p>withLabel: a Boolean that defines if a label should be shown in the button or not</p>
+</li>
+<li><p>customLabel: overrides the default label with this value</p>
+</li>
+</ul>
+<p>Example:</p>
+<pre class="prettyprint source lang-javascript"><code>   render() {
+      return (
+         &lt;OutcomeButton
+            outcome={ this.props.outcome }
+         >&lt;/OutcomeButton>
+      );
+   }</code></pre><h3>useRealReact flag</h3><p>By default the project uses <a href="https://github.com/Lucifier129/react-lite">react-lite</a> in production build which is a light-weight version of react with focus on small file-size instead of the normal react. While in development mode though (<code>npm run start</code>) the project uses the real react because it provides more debug functionalities. This is handled by the <code>kambi-widget-build-tools</code> automatically.</p>
+<p>React Lite is an alternative implementation of React and as such it can have incompatibilities, although so far we haven't encountered any. If you want to override the default behavior of the build you can force the use of a specific React version by placing a <code>useRealReact</code> object in package.json. You can define different values for development and production environment.</p>
+<p>package.json:</p>
+<pre class="prettyprint source lang-javascript"><code>{
+   ...
+   &quot;useRealReact&quot;: {
+      &quot;development&quot;: [Boolean],
+      &quot;production&quot;: [Boolean]
+   }
+}</code></pre><p>By default <code>development</code> is <code>true</code> and <code>production</code> is <code>false</code></p>
+</article>
+
+</section>
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
 </div>
-<div class="modal fade" id="searchResults">
-   <div class="modal-dialog">
-      <div class="modal-content">
-         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-               aria-hidden="true">&times;</span></button>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title">Search results</h4>
-         </div>
-         <div class="modal-body"></div>
-         <div class="modal-footer">
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-         </div>
-      </div><!-- /.modal-content -->
-   </div><!-- /.modal-dialog -->
-</div>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
 <footer>
+
+
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a>
-
-		on Mon Oct 24th 2016
-
+	
+		on Tue Oct 25th 2016
+	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
 </footer>
@@ -150,69 +169,71 @@
 <script src="scripts/docstrap.lib.js"></script>
 <script src="scripts/toc.js"></script>
 
-<script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
 
 <script>
-   $(function () {
-      $("[id*='$']").each(function () {
-         var $this = $(this);
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
 
-         $this.attr("id", $this.attr("id").replace("$", "__"));
-      });
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
 
-      $(".tutorial-section pre, .readme-section pre, pre.prettyprint.source").each(function () {
-         var $this = $(this);
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
 
-         var example = $this.find("code");
-         exampleText = example.html();
-         var lang = /{@lang (.*?)}/.exec(exampleText);
-         if (lang && lang[1]) {
-            exampleText = exampleText.replace(lang[0], "");
-            example.html(exampleText);
-            lang = lang[1];
-         } else {
-            var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
-            lang = langClassMatch ? langClassMatch[1] : "javascript";
-         }
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
 
-         if (lang) {
+		if ( lang ) {
 
-            $this
-            .addClass("sunlight-highlight-" + lang)
-            .addClass("linenums")
-            .html(example.html());
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
 
-         }
-      });
+		}
+	} );
 
-      Sunlight.highlightAll({
-         lineNumbers: true,
-         showMenu: true,
-         enableDoclinks: true
-      });
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
 
-      $.catchAnchorLinks({
-         navbarOffset: 10
-      });
-      $("#toc").toc({
-         anchorName: function (i, heading, prefix) {
-            return $(heading).attr("id") || ( prefix + i );
-         },
-         selectors: "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
-         showAndHide: false,
-         smoothScrolling: true
-      });
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
 
-      $("#main span[id^='toc']").addClass("toc-shim");
-      $('.dropdown-toggle').dropdown();
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
 
-      $("table").each(function () {
-         var $this = $(this);
-         $this.addClass('table');
-      });
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
 
-   });
+} );
 </script>
+
 
 
 <!--Navigation and Symbol Display-->
@@ -221,11 +242,12 @@
 <!--Google Analytics-->
 
 
-<script type="text/javascript">
-   $(document).ready(function () {
-      SearcherDisplay.init();
-   });
-</script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
 
 
 </body>
