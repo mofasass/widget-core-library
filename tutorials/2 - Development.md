@@ -1,5 +1,3 @@
-# Development
-
 ### Running the widget
 
 - Inside the project folder run:
@@ -10,7 +8,7 @@
 
 ### HTTPS certificate
 
-`npm run start` starts a built-in webserver (called WebpackDevserver) that hosts the widgets code for development mode. This servers runs under the HTTPS protocol because that is required by the Kambi Sportsbook, as such it has a self-signed certificate which needs to be manually trusted in order to be able to open the widget
+`npm run start` starts a built-in webserver (called WebpackDevServer) that hosts the widgets code for development mode. This servers runs under the HTTPS protocol because that is required by the Kambi Sportsbook, as such it has a self-signed certificate which needs to be manually trusted in order to be able to open the widget
 
 In chrome and firefox you can trust the certificate by visiting `https://localhost:8080` and hitting advance to accept the certificate. 
 
@@ -47,44 +45,66 @@ project
 
 README.md: readme for the project
 
-.eslintrc, .gitignore, .editorconfig: configuration files for the project. These files are overwritten everytime the widget is built to make sure that all the widgets have the same files
+ - .eslintrc, .gitignore, .editorconfig
 
-LICENSE: license file of the project
+ Configuration files for the project. These files are overwritten everytime the widget is built to make sure that all the widgets have the same files
 
-package.json: NPM configuration file. This file lists metadata about the project as well as all external dependencies it uses
+ - LICENSE
 
-dist: When building the project for production with `npm run build` the files to be deployed are placed inside this folder
+ License file of the project
 
-node_modules: all NPM dependencies used in the project are stored in this folder, if the project seems to be missing or using outdated dependencies delete this folder and call `npm install`
+ - package.json
 
-src: this folder holds the source code for the widget
+  NPM configuration file. This file lists metadata about the project as well as all external dependencies it uses
 
-src/app.scss: SCSS file with styling rules for this widget, this file is converted to regular CSS during the build process. SCSS is a superset of CSS and as such all CSS is also valid SCSS, so normal CSS can be placed in this file. More information on SCSS [here](http://sass-lang.com/)
+ - dist
 
-src/index.html: The markup of the widget, ideally the widget should only change the `<body>` section of the page. Additional files/libraries should not be included in as `<script>` tags in the page, instead they should be included by `import`ing them inside index.js, although it is still possible to do so. See the following sections on how to add dependencies to the project
+ When building the project for production with `npm run build` the files to be deployed are placed inside this folder
 
-src/index.js: This is the main javascript file of the project, see the following sections on how to use it
+ - node_modules
 
-src/mockSetupData.json: This file is used ONLY when not opening the widget inside the Kambi Sportsbook, it mocks values that would normally be passed by the Sportsbook. By changing values in this file you can test how the widget will look like in another language for example.
-For more information check the API documentation for `coreLibrary.config`, `coreLibrary.args` and `coreLibrary.pageInfo`
+ All NPM dependencies used in the project are stored in this folder, if the project seems to be missing or using outdated dependencies delete this folder and run `npm install` to download fresh versions of all the dependencies
 
-i18n: This folder holds all the internationalization JSON files of the widget, these are used by the `translationModule`, the use of these files are optional if no internationalization is required. If the user locale is not found in this folder it will fallback to `en_GB.json`. These are all the currently supported locales in the Sportsbook, although they can vary by operator:
+ - src
 
-cs_CZ.json, de_DE.json, es_ES.json, fr_CH.json, lt_LT.json, no_NO.json, ro_RO.json, da_DK.json, el_GR.json, et_EE.json, fr_FR.json, lv_LV.json, pl_PL.json, ru_RU.json, de_AT.json, en_AU.json, fi_FI.json, hu_HU.json, nl_BE.json, pt_BR.json, sv_SE.json, de_CH.json, en_GB.json, fr_BE.json, it_IT.json, nl_NL.json, pt_PT.json, tr_TR.json
+ This folder holds the source code for the widget
+
+ - src/app.scss
+
+ SCSS file with styling rules for this widget, this file is converted to regular CSS during the build process. SCSS is a superset of CSS and as such all CSS is also valid SCSS, so normal CSS can be placed in this file. More information on SCSS [here](http://sass-lang.com/)
+
+ - src/index.html
+
+ The markup of the widget, ideally the widget should only change the `<body>` section of this file. Additional files/libraries should not be included in as `<script>` tags in the page, instead they should be included by `import`ing them inside index.js, although it is still possible to do so. See the following sections on how to add dependencies to the project
+
+ - src/index.js
+
+ This is the main javascript file of the project, see the following sections on how to use it
+
+ - src/mockSetupData.json
+
+ This file is used ONLY when not opening the widget inside the Kambi Sportsbook, it mocks values that would normally be passed by the Sportsbook. By changing values in this file you can test how the widget will look like in another language for example.
+
+ For more information check the API documentation for `coreLibrary.config`, `coreLibrary.args` and `coreLibrary.pageInfo`
+
+ - src/i18n
+ This folder holds all the internationalization JSON files of the widget, these are used by the `translationModule`, the use of these files are optional if no internationalization is required. If the user locale is not found in this folder it will fallback to `en_GB.json`. These are all the currently supported locales in the Sportsbook, although they can vary by operator:
+
+ cs_CZ.json, de_DE.json, es_ES.json, fr_CH.json, lt_LT.json, no_NO.json, ro_RO.json, da_DK.json, el_GR.json, et_EE.json, fr_FR.json, lv_LV.json, pl_PL.json, ru_RU.json, de_AT.json, en_AU.json, fi_FI.json, hu_HU.json, nl_BE.json, pt_BR.json, sv_SE.json, de_CH.json, en_GB.json, fr_BE.json, it_IT.json, nl_NL.json, pt_PT.json, tr_TR.json
 
 ### Core Library and Build Tools
 
 By default the a widget project uses these two dependencies:
 
- - `widget-core-library`
+ - `kambi-widget-core-library`
 
  Has API methods for interacting with the Sportsbook and fetching data as well as methods for internationalization.
 
- - `widget-build-tools`
+ - `kambi-widget-build-tools`
 
- Defines the build process of the widget.
+ Defines the build process of the widget as well as the built-in development server. Only used at build time.
 
-These dependencies are external to the project and as such have their own specific versions, you can check the versions inside the `package.json` file.
+These dependencies are external to the project and as such have their own specific versions, you can check their versions inside the `package.json` file.
 
 ### Importing and Exporting Files
 
@@ -97,14 +117,14 @@ import {
    coreLibrary,
    widgetModule,
    offeringModule
-} from 'widget-core-library';
+} from 'kambi-widget-core-library';
 import './index.html';
 import './app.scss';
 
 ...
 ```
 
-As can be seen here, that file imports `coreLibrary`, `widgetModule` and `offeringModule` from `widget-core-library` as well as importing the `./index.html` and `./app.scss`. If those files were not imported they would not be included in the final bundled version (`index.html` would be missing in the `dist` folder for example).
+As can be seen here, that file imports `coreLibrary`, `widgetModule` and `offeringModule` from `kambi-widget-core-library` as well as importing the `./index.html` and `./app.scss`. If those files were not imported they would not be included in the final bundled version (`index.html` would be missing in the `dist` folder for example).
 
 Imports that start with `./` mean that they are importing other files in the same project, while those without `./` are importing files that are dependencies of the project (see next few sections for more information). So it is possible to split the widgets code in multiple javascript files.
 
@@ -112,7 +132,7 @@ More information about exports and imports can be seen [here](https://developer.
 
 ### Basic Code Setup
 
-All widgets need to start by calling `coreLibrary.init()` and passing it the default arguments that the widget receives. These arguments can be overwritten by the Sportsbook (or inside `src/mockSetupData.json` arguments attribute when running the widget outside the sportsbook). `coreLibrary.init()` returns a `Promise` object which is a way to deal with asynchronous requests (all calls to fetch data in `widget-core-library` return `Promise`s).
+All widgets need to start by calling `coreLibrary.init()` and passing it the default arguments that the widget receives. These arguments can be overwritten by the Sportsbook (or inside `src/mockSetupData.json` arguments attribute when running the widget outside the sportsbook). `coreLibrary.init()` returns a `Promise` object which is a way to deal with asynchronous requests (all calls to fetch data in `kambi-widget-core-library` return `Promise`s).
 
 You can learn more about `Promise`s [here](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise). Examples about `Promise`s can also be seen in the `Fetching Data` section.
 
@@ -133,7 +153,7 @@ The above code simply sets the header text of the widget to be `"Hello World"` u
 
 ### Adding an external Dependency
 
-With the basic setup you only have access to the `widget-core-library` in the project, which can make it hard to do complex widgets using plain Javascript. If we wanted to add a library to make our jobs easier we could do so by adding a `<script>` tag in the `<head>` section of the page and using it by accessing the global values it defines, but that is not the recommended way of doing this because it can be hard to keep track of all the dependencies the project will need. As an alternative you can also add dependencies using `npm`. For example to add jquery to the project all we need to do is run this in the command line:
+With the basic setup you only have access to the `kambi-widget-core-library` in the project, which can make it hard to do complex widgets using plain Javascript. If we wanted to add a library to make our jobs easier we could do so by adding a `<script>` tag in the `<head>` section of the page and using it by accessing the global values it defines, but that is not the recommended way of doing this because it can be hard to keep track of all the dependencies the project will need. As an alternative you can also add dependencies using `npm`. For example to add jquery to the project all we need to do is run this in the command line:
 
 `npm install --save jquery`
 
@@ -142,7 +162,7 @@ and start using it by `import`ing it in the javascript:
 ```javascript
 import {
    coreLibrary
-} from 'widget-core-library';
+} from 'kambi-widget-core-library';
 import './index.html';
 import './app.scss';
 import $ from 'jquery';
@@ -169,12 +189,12 @@ The most important part of the coding style rules is that the default indentatio
 
 ### Common Build Architecture
 
- Since all webpack build configuration of the widgets is shared and localized in the `widget-build-tools` dependency it is not possible to add more items to the build architecture. For example replacing SCSS with LESS is not possible. We might add some scape hatches in the future to support customizing the webpack configuration to allow modifying the build process.
+ Since all webpack build configuration of the widgets is shared and localized in the `kambi-widget-build-tools` dependency it is not possible to add more items to the build architecture. For example replacing SCSS with LESS is not possible. We might add some scape hatches in the future to support customizing the webpack configuration to allow modifying the build process.
 
 ### ES6 and JSX
 
-The project has babel [transpilation](https://babeljs.io/) step process set up during the build so it supports the full [ES6 syntax](https://babeljs.io/docs/learn-es2015/) and JSX for React development. These new syntaxes are completely optional and can be ignored completely if so desired.
+The project has babel [transpilation](https://babeljs.io/) step process set up during the build so it supports the full [ES6 syntax](https://babeljs.io/docs/learn-es2015/) and JSX for React development in all browsers. These new syntaxes are completely optional and can be ignored completely if so desired.
 
-Important: babel only transpiles ES6 syntax, but not ES6 features like [fetch API](https://developer.mozilla.org/en/docs/Web/API/Fetch_API). New ES6 features need to be polyfilled in to support old browsers (for example IE11 does not support fetch API), the `widget-core-library` polyfills ES6 `Promise`s so those can be safely used no matter the target browser.
+Important: babel only transpiles ES6 syntax, but not ES6 features like [fetch API](https://developer.mozilla.org/en/docs/Web/API/Fetch_API). New ES6 features need to be polyfilled in to support old browsers (for example IE11 does not support fetch API), the `kambi-widget-core-library` polyfills ES6 `Promise`s so those can be safely used no matter the target browser.
 
 Besides ES6 the build process also supports JSX for React development. The only caveat is that JSX syntax is only supported in `.jsx` files. Since the entry point of the project is `src/index.js` that file needs to `import` another `.jsx` file in order to enable JSX. See more about this in section 7 - Using React and widget-components.

@@ -1,5 +1,3 @@
-# Production Builds and Deployment
-
 ### Production Build
 
 - Inside the project folder run:
@@ -12,4 +10,4 @@
 
 ### Deployment
 
- Copy the files from the `/dist/` folder to whatever Content Delivery Network (CDN) you use. When configuring the sportsbook the url should point to the `index.html` inside this `/dist/` folder in your CDN of choice. Information about configuring the widgets inside the Sportsbook can be found inside the [Kambi Documentation](https://kambiservices.atlassian.net/wiki/display/Kambi/Widgets)
+ Copy the files from the `/dist/` folder to whatever Content Delivery Network (CDN) you use. When configuring the sportsbook the url should point to the `index.html` inside this `/dist/` folder in your CDN of choice. Information about configuring the widgets inside the Sportsbook can be found in the [Kambi Documentation](https://kambiservices.atlassian.net/wiki/display/Kambi/Widgets)

@@ -1,5 +1,3 @@
-# Introduction
-
 Widgets are self-contained content that can be added to various places in the Kambi client. It provides the possibility for the operator to differentiate the client, to add unique features or content, and to tailor the client to a group of players, or even to individuals.
 
 The widget is an html-page loaded inside an iframe. By configuration using JavaScript the operator controls what widgets to load, where to place them and when to display them.
@@ -9,11 +7,19 @@ The widget is an html-page loaded inside an iframe. By configuration using JavaS
 
  - Install [Nodejs latest version](https://nodejs.org/en/)
 
- - By installing Nodejs you should have the `npm` command line tool installed. With it run:
+ - Run:
 
  `npm install -g kambi-widget-build-tools`
 
  - By running this command you will now have a new command line tool called `kambi-widgets-cli` which is used for creating new projects
+
+Notes:
+
+By installing Nodejs you should have the `npm` command line tool installed. Make sure that the version of npm you have is `3.0.0` or higher by running:
+
+`npm --version`
+
+Version 3.0.0 of npm is included in Nodejs versions 5.0.0 or higher.
 
 ### Creating a New Project
 
@@ -21,7 +27,9 @@ The widget is an html-page loaded inside an iframe. By configuration using JavaS
 
  `kambi-widgets-cli init project-name`
 
- A new project will be created inside the `project-name` folder. This project has a very simple demonstration on how to build a widget.
+ This process can take a few minutes to download all the dependencies.
+
+ A new project will be created inside the `project-name` folder. This project has a very simple example on how to build a widget.
 
 ### Setup an Existing Project
 
@@ -30,6 +38,8 @@ The widget is an html-page loaded inside an iframe. By configuration using JavaS
  - Inside the project folder run:
 
  `npm install`
+
+ This process can take a few minutes to download all the dependencies.
 
 ### Running the Project in Development Mode
 
