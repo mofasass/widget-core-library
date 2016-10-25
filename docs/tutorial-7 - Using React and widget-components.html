@@ -85,10 +85,10 @@
                         <section>
                            <h3>Pre-requisites</h3>
                            You can start using widget-components by installing it as a dependency
-                           <code>npm install widget-components react react-dom --save</code>
+                           <code>npm install widget-components</code>
                         </section>
                         <section>
-                           <h3>Using components in a widget (ex. OutcomeComponent)</h3>
+                           <h3>Using components in a widget (i.e. OutcomeComponent)</h3>
                            Open up the file where you would like to use the chosen component and add
                            <code>import { ComponentName } from 'widget-components'</code>
                            on top of the file. In order to properly use any of the components you need to follow
@@ -108,6 +108,10 @@
                            argumentName={ argumentValue }&#62&#60/OutcomeComponent&#62, htmlTag)</code>
                         </section>
                         <section>
+                           <h3>useRealReact flag</h3>
+                           You can specify <code>useRealReact</code> object in package.json to setup for which environment <a href="https://github.com/facebook/react">React</a> or <a href="https://github.com/Lucifier129/react-lite">React Lite</a> will be used. You can define different values for development and production environment.
+                           <code>{ development: [Boolean], production: [Boolean] }</code>.
+                           React version will be used for if is set to true otherwise React lite will be loaded.
                         </section>
                      </article>
                   </section>
