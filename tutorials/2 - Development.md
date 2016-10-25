@@ -12,7 +12,17 @@
 
 `npm run start` starts a built-in webserver (called WebpackDevserver) that hosts the widgets code for development mode. This servers runs under the HTTPS protocol because that is required by the Kambi Sportsbook, as such it has a self-signed certificate which needs to be manually trusted in order to be able to open the widget
 
--- TODO
+In chrome and firefox you can trust the certificate by visiting `https://localhost:8080` and hitting advance to accept the certificate. 
+
+For Microsoft edge and Internet explorer you need to add the certificate on windows:
+
+- Open control panel
+- Open Internet options
+- Select content tab
+- Click on Certificates
+- Select Trusted Root Certification Authorities
+- Clici import
+- Select the certificate from project folder\node_modules\webpack-dev-server\ssl\server.crt
 
 ### Project file structure
 
