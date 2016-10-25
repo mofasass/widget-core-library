@@ -1,5 +1,5 @@
 {
-  "name": "widget-core-library",
+  "name": "kambi-widget-core-library",
   "version": "3.1.0",
   "description": "",
   "main": "dist/core.js",

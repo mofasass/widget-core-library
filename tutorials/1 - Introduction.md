@@ -11,7 +11,7 @@ The widget is an html-page loaded inside an iframe. By configuration using JavaS
 
  - By installing Nodejs you should have the `npm` command line tool installed. With it run:
 
- `npm install widget-build-tools.git`
+ `npm install -g kambi-widget-build-tools`
 
  - By running this command you will now have a new command line tool called `kambi-widgets-cli` which is used for creating new projects
 
