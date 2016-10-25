@@ -1,14 +1,17 @@
 ### Running the widget
 
-- Inside the project folder run:
+ - Inside the project folder run:
 
 `npm run start`
 
-- If the build was successful the widget will be running under `https://localhost:8080` after a few seconds. The server that hosts the widgets code runs under port 8080 and under the HTTPS protocol, which means you might get an HTTPS certificate error
+ - If the build was successful the widget will be running under `https://localhost:8080` after a few seconds. The server that hosts the widgets code runs under port 8080
+
+ - To open the widget inside the Sportsbook while in development configure the `widgetSettings` to point to to `https://localhost:8080/` The server runs under the HTTPS protocol, so in order to see the widget inside the sportsbook it is required to trust the self-signed certificate that the development server uses. See next section for more information.
+
 
 ### HTTPS certificate
 
-`npm run start` starts a built-in webserver (called WebpackDevServer) that hosts the widgets code for development mode. This servers runs under the HTTPS protocol because that is required by the Kambi Sportsbook, as such it has a self-signed certificate which needs to be manually trusted in order to be able to open the widget
+`npm run start` starts a built-in webserver (called WebpackDevServer) that hosts the widgets code for development mode. This servers runs under the HTTPS protocol because that is required by the Kambi Sportsbook, as such it has a self-signed certificate which needs to be manually trusted in order to be able to open the widget.
 
 In Chrome and Firefox you can trust the certificate by visiting `https://localhost:8080` and hitting advance to accept the certificate.
 
@@ -43,7 +46,9 @@ project
          en_GB.json
 ```
 
-README.md: readme for the project
+ - README.md
+
+ Readme for the project
 
  - .eslintrc, .gitignore, .editorconfig
 
@@ -135,7 +140,7 @@ More information about exports and imports can be seen [here](https://developer.
 
 All widgets need to start by calling `coreLibrary.init()` and passing it the default arguments that the widget receives. These arguments can be overwritten by the Sportsbook (or inside `src/mockSetupData.json` arguments attribute when running the widget outside the sportsbook). `coreLibrary.init()` returns a `Promise` object which is a way to deal with asynchronous requests (all calls to fetch data in `kambi-widget-core-library` return `Promise`s).
 
-You can learn more about `Promise`s [here](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise). Examples about `Promise`s can also be seen in the `4 - Fetching Data` section.
+You can learn more about `Promise`s [here](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise). Examples about `Promise`s can also be seen in section `4 - Fetching Data`.
 
 ```javascript
 coreLibrary.init({

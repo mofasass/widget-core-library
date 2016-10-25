@@ -1,5 +1,3 @@
-# Internationalization
-
 Translations are handled by the `translationModule` module which is part of the `kambi-widget-core-library`. The module fetches the corresponding translations from JSON files inside the `src/i18n` folder.
 
 The use of these files are optional if no internationalization is required. If the user locale is not found in this folder it will fallback to `en_GB.json`.
@@ -9,7 +7,7 @@ These are all the currently supported locales in the Sportsbook, although they c
 cs_CZ.json, de_DE.json, es_ES.json, fr_CH.json, lt_LT.json, no_NO.json, ro_RO.json, da_DK.json, el_GR.json, et_EE.json, fr_FR.json, lv_LV.json, pl_PL.json, ru_RU.json, de_AT.json, en_AU.json, fi_FI.json, hu_HU.json, nl_BE.json, pt_BR.json, sv_SE.json, de_CH.json, en_GB.json, fr_BE.json, it_IT.json, nl_NL.json, pt_PT.json, tr_TR.json
 
 
-We can test different translations by changing the `locale` parameter in `mockSetupData.json`. This `mockSetupData.json` is used only when opening the widget in stand-alone mode (that means opening the widget directly instead of through the Sportsbook)
+We can test translations by changing the `locale` parameter in `modkSetupData.json`
 
 ```json
 {
@@ -79,4 +77,4 @@ $('#welcome').text(translationModule.getTranslation('WelcomeTo', user, place));
 
 ```
 
-And would result to **Welcome Jim to Sportsbook** for 'en_GB' locale and **Välkomna Jim till Sportsbook** for 'sv_SE'
+That would result to **Welcome Jim to Sportsbook** for 'en_GB' locale and **Välkomna Jim till Sportsbook** for 'sv_SE'
