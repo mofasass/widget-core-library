@@ -1,12 +1,12 @@
-Fetching data is done through the Kambi's Offering API and the Statistics API. The `kambi-widget-core-library` offers a wrapper around these API through the `offeringModule` and the `statisticsModule`. These modules take care of setting all the appropriate values in the request URLs as well as abstracting the endpoints of the APIs as functions that return `Promise`s.
+Fetching data is done through the Kambi's Offering API and the Kambi's Statistics API. The `kambi-widget-core-library` offers a wrapper around these API through the `offeringModule` and the `statisticsModule`. These modules take care of setting all the appropriate values in the request URLs as well as abstracting the endpoints of the APIs as functions that return `Promise`s.
 
 Note that it is only possible to fetch data after the `coreLibrary.init()` call has been finished. That means inside its `.then()` callback.
 
 ### Using Promises
 
-`Promise` is a way to deal with asynchronous (AJAX) requests, it allows for easier chaining and error handling than callbacks. All asynchronous methods of the `kambi-widget-core-library` return `Promise`.
+`Promise` is a way to deal with asynchronous (AJAX) requests, it allows for easier chaining and error handling of requests than callbacks. All asynchronous methods of the `kambi-widget-core-library` return `Promise`s.
 
-`Promise`s are Javascript objects and as such they have methods, these methods are `then(fn)` and `catch(fn)`. Both receive a function as an argument and call that function:
+`Promise`s are Javascript objects and as such they have methods, these methods are `then(fn)` and `catch(fn)`. Both receive a function as an argument:
 
  - `then(fn)`
 
@@ -39,7 +39,8 @@ promise = promise.catch(function (error) {
    console.log(error);
 });
 
-// same thing as above in a more concise manner
+
+// same thing as above, but in a more concise way
 offeringModule.getEvent(someEventId)
    .then(function (response) {
       console.log('success!');
@@ -81,7 +82,7 @@ offeringModule.getLiveEvents()
 
  It is possible to chain `Promise`s by returning a new `Promise` inside a `then(fn)` function, the subsequent `then(fn)` call will be invoked when this returned `Promise` is resolved.
 
- `catch(fn)` blocks in the chain will catch any errors that happen at any point in the chain.
+ `catch(fn)` blocks in the chain will catch any errors that happen before it in the chain.
 
 
 ```javascript
@@ -141,6 +142,7 @@ offeringModule.getLiveEvents()
        widgetModule.removeWidget(); // widget is removed from the Sportsbook
     });
  ```
+
 
 More about [Promises](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 
@@ -231,7 +233,3 @@ offeringModule.getEventsByFilter('football/england,germany')
  `getEventsByFilter` returns both live and pre-live matches, it is possible to differentiate between them using `eventData.event.openForLiveBetting`. If it is true then it the match is live and to get all its betoffers one should use `getLiveEvent(eventId)` instead of `getEvent(eventId)`
 
  See the `offeringModule` documentation for a list of all the methods.
-
-### Statistics Module
-
-TODO

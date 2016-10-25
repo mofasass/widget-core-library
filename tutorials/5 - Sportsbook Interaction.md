@@ -8,7 +8,7 @@ Since the widgets run inside iframes in the Sportsbook the widget needs to manua
 
  - `widgetModule.adaptWidgetHeight()`
 
- Tries to make the widget the same height as the `<body>` tag of the page, essentially making the iframe the same size of the widget. This approach doesn't always work, first the `<body>` tag can not have a 100% height styling rule, secondly this method needs to be called AFTER animations that dynamically change the `<body>` height end (both CSS animations and Javascript animations have this limitation), which basically means that animations that change the widget's height are unusable.
+ Tries to make the widget the same height as the `<body>` tag of the page, essentially making the iframe the same size of the widget. This approach doesn't always work, first the `<body>` tag can not have a 100% height styling rule, secondly this method needs to be called AFTER animations that dynamically change the `<body>` height end (both CSS animations and Javascript animations have this limitation), which basically means that animations that change the widget's height are not recommended.
 
  - `widgetModule.setHeight(value)`
 
@@ -35,7 +35,7 @@ offeringModule.getEvent(someEventId)
 
 ### Navigating to Other Pages
 
-The `widgetModule` allows the user to navigate to other parts of the Sportsbook. Example:
+The `widgetModule` allows the user to redirect the user to other parts of the Sportsbook. Example:
 
 ```javascript
 widgetModule.navigateToFilter('football/england/premier_league');
