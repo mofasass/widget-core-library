@@ -1,4 +1,4 @@
-Widget-components is a collection of reusable components written with [React](https://facebook.github.io/react/) framework. Currently the list involves following components: OutcomeButton
+Widget-components is a collection of reusable components written with [React](https://facebook.github.io/react/) framework. The use of React and these widget-components is completely optional, but they help a lot in the development and with keeping the style of the widget consistent with the style of the Sportsbook. Currently the list involves following components: OutcomeButton
 
 ### Pre-requisites
 
@@ -6,12 +6,14 @@ You can start using widget-components by installing it as a dependency to the pr
 
 `npm install kambi-widget-components`
 
-JSX syntax works only in `.jsx` files, so index.js should import a `.jsx` file like this:
+JSX syntax works only in `.jsx` files, so `index.js` should import a `.jsx` file like this:
 
 ```javascript
 import { ComponentName } from 'kambi-widget-components';
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+...
 
 ReactDOM.render(
    <ComponentName
@@ -22,11 +24,14 @@ ReactDOM.render(
 );
 ```
 
-Note: `kambi-widget-components` also includes `react` and `react-dom` dependencies and as such they don't need to be installed in the project. You can also make your own components and have the whole widget be a React component if desired.
+ReactDOM.render should only be called after `coreLibrary.init()` is resolved.
 
-At the top of the file. In order to properly use any of the components you need to follow instruction on the list of arguments that you need to supply.
+`kambi-widget-components` also includes `react` and `react-dom` dependencies and as such they don't need to be installed in the project. You can also make your own components and have the whole widget be a React component if desired.
 
-For example OutcomeButton has:
+
+### OutcomeButton
+
+For example OutcomeButton accepts the following props:
 
  - outcome (required): a outcome object from the `offeringModule`
 

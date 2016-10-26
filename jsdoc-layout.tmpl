@@ -1,29 +1,36 @@
 <!DOCTYPE html>
+<?js var that = this; ?>
 
-
-
+<?js if(false) { ?>
+<!--
+This template file is the same as ./node_modules/ink-docstrap/template/tmpl/layout.tmpl
+except the the footer was removed to prevent
+changes to files that were not modified, which was messing up the git history of the repository. The footer only had information about the creation date of the docs
+-->
+<?js } ?>
 
 <html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Kambi Widgets Source: Module/statisticsModule.js</title>
+	<title><?js= this.navOptions.systemName ?> <?js= title ?></title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.<?js= this.navOptions.syntaxTheme ?>.css">
 
-	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+	<link type="text/css" rel="stylesheet" href="styles/site.<?js= this.navOptions.theme ?>.css">
 
 </head>
 
 <body>
 
-<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="navbar navbar-default navbar-fixed-top <?js= this.navOptions.inverseNav ? 'navbar-inverse' : '' ?>">
 <div class="container">
 	<div class="navbar-header">
-		<a class="navbar-brand" href="index.html">Kambi Widgets</a>
+		<a class="navbar-brand" href="<?js= this.nav.index.link ?>"><?js if(this.navOptions.logoFile) { ?><img class="branding-logo" src="<?js= this.navOptions.logoFile ?>"
+		alt="logo"/><?js } ?><?js= this.nav.index.title ?></a>
 		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
@@ -32,23 +39,16 @@
 	</div>
 	<div class="navbar-collapse collapse" id="topNavigation">
 		<ul class="nav navbar-nav">
-			
+			<?js this.nav.topLevelNav.forEach(function(entry){ ?>
 			<li class="dropdown">
-				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
-				<ul class="dropdown-menu ">
-					<li><a href="module-coreLibrary.html">coreLibrary</a></li><li><a href="module-offeringModule.html">offeringModule</a></li><li><a href="module-statisticsModule.html">statisticsModule</a></li><li><a href="module-translationModule.html">translationModule</a></li><li><a href="module-utilModule.html">utilModule</a></li><li><a href="module-widgetModule.html">widgetModule</a></li>
+				<a href="<?js= entry.link ?>" class="dropdown-toggle" data-toggle="dropdown"><?js= entry.title ?><b class="caret"></b></a>
+				<ul class="dropdown-menu <?js= that.navOptions.navType ==='inline' ? 'inline' : '' ?>">
+					<?js entry.members.forEach(function(member){ ?><li><?js= member ?></li><?js	}); ?>
 				</ul>
 			</li>
-			
-			<li class="dropdown">
-				<a href="tutorials.list.html" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
-				<ul class="dropdown-menu ">
-					<li><a href="tutorial-1 - Introduction.html">1 - Introduction</a></li><li><a href="tutorial-2 - Development.html">2 - Development</a></li><li><a href="tutorial-3 - Production Builds and Deployment.html">3 - Production Builds and Deployment</a></li><li><a href="tutorial-4 - Fetching Data.html">4 - Fetching Data</a></li><li><a href="tutorial-5 - Sportsbook Interaction.html">5 - Sportsbook Interaction</a></li><li><a href="tutorial-6 - Internationalization.html">6 - Internationalization</a></li><li><a href="tutorial-7 - Using React and widget-components.html">7 - Using React and widget-components</a></li>
-				</ul>
-			</li>
-			
+			<?js }); ?>
 		</ul>
-        
+        <?js if (this.navOptions.search) { ?>
             <div class="col-sm-3 col-md-3">
                 <form class="navbar-form" role="search">
                     <div class="input-group">
@@ -59,7 +59,7 @@
                     </div>
                 </form>
             </div>
-        
+        <?js } ?>
 	</div>
 
 </div>
@@ -69,93 +69,28 @@
 <div class="container" id="toc-content">
 <div class="row">
 
-	
+	<?js if(docs && docs[0].kind !== "source"){ ?>
+	<div class="col-md-8">
+	<?js } else { ?>
 	<div class="col-md-12">
-	
+	<?js } ?>
 		<div id="main">
-			
-
-		<h1 class="page-title">Source: Module/statisticsModule.js</h1>
-    
-<section>
-    <article>
-        <pre
-            class="sunlight-highlight-javascript linenums">import coreLibrary from '../coreLibrary';
-
-/**
- * Module to access statistics API
- * The statistics API has information concerning historical data of events (matches, competitions)
- * All methods in this module return Promises that are resolved when the data is ready and throws errors (that can be handled with .catch()) on failure
- * @module statisticsModule
- */
-
-export default {
-
-   /**
-    * Configuration
-    * @type {Object}
-    * @property {String} baseApiUrl the baseURL for statistics API requests
-    */
-   config: {
-      baseApiUrl: 'https://api.kambi.com/statistics/api/'
-   },
-
-   /**
-    * Requests league table statistics data from api.
-    * @param {String} filter a filter string to a competition. Example 'football/england/premier_league'
-    * @returns {Promise}
-    */
-   getLeagueTableStatistics (filter) {
-      // Remove url parameters from filter
-      filter = filter.match(/[^?]*/)[0];
-
-      // Removing trailing and starting slashes if present
-      if ( filter[filter.length - 1] === '/' ) {
-         filter = filter.slice(0, -1);
-      }
-      if ( filter[0] === '/' ) {
-         filter = filter.slice(1);
-      }
-      return coreLibrary.getData(this.config.baseApiUrl + coreLibrary.config.offering + '/leaguetable/' + filter + '.json');
-   },
-
-   /**
-    * Requests H2H statistics data from api.
-    * @param {String|Number} eventId id of a match
-    * @returns {Promise}
-    */
-   getHeadToHeadStatistics (eventId) {
-      return coreLibrary.getData(this.config.baseApiUrl + coreLibrary.config.offering + '/h2h/event/' + eventId + '.json');
-   },
-
-   /**
-    * Requests TPI statistics data from api.
-    * @param {String|Number} eventId id of a match
-    * @returns {Promise}
-    */
-   getTeamPerformanceStatistics (eventId) {
-      return coreLibrary.getData(this.config.baseApiUrl + coreLibrary.config.offering + '/tpi/event/' + eventId + '.json');
-   }
-};
-</pre>
-    </article>
-</section>
-
-
-
-
-
+			<?js= content ?>
 		</div>
 	</div>
 
 	<div class="clearfix"></div>
 
-	
+	<?js if(docs && docs[0].kind !== "source"){ ?>
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
+	<?js } ?>
 
 </div>
 </div>
 
-
+<?js if (this.navOptions.search) { ?>
     <div class="modal fade" id="searchResults">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -170,13 +105,13 @@ export default {
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div>
-
+<?js } ?>
 
 <script src="scripts/docstrap.lib.js"></script>
 <script src="scripts/toc.js"></script>
-
+<?js if (this.navOptions.search) { ?>
     <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
-
+<?js } ?>
 
 <script>
 $( function () {
@@ -212,7 +147,7 @@ $( function () {
 	} );
 
 	Sunlight.highlightAll( {
-		lineNumbers : true,
+		lineNumbers : <?js= this.navOptions.linenums || false ?>,
 		showMenu : true,
 		enableDoclinks : true
 	} );
@@ -243,18 +178,70 @@ $( function () {
 
 
 <!--Navigation and Symbol Display-->
+<?js if (this.navOptions.collapseSymbols) { ?>
+<script>
+	$( function () {
+		$( '#main' ).localScroll( {
+			offset : { top : 60 } //offset by the height of your header (give or take a few px, see what works for you)
+		} );
+		$( "dt.name" ).each( function () {
+			var $this = $( this ).find("h4");
+			var icon = $( "<i/>" ).addClass( "icon-plus-sign" ).addClass( "pull-right" ).addClass( "icon-white" );
+			var dt = $(this);
+			var children = dt.next( "dd" );
 
+			dt.prepend( icon ).css( {cursor : "pointer"} );
+			dt.addClass( "member-collapsed" ).addClass( "member" );
+
+
+			children.hide();
+
+			dt.children().on( "click", function () {
+				children = dt.next( "dd" );
+				children.slideToggle( "fast", function () {
+
+					if ( children.is( ":visible" ) ) {
+						icon.addClass( "icon-minus-sign" ).removeClass( "icon-plus-sign" ).removeClass( "icon-white" );
+						dt.addClass( "member-open" ).animate( "member-collapsed" );
+					} else {
+						icon.addClass( "icon-plus-sign" ).removeClass( "icon-minus-sign" ).addClass( "icon-white" );
+						dt.addClass( "member-collapsed" ).removeClass( "member-open" );
+					}
+				} );
+			} );
+
+		} );
+	} );
+</script>
+<?js } ?>
 
 <!--Google Analytics-->
+<?js if (this.navOptions.analytics && this.navOptions.analytics.ua && this.navOptions.analytics.domain) { ?>
+<script>
+	(function ( i, s, o, g, r, a, m ) {
+		i['GoogleAnalyticsObject'] = r;
+		i[r] = i[r] || function () {
+			(i[r].q = i[r].q || []).push( arguments )
+		}, i[r].l = 1 * new Date();
+		a = s.createElement( o ),
+			m = s.getElementsByTagName( o )[0];
+		a.async = 1;
+		a.src = g;
+		m.parentNode.insertBefore( a, m )
+	})( window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga' );
 
+	ga( 'create', '<?js= this.navOptions.analytics.ua ?>', '<?js= this.navOptions.analytics.domain ?>' );
+	ga( 'send', 'pageview' );
+</script>
+<?js } ?>
 
-
+<?js if (this.navOptions.search) { ?>
     <script type="text/javascript">
         $(document).ready(function() {
             SearcherDisplay.init();
         });
     </script>
-
+<?js } ?>
 
 </body>
 </html>
