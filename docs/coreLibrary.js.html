@@ -244,6 +244,15 @@ export default {
       version: 'v2'
    },
 
+   /**
+    * An array with the default classes that should be added to HTML tag
+    */
+   kambiDefaultClasses: [
+      "KambiWidget-card-text-color",
+      "KambiWidget-card-background-color",
+      "KambiWidget-font",
+   ],
+
    get config () {
       return this._config; // eslint-disable-line no-underscore-dangle
    },
@@ -477,6 +486,7 @@ export default {
                   this.pageInfo = setupData.pageInfo;
                   this.apiVersions = setupData.versions;
                   this.args = setupData.arguments;
+                  this.addClasses(this.kambiDefaultClasses);
 
                   const translationPromise = translationModule.fetchTranslations(setupData.clientConfig.locale);
 
@@ -597,6 +607,17 @@ export default {
    },
 
    /**
+    * Adds classes to to HTML tag
+    * @param classes {Array} An array of strings with the classnames to be addes
+    */
+   addClasses ( classes ) {
+
+      const html = document.getElementsByTagName('html')[0];
+      html.classList.add(classes);
+
+   },
+
+   /**
     * Injects stylesheet based on configuration parameters (coreLibrary.config)
     * Replaces expressions like "{customer}" in the strings provided
     * @param customCssUrl {String}
@@ -605,6 +626,7 @@ export default {
     * @private
     */
    injectCustomCss (customCssUrl, customCssUrlFallback) {
+
       if (customCssUrl == null) {
          return Promise.resolve('');
       }
@@ -621,6 +643,7 @@ export default {
          // custom CSS should be the LAST CSS in the page
          head.insertBefore(tag, null);
       };
+
 
       return this.getFile(customCssUrl)
          .then(( response ) => {
