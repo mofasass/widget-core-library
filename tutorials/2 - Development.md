@@ -203,4 +203,4 @@ The project has babel [transpilation](https://babeljs.io/) step process set up d
 
 Important: babel only transpiles ES6 syntax, but not ES6 features like [fetch API](https://developer.mozilla.org/en/docs/Web/API/Fetch_API). New ES6 features need to be polyfilled in to support old browsers (for example IE11 does not support fetch API), the `kambi-widget-core-library` polyfills ES6 `Promise`s so those can be safely used no matter the target browser.
 
-Besides ES6 the build process also supports JSX for React development. The only caveat is that JSX syntax is only supported in `.jsx` files. Since the entry point of the project is `src/index.js` that file needs to `import` another `.jsx` file in order to enable JSX. See more about this in section 7 - Using React and widget-components.
+Besides ES6 the build process also supports JSX for React development. The only caveat is that JSX syntax is only supported in `.jsx` files. Since the entry point of the project is `src/index.js` that file needs to `import` another `.jsx` file in order to enable JSX. See more about this in section 8 - Using React and widget-components.

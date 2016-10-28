@@ -43,7 +43,7 @@
 			<li class="dropdown">
 				<a href="tutorials.list.html" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="tutorial-1 - Introduction.html">1 - Introduction</a></li><li><a href="tutorial-2 - Development.html">2 - Development</a></li><li><a href="tutorial-3 - Production Builds and Deployment.html">3 - Production Builds and Deployment</a></li><li><a href="tutorial-4 - Fetching Data.html">4 - Fetching Data</a></li><li><a href="tutorial-5 - Sportsbook Interaction.html">5 - Sportsbook Interaction</a></li><li><a href="tutorial-6 - Internationalization.html">6 - Internationalization</a></li><li><a href="tutorial-7 - Using React and widget-components.html">7 - Using React and widget-components</a></li>
+					<li><a href="tutorial-1 - Introduction.html">1 - Introduction</a></li><li><a href="tutorial-2 - Development.html">2 - Development</a></li><li><a href="tutorial-3 - Production Builds and Deployment.html">3 - Production Builds and Deployment</a></li><li><a href="tutorial-4 - Fetching Data.html">4 - Fetching Data</a></li><li><a href="tutorial-5 - Sportsbook Interaction.html">5 - Sportsbook Interaction</a></li><li><a href="tutorial-6 - Internationalization.html">6 - Internationalization</a></li><li><a href="tutorial-7 - Styling.html">7 - Styling</a></li><li><a href="tutorial-8 - Using React and widget-components.html">8 - Using React and widget-components</a></li>
 				</ul>
 			</li>
 			
@@ -218,7 +218,7 @@ coreLibrary.init({
 <h3>Common Build Architecture</h3><p> Since all webpack build configuration of the widgets is shared and localized in the <code>kambi-widget-build-tools</code> dependency it is not possible to add more items to the build architecture. For example replacing SCSS with LESS is not possible. We might add some scape hatches in the future to support customizing the webpack configuration to allow modifying the build process.</p>
 <h3>ES6 and JSX</h3><p>The project has babel <a href="https://babeljs.io/">transpilation</a> step process set up during the build so it supports the full <a href="https://babeljs.io/docs/learn-es2015/">ES6 syntax</a> and JSX for React development in all browsers. These new syntaxes are completely optional and can be ignored completely if so desired.</p>
 <p>Important: babel only transpiles ES6 syntax, but not ES6 features like <a href="https://developer.mozilla.org/en/docs/Web/API/Fetch_API">fetch API</a>. New ES6 features need to be polyfilled in to support old browsers (for example IE11 does not support fetch API), the <code>kambi-widget-core-library</code> polyfills ES6 <code>Promise</code>s so those can be safely used no matter the target browser.</p>
-<p>Besides ES6 the build process also supports JSX for React development. The only caveat is that JSX syntax is only supported in <code>.jsx</code> files. Since the entry point of the project is <code>src/index.js</code> that file needs to <code>import</code> another <code>.jsx</code> file in order to enable JSX. See more about this in section 7 - Using React and widget-components.</p>
+<p>Besides ES6 the build process also supports JSX for React development. The only caveat is that JSX syntax is only supported in <code>.jsx</code> files. Since the entry point of the project is <code>src/index.js</code> that file needs to <code>import</code> another <code>.jsx</code> file in order to enable JSX. See more about this in section 8 - Using React and widget-components.</p>
 </article>
 
 </section>

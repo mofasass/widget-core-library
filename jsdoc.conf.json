@@ -2,10 +2,18 @@
    "tags": {
       "allowUnknownTags": true
    },
-   "plugins": ["plugins/markdown"],
+   "plugins": [
+      "plugins/markdown"
+   ],
    "templates": {
       "default": {
-         "layoutFile": "./jsdoc-layout.tmpl"
+         "layoutFile": "./jsdoc-layout.tmpl",
+         "staticFiles": {
+            "include": [
+               "./tutorials/"
+            ],
+            "includePattern": "\\.(jpg|png|gif)"
+         }
       },
       "logoFile": "",
       "cleverLinks": false,

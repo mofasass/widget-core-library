@@ -7,7 +7,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Kambi Widgets Index</title>
+	<title>Kambi Widgets Tutorial: 8 - Using React and widget-components</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -70,50 +70,73 @@
 <div class="row">
 
 	
-	<div class="col-md-8">
+	<div class="col-md-12">
 	
 		<div id="main">
-			
+			<section class="tutorial-section">
 
-	
-	
+<header>
+    
 
+    <h2>8 - Using React and widget-components</h2>
+</header>
 
+<article>
+    <p>Widget-components is a collection of reusable components written with <a href="https://facebook.github.io/react/">React</a> framework. The use of React and these widget-components is completely optional, but they help a lot in the development and with keeping the style of the widget consistent with the style of the Sportsbook. Currently the list involves following components: OutcomeButton</p>
+<h3>Pre-requisites</h3><p>You can start using widget-components by installing it as a dependency to the project by running:</p>
+<p><code>npm install kambi-widget-components</code></p>
+<p>JSX syntax works only in <code>.jsx</code> files, so <code>index.js</code> should import a <code>.jsx</code> file like this:</p>
+<pre class="prettyprint source lang-javascript"><code>import { ComponentName } from 'kambi-widget-components';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
+...
 
+ReactDOM.render(
+   &lt;ComponentName
+      componentProp1=&quot;someValue&quot;
+      componentProp2={coreLibrary.args.someArgument}
+   />,
+   document.getElementById('root')
+);</code></pre><p>ReactDOM.render should only be called after <code>coreLibrary.init()</code> is resolved.</p>
+<p><code>kambi-widget-components</code> also includes <code>react</code> and <code>react-dom</code> dependencies and as such they don't need to be installed in the project. You can also make your own components and have the whole widget be a React component if desired.</p>
+<h3>OutcomeButton</h3><p>For example OutcomeButton accepts the following props:</p>
+<ul>
+<li><p>outcome (required): a outcome object from the <code>offeringModule</code></p>
+</li>
+<li><p>event: a event object from the <code>offeringModule</code></p>
+</li>
+<li><p>withLabel: a Boolean that defines if a label should be shown in the button or not</p>
+</li>
+<li><p>customLabel: overrides the default label with this value</p>
+</li>
+</ul>
+<p>Example:</p>
+<pre class="prettyprint source lang-javascript"><code>   render() {
+      return (
+         &lt;OutcomeButton
+            outcome={ this.props.outcome }
+         >&lt;/OutcomeButton>
+      );
+   }</code></pre><h3>useRealReact flag</h3><p>By default the project uses <a href="https://github.com/Lucifier129/react-lite">react-lite</a> in production build which is a light-weight version of react with focus on small file-size instead of the normal react. While in development mode though (<code>npm run start</code>) the project uses the real react because it provides more debug functionalities. This is handled by the <code>kambi-widget-build-tools</code> automatically.</p>
+<p>React Lite is an alternative implementation of React and as such it can have incompatibilities, although so far we haven't encountered any. If you want to override the default behavior of the build you can force the use of a specific React version by placing a <code>useRealReact</code> object in package.json. You can define different values for development and production environment.</p>
+<p>package.json:</p>
+<pre class="prettyprint source lang-javascript"><code>{
+   ...
+   &quot;useRealReact&quot;: {
+      &quot;development&quot;: [Boolean],
+      &quot;production&quot;: [Boolean]
+   }
+}</code></pre><p>By default <code>development</code> is <code>true</code> and <code>production</code> is <code>false</code></p>
+</article>
 
-
-
-
-
-
-
-	
-	
-
-
-
-
-
-    <section class="readme-section">
-        <article><h1>widget-core-library</h1><p>Collection of methods and settings common to all widgets, contains the initial communication with KambiWidgetApi and support for i18n.</p></article>
-    </section>
-
-
-
-
-
-
+</section>
 
 		</div>
 	</div>
 
 	<div class="clearfix"></div>
 
-	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
-		</div>
 	
 
 </div>
