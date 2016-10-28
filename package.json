@@ -11,6 +11,7 @@
     "build": "env NODE_ENV=production webpack --config webpack.config.js --verbose --display-modules",
     "jsdoc": "rm -rf ./docs && jsdoc ./src/ -r -c jsdoc.conf.json -u ./tutorials/ -d ./docs/ -R ./README.md -t ./node_modules/ink-docstrap/template",
     "preversion": "npm run jsdoc",
+    "postversion": "npm publish",
     "jsdoc-help": "jsdoc --help"
   },
   "repository": {
