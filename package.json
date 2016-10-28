@@ -2,13 +2,8 @@
   "name": "kambi-widget-core-library",
   "version": "3.1.0",
   "description": "",
-  "main": "dist/core.js",
+  "main": "src/index.js",
   "scripts": {
-    "clean": "rm -rf ./dist",
-    "prestart": "npm run clean",
-    "start": "env NODE_ENV=development webpack --watch --config webpack.config.js --verbose --display-modules",
-    "prebuild": "npm run clean",
-    "build": "env NODE_ENV=production webpack --config webpack.config.js --verbose --display-modules",
     "jsdoc": "rm -rf ./docs && jsdoc ./src/ -r -c jsdoc.conf.json -u ./tutorials/ -d ./docs/ -R ./README.md -t ./node_modules/ink-docstrap/template",
     "preversion": "npm run jsdoc",
     "postversion": "npm publish",
@@ -34,8 +29,7 @@
     "eslint-plugin-react": "^6.3.0",
     "ink-docstrap": "^1.3.0",
     "jsdoc": "^3.4.2",
-    "node-sass": "^3.9.3",
-    "webpack": "^1.13.2"
+    "node-sass": "^3.9.3"
   },
   "dependencies": {
     "compass-mixins": "^0.12.10",
