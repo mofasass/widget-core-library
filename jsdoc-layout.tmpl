@@ -4,7 +4,7 @@
 <?js if(false) { ?>
 <!--
 This template file is the same as ./node_modules/ink-docstrap/template/tmpl/layout.tmpl
-except the the footer was removed to prevent
+except for some extra styling and the footer was removed to prevent
 changes to files that were not modified, which was messing up the git history of the repository. The footer only had information about the creation date of the docs
 -->
 <?js } ?>
@@ -25,6 +25,12 @@ changes to files that were not modified, which was messing up the git history of
 </head>
 
 <body>
+
+<style>
+    img {
+    	max-width: 100%;
+    }
+</style>
 
 <div class="navbar navbar-default navbar-fixed-top <?js= this.navOptions.inverseNav ? 'navbar-inverse' : '' ?>">
 <div class="container">
