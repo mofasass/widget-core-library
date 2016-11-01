@@ -39,7 +39,7 @@ function checkBrowser() {
    } else if (/(ipod|iphone|ipad)/i.test(ua)) {
       return {
          browser: 'ios',
-         browserVersion: getFirstMatch(/(?:mxios)[\s\/](\d+(?:\.\d+)+)/i)
+         browserVersion: getFirstMatch(/(?:mxios)[\s/](\d+(?:\.\d+)+)/i)
       };
    } else if (/msie|trident/i.test(ua)) {
       return {
@@ -64,7 +64,7 @@ function checkBrowser() {
    } else if (/firefox|iceweasel|fxios/i.test(ua)) {
       return {
          browser: 'firefox',
-         browserVersion: getFirstMatch(/(?:firefox|iceweasel|fxios)[ \/](\d+(\.\d+)?)/i)
+         browserVersion: getFirstMatch(/(?:firefox|iceweasel|fxios)[ /](\d+(\.\d+)?)/i)
       };
    }
 }
@@ -160,9 +160,9 @@ export default {
     * An array with the default classes that should be added to HTML tag
     */
    kambiDefaultClasses: [
-      "KambiWidget-card-text-color",
-      "KambiWidget-card-background-color",
-      "KambiWidget-font",
+      'KambiWidget-card-text-color',
+      'KambiWidget-card-background-color',
+      'KambiWidget-font',
    ],
 
    get config () {
@@ -403,7 +403,7 @@ export default {
                   const translationPromise = translationModule.fetchTranslations(setupData.clientConfig.locale);
 
                   const operatorCssPromise = this.injectOperatorCss(
-                        this.apiVersions.wapi,
+                        this.expectedApiVersion,
                         this.config.customer,
                         this.config.offering);
 
