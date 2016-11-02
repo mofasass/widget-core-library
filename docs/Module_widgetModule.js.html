@@ -152,10 +152,10 @@ export default {
          var route = '#' + urlBase.replace(/.*?#/, '').replace(/^\//, '');
          route += segments.reduce((str, segment) => str + '/' + JSON.stringify(segment).slice(1, -1), '')
             .replace(/"/g, '')
-            .replace(/(,all)+(\/|\]|$)/g, '$2');
+            .replace(/(,all)+(\/|]|$)/g, '$2');
 
          for (var i = 0; i &lt;= segments.length; i++) {
-            route = route.replace(/\[([^,\]]*)\]/g, '$1');
+            route = route.replace(/\[([^,\]]*)]/g, '$1');
          }
 
          var attributes = terms.filter(term => term.indexOf('/') !== 0).join(',');

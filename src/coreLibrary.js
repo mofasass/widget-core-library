@@ -525,7 +525,7 @@ export default {
    addClasses ( classes ) {
 
       const html = document.getElementsByTagName('html')[0];
-      html.classList.add(classes);
+      classes.map((cssClass) => { html.classList.add(cssClass)});
 
    },
 
