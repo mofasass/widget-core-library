@@ -3,6 +3,7 @@ import statisticsModule from './Module/statisticsModule';
 import translationModule from './Module/translationModule';
 import utilModule from './Module/utilModule';
 import widgetModule from './Module/widgetModule';
+import constants from './constants';
 
 /**
  * Main module that holds the other modules as well as widget
@@ -112,13 +113,6 @@ export default {
     * @type {String}
     */
    browserVersion: checkBrowser().browserVersion,
-
-   /**
-    * Kambi Widget API version to use
-    * @type {String}
-    * @private
-    */
-   expectedApiVersion: '1.0.0.15',
 
    /**
     * Config object. This data comes from the sportsbook and should not be manually changed. When in running the widget stand alone this values are retrieved from ./src/mockSetupData.json
@@ -376,97 +370,79 @@ export default {
       this.defaultArgs = defaultArgs;
 
       return new Promise((resolve, reject) => {
-         // injecting widget-api in the page
-         return this.getFile('https://c3-static.kambi.com/sb-mobileclient/widget-api/' + this.expectedApiVersion + '/kambi-widget-api.js')
-            .then((content) => {
-               const tag = document.createElement('script');
-               tag.setAttribute('id', 'widget-api');
-               tag.textContent = content;
-               const head = document.getElementsByTagName('head')[0];
-               // custom CSS should be the LAST CSS in the page
-               head.insertBefore(tag, head.lastChild);
-               return 'success';
-            }).catch((err) => {
-               console.error('Error loading widget api')
-               console.error(err);
-               reject();
-            })
-            .then(() => {
-               // applies the setup data and sets up the CSS and translations
-               var applySetupData = (setupData) => {
-                  this.config = setupData.clientConfig;
-                  this.pageInfo = setupData.pageInfo;
-                  this.apiVersions = setupData.versions;
-                  this.args = setupData.arguments;
-                  this.addClasses(this.kambiDefaultClasses);
+         // applies the setup data and sets up the CSS and translations
+         var applySetupData = (setupData) => {
+            this.config = setupData.clientConfig;
+            this.pageInfo = setupData.pageInfo;
+            this.apiVersions = setupData.versions;
+            this.args = setupData.arguments;
+            this.addClasses(this.kambiDefaultClasses);
 
-                  const translationPromise = translationModule.fetchTranslations(setupData.clientConfig.locale);
+            const translationPromise = translationModule.fetchTranslations(setupData.clientConfig.locale);
 
-                  const operatorCssPromise = this.injectOperatorCss(
-                        this.expectedApiVersion,
-                        this.config.customer,
-                        this.config.offering);
+            const operatorCssPromise = this.injectOperatorCss(
+                  this.config.customer,
+                  this.config.offering);
 
-                  const customCssPromise = this.injectCustomCss(
-                        this.args.customCssUrl,
-                        this.args.customCssUrlFallback);
+            const customCssPromise = this.injectCustomCss(
+                  this.args.customCssUrl,
+                  this.args.customCssUrlFallback);
 
-                  // most widgets don't need to wait for the CSS to be loaded
-                  // so we keep a promise instead of waiting for it
-                  this.cssLoadedPromise = Promise.all([operatorCssPromise, customCssPromise]);
+            // most widgets don't need to wait for the CSS to be loaded
+            // so we keep a promise instead of waiting for it
+            this.cssLoadedPromise = Promise.all([operatorCssPromise, customCssPromise]);
 
-                  translationPromise
-                     .then(() => {
-                        resolve();
-                     })
-                     .catch((err) => {
-                        reject();
-                     });
-               };
-
-               if (window.KambiWidget) {
-                  // For development purposes we might want to load a widget on it's own so we check if we are in an iframe, if not then load some fake data
-                  if (window.self === window.top) {
-                     console.warn(window.location.host + window.location.pathname + ' is being loaded as stand-alone');
-                     // Load the mock config data
-                     this.getData('mockSetupData.json')
-                        .then((mockSetupData) => {
-                           // Output some debug info that could be helpful
-                           console.debug('Loaded mock setup data');
-                           console.debug(mockSetupData);
-                           // Apply the mock config data to the core
-                           applySetupData(mockSetupData);
-                        })
-                        .catch((error) => {
-                           console.debug('Failed to fetch mockSetupData');
-                           console.trace(error);
-                           reject();
-                        });
-                  } else {
-                     window.KambiWidget.apiReady = (api) => {
-                        widgetModule.api = api;
-
-                        // Request the setup info from the widget api
-                        widgetModule.requestSetup((setupData) => {
-                           // Request the outcomes from the betslip so we can update our widget, also sets up a subscription for future betslip updates
-                           widgetModule.requestBetslipOutcomes();
-                           // Request the odds format that is set in the sportsbook, this also sets up a subscription for future odds format changes
-                           widgetModule.requestOddsFormat();
-
-                           // Apply the config data to the core
-                           applySetupData(setupData);
-                        });
-                     };
-                     // Setup the response handler for the widget api
-                     window.KambiWidget.receiveResponse = (dataObject) => {
-                        widgetModule.handleResponse(dataObject);
-                     };
-                  }
-               } else {
-                  console.warn('Kambi widget API not loaded');
+            translationPromise
+               .then(() => {
+                  resolve();
+               })
+               .catch((err) => {
                   reject();
-               }
-            });
+               });
+         };
+
+         if (window.KambiWidget) {
+            // For development purposes we might want to load a widget on it's own so we check if we are in an iframe, if not then load some fake data
+            if (window.self === window.top) {
+               console.warn(window.location.host + window.location.pathname + ' is being loaded as stand-alone');
+               // Load the mock config data
+               this.getData('mockSetupData.json')
+                  .then((mockSetupData) => {
+                     // Output some debug info that could be helpful
+                     console.debug('Loaded mock setup data');
+                     console.debug(mockSetupData);
+                     // Apply the mock config data to the core
+                     applySetupData(mockSetupData);
+                  })
+                  .catch((error) => {
+                     console.debug('Failed to fetch mockSetupData');
+                     console.trace(error);
+                     reject();
+                  });
+            } else {
+               window.KambiWidget.apiReady = (api) => {
+                  widgetModule.api = api;
+
+                  // Request the setup info from the widget api
+                  widgetModule.requestSetup((setupData) => {
+                     // Request the outcomes from the betslip so we can update our widget, also sets up a subscription for future betslip updates
+                     widgetModule.requestBetslipOutcomes();
+                     // Request the odds format that is set in the sportsbook, this also sets up a subscription for future odds format changes
+                     widgetModule.requestOddsFormat();
+
+                     // Apply the config data to the core
+                     applySetupData(setupData);
+                  });
+               };
+               // Setup the response handler for the widget api
+               window.KambiWidget.receiveResponse = (dataObject) => {
+                  widgetModule.handleResponse(dataObject);
+               };
+            }
+         } else {
+            console.warn('Kambi widget API not loaded');
+            reject();
+         }
       });
    },
 
@@ -489,18 +465,14 @@ export default {
    /**
     * Injects operator specific CSS based on widget API version,
     * customer and offering
-    * @param wApiVersion {String|Null} If null will use expectedApiVersion
     * @param customer {String}
     * @param offering {String}
     * @returns {Promise} When resolved the stylesheet has been successfully added to the page
     * @private
     */
-   injectOperatorCss (wApiVersion, customer, offering) {
-      if ( wApiVersion == null || wApiVersion === '') {
-         wApiVersion = this.expectedApiVersion;
-      }
+   injectOperatorCss (customer, offering) {
       const url = '//c3-static.kambi.com/sb-mobileclient/widget-api/' +
-         wApiVersion +
+         constants.widgetCssVersion +
          '/resources/css/' +
          customer +
          '/' +
@@ -523,10 +495,11 @@ export default {
     * @param classes {Array} An array of strings with the classnames to be addes
     */
    addClasses ( classes ) {
-
       const html = document.getElementsByTagName('html')[0];
-      classes.map((cssClass) => { html.classList.add(cssClass)});
 
+      classes.map((cssClass) => {
+         html.classList.add(cssClass);
+      });
    },
 
    /**
