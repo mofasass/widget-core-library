@@ -1,5 +1,5 @@
 // The constants defined here are used by both the
-// coreLibrary and the build tools
+// core-library and the build-tools
 
 // don't use "export default" here because inside the build-tools there is no transpiling
 module.exports = {
@@ -7,7 +7,7 @@ module.exports = {
     although it seems like widgetCssVersion and
     widgetApiVersion are synced that is not really the
     case. Sometimes Kambi bumps the wapi version
-    without creating a new stylesheet
+    without creating a new stylesheet for all operators
     */
 
    // version of the widget API to use
