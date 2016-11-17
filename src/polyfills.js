@@ -62,5 +62,5 @@ if (!Array.prototype.find) {
 // The Number.isNaN() method determines whether the passed value is NaN. It is a more robust version of the original, global isNaN().
 // https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN
 Number.isNaN = Number.isNaN || function(value) {
-   return typeof value === "number" && isNaN(value);
-}
+   return typeof value === 'number' && isNaN(value);
+};

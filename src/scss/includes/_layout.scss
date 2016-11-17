@@ -1,124 +1,97 @@
 .l-flexbox {
-   @include flexbox();
+   display: flex;
 }
 
 .l-horizontal {
-   @include flex-direction(row);
+   flex-direction: row;
 }
 
 .l-vertical {
-   @include flex-direction(column);
+   flex-direction: column;
 }
 
 .l-align-start {
-   @include align-items(flex-start);
+   align-items: flex-start;
 }
 
 .l-align-center {
-   @include align-items(center);
+   align-items: center;
 }
 
 .l-align-end {
-   @include align-items(flex-end);
+   align-items: flex-end;
 }
 
 .l-align-stretch {
-   @include align-items(stretch);
+   align-items: stretch;
 }
 
 .l-align-baseline {
-   @include align-items(baseline);
+   align-items: baseline;
 }
 
 .l-align-self-auto {
-   @include align-self(auto);
+   align-self: auto;
 }
 
 .l-align-self-start {
-   @include align-self(flex-start);
+   align-self: flex-start;
 }
 
 .l-align-self-center {
-   @include align-self(center);
+   align-self: center;
 }
 
 .l-align-self-end {
-   @include align-self(flex-end);
+   align-self: flex-end;
 }
 
 .l-align-self-stretch {
-   @include align-self(stretch);
+   align-self: stretch;
 }
 
 .l-align-self-baseline {
-   @include align-self(baseline);
+   align-self: baseline;
 }
 
 .l-justify-start {
-   @include justify-content(flex-start);
+   justify-content: flex-start;
 }
 
 .l-justify-center {
-   @include justify-content(center);
+   justify-content: center;
 }
 
 .l-justify-end {
-   @include justify-content(flex-end);
+   justify-content: flex-end;
 }
 
 .l-justify-between {
-   @include justify-content(space-between);
+   justify-content: space-between;
 }
 
 .l-justify-around {
-   @include justify-content(space-around);
+   justify-content: space-around;
 }
 
-.l-flexed,
-.l-flex-1 {
-   @include flex(1);
+
+@each $flex in 1 2 3 4 5 6 7 8 9 10 {
+   .l-flex-#{$flex} {
+      flex: $flex
+   }
 }
 
-.l-flex-2 {
-   @include flex(2);
+.l-flexed {
+   flex: 1;
 }
 
-.l-flex-3 {
-   @include flex(3);
-}
-
-.l-flex-4 {
-   @include flex(4);
-}
-
-.l-flex-5 {
-   @include flex(5);
-}
-
-.l-flex-6 {
-   @include flex(6);
-}
-
-.l-flex-7 {
-   @include flex(7);
-}
-
-.l-flex-8 {
-   @include flex(8);
-}
-
-.l-flex-9 {
-   @include flex(9);
-}
-
-.l-flex-10 {
-   @include flex(10);
-}
 
 [class*="l-flex-"] {
    min-width: 1px; // Firefox needs this
 }
 
 .text-truncate {
-   @include text-truncate();
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
 }
