@@ -425,6 +425,14 @@ export default {
       // tries to adapt the widget iframe height to match the content
       var body = document.body,
          html = document.documentElement;
+      var heights = [body.offsetHeight, html.offsetHeight];
+      // scrollHeight is the property used to get the size of the content of the page when it is bigger than the viewport
+      if (coreLibrary.browser === 'internet-explorer' &amp;&amp; parseInt(coreLibrary.browserVersion, 10) &lt;= 11) {
+         // on IE the html.scrollHeight does not reduce in size once it grows, so we use body.scrollHeight
+         heights.push(body.scrollHeight);
+      } else {
+         heights.push(html.scrollHeight);
+      }
       var height = Math.max(body.offsetHeight, html.scrollHeight, html.offsetHeight);
       this.api.set(this.api.WIDGET_HEIGHT, height);
    },
