@@ -18,10 +18,10 @@ const pollLiveEvent = function(eventId, publishFunc) {
    schedule.periodically(
       event,
       () => offeringModule.getLiveEvent(eventId)
-         .catch((e) => {
+         .catch((error) => {
             publishFunc(`LIVE:EVENT:${eventId}:REMOVED`);
             schedule.stop(event);
-            throw e;
+            throw error;
          }),
       publishFunc.bind(null, event),
       { interval: this.pollingInterval, checkEquality: true }
@@ -39,10 +39,10 @@ const pollLiveEventData = function(eventId, publishFunc) {
    schedule.periodically(
       event,
       () => offeringModule.getLiveEventData(eventId)
-         .catch((e) => {
+         .catch((error) => {
             publishFunc(`LIVE:EVENTDATA:${eventId}:REMOVED`);
             schedule.stop(event);
-            throw e;
+            throw error;
          }),
       publishFunc.bind(null, event),
       { interval: this.pollingInterval, checkEquality: true }
@@ -63,6 +63,30 @@ const pollLiveEvents = function(publishFunc) {
       {
          interval: this.pollingInterval,
          checkEquality: false // there are timers inside each event so we are almost sure that it will differ than previous request
+      }
+   );
+};
+
+/**
+ * Starts polling when event becomes live event.
+ * @param {number} eventId Event identifier
+ * @param {function(string, ...args)} publishFunc Used for publishing live event start
+ */
+const pollLiveEventStart = function(eventId, publishFunc) {
+   const event = `LIVE:EVENT:${eventId}:ADDED`;
+
+   schedule.periodically(
+      event,
+      () => offeringModule.getLiveEvent(eventId)
+         .then((result) => {
+            // became live event, no need for further checks
+            schedule.stop(event);
+            return result;
+         }),
+      publishFunc.bind(null, event),
+      {
+         interval: this.pollingInterval,
+         checkEquality: false // no need, it will have sth to compare only once, when event appears
       }
    );
 };
@@ -89,6 +113,8 @@ export default {
          pollLiveEventData.call(this, matches[1], publishFunc);
       } else if (event === 'LIVE:EVENTS') {
          pollLiveEvents.call(this, publishFunc);
+      } else if (matches = event.match(/^LIVE:EVENT:([0-9]+):ADDED$/)) {
+         pollLiveEventStart.call(this, matches[1], publishFunc);
       }
    },
 
@@ -102,6 +128,8 @@ export default {
       } else if (/^LIVE:EVENTDATA:[0-9]+$/.test(event)) {
          schedule.stop(event);
       } else if (event === 'LIVE:EVENTS') {
+         schedule.stop(event);
+      } else if (/^LIVE:EVENT:([0-9]+):ADDED$/.test(event)) {
          schedule.stop(event);
       }
    }
