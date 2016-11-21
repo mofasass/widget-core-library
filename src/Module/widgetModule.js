@@ -345,7 +345,7 @@ export default {
       } else {
          heights.push(html.scrollHeight);
       }
-      var height = Math.max(body.offsetHeight, html.scrollHeight, html.offsetHeight);
+      var height = Math.max.apply(null, heights);
       this.api.set(this.api.WIDGET_HEIGHT, height);
    },
 
