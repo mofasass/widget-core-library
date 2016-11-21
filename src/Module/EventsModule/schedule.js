@@ -14,10 +14,10 @@ const Schedule = {
    /**
     * Runs given task function periodically.
     * @param {string} key Unique task key
-    * @param {function: Promise} taskFunc Task function
+    * @param {function():Promise} taskFunc Task function
     * @param {function(mixed)} resultHandler Called with task result
     * @param {number} interval Task interval (in milliseconds)
-    * @param {bool} checkEquality Compare current and last result, don't call resultHandler if both are equal
+    * @param {boolean} checkEquality Compare current and last result, don't call resultHandler if both are equal
     */
    periodically(key, taskFunc, resultHandler, { interval, checkEquality }) {
       if (this.tasks.hasOwnProperty(key)) {
