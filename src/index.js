@@ -5,6 +5,7 @@ import statisticsModule from './Module/statisticsModule';
 import translationModule from './Module/translationModule';
 import utilModule from './Module/utilModule';
 import widgetModule from './Module/widgetModule';
+import eventsModule from './Module/EventsModule/index';
 
 if (window != null) {
    window.WidgetCoreLibrary = {
@@ -13,7 +14,8 @@ if (window != null) {
       statisticsModule,
       translationModule,
       utilModule,
-      widgetModule
+      widgetModule,
+      eventsModule
    };
 }
 
@@ -23,5 +25,6 @@ export {
    statisticsModule,
    translationModule,
    utilModule,
-   widgetModule
+   widgetModule,
+   eventsModule
 };

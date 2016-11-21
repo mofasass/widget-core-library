@@ -29,6 +29,39 @@ export default {
       return C;
    },
 
+   /**
+    * Checks deep equality of two object.
+    * @param {object} x First object
+    * @param {object} y Second object
+    * @returns {boolean}
+    */
+   equals (x, y) {
+      if (x === y) return true;
+      if ( !(x instanceof Object) || !(y instanceof Object)) return false;
+      if (x.constructor !== y.constructor) return false;
+      for (var p in x) {
+         if (!x.hasOwnProperty(p)) continue;
+         if (!y.hasOwnProperty(p)) return false;
+         if (x[p] === y[p]) continue;
+         if (typeof x[p] !== 'object') return false;
+         if (!this.equals(x[p], y[p])) return false;
+      }
+
+      for (p in y) {
+         if (y.hasOwnProperty(p) && !x.hasOwnProperty(p) ) return false;
+      }
+
+      return true;
+   },
+
+   /**
+    * Returns deep copy of given object.
+    * @param {object} x Object to be cloned
+    */
+   clone (x) {
+      return JSON.parse(JSON.stringify(x));
+   },
+
    /* Replaces expressions like "{customer}" from the provided string
     * to the value the have in the coreLibrary.config object
     * @param {String} str the string to replace the expressions in
