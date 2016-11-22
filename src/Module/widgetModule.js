@@ -149,7 +149,7 @@ export default {
       switch (response.type) {
          case this.api.WIDGET_HEIGHT:
             // We've received a height response
-            this.events.publish('WIDGET:HEIGHT', response.data);
+            eventsModule.publish('WIDGET:HEIGHT', response.data);
             break;
          case this.api.BETSLIP_OUTCOMES:
             // We've received a response with the outcomes currently in the betslip
@@ -170,44 +170,44 @@ export default {
             i = 0;
             len = removedIds.length;
             for (; i < len; ++i) {
-               this.events.publish('OUTCOME:REMOVED:' + removedIds[i]);
+               eventsModule.publish('OUTCOME:REMOVED:' + removedIds[i]);
             }
 
             // Emit events for each added id
             i = 0;
             len = addedIds.length;
             for (; i < len; ++i) {
-               this.events.publish('OUTCOME:ADDED:' + addedIds[i]);
+               eventsModule.publish('OUTCOME:ADDED:' + addedIds[i]);
             }
 
             // Emit a generic update in case we want to use that
-            this.events.publish('OUTCOMES:UPDATE', response.data);
+            eventsModule.publish('OUTCOMES:UPDATE', response.data);
             break;
          case this.api.WIDGET_ARGS:
             // We've received a response with the arguments set in the
             coreLibrary.args = response.data;
-            this.events.publish('WIDGET:ARGS', response.data);
+            eventsModule.publish('WIDGET:ARGS', response.data);
             break;
          case this.api.PAGE_INFO:
             // Received page info response
             coreLibrary.setPageInfo(response.data);
-            this.events.publish('PAGE:INFO', response.data);
+            eventsModule.publish('PAGE:INFO', response.data);
             break;
          case this.api.CLIENT_ODDS_FORMAT:
             // Received odds format response
             coreLibrary.setOddsFormat(response.data);
-            this.events.publish('ODDS:FORMAT', response.data);
+            eventsModule.publish('ODDS:FORMAT', response.data);
             break;
          case this.api.CLIENT_CONFIG:
             coreLibrary.setConfig(response.data);
-            this.events.publish('CLIENT:CONFIG', response.data);
+            eventsModule.publish('CLIENT:CONFIG', response.data);
             break;
          case this.api.USER_LOGGED_IN:
             console.debug('User logged in', response.data);
-            this.events.publish('USER:LOGGED_IN', response.data);
+            eventsModule.publish('USER:LOGGED_IN', response.data);
             break;
          case 'Setup':
-            this.events.publish('Setup response', response.data);
+            eventsModule.publish('Setup response', response.data);
             break;
          default:
             // Unhandled response

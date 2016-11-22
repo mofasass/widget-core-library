@@ -126,7 +126,7 @@ export default {
     * @property {String} device what kind of device does the user have. Possible values: 'desktop', 'mobile'
     * @property {String} locale locale of the user, example: 'en_GB', 'sv_SE'
     * @property {String} market market to use with the offering API.
-    * @property {String} oddsFormat the odds format to show. Possible values: 'decimal', 'fractional', 'american'. To listen to changes to this value use widgetModule.events.subscribe('ODDS:FORMAT', eventHandlerFn);
+    * @property {String} oddsFormat the odds format to show. Possible values: 'decimal', 'fractional', 'american'. To listen to changes to this value use eventsModule.subscribe('ODDS:FORMAT', eventHandlerFn);
     * @property {String} offering the offering to use with the offering API
     * @property {String} routeRoot
     * @property {Boolean} streamingAllowedForPlayer
