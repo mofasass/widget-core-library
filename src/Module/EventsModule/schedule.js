@@ -57,6 +57,10 @@ const Schedule = {
     * @param {string} key Task key
     */
    stop(key) {
+      if (!this.tasks.hasOwnProperty(key)) {
+         return;
+      }
+
       clearInterval(this.tasks[key].interval);
       delete this.tasks[key];
    }
