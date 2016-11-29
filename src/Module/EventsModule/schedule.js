@@ -2,6 +2,7 @@ import utilModule from '../utilModule';
 
 /**
  * Utility for running tasks periodically with equality check.
+ * @memberof module:eventsModule
  */
 const Schedule = {
 

@@ -3,6 +3,7 @@ import liveEventsAdapter from './liveEventsAdapter';
 /**
  *
  * @type {object.<string, function[]>}
+ * @memberof module:eventsModule
  */
 const handlers = {};
 
@@ -45,6 +46,8 @@ const handlers = {};
  *       ( data ) => {
  *          ...
  *       });
+ *
+ @module eventsModule
  */
 const EventsModule = {
 

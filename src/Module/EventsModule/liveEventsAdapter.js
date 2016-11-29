@@ -4,6 +4,7 @@ import schedule from './schedule';
 /**
  * Default interval for polling live events
  * @type {number}
+ * @memberof module:eventsModule
  */
 const DEFAULT_POLLING_INTERVAL = 30000;
 
@@ -11,6 +12,7 @@ const DEFAULT_POLLING_INTERVAL = 30000;
  * Starts polling given live event.
  * @param {number} eventId Event identifier
  * @param {function(string, ...args)} publishFunc Used for publishing event updates
+ * @memberof module:eventsModule
  */
 const pollLiveEvent = function(eventId, publishFunc) {
    const event = `LIVE:EVENT:${eventId}`;
@@ -32,6 +34,7 @@ const pollLiveEvent = function(eventId, publishFunc) {
  * Starts pooling given live event statistics.
  * @param {number} eventId Event identifier
  * @param {function(string, ...args)} publishFunc Used for publishing event statistics updates
+ * @memberof module:eventsModule
  */
 const pollLiveEventData = function(eventId, publishFunc) {
    const event = `LIVE:EVENTDATA:${eventId}`;
@@ -52,6 +55,7 @@ const pollLiveEventData = function(eventId, publishFunc) {
 /**
  * Starts polling live events list.
  * @param {function(string, ...args)} publishFunc Used for publishing live event list updates
+ * @memberof module:eventsModule
  */
 const pollLiveEvents = function(publishFunc) {
    const event = 'LIVE:EVENTS';
@@ -71,6 +75,7 @@ const pollLiveEvents = function(publishFunc) {
  * Starts polling when event becomes live event.
  * @param {number} eventId Event identifier
  * @param {function(string, ...args)} publishFunc Used for publishing live event start
+ * @memberof module:eventsModule
  */
 const pollLiveEventStart = function(eventId, publishFunc) {
    const event = `LIVE:EVENT:${eventId}:ADDED`;

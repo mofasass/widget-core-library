@@ -7,7 +7,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Kambi Widgets Global</title>
+	<title>Kambi Widgets Module: eventsModule</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -42,7 +42,7 @@
 			<li class="dropdown">
 				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="module-coreLibrary.html">coreLibrary</a></li><li><a href="module-offeringModule.html">offeringModule</a></li><li><a href="module-statisticsModule.html">statisticsModule</a></li><li><a href="module-translationModule.html">translationModule</a></li><li><a href="module-utilModule.html">utilModule</a></li><li><a href="module-widgetModule.html">widgetModule</a></li>
+					<li><a href="module-coreLibrary.html">coreLibrary</a></li><li><a href="module-eventsModule.html">eventsModule</a></li><li><a href="module-offeringModule.html">offeringModule</a></li><li><a href="module-statisticsModule.html">statisticsModule</a></li><li><a href="module-translationModule.html">translationModule</a></li><li><a href="module-utilModule.html">utilModule</a></li><li><a href="module-widgetModule.html">widgetModule</a></li>
 				</ul>
 			</li>
 			
@@ -50,13 +50,6 @@
 				<a href="tutorials.list.html" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
 					<li><a href="tutorial-1 - Introduction.html">1 - Introduction</a></li><li><a href="tutorial-2 - Development.html">2 - Development</a></li><li><a href="tutorial-3 - Production Builds and Deployment.html">3 - Production Builds and Deployment</a></li><li><a href="tutorial-4 - Fetching Data.html">4 - Fetching Data</a></li><li><a href="tutorial-5 - Sportsbook Interaction.html">5 - Sportsbook Interaction</a></li><li><a href="tutorial-6 - Internationalization.html">6 - Internationalization</a></li><li><a href="tutorial-7 - Styling.html">7 - Styling</a></li><li><a href="tutorial-8 - Using React and widget-components.html">8 - Using React and widget-components</a></li>
-				</ul>
-			</li>
-			
-			<li class="dropdown">
-				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
-				<ul class="dropdown-menu ">
-					<li><a href="global.html#DEFAULT_POLLING_INTERVAL">DEFAULT_POLLING_INTERVAL</a></li><li><a href="global.html#EventsModule">EventsModule</a></li><li><a href="global.html#handlers">handlers</a></li><li><a href="global.html#pollLiveEvent">pollLiveEvent</a></li><li><a href="global.html#pollLiveEventData">pollLiveEventData</a></li><li><a href="global.html#pollLiveEvents">pollLiveEvents</a></li><li><a href="global.html#pollLiveEventStart">pollLiveEventStart</a></li><li><a href="global.html#Schedule">Schedule</a></li>
 				</ul>
 			</li>
 			
@@ -88,15 +81,10 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Global</h1>
+	<h1 class="page-title">Module: eventsModule</h1>
 <section>
 
 <header>
-    
-        <h2>
-        
-        </h2>
-        
     
 </header>
 
@@ -104,6 +92,22 @@
 <article>
     <div class="container-overview">
     
+        
+            <div class="description"><p>Object in which you can add event listeners for Kambi Widget API events<br>Valid events listeners:</p>
+<p>'WIDGET:HEIGHT': Widget height changed</p>
+<p>'OUTCOME:REMOVED:{outcomeId}': Outcome with {outcomeId} removed</p>
+<p>'OUTCOME:ADDED:{outcomeId}': Outcome with {outcomeId} added</p>
+<p>'OUTCOME:UPDATE:{outcomeId}': Outcome with {outcomeId} updated</p>
+<p>'WIDGET:ARGS': Widget args changed</p>
+<p>'PAGE:INFO': Page info changed</p>
+<p>'ODDS:FORMAT': Odds format changed</p>
+<p>'CLIENT:CONFIG': Client config changed</p>
+<p>'USER:LOGGED_IN': User logged in changed</p>
+<p>'LIVE:EVENT:{eventId}': Live event statistics changed</p>
+<p>'LIVE:EVENT:{eventId}:REMOVED': Not a live event anymore</p>
+<p>'LIVE:EVENTDATA:{eventId}': Live event's statistics changed</p>
+<p>'LIVE:EVENTDATA:{eventId}:REMOVED': Not a live event anymore</p>
+<p>'LIVE:EVENTS': Live events list changed</p></div>
         
 
         
@@ -137,6 +141,16 @@
 
 
 	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="Module_EventsModule_index.js.html">Module/EventsModule/index.js</a>,
+				 <a href="Module_EventsModule_index.js.html#sunlight-1-line-10">line 10</a>
+			</li>
+		</ul>
+	</dd>
+	
 
 	
 
@@ -144,6 +158,18 @@
 
 	
 </dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="sunlight-highlight-javascript">eventsModule
+   .subscribe(&#x27;OUTCOME:ADDED:&#x27; + outcome.id,
+      ( data ) =&gt; {
+         ...
+      });
+
+ </pre>
 
 
         
@@ -166,8 +192,8 @@
         <dl>
             
 <hr>
-<dt class="name" id="DEFAULT_POLLING_INTERVAL">
-    <h4 id="DEFAULT_POLLING_INTERVAL"><span class="type-signature">&lt;constant> </span>DEFAULT_POLLING_INTERVAL<span class="type-signature"> :number</span></h4>
+<dt class="name" id=".DEFAULT_POLLING_INTERVAL">
+    <h4 id=".DEFAULT_POLLING_INTERVAL"><span class="type-signature">&lt;static, constant> </span>DEFAULT_POLLING_INTERVAL<span class="type-signature"> :number</span></h4>
 
     
 </dt>
@@ -227,7 +253,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_EventsModule_liveEventsAdapter.js.html">Module/EventsModule/liveEventsAdapter.js</a>,
-				 <a href="Module_EventsModule_liveEventsAdapter.js.html#sunlight-1-line-8">line 8</a>
+				 <a href="Module_EventsModule_liveEventsAdapter.js.html#sunlight-1-line-9">line 9</a>
 			</li>
 		</ul>
 	</dd>
@@ -247,102 +273,8 @@
         
             
 <hr>
-<dt class="name" id="EventsModule">
-    <h4 id="EventsModule"><span class="type-signature">&lt;constant> </span>EventsModule<span class="type-signature"></span></h4>
-
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>Object in which you can add event listeners for Kambi Widget API events<br>Valid events listeners:</p>
-<p>'WIDGET:HEIGHT': Widget height changed</p>
-<p>'OUTCOME:REMOVED:{outcomeId}': Outcome with {outcomeId} removed</p>
-<p>'OUTCOME:ADDED:{outcomeId}': Outcome with {outcomeId} added</p>
-<p>'OUTCOME:UPDATE:{outcomeId}': Outcome with {outcomeId} updated</p>
-<p>'WIDGET:ARGS': Widget args changed</p>
-<p>'PAGE:INFO': Page info changed</p>
-<p>'ODDS:FORMAT': Odds format changed</p>
-<p>'CLIENT:CONFIG': Client config changed</p>
-<p>'USER:LOGGED_IN': User logged in changed</p>
-<p>'LIVE:EVENT:{eventId}': Live event statistics changed</p>
-<p>'LIVE:EVENT:{eventId}:REMOVED': Not a live event anymore</p>
-<p>'LIVE:EVENTDATA:{eventId}': Live event's statistics changed</p>
-<p>'LIVE:EVENTDATA:{eventId}:REMOVED': Not a live event anymore</p>
-<p>'LIVE:EVENTS': Live events list changed</p>
-    </div>
-    
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="Module_EventsModule_index.js.html">Module/EventsModule/index.js</a>,
-				 <a href="Module_EventsModule_index.js.html#sunlight-1-line-49">line 49</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-        <h5>Example</h5>
-        
-    <pre class="sunlight-highlight-javascript">eventsModule
-   .subscribe(&#x27;OUTCOME:ADDED:&#x27; + outcome.id,
-      ( data ) =&gt; {
-         ...
-      });</pre>
-
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt class="name" id="handlers">
-    <h4 id="handlers"><span class="type-signature">&lt;constant> </span>handlers<span class="type-signature"> :object.&lt;string, Array.&lt;function()>></span></h4>
+<dt class="name" id=".handlers">
+    <h4 id=".handlers"><span class="type-signature">&lt;static, constant> </span>handlers<span class="type-signature"> :object.&lt;string, Array.&lt;function()>></span></h4>
 
     
 </dt>
@@ -398,7 +330,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_EventsModule_index.js.html">Module/EventsModule/index.js</a>,
-				 <a href="Module_EventsModule_index.js.html#sunlight-1-line-7">line 7</a>
+				 <a href="Module_EventsModule_index.js.html#sunlight-1-line-8">line 8</a>
 			</li>
 		</ul>
 	</dd>
@@ -418,8 +350,8 @@
         
             
 <hr>
-<dt class="name" id="Schedule">
-    <h4 id="Schedule"><span class="type-signature">&lt;constant> </span>Schedule<span class="type-signature"></span></h4>
+<dt class="name" id=".Schedule">
+    <h4 id=".Schedule"><span class="type-signature">&lt;static, constant> </span>Schedule<span class="type-signature"></span></h4>
 
     
 </dt>
@@ -468,7 +400,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_EventsModule_schedule.js.html">Module/EventsModule/schedule.js</a>,
-				 <a href="Module_EventsModule_schedule.js.html#sunlight-1-line-6">line 6</a>
+				 <a href="Module_EventsModule_schedule.js.html#sunlight-1-line-7">line 7</a>
 			</li>
 		</ul>
 	</dd>
@@ -495,7 +427,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="pollLiveEvent"><span class="type-signature"></span>pollLiveEvent(eventId, publishFunc)</h4>
+    <h4 class="name" id=".pollLiveEvent"><span class="type-signature">&lt;static> </span>pollLiveEvent(eventId, publishFunc)</h4>
     
     
 </dt>
@@ -624,7 +556,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_EventsModule_liveEventsAdapter.js.html">Module/EventsModule/liveEventsAdapter.js</a>,
-				 <a href="Module_EventsModule_liveEventsAdapter.js.html#sunlight-1-line-15">line 15</a>
+				 <a href="Module_EventsModule_liveEventsAdapter.js.html#sunlight-1-line-17">line 17</a>
 			</li>
 		</ul>
 	</dd>
@@ -657,7 +589,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="pollLiveEventData"><span class="type-signature"></span>pollLiveEventData(eventId, publishFunc)</h4>
+    <h4 class="name" id=".pollLiveEventData"><span class="type-signature">&lt;static> </span>pollLiveEventData(eventId, publishFunc)</h4>
     
     
 </dt>
@@ -786,7 +718,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_EventsModule_liveEventsAdapter.js.html">Module/EventsModule/liveEventsAdapter.js</a>,
-				 <a href="Module_EventsModule_liveEventsAdapter.js.html#sunlight-1-line-36">line 36</a>
+				 <a href="Module_EventsModule_liveEventsAdapter.js.html#sunlight-1-line-39">line 39</a>
 			</li>
 		</ul>
 	</dd>
@@ -819,7 +751,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="pollLiveEvents"><span class="type-signature"></span>pollLiveEvents(publishFunc)</h4>
+    <h4 class="name" id=".pollLiveEvents"><span class="type-signature">&lt;static> </span>pollLiveEvents(publishFunc)</h4>
     
     
 </dt>
@@ -924,7 +856,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_EventsModule_liveEventsAdapter.js.html">Module/EventsModule/liveEventsAdapter.js</a>,
-				 <a href="Module_EventsModule_liveEventsAdapter.js.html#sunlight-1-line-56">line 56</a>
+				 <a href="Module_EventsModule_liveEventsAdapter.js.html#sunlight-1-line-60">line 60</a>
 			</li>
 		</ul>
 	</dd>
@@ -957,7 +889,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="pollLiveEventStart"><span class="type-signature"></span>pollLiveEventStart(eventId, publishFunc)</h4>
+    <h4 class="name" id=".pollLiveEventStart"><span class="type-signature">&lt;static> </span>pollLiveEventStart(eventId, publishFunc)</h4>
     
     
 </dt>
@@ -1086,7 +1018,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_EventsModule_liveEventsAdapter.js.html">Module/EventsModule/liveEventsAdapter.js</a>,
-				 <a href="Module_EventsModule_liveEventsAdapter.js.html#sunlight-1-line-75">line 75</a>
+				 <a href="Module_EventsModule_liveEventsAdapter.js.html#sunlight-1-line-80">line 80</a>
 			</li>
 		</ul>
 	</dd>
