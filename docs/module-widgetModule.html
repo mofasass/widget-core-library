@@ -53,6 +53,13 @@
 				</ul>
 			</li>
 			
+			<li class="dropdown">
+				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="global.html#DEFAULT_POLLING_INTERVAL">DEFAULT_POLLING_INTERVAL</a></li><li><a href="global.html#EventsModule">EventsModule</a></li><li><a href="global.html#handlers">handlers</a></li><li><a href="global.html#pollLiveEvent">pollLiveEvent</a></li><li><a href="global.html#pollLiveEventData">pollLiveEventData</a></li><li><a href="global.html#pollLiveEvents">pollLiveEvents</a></li><li><a href="global.html#pollLiveEventStart">pollLiveEventStart</a></li><li><a href="global.html#Schedule">Schedule</a></li>
+				</ul>
+			</li>
+			
 		</ul>
         
             <div class="col-sm-3 col-md-3">
@@ -167,120 +174,23 @@
             
 <hr>
 <dt class="name" id=".events">
-    <h4 id=".events"><span class="type-signature">&lt;static> </span>events<span class="type-signature"> :Object</span></h4>
+    <h4 id=".events"><span class="type-signature">&lt;static> </span>events<span class="type-signature"></span></h4>
 
     
 </dt>
 <dd>
     
     <div class="description">
-        <p>Object in which you can add event listeners for Kambi Widget API events<br>Valid events listeners:</p>
-<p>'WIDGET:HEIGHT': Widget height changed</p>
-<p>'OUTCOME:REMOVED:{outcomeId}': Outcome with {outcomeId} removed</p>
-<p>'OUTCOME:ADDED:{outcomeId}': Outcome with {outcomeId} added</p>
-<p>'OUTCOME:UPDATE:{outcomeId}': Outcome with {outcomeId} updated</p>
-<p>'WIDGET:ARGS': Widget args changed</p>
-<p>'PAGE:INFO':  Page info changed</p>
-<p>'ODDS:FORMAT': Odds format changed</p>
-<p>'CLIENT:CONFIG': Client config changed</p>
-<p>'USER:LOGGED_IN': User logged in changed</p>
+        <p>Object in which you can add event listeners for Kambi Widget API events</p>
     </div>
     
 
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
-<span class="param-type">Object</span>
-
-
-
-            </li>
-        </ul>
     
 
     
 <dl class="details">
     
 
-    <h5 class="subsection-title">Properties:</h5>
-
-    <dl>
-
-<table class="props table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>subscribe</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Parameters: (eventName, eventHandlerFn). Subscribes to the eventName, when that event happens eventHandlerFn is called</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>unsubscribe</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Parameters: (eventName, eventHandlerFn). Unsubscribes all handlers to the event or if an eventHandlerFn is passed, only unsubscribes that handler</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-</dl>
-
-    
-
 	
 
 	
@@ -296,6 +206,45 @@
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd>
+        <ul class="dummy">
+            <li>use eventsModule
+
+Valid events listeners:
+
+'WIDGET:HEIGHT': Widget height changed
+
+'OUTCOME:REMOVED:{outcomeId}': Outcome with {outcomeId} removed
+
+'OUTCOME:ADDED:{outcomeId}': Outcome with {outcomeId} added
+
+'OUTCOME:UPDATE:{outcomeId}': Outcome with {outcomeId} updated
+
+'WIDGET:ARGS': Widget args changed
+
+'PAGE:INFO':  Page info changed
+
+'ODDS:FORMAT': Odds format changed
+
+'CLIENT:CONFIG': Client config changed
+
+'USER:LOGGED_IN': User logged in changed
+
+'LIVE:EVENT:{eventId}': Live event statistics changed
+
+'LIVE:EVENT:{eventId}:REMOVED': Not a live event anymore
+
+'LIVE:EVENTDATA:{eventId}': Live event's statistics changed
+
+'LIVE:EVENTDATA:{eventId}:REMOVED': Not a live event anymore
+
+'LIVE:EVENTS': Live events list changed</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -313,7 +262,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_widgetModule.js.html">Module/widgetModule.js</a>,
-				 <a href="Module_widgetModule.js.html#sunlight-1-line-121">line 121</a>
+				 <a href="Module_widgetModule.js.html#sunlight-1-line-132">line 132</a>
 			</li>
 		</ul>
 	</dd>
@@ -406,7 +355,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_widgetModule.js.html">Module/widgetModule.js</a>,
-				 <a href="Module_widgetModule.js.html#sunlight-1-line-336">line 336</a>
+				 <a href="Module_widgetModule.js.html#sunlight-1-line-289">line 289</a>
 			</li>
 		</ul>
 	</dd>
@@ -622,7 +571,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_widgetModule.js.html">Module/widgetModule.js</a>,
-				 <a href="Module_widgetModule.js.html#sunlight-1-line-413">line 413</a>
+				 <a href="Module_widgetModule.js.html#sunlight-1-line-366">line 366</a>
 			</li>
 		</ul>
 	</dd>
@@ -760,7 +709,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_widgetModule.js.html">Module/widgetModule.js</a>,
-				 <a href="Module_widgetModule.js.html#sunlight-1-line-284">line 284</a>
+				 <a href="Module_widgetModule.js.html#sunlight-1-line-237">line 237</a>
 			</li>
 		</ul>
 	</dd>
@@ -948,7 +897,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_widgetModule.js.html">Module/widgetModule.js</a>,
-				 <a href="Module_widgetModule.js.html#sunlight-1-line-273">line 273</a>
+				 <a href="Module_widgetModule.js.html#sunlight-1-line-226">line 226</a>
 			</li>
 		</ul>
 	</dd>
@@ -1106,7 +1055,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_widgetModule.js.html">Module/widgetModule.js</a>,
-				 <a href="Module_widgetModule.js.html#sunlight-1-line-356">line 356</a>
+				 <a href="Module_widgetModule.js.html#sunlight-1-line-309">line 309</a>
 			</li>
 		</ul>
 	</dd>
@@ -1194,7 +1143,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_widgetModule.js.html">Module/widgetModule.js</a>,
-				 <a href="Module_widgetModule.js.html#sunlight-1-line-292">line 292</a>
+				 <a href="Module_widgetModule.js.html#sunlight-1-line-245">line 245</a>
 			</li>
 		</ul>
 	</dd>
@@ -1355,7 +1304,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_widgetModule.js.html">Module/widgetModule.js</a>,
-				 <a href="Module_widgetModule.js.html#sunlight-1-line-540">line 540</a>
+				 <a href="Module_widgetModule.js.html#sunlight-1-line-493">line 493</a>
 			</li>
 		</ul>
 	</dd>
@@ -1493,7 +1442,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_widgetModule.js.html">Module/widgetModule.js</a>,
-				 <a href="Module_widgetModule.js.html#sunlight-1-line-383">line 383</a>
+				 <a href="Module_widgetModule.js.html#sunlight-1-line-336">line 336</a>
 			</li>
 		</ul>
 	</dd>
@@ -1631,7 +1580,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_widgetModule.js.html">Module/widgetModule.js</a>,
-				 <a href="Module_widgetModule.js.html#sunlight-1-line-391">line 391</a>
+				 <a href="Module_widgetModule.js.html#sunlight-1-line-344">line 344</a>
 			</li>
 		</ul>
 	</dd>
@@ -1769,7 +1718,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_widgetModule.js.html">Module/widgetModule.js</a>,
-				 <a href="Module_widgetModule.js.html#sunlight-1-line-375">line 375</a>
+				 <a href="Module_widgetModule.js.html#sunlight-1-line-328">line 328</a>
 			</li>
 		</ul>
 	</dd>
@@ -1857,7 +1806,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_widgetModule.js.html">Module/widgetModule.js</a>,
-				 <a href="Module_widgetModule.js.html#sunlight-1-line-402">line 402</a>
+				 <a href="Module_widgetModule.js.html#sunlight-1-line-355">line 355</a>
 			</li>
 		</ul>
 	</dd>
@@ -1998,7 +1947,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_widgetModule.js.html">Module/widgetModule.js</a>,
-				 <a href="Module_widgetModule.js.html#sunlight-1-line-458">line 458</a>
+				 <a href="Module_widgetModule.js.html#sunlight-1-line-411">line 411</a>
 			</li>
 		</ul>
 	</dd>
@@ -2086,7 +2035,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_widgetModule.js.html">Module/widgetModule.js</a>,
-				 <a href="Module_widgetModule.js.html#sunlight-1-line-367">line 367</a>
+				 <a href="Module_widgetModule.js.html#sunlight-1-line-320">line 320</a>
 			</li>
 		</ul>
 	</dd>
@@ -2174,7 +2123,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_widgetModule.js.html">Module/widgetModule.js</a>,
-				 <a href="Module_widgetModule.js.html#sunlight-1-line-478">line 478</a>
+				 <a href="Module_widgetModule.js.html#sunlight-1-line-431">line 431</a>
 			</li>
 		</ul>
 	</dd>
@@ -2262,7 +2211,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_widgetModule.js.html">Module/widgetModule.js</a>,
-				 <a href="Module_widgetModule.js.html#sunlight-1-line-499">line 499</a>
+				 <a href="Module_widgetModule.js.html#sunlight-1-line-452">line 452</a>
 			</li>
 		</ul>
 	</dd>
@@ -2400,7 +2349,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_widgetModule.js.html">Module/widgetModule.js</a>,
-				 <a href="Module_widgetModule.js.html#sunlight-1-line-515">line 515</a>
+				 <a href="Module_widgetModule.js.html#sunlight-1-line-468">line 468</a>
 			</li>
 		</ul>
 	</dd>
@@ -2558,7 +2507,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_widgetModule.js.html">Module/widgetModule.js</a>,
-				 <a href="Module_widgetModule.js.html#sunlight-1-line-528">line 528</a>
+				 <a href="Module_widgetModule.js.html#sunlight-1-line-481">line 481</a>
 			</li>
 		</ul>
 	</dd>
@@ -2666,7 +2615,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_widgetModule.js.html">Module/widgetModule.js</a>,
-				 <a href="Module_widgetModule.js.html#sunlight-1-line-506">line 506</a>
+				 <a href="Module_widgetModule.js.html#sunlight-1-line-459">line 459</a>
 			</li>
 		</ul>
 	</dd>
@@ -2754,7 +2703,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_widgetModule.js.html">Module/widgetModule.js</a>,
-				 <a href="Module_widgetModule.js.html#sunlight-1-line-485">line 485</a>
+				 <a href="Module_widgetModule.js.html#sunlight-1-line-438">line 438</a>
 			</li>
 		</ul>
 	</dd>
@@ -2892,7 +2841,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_widgetModule.js.html">Module/widgetModule.js</a>,
-				 <a href="Module_widgetModule.js.html#sunlight-1-line-312">line 312</a>
+				 <a href="Module_widgetModule.js.html#sunlight-1-line-265">line 265</a>
 			</li>
 		</ul>
 	</dd>
@@ -2980,7 +2929,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_widgetModule.js.html">Module/widgetModule.js</a>,
-				 <a href="Module_widgetModule.js.html#sunlight-1-line-492">line 492</a>
+				 <a href="Module_widgetModule.js.html#sunlight-1-line-445">line 445</a>
 			</li>
 		</ul>
 	</dd>
@@ -3068,7 +3017,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_widgetModule.js.html">Module/widgetModule.js</a>,
-				 <a href="Module_widgetModule.js.html#sunlight-1-line-319">line 319</a>
+				 <a href="Module_widgetModule.js.html#sunlight-1-line-272">line 272</a>
 			</li>
 		</ul>
 	</dd>
@@ -3206,7 +3155,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="Module_widgetModule.js.html">Module/widgetModule.js</a>,
-				 <a href="Module_widgetModule.js.html#sunlight-1-line-327">line 327</a>
+				 <a href="Module_widgetModule.js.html#sunlight-1-line-280">line 280</a>
 			</li>
 		</ul>
 	</dd>

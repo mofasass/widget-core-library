@@ -26,6 +26,10 @@ Version 3.0.0 of npm is included in Nodejs versions 5.0.0 or higher.
  - Run:
 
  `kambi-widgets-cli init project-name`
+ 
+ - Or if you are planning to use React run:
+ 
+  `kambi-widgets-cli init-react project-name`
 
  This process can take a few minutes to download all the dependencies.
 

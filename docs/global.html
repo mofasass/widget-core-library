@@ -7,7 +7,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Kambi Widgets Module: offeringModule</title>
+	<title>Kambi Widgets Global</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -88,10 +88,15 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Module: offeringModule</h1>
+	<h1 class="page-title">Global</h1>
 <section>
 
 <header>
+    
+        <h2>
+        
+        </h2>
+        
     
 </header>
 
@@ -100,10 +105,93 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>Module with methods to request data from the offering API<br>The offering API has information concerning events (matches, competations) and their respective betoffers as well as live data if available<br>All methods in this module return Promises that are resolved when the data is ready and throws errors (that can be handled with .catch()) on failure</p></div>
-        
 
         
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        <dl>
+            
+<hr>
+<dt class="name" id="DEFAULT_POLLING_INTERVAL">
+    <h4 id="DEFAULT_POLLING_INTERVAL"><span class="type-signature">&lt;constant> </span>DEFAULT_POLLING_INTERVAL<span class="type-signature"> :number</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Default interval for polling live events</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">number</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
 <dl class="details">
     
 
@@ -138,8 +226,8 @@
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="Module_offeringModule.js.html">Module/offeringModule.js</a>,
-				 <a href="Module_offeringModule.js.html#sunlight-1-line-3">line 3</a>
+				<a href="Module_EventsModule_liveEventsAdapter.js.html">Module/EventsModule/liveEventsAdapter.js</a>,
+				 <a href="Module_EventsModule_liveEventsAdapter.js.html#sunlight-1-line-8">line 8</a>
 			</li>
 		</ul>
 	</dd>
@@ -153,9 +241,49 @@
 </dl>
 
 
+    
+</dd>
+
         
+            
+<hr>
+<dt class="name" id="EventsModule">
+    <h4 id="EventsModule"><span class="type-signature">&lt;constant> </span>EventsModule<span class="type-signature"></span></h4>
+
     
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Object in which you can add event listeners for Kambi Widget API events<br>Valid events listeners:</p>
+<p>'WIDGET:HEIGHT': Widget height changed</p>
+<p>'OUTCOME:REMOVED:{outcomeId}': Outcome with {outcomeId} removed</p>
+<p>'OUTCOME:ADDED:{outcomeId}': Outcome with {outcomeId} added</p>
+<p>'OUTCOME:UPDATE:{outcomeId}': Outcome with {outcomeId} updated</p>
+<p>'WIDGET:ARGS': Widget args changed</p>
+<p>'PAGE:INFO': Page info changed</p>
+<p>'ODDS:FORMAT': Odds format changed</p>
+<p>'CLIENT:CONFIG': Client config changed</p>
+<p>'USER:LOGGED_IN': User logged in changed</p>
+<p>'LIVE:EVENT:{eventId}': Live event statistics changed</p>
+<p>'LIVE:EVENT:{eventId}:REMOVED': Not a live event anymore</p>
+<p>'LIVE:EVENTDATA:{eventId}': Live event's statistics changed</p>
+<p>'LIVE:EVENTDATA:{eventId}:REMOVED': Not a live event anymore</p>
+<p>'LIVE:EVENTS': Live events list changed</p>
     </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -165,8 +293,199 @@
 
     
 
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="Module_EventsModule_index.js.html">Module/EventsModule/index.js</a>,
+				 <a href="Module_EventsModule_index.js.html#sunlight-1-line-49">line 49</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">eventsModule
+   .subscribe(&#x27;OUTCOME:ADDED:&#x27; + outcome.id,
+      ( data ) =&gt; {
+         ...
+      });</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="handlers">
+    <h4 id="handlers"><span class="type-signature">&lt;constant> </span>handlers<span class="type-signature"> :object.&lt;string, Array.&lt;function()>></span></h4>
+
+    
+</dt>
+<dd>
     
 
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">object.&lt;string, Array.&lt;function()>></span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="Module_EventsModule_index.js.html">Module/EventsModule/index.js</a>,
+				 <a href="Module_EventsModule_index.js.html#sunlight-1-line-7">line 7</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="Schedule">
+    <h4 id="Schedule"><span class="type-signature">&lt;constant> </span>Schedule<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Utility for running tasks periodically with equality check.</p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="Module_EventsModule_schedule.js.html">Module/EventsModule/schedule.js</a>,
+				 <a href="Module_EventsModule_schedule.js.html#sunlight-1-line-6">line 6</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        </dl>
     
 
     
@@ -176,7 +495,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id=".doRequest"><span class="type-signature">&lt;static> </span>doRequest(requestPath, params, version, noCache)</h4>
+    <h4 class="name" id="pollLiveEvent"><span class="type-signature"></span>pollLiveEvent(eventId, publishFunc)</h4>
     
     
 </dt>
@@ -184,241 +503,7 @@
 
     
     <div class="description">
-        <p>Makes a request to provided path setting the appropriated URL parameters. Usually this method should not be called directly, unless you want to access an endpoint that is not available in the other methods<br>    The final url looks like:<br>    coreLibrary.config.apiBaseUrl + version + coreLibrary.config.offering + requestPath<br>    Example (same as calling offeringModule.getLiveEvents() but forcing to use Portugal Portuguese locale)<br>    doRequest('/event/live/open.json' { lang: 'pt_PT' });<br>    this call would fetch this url:</p>
-<pre class="prettyprint source"><code>https://api.kambi.com/offering/api/v2/kambi/event/live/open.json?lang=pt_PT&market=kambi&client_id=2&include=&betOffers=COMBINED&categoryGroup=COMBINED&displayDefault=true&nocache=1476973932524</code></pre>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>requestPath</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>the path to the request</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>params</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>params to use, can override the parameters this method usually sets</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>version</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-|
-
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>which version of the API to use. Some endpoints are 'v2' and some are 'v3'</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>noCache</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>if true will add a cache-busting URL parameter. Defaults to true</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="Module_offeringModule.js.html">Module/offeringModule.js</a>,
-				 <a href="Module_offeringModule.js.html#sunlight-1-line-245">line 245</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id=".getEvent"><span class="type-signature">&lt;static> </span>getEvent(eventId)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Requests and event from api</p>
+        <p>Starts polling given live event.</p>
     </div>
     
 
@@ -459,511 +544,7 @@
             <td class="type">
             
                 
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The event id we need to fetch</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="Module_offeringModule.js.html">Module/offeringModule.js</a>,
-				 <a href="Module_offeringModule.js.html#sunlight-1-line-193">line 193</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id=".getEventsByFilter"><span class="type-signature">&lt;static> </span>getEventsByFilter(filter, params)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Get events by filter, only returns the main betoffer for the event. To get all betoffers use getEvent() or getLiveEvent()</p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>filter</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Filter string, eg: football</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>params</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Request relevant parameters</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="Module_offeringModule.js.html">Module/offeringModule.js</a>,
-				 <a href="Module_offeringModule.js.html#sunlight-1-line-38">line 38</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id=".getGroup"><span class="type-signature">&lt;static> </span>getGroup(groupId)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Get group information.</p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>groupId</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-|
-
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Group id</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="Module_offeringModule.js.html">Module/offeringModule.js</a>,
-				 <a href="Module_offeringModule.js.html#sunlight-1-line-27">line 27</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id=".getGroupEvents"><span class="type-signature">&lt;static> </span>getGroupEvents(groupId)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Get group events</p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>groupId</code></td>
-            
-
-            <td class="type">
-            
-                
 <span class="param-type">number</span>
-|
-
-<span class="param-type">string</span>
 
 
 
@@ -974,7 +555,31 @@
 
             
 
-            <td class="description last"><p>Group id</p></td>
+            <td class="description last"><p>Event identifier</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>publishFunc</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Used for publishing event updates</p></td>
         </tr>
 
     
@@ -1018,8 +623,8 @@
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="Module_offeringModule.js.html">Module/offeringModule.js</a>,
-				 <a href="Module_offeringModule.js.html#sunlight-1-line-17">line 17</a>
+				<a href="Module_EventsModule_liveEventsAdapter.js.html">Module/EventsModule/liveEventsAdapter.js</a>,
+				 <a href="Module_EventsModule_liveEventsAdapter.js.html#sunlight-1-line-15">line 15</a>
 			</li>
 		</ul>
 	</dd>
@@ -1044,26 +649,6 @@
     
 
     
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
 
     
 </dd>
@@ -1072,7 +657,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id=".getHighlight"><span class="type-signature">&lt;static> </span>getHighlight()</h4>
+    <h4 class="name" id="pollLiveEventData"><span class="type-signature"></span>pollLiveEventData(eventId, publishFunc)</h4>
     
     
 </dt>
@@ -1080,115 +665,7 @@
 
     
     <div class="description">
-        <p>Request the highlight resource which is what is shown under the &quot;Popular&quot; section in the Sportsbook</p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="Module_offeringModule.js.html">Module/offeringModule.js</a>,
-				 <a href="Module_offeringModule.js.html#sunlight-1-line-210">line 210</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id=".getLiveEvent"><span class="type-signature">&lt;static> </span>getLiveEvent(eventId)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Returns a live event</p>
+        <p>Starts pooling given live event statistics.</p>
     </div>
     
 
@@ -1229,10 +706,7 @@
             <td class="type">
             
                 
-<span class="param-type">Number</span>
-|
-
-<span class="param-type">String</span>
+<span class="param-type">number</span>
 
 
 
@@ -1243,7 +717,31 @@
 
             
 
-            <td class="description last"><p>The event id we need to fetch</p></td>
+            <td class="description last"><p>Event identifier</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>publishFunc</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Used for publishing event statistics updates</p></td>
         </tr>
 
     
@@ -1287,8 +785,8 @@
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="Module_offeringModule.js.html">Module/offeringModule.js</a>,
-				 <a href="Module_offeringModule.js.html#sunlight-1-line-134">line 134</a>
+				<a href="Module_EventsModule_liveEventsAdapter.js.html">Module/EventsModule/liveEventsAdapter.js</a>,
+				 <a href="Module_EventsModule_liveEventsAdapter.js.html#sunlight-1-line-36">line 36</a>
 			</li>
 		</ul>
 	</dd>
@@ -1313,26 +811,6 @@
     
 
     
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
 
     
 </dd>
@@ -1341,7 +819,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id=".getLiveEventsByFilter"><span class="type-signature">&lt;static> </span>getLiveEventsByFilter(filter)</h4>
+    <h4 class="name" id="pollLiveEvents"><span class="type-signature"></span>pollLiveEvents(publishFunc)</h4>
     
     
 </dt>
@@ -1349,7 +827,7 @@
 
     
     <div class="description">
-        <p>Get live events by filter, only returns the main betoffer for the event. To get all betoffers use getEvent() or getLiveEvent()</p>
+        <p>Starts polling live events list.</p>
     </div>
     
 
@@ -1384,13 +862,13 @@
 
         <tr>
             
-                <td class="name"><code>filter</code></td>
+                <td class="name"><code>publishFunc</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type">function</span>
 
 
 
@@ -1401,7 +879,7 @@
 
             
 
-            <td class="description last"><p>Filter string</p></td>
+            <td class="description last"><p>Used for publishing live event list updates</p></td>
         </tr>
 
     
@@ -1445,8 +923,8 @@
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="Module_offeringModule.js.html">Module/offeringModule.js</a>,
-				 <a href="Module_offeringModule.js.html#sunlight-1-line-153">line 153</a>
+				<a href="Module_EventsModule_liveEventsAdapter.js.html">Module/EventsModule/liveEventsAdapter.js</a>,
+				 <a href="Module_EventsModule_liveEventsAdapter.js.html#sunlight-1-line-56">line 56</a>
 			</li>
 		</ul>
 	</dd>
@@ -1471,26 +949,168 @@
     
 
     
-    <h5>Returns:</h5>
+
     
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="pollLiveEventStart"><span class="type-signature"></span>pollLiveEventStart(eventId, publishFunc)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Starts polling when event becomes live event.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>eventId</code></td>
             
 
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise</span>
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
 
 
 
-    </dd>
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Event identifier</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>publishFunc</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Used for publishing live event start</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="Module_EventsModule_liveEventsAdapter.js.html">Module/EventsModule/liveEventsAdapter.js</a>,
+				 <a href="Module_EventsModule_liveEventsAdapter.js.html#sunlight-1-line-75">line 75</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
 </dl>
 
 
-        
+    
+
+    
+
+    
+
+    
+
+    
+
+    
 
     
 </dd>
