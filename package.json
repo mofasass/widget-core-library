@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://github.com/kambi-sportsbook-widgets/widget-library.git"
+    "url": "git+ssh://github.com/kambi-sportsbook-widgets/widget-core-library.git"
   },
   "private": false,
   "license": "MIT",
