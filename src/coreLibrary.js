@@ -495,10 +495,10 @@ export default {
     * @param classes {Array} An array of strings with the classnames to be addes
     */
    addClasses ( classes ) {
-      const html = document.getElementsByTagName('html')[0];
+      const body = document.getElementsByTagName('body')[0];
 
       classes.map((cssClass) => {
-         html.classList.add(cssClass);
+         body.classList.add(cssClass);
       });
    },
 
