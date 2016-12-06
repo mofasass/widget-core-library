@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "jsdoc": "rm -rf ./docs && jsdoc ./src/ -r -c jsdoc.conf.json -u ./tutorials/ -d ./docs/ -R ./README.md -t ./node_modules/ink-docstrap/template",
+    "jsdoc": "rm -rf ./docs && jsdoc -c jsdoc.conf.json",
     "preversion": "npm run jsdoc",
     "postversion": "npm publish",
     "jsdoc-help": "jsdoc --help"

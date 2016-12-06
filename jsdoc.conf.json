@@ -5,6 +5,16 @@
    "plugins": [
       "plugins/markdown"
    ],
+   "source": {
+      "include": ["./src/"]
+   },
+   "opts": {
+      "readme": "./README.md",
+      "template": "./node_modules/ink-docstrap/template",
+      "tutorials": "./tutorials",
+      "recurse": true,
+      "destination": "./docs/"
+   },
    "templates": {
       "default": {
          "layoutFile": "./jsdoc-layout.tmpl",
