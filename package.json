@@ -6,8 +6,7 @@
   "scripts": {
     "jsdoc": "rm -rf ./docs && jsdoc -c jsdoc.conf.json",
     "preversion": "npm run jsdoc",
-    "postversion": "npm publish",
-    "jsdoc-help": "jsdoc --help"
+    "postversion": "npm publish"
   },
   "repository": {
     "type": "git",
@@ -17,6 +16,7 @@
   "license": "MIT",
   "homepage": "https://github.com/kambi-sportsbook-widgets/widget-core-library#readme",
   "devDependencies": {
+    "kambi-widget-components": "^1.7.1",
     "babel-core": "^6.14.0",
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.14.0",

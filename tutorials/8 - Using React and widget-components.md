@@ -1,12 +1,10 @@
-Widget-components is a collection of reusable components written with [React](https://facebook.github.io/react/) framework. The use of React and these widget-components is completely optional, but they help a lot in the development and with keeping the style of the widget consistent with the style of the Sportsbook. Currently the list involves following components: OutcomeButton
+Widget-components is a collection of reusable components written with [React](https://facebook.github.io/react/) framework. The use of React and these widget-components is completely optional, but they help a lot in the development and with keeping the style of the widget consistent with the style of the Sportsbook.
 
 ### Pre-requisites
 
 You can start using widget-components by installing it as a dependency to the project by running:
 
 `npm install kambi-widget-components`
-
-JSX syntax works only in `.jsx` files, so `index.js` should import a `.jsx` file like this:
 
 ```javascript
 import { ComponentName } from 'kambi-widget-components';
@@ -15,48 +13,63 @@ import ReactDOM from 'react-dom';
 
 ...
 
-ReactDOM.render(
-   <ComponentName
-      componentProp1="someValue"
-      componentProp2={coreLibrary.args.someArgument}
-   />,
-   document.getElementById('root')
-);
+ReactDOM.render(reactElement, document.getElementById('root'));
 ```
 
 ReactDOM.render should only be called after `coreLibrary.init()` is resolved.
 
 `kambi-widget-components` also includes `react` and `react-dom` dependencies and as such they don't need to be installed in the project. You can also make your own components and have the whole widget be a React component if desired.
 
+### Creating React Elements
 
-### OutcomeButton
-
-For example OutcomeButton accepts the following props:
-
- - outcome (required): a outcome object from the `offeringModule`
-
- - event: a event object from the `offeringModule`
-
- - withLabel: a Boolean that defines if a label should be shown in the button or not
-
- - customLabel: overrides the default label with this value
-
-Example:
+To render one of the reusable components from `kambi-widget-components`
 
 ```javascript
-   render() {
-      return (
-         <OutcomeButton
-            outcome={ this.props.outcome }
-         ></OutcomeButton>
-      );
-   }
+import { Header } from 'kambi-widget-components';
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+var header = React.createElement(
+   Header,
+   { collapsable: false },
+   'This is the Header title'
+)
+
+ReactDOM.render(header,
+   document.getElementById('root')
+);
 ```
 
 
+### Creating React Elements with JSX
+
+JSX is an extension of the normal JavaScript programming language, it adds syntatic sugar to transform HTML code into calls to React.createElement. The following example is equivalent to the previous example:
+
+
+```javascript
+import { Header } from 'kambi-widget-components';
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+ReactDOM.render(
+   <Header collapsable={false}>
+      This is the Header title
+   </Header>
+, document.getElementById('header'))
+```
+
+Note: JSX syntax works only in `.jsx` files, so `index.js` should import a `.jsx` for this syntax to work. The whole widget (except `index.js`) can be written in `.jsx` file if so desired.
+
+
+### Using React
+
+It is possible to use only the pre-made components available in `kambi-widget-components`, but that is not really recommended. Due to the fact that the widgets live inside iframes it is highly recommended to avoid big dependencies like software frameworks (there will be multiple copies, one for each iframe). It is recommend to either not use any frameworks/libraries (even jQuery is quite big) or use our React solution. Behind the scenes if (and only if) you use React components your project [react-lite](https://github.com/Lucifier129/react-lite) will be bundled with the widgets code. This is a very small implementation of the React API and as such its performance impact is minimal.
+
+The widget can use React even without using including `kambi-widget-components`, widgets can be written completely as React components if desired, or they can only use the components from `kambi-widget-components` or not use React at all.
+
 ### useRealReact flag
 
-By default the project uses [react-lite](https://github.com/Lucifier129/react-lite) in production build which is a light-weight version of react with focus on small file-size instead of the normal react. While in development mode though (`npm run start`) the project uses the real react because it provides more debug functionalities. This is handled by the `kambi-widget-build-tools` automatically.
+By default the project uses [react-lite](https://github.com/Lucifier129/react-lite) in production builds instead of the normal React. While in development mode though (`npm run start`) the project uses the real React because it provides more debug functionalities. This is handled by the `kambi-widget-build-tools` automatically.
 
 React Lite is an alternative implementation of React and as such it can have incompatibilities, although so far we haven't encountered any. If you want to override the default behavior of the build you can force the use of a specific React version by placing a `useRealReact` object in package.json. You can define different values for development and production environment.
 
@@ -73,3 +86,5 @@ package.json:
 ```
 
 By default `development` is `true` and `production` is `false`
+
+React-lite performance suffers on fast-updating widgets (multiple times per second). Those are very uncommon edge cases, but in those cases it might be worth to sacrifice some load-time performance to gain run-time performance by using the real React in production as well.

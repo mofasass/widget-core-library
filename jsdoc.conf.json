@@ -6,7 +6,10 @@
       "plugins/markdown"
    ],
    "source": {
-      "include": ["./src/"]
+      "include": [
+         "./src/",
+         "./node_modules/kambi-widget-components/src/"
+      ]
    },
    "opts": {
       "readme": "./README.md",
