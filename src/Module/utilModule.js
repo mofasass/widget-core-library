@@ -103,11 +103,11 @@ export default {
    getOutcomeLabel (outcome, event) {
       switch (outcome.type) {
          case 'OT_ONE': // Outcome has label 1. Applies to Threeway bet offers.
-            return event.homeLabelCustom && event.homeLabelCustom !== '' ? event.homeLabelCustom : event.homeName;
+            return event.homeName;
          case 'OT_CROSS': // Outcome has label X. Applies to Threeway bet offers.
             return translationModule.getTranslation('draw');
          case 'OT_TWO': // Outcome has label 2. Applies to Threeway bet offers.
-            return event.awayLabelCustom && event.awayLabelCustom !== '' ? event.awayLabelCustom : event.awayName;
+            return event.awayName;
          case 'OT_OVER': // The “Over” outcome in Over/Under bet offer.
             return outcome.label + ' ' + (outcome.line / 1000);
          case 'OT_UNDER': // The “Under” outcome in Over/Under bet offer.
