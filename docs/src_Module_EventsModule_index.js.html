@@ -7,7 +7,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Kambi Widgets Tutorial: 5 - Sportsbook Interaction</title>
+	<title>Kambi Widgets Source: src/Module/EventsModule/index.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -93,46 +93,147 @@
 	<div class="col-md-12">
 	
 		<div id="main">
-			<section class="tutorial-section">
+			
 
-<header>
+		<h1 class="page-title">Source: src/Module/EventsModule/index.js</h1>
     
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">import liveEventsAdapter from './liveEventsAdapter';
 
-    <h2>5 - Sportsbook Interaction</h2>
-</header>
+/**
+ *
+ * @type {object.&lt;string, function[]>}
+ * @memberof module:eventsModule
+ */
+const handlers = {};
 
-<article>
-    <p>Interaction with the sportsbook is done through the <code>widgetModule</code>. A few examples of interactions are: changing the widget height, remove the widget from the Sportsbook, adding bets to the betslip. For full documentation please check the <code>widgetModule</code> API documentation.</p>
-<p>Note: Most of the methods inside the <code>widgetModule</code> only work when the widget is running inside the Sportsbook, when opening the widget as stand-alone these methods don't do anything.</p>
-<h3>Widget Height</h3><p>Since the widgets run inside iframes in the Sportsbook the widget needs to manually control its own height (iframes don't grow in size based in their contents height). The <code>widgetModule</code> provides two ways of changing the widget's height, every time the widget needs to change its height (for example when receiveing new data) one of these methods should be used</p>
-<ul>
-<li><p><code>widgetModule.adaptWidgetHeight()</code></p>
-<p>Tries to make the widget the same height as the <code>&lt;body&gt;</code> tag of the page, essentially making the iframe the same size of the widget. This approach doesn't always work, first the <code>&lt;body&gt;</code> tag can not have a 100% height styling rule, secondly this method needs to be called AFTER animations that dynamically change the <code>&lt;body&gt;</code> height end (both CSS animations and Javascript animations have this limitation), which basically means that animations that change the widget's height are not recommended.</p>
-</li>
-<li><p><code>widgetModule.setHeight(value)</code></p>
-<p>Sets the height to a specific value in pixels, this method has no gotchas like the <code>adaptWidgetHeight()</code>, but it can be very cumbersome to keep track of the widgets height manually.</p>
-</li>
-</ul>
-<h3>Removing the Widget</h3><p>The widget can choose to remove itself from the Sportsbook, this is useful to handle unexpected states in the data (like no events to show) and to prevent the widget from being in a broken state in cases of unexpected errors:</p>
-<pre class="prettyprint source lang-javascript"><code>// same thing as above in a more concise manner
-offeringModule.getEvent(someEventId)
-   .then(function (response) {
-      console.log('success!');
-      console.log(response);
-   })
-   .catch(function (error) {
-      console.log(error);
-      console.log('Error, maybe the event with the provided id does not exists? Widget removing itself');
-      widgetModule.removeWidget();
-   });</code></pre><h3>Navigating to Other Pages</h3><p>The <code>widgetModule</code> allows the user to redirect the user to other parts of the Sportsbook. Example:</p>
-<pre class="prettyprint source lang-javascript"><code>widgetModule.navigateToFilter('football/england/premier_league');</code></pre><h3>Adding Bets to Betslip</h3><p>BetOffers returned from the <code>offeringModule</code> have two or more outcomes (the possible choices in the bet). The <code>widgetModule</code> offers a way to add those outcomes to the betslip.</p>
-<pre class="prettyprint source lang-javascript"><code>widgetModule.addOutcomeToBetslip(outcome.id);</code></pre><h3>Events</h3><p>The <code>widgetModule</code> offers a publish/subscribe system to listen for a few specific events. For example</p>
-<pre class="prettyprint source lang-javascript"><code>widgetModule.events.subscribe('ODDS:FORMAT', function() {
-   console.log('odds format changed!');
-});</code></pre>
-</article>
+/**
+ * Object in which you can add event listeners for Kambi Widget API events
+ * Valid events listeners:
+ *
+ * 'WIDGET:HEIGHT': Widget height changed
+ *
+ * 'OUTCOME:REMOVED:{outcomeId}': Outcome with {outcomeId} removed
+ *
+ * 'OUTCOME:ADDED:{outcomeId}': Outcome with {outcomeId} added
+ *
+ * 'OUTCOME:UPDATE:{outcomeId}': Outcome with {outcomeId} updated
+ *
+ * 'WIDGET:ARGS': Widget args changed
+ *
+ * 'PAGE:INFO': Page info changed
+ *
+ * 'ODDS:FORMAT': Odds format changed
+ *
+ * 'CLIENT:CONFIG': Client config changed
+ *
+ * 'USER:LOGGED_IN': User logged in changed
+ *
+ * 'LIVE:EVENT:{eventId}': Live event statistics changed
+ *
+ * 'LIVE:EVENT:{eventId}:REMOVED': Not a live event anymore
+ *
+ * 'LIVE:EVENTDATA:{eventId}': Live event's statistics changed
+ *
+ * 'LIVE:EVENTDATA:{eventId}:REMOVED': Not a live event anymore
+ *
+ * 'LIVE:EVENTS': Live events list changed
+ *
+ * @example
+ *
+ * eventsModule
+ *    .subscribe('OUTCOME:ADDED:' + outcome.id,
+ *       ( data ) => {
+ *          ...
+ *       });
+ *
+ @module eventsModule
+ */
+const EventsModule = {
 
+   /**
+    * Live services polling interval (in milliseconds)
+    */
+   set liveEventPollingInterval(value) {
+      if (typeof value !== 'number') {
+         throw new Error(`Invalid number: ${value}`);
+      }
+
+      liveEventsAdapter.pollingInterval = value;
+   },
+
+
+   /**
+    * Subscribes a handler to given event.
+    * @param {string} event Event name
+    * @param {function} handler Handler function
+    */
+   subscribe(event, handler) {
+      if (handlers.hasOwnProperty(event)) {
+         handlers[event].push(handler);
+      } else {
+         handlers[event] = [handler];
+
+         // start proper polling service when first listener of given LIVE:* event subscribes
+         liveEventsAdapter.subscribe(event, this.publish.bind(this));
+      }
+   },
+
+   /**
+    * Unsubscribes handler/all handlers from given event.
+    * @param {string} event Event name
+    * @param {function?} handler Optional handler function pointer
+    */
+   unsubscribe(event, handler) {
+      if (!handlers.hasOwnProperty(event)) {
+         return;
+      }
+
+      if (handler) {
+         // remove particular handler
+         const handlerIdx = handlers[event].indexOf(handler);
+
+         if (handlerIdx > -1) {
+            handlers[event].splice(handlerIdx, 1);
+         }
+      } else {
+         // remove all handlers for given event
+         handlers[event] = [];
+      }
+
+      if (handlers[event].length == 0) {
+         delete handlers[event];
+
+         // stop additional polling services on given event
+         liveEventsAdapter.unsubscribe(event);
+      }
+   },
+
+   /**
+    * Emits an event with given arguments.
+    * @param {string} event Event name
+    * @param {...*} args Arguments for handlers
+    */
+   publish(event, ...args) {
+      if (!handlers.hasOwnProperty(event)) {
+         return;
+      }
+
+      handlers[event].forEach(handler => handler.apply(undefined, args));
+   }
+
+};
+
+export default EventsModule;
+</pre>
+    </article>
 </section>
+
+
+
+
 
 		</div>
 	</div>

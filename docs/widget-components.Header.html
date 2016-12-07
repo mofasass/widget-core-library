@@ -7,7 +7,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Kambi Widgets Module: utilModule</title>
+	<title>Kambi Widgets Class: Header</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -95,10 +95,19 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Module: utilModule</h1>
+	<h1 class="page-title">Class: Header</h1>
 <section>
 
 <header>
+    
+        <h2>
+            <span class="ancestors"><a href="widget-components.html">widget-components</a>.</span>
+        
+        Header
+        </h2>
+        
+            <div class="class-description"><p>Header component, used to create standard headers, this component changes its default behavior based on coreLibrary.pageInfo.<br>If pageInfo.pageType is &quot;home&quot; the header is white background with grey text, otherwise the widget becomes collapsable and the header becomes black with white text.<br>These defaults are overridable by the props</p></div>
+        
     
 </header>
 
@@ -107,10 +116,24 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>Module with utility functions</p></div>
-        
+<hr>
+<dt>
+    <h4 class="name" id="Header"><span class="type-signature"></span>new Header()</h4>
+    
+    
+</dt>
+<dd>
 
-        
+    
+
+    
+
+    
+
+    
+    
+
+    
 <dl class="details">
     
 
@@ -145,8 +168,8 @@
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="src_Module_utilModule.js.html">src/Module/utilModule.js</a>,
-				 <a href="src_Module_utilModule.js.html#sunlight-1-line-4">line 4</a>
+				<a href="node_modules_kambi-widget-components_src_Header_Header.jsx.html">node_modules/kambi-widget-components/src/Header/Header.jsx</a>,
+				 <a href="node_modules_kambi-widget-components_src_Header_Header.jsx.html#sunlight-1-line-11">line 11</a>
 			</li>
 		</ul>
 	</dd>
@@ -160,7 +183,21 @@
 </dl>
 
 
-        
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
     
     </div>
 
@@ -175,81 +212,34 @@
     
 
     
-
-    
-        <h3 class="subsection-title">Methods</h3>
+        <h3 class="subsection-title">Members</h3>
 
         <dl>
             
 <hr>
-<dt>
-    <h4 class="name" id=".clone"><span class="type-signature">&lt;static> </span>clone(x)</h4>
-    
+<dt class="name" id=".HEIGHT">
+    <h4 id=".HEIGHT"><span class="type-signature">&lt;static> </span>HEIGHT<span class="type-signature"> :number</span></h4>
+
     
 </dt>
 <dd>
-
     
     <div class="description">
-        <p>Returns deep copy of given object.</p>
+        <p>Holds the height of the header in pixels</p>
     </div>
     
 
     
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>x</code></td>
-            
-
-            <td class="type">
-            
+        <h5>Type:</h5>
+        <ul>
+            <li>
                 
-<span class="param-type">object</span>
+<span class="param-type">number</span>
 
 
 
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Object to be cloned</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
+            </li>
+        </ul>
     
 
     
@@ -287,8 +277,8 @@
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="src_Module_utilModule.js.html">src/Module/utilModule.js</a>,
-				 <a href="src_Module_utilModule.js.html#sunlight-1-line-61">line 61</a>
+				<a href="node_modules_kambi-widget-components_src_Header_Header.jsx.html">node_modules/kambi-widget-components/src/Header/Header.jsx</a>,
+				 <a href="node_modules_kambi-widget-components_src_Header_Header.jsx.html#sunlight-1-line-102">line 102</a>
 			</li>
 		</ul>
 	</dd>
@@ -301,18 +291,6 @@
 	
 </dl>
 
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
 
     
 </dd>
@@ -320,29 +298,25 @@
         
             
 <hr>
-<dt>
-    <h4 class="name" id=".equals"><span class="type-signature">&lt;static> </span>equals(x, y)</h4>
-    
+<dt class="name" id=".propTypes">
+    <h4 id=".propTypes"><span class="type-signature">&lt;static> </span>propTypes<span class="type-signature"></span></h4>
+
     
 </dt>
 <dd>
-
-    
-    <div class="description">
-        <p>Checks deep equality of two object.</p>
-    </div>
     
 
     
 
     
-
+<dl class="details">
     
-    
-        <h5>Parameters:</h5>
-        
 
-<table class="params table table-striped">
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
     <thead>
     <tr>
         
@@ -351,6 +325,8 @@
 
         <th>Type</th>
 
+        
+        <th>Argument</th>
         
 
         
@@ -364,13 +340,13 @@
 
         <tr>
             
-                <td class="name"><code>x</code></td>
+                <td class="name"><code>children</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">ReactElement</span>
 
 
 
@@ -378,181 +354,61 @@
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last"><p>First object</p></td>
+            <td class="description last"><p>Elements to be placed inside the header</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>y</code></td>
+                <td class="name"><code>collapsable</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Second object</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="src_Module_utilModule.js.html">src/Module/utilModule.js</a>,
-				 <a href="src_Module_utilModule.js.html#sunlight-1-line-38">line 38</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
 <span class="param-type">boolean</span>
 
 
 
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
             
-<hr>
-<dt>
-    <h4 class="name" id=".getOddsDecimalValue"><span class="type-signature">&lt;static> </span>getOddsDecimalValue(odds)</h4>
-    
-    
-</dt>
-<dd>
+            </td>
 
-    
-    <div class="description">
-        <p>Get decimal formatted odds.</p>
-    </div>
-    
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
 
-    
+                
+                </td>
+            
 
-    
+            
 
-    
-    
-        <h5>Parameters:</h5>
-        
+            <td class="description last"><p>Sets header as collapsable</p></td>
+        </tr>
 
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
     
 
         <tr>
             
-                <td class="name"><code>odds</code></td>
+                <td class="name"><code>hidden</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Number</span>
+<span class="param-type">boolean</span>
 
 
 
@@ -560,157 +416,31 @@
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last"><p>Odds number</p></td>
+            <td class="description last"><p>if true the widget will start collapsed</p></td>
         </tr>
 
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="src_Module_utilModule.js.html">src/Module/utilModule.js</a>,
-				 <a href="src_Module_utilModule.js.html#sunlight-1-line-87">line 87</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Number</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id=".getOutcomeLabel"><span class="type-signature">&lt;static> </span>getOutcomeLabel(outcome, event)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Returns the outcome label translated.</p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
     
 
         <tr>
             
-                <td class="name"><code>outcome</code></td>
+                <td class="name"><code>onCollapse</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">function</span>
 
 
 
@@ -718,23 +448,31 @@
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last"><p>A betoffer outcome object</p></td>
+            <td class="description last"><p>callback invoked when the widget collapses</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>event</code></td>
+                <td class="name"><code>onExpand</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">function</span>
 
 
 
@@ -742,104 +480,114 @@
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last"><p>Event object</p></td>
+            <td class="description last"><p>callback invoked when the widget uncollapses</p></td>
         </tr>
 
     
-    </tbody>
-</table>
 
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="src_Module_utilModule.js.html">src/Module/utilModule.js</a>,
-				 <a href="src_Module_utilModule.js.html#sunlight-1-line-103">line 103</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
+        <tr>
+            
+                <td class="name"><code>customClasses</code></td>
             
 
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
+            <td class="type">
+            
+                
 <span class="param-type">string</span>
+|
+
+<span class="param-type">boolean</span>
 
 
 
-    </dd>
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Defaults to false. If provided adds these CSS classes to the header instead of adding classes based on pageInfo</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
 </dl>
 
+    
 
-        
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="node_modules_kambi-widget-components_src_Header_Header.jsx.html">node_modules/kambi-widget-components/src/Header/Header.jsx</a>,
+				 <a href="node_modules_kambi-widget-components_src_Header_Header.jsx.html#sunlight-1-line-89">line 89</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
 
     
 </dd>
 
         </dl>
+    
+
     
 
     

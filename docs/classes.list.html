@@ -7,7 +7,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Kambi Widgets Source: Module/EventsModule/schedule.js</title>
+	<title>Kambi Widgets Classes</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -40,9 +40,23 @@
 		<ul class="nav navbar-nav">
 			
 			<li class="dropdown">
+				<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="widget-components.html">widget-components</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
 				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
 					<li><a href="module-coreLibrary.html">coreLibrary</a></li><li><a href="module-eventsModule.html">eventsModule</a></li><li><a href="module-offeringModule.html">offeringModule</a></li><li><a href="module-statisticsModule.html">statisticsModule</a></li><li><a href="module-translationModule.html">translationModule</a></li><li><a href="module-utilModule.html">utilModule</a></li><li><a href="module-widgetModule.html">widgetModule</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="widget-components.DropdownButton.html">widget-components.DropdownButton</a></li><li><a href="widget-components.Header.html">widget-components.Header</a></li><li><a href="widget-components.OutcomeButton.html">widget-components.OutcomeButton</a></li><li><a href="widget-components.OutcomeButtonUI.html">widget-components.OutcomeButtonUI</a></li><li><a href="widget-components.TabBarScrolled.html">widget-components.TabBarScrolled</a></li><li><a href="widget-components.TabPagination.html">widget-components.TabPagination</a></li>
 				</ul>
 			</li>
 			
@@ -76,91 +90,122 @@
 <div class="row">
 
 	
-	<div class="col-md-12">
+	<div class="col-md-8">
 	
 		<div id="main">
 			
 
-		<h1 class="page-title">Source: Module/EventsModule/schedule.js</h1>
-    
+	<h1 class="page-title">Classes</h1>
 <section>
-    <article>
-        <pre
-            class="sunlight-highlight-javascript linenums">import utilModule from '../utilModule';
 
-/**
- * Utility for running tasks periodically with equality check.
- * @memberof module:eventsModule
- */
-const Schedule = {
+<header>
+    
+        <h2>
+        
+        </h2>
+        
+    
+</header>
 
-   /**
-    * Currently running tasks map
-    * @type {object.&lt;string, {interval: number, lastResult: object|null}>}
-    */
-   tasks: {},
 
-   /**
-    * Runs given task function periodically.
-    * @param {string} key Unique task key
-    * @param {function():Promise} taskFunc Task function
-    * @param {function(mixed)} resultHandler Called with task result
-    * @param {number} interval Task interval (in milliseconds)
-    * @param {boolean} checkEquality Compare current and last result, don't call resultHandler if both are equal
-    */
-   periodically(key, taskFunc, resultHandler, { interval, checkEquality }) {
-      if (this.tasks.hasOwnProperty(key)) {
-         return;
-      }
+<article>
+    <div class="container-overview">
+    
+        
 
-      this.tasks[key] = {
-         /**
-          * Task runner interval
-          */
-         interval: setInterval(() => {
-            const task = this.tasks[key];
+        
+<dl class="details">
+    
 
-            taskFunc()
-               .then((result) => {
-                  if (!(checkEquality &amp;&amp; utilModule.equals(task.lastResult, result))) {
-                     resultHandler(result);
-                  }
+	
 
-                  if (checkEquality) {
-                     // result needs to be cloned as it could be modified in further processing
-                     task.lastResult = utilModule.clone(result);
-                  }
-               })
-               .catch(error => console.error(error));
-         }, interval),
+	
 
-         /**
-          * Last result pointer for equality check
-          */
-         lastResult: null
-      };
-   },
+	
 
-   /**
-    * Stops given task.
-    * @param {string} key Task key
-    */
-   stop(key) {
-      if (!this.tasks.hasOwnProperty(key)) {
-         return;
-      }
+    
 
-      clearInterval(this.tasks[key].interval);
-      delete this.tasks[key];
-   }
+    
 
-};
+    
 
-export default Schedule;
-</pre>
-    </article>
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="widget-components.DropdownButton.html">DropdownButton</a></dt>
+            <dd></dd>
+        
+            <dt><a href="widget-components.Header.html">Header</a></dt>
+            <dd></dd>
+        
+            <dt><a href="widget-components.OutcomeButton.html">OutcomeButton</a></dt>
+            <dd></dd>
+        
+            <dt><a href="widget-components.OutcomeButtonUI.html">OutcomeButtonUI</a></dt>
+            <dd></dd>
+        
+            <dt><a href="widget-components.TabBarScrolled.html">TabBarScrolled</a></dt>
+            <dd></dd>
+        
+            <dt><a href="widget-components.TabPagination.html">TabPagination</a></dt>
+            <dd></dd>
+        </dl>
+    
+
+    
+
+    
+        <h3 class="subsection-title">Namespaces</h3>
+
+        <dl>
+            <dt><a href="namespaces.html#widget-components"><a href="widget-components.html">widget-components</a></a></dt>
+            <dd></dd>
+        </dl>
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
 </section>
-
 
 
 
@@ -170,6 +215,10 @@ export default Schedule;
 
 	<div class="clearfix"></div>
 
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
 	
 
 </div>

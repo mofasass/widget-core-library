@@ -7,7 +7,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Kambi Widgets Source: Module/utilModule.js</title>
+	<title>Kambi Widgets Source: src/Module/statisticsModule.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -40,9 +40,23 @@
 		<ul class="nav navbar-nav">
 			
 			<li class="dropdown">
+				<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="widget-components.html">widget-components</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
 				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
 					<li><a href="module-coreLibrary.html">coreLibrary</a></li><li><a href="module-eventsModule.html">eventsModule</a></li><li><a href="module-offeringModule.html">offeringModule</a></li><li><a href="module-statisticsModule.html">statisticsModule</a></li><li><a href="module-translationModule.html">translationModule</a></li><li><a href="module-utilModule.html">utilModule</a></li><li><a href="module-widgetModule.html">widgetModule</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="widget-components.DropdownButton.html">widget-components.DropdownButton</a></li><li><a href="widget-components.Header.html">widget-components.Header</a></li><li><a href="widget-components.OutcomeButton.html">widget-components.OutcomeButton</a></li><li><a href="widget-components.OutcomeButtonUI.html">widget-components.OutcomeButtonUI</a></li><li><a href="widget-components.TabBarScrolled.html">widget-components.TabBarScrolled</a></li><li><a href="widget-components.TabPagination.html">widget-components.TabPagination</a></li>
 				</ul>
 			</li>
 			
@@ -81,173 +95,66 @@
 		<div id="main">
 			
 
-		<h1 class="page-title">Source: Module/utilModule.js</h1>
+		<h1 class="page-title">Source: src/Module/statisticsModule.js</h1>
     
 <section>
     <article>
         <pre
-            class="sunlight-highlight-javascript linenums">import translationModule from './translationModule';
-import coreLibrary from '../coreLibrary';
+            class="sunlight-highlight-javascript linenums">import coreLibrary from '../coreLibrary';
 
 /**
- * Module with utility functions
- * @module utilModule
+ * Module to access statistics API
+ * The statistics API has information concerning historical data of events (matches, competitions)
+ * All methods in this module return Promises that are resolved when the data is ready and throws errors (that can be handled with .catch()) on failure
+ * @module statisticsModule
  */
+
 export default {
 
    /**
-    * Util method for return unique items between arrays
-    * @param {Array} A First array
-    * @param {Array} B Second array
-    * @returns {Array}
-    * @private
+    * Configuration
+    * @type {Object}
+    * @property {String} baseApiUrl the baseURL for statistics API requests
     */
-   diffArray (A, B) {
-      var map = {}, C = [];
-
-      for (var i = B.length; i--;) {
-         map[B[i]] = null;
-      } // any other value would do
-
-      for (var i = A.length; i--;) {
-         if (!map.hasOwnProperty(A[i])) {
-            C.push(A[i]);
-         }
-      }
-      return C;
+   config: {
+      baseApiUrl: 'https://api.kambi.com/statistics/api/'
    },
 
    /**
-    * Checks deep equality of two object.
-    * @param {object} x First object
-    * @param {object} y Second object
-    * @returns {boolean}
+    * Requests league table statistics data from api.
+    * @param {String} filter a filter string to a competition. Example 'football/england/premier_league'
+    * @returns {Promise}
     */
-   equals (x, y) {
-      if (x === y) return true;
-      if ( !(x instanceof Object) || !(y instanceof Object)) return false;
-      if (x.constructor !== y.constructor) return false;
-      for (var p in x) {
-         if (!x.hasOwnProperty(p)) continue;
-         if (!y.hasOwnProperty(p)) return false;
-         if (x[p] === y[p]) continue;
-         if (typeof x[p] !== 'object') return false;
-         if (!this.equals(x[p], y[p])) return false;
-      }
+   getLeagueTableStatistics (filter) {
+      // Remove url parameters from filter
+      filter = filter.match(/[^?]*/)[0];
 
-      for (p in y) {
-         if (y.hasOwnProperty(p) &amp;&amp; !x.hasOwnProperty(p) ) return false;
+      // Removing trailing and starting slashes if present
+      if ( filter[filter.length - 1] === '/' ) {
+         filter = filter.slice(0, -1);
       }
-
-      return true;
+      if ( filter[0] === '/' ) {
+         filter = filter.slice(1);
+      }
+      return coreLibrary.getData(this.config.baseApiUrl + coreLibrary.config.offering + '/leaguetable/' + filter + '.json');
    },
 
    /**
-    * Returns deep copy of given object.
-    * @param {object} x Object to be cloned
+    * Requests H2H statistics data from api.
+    * @param {String|Number} eventId id of a match
+    * @returns {Promise}
     */
-   clone (x) {
-      return JSON.parse(JSON.stringify(x));
-   },
-
-   /* Replaces expressions like "{customer}" from the provided string
-    * to the value the have in the coreLibrary.config object
-    * @param {String} str the string to replace the expressions in
-    */
-   replaceConfigParameters (str) {
-      if (str == null) {
-         return str;
-      }
-      const config = coreLibrary.config;
-      Object.keys(config).forEach((key) => {
-         var regex = new RegExp('{' + key + '}', 'g');
-         var value = config[key];
-         str = str.replace(regex, value);
-      });
-      return str;
+   getHeadToHeadStatistics (eventId) {
+      return coreLibrary.getData(this.config.baseApiUrl + coreLibrary.config.offering + '/h2h/event/' + eventId + '.json');
    },
 
    /**
-    * Get decimal formatted odds.
-    * @param {Number} odds Odds number
-    * @returns {Number}
+    * Requests TPI statistics data from api.
+    * @param {String|Number} eventId id of a match
+    * @returns {Promise}
     */
-   getOddsDecimalValue (odds) {
-      if (odds &lt; 100) {
-         return odds.toFixed(2);
-      } else if (odds &lt; 1000) {
-         return odds.toFixed(1);
-      } else {
-         return odds.toFixed(0);
-      }
-   },
-
-   /**
-    * Returns the outcome label translated.
-    * @param {Object} outcome A betoffer outcome object
-    * @param {Object} event Event object
-    * @returns {string}
-    */
-   getOutcomeLabel (outcome, event) {
-      switch (outcome.type) {
-         case 'OT_ONE': // Outcome has label 1. Applies to Threeway bet offers.
-            return event.homeLabelCustom &amp;&amp; event.homeLabelCustom !== '' ? event.homeLabelCustom : event.homeName;
-         case 'OT_CROSS': // Outcome has label X. Applies to Threeway bet offers.
-            return translationModule.getTranslation('draw');
-         case 'OT_TWO': // Outcome has label 2. Applies to Threeway bet offers.
-            return event.awayLabelCustom &amp;&amp; event.awayLabelCustom !== '' ? event.awayLabelCustom : event.awayName;
-         case 'OT_OVER': // The “Over” outcome in Over/Under bet offer.
-            return outcome.label + ' ' + (outcome.line / 1000);
-         case 'OT_UNDER': // The “Under” outcome in Over/Under bet offer.
-            return outcome.label + ' ' + (outcome.line / 1000);
-         // Todo: Impelement these responses with translations
-         // case 'OT_ODD': //The “Odd” outcome in Odd/Even bet offer.
-         // break;
-         // case 'OT_EVEN': //The “Even” outcome in Odd/Even bet offer.
-         // break;
-         // case 'OT_ONE_ONE': //1-1 outcome in Halftime/fulltime bet offer.
-         // break;
-         // case 'OT_ONE_TWO': //1-2 outcome in Halftime/fulltime bet offer.
-         // break;
-         // case 'OT_ONE_CROSS': //1-X outcome in Halftime/fulltime bet offer.
-         // break;
-         // case 'OT_TWO_ONE': //2-1 outcome in Halftime/fulltime bet offer.
-         // break;
-         // case 'OT_TWO_TWO': //2-2 outcome in Halftime/fulltime bet offer.
-         // break;
-         // case 'OT_TWO_CROSS': //2-X outcome in Halftime/fulltime bet offer.
-         // break;
-         // case 'OT_CROSS_ONE': //X-1 outcome in Halftime/fulltime bet offer.
-         // break;
-         // case 'OT_CROSS_TWO': //X-2 outcome in Halftime/fulltime bet offer.
-         // break;
-         // case 'OT_CROSS_CROSS': //X-X outcome in Halftime/fulltime bet offer.
-         // break;
-         // case 'OT_ONE_OR_TWO': //1 or 2 outcome in Double Chance bet offer.
-         // break;
-         // case 'OT_ONE_OR_CROSS': //1 or X outcome in Double Chance bet offer.
-         // break;
-         // case 'OT_CROSS_OR_TWO': //X or 2 outcome in Double Chance bet offer.
-         // break;
-         // case 'OT_YES': //“Yes” outcome in Head To Head and Yes/No bet offer.
-         // break;
-         // case 'OT_NO': //“No” outcome in Head To Head and Yes/No bet offer.
-         // break;
-         // case 'OT_OTHER': //“Other results” outcome in Result bet offer.
-         // break;
-         // case 'OT_UNTYPED': //Outcome does not have type.
-         // break;
-         // case 'OT_WC_HOME': //Outcome has label Home Win. Applies to WinCast bet offers.
-         // break;
-         // case 'OT_WC_DRAW': //Outcome has label Draw. Applies to WinCast bet offers.
-         // break;
-         // case 'OT_WC_AWAY': //Outcome has label Away Win. Applies to WinCast bet offers.
-         // break;
-
-         default:
-            console.warn('Unhandled outcome type: ' + outcome.type, outcome);
-            return outcome.label;
-      }
+   getTeamPerformanceStatistics (eventId) {
+      return coreLibrary.getData(this.config.baseApiUrl + coreLibrary.config.offering + '/tpi/event/' + eventId + '.json');
    }
 };
 </pre>

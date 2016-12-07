@@ -40,9 +40,23 @@
 		<ul class="nav navbar-nav">
 			
 			<li class="dropdown">
+				<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="widget-components.html">widget-components</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
 				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
 					<li><a href="module-coreLibrary.html">coreLibrary</a></li><li><a href="module-eventsModule.html">eventsModule</a></li><li><a href="module-offeringModule.html">offeringModule</a></li><li><a href="module-statisticsModule.html">statisticsModule</a></li><li><a href="module-translationModule.html">translationModule</a></li><li><a href="module-utilModule.html">utilModule</a></li><li><a href="module-widgetModule.html">widgetModule</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="widget-components.DropdownButton.html">widget-components.DropdownButton</a></li><li><a href="widget-components.Header.html">widget-components.Header</a></li><li><a href="widget-components.OutcomeButton.html">widget-components.OutcomeButton</a></li><li><a href="widget-components.OutcomeButtonUI.html">widget-components.OutcomeButtonUI</a></li><li><a href="widget-components.TabBarScrolled.html">widget-components.TabBarScrolled</a></li><li><a href="widget-components.TabPagination.html">widget-components.TabPagination</a></li>
 				</ul>
 			</li>
 			
@@ -88,43 +102,43 @@
 </header>
 
 <article>
-    <p>Widget-components is a collection of reusable components written with <a href="https://facebook.github.io/react/">React</a> framework. The use of React and these widget-components is completely optional, but they help a lot in the development and with keeping the style of the widget consistent with the style of the Sportsbook. Currently the list involves following components: OutcomeButton</p>
+    <p>Widget-components is a collection of reusable components written with <a href="https://facebook.github.io/react/">React</a> framework. The use of React and these widget-components is completely optional, but they help a lot in the development and with keeping the style of the widget consistent with the style of the Sportsbook.</p>
 <h3>Pre-requisites</h3><p>You can start using widget-components by installing it as a dependency to the project by running:</p>
 <p><code>npm install kambi-widget-components</code></p>
-<p>JSX syntax works only in <code>.jsx</code> files, so <code>index.js</code> should import a <code>.jsx</code> file like this:</p>
 <pre class="prettyprint source lang-javascript"><code>import { ComponentName } from 'kambi-widget-components';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 ...
 
-ReactDOM.render(
-   &lt;ComponentName
-      componentProp1=&quot;someValue&quot;
-      componentProp2={coreLibrary.args.someArgument}
-   />,
-   document.getElementById('root')
-);</code></pre><p>ReactDOM.render should only be called after <code>coreLibrary.init()</code> is resolved.</p>
+ReactDOM.render(reactElement, document.getElementById('root'));</code></pre><p>ReactDOM.render should only be called after <code>coreLibrary.init()</code> is resolved.</p>
 <p><code>kambi-widget-components</code> also includes <code>react</code> and <code>react-dom</code> dependencies and as such they don't need to be installed in the project. You can also make your own components and have the whole widget be a React component if desired.</p>
-<h3>OutcomeButton</h3><p>For example OutcomeButton accepts the following props:</p>
-<ul>
-<li><p>outcome (required): a outcome object from the <code>offeringModule</code></p>
-</li>
-<li><p>event: a event object from the <code>offeringModule</code></p>
-</li>
-<li><p>withLabel: a Boolean that defines if a label should be shown in the button or not</p>
-</li>
-<li><p>customLabel: overrides the default label with this value</p>
-</li>
-</ul>
-<p>Example:</p>
-<pre class="prettyprint source lang-javascript"><code>   render() {
-      return (
-         &lt;OutcomeButton
-            outcome={ this.props.outcome }
-         >&lt;/OutcomeButton>
-      );
-   }</code></pre><h3>useRealReact flag</h3><p>By default the project uses <a href="https://github.com/Lucifier129/react-lite">react-lite</a> in production build which is a light-weight version of react with focus on small file-size instead of the normal react. While in development mode though (<code>npm run start</code>) the project uses the real react because it provides more debug functionalities. This is handled by the <code>kambi-widget-build-tools</code> automatically.</p>
+<h3>Creating React Elements</h3><p>To render one of the reusable components from <code>kambi-widget-components</code></p>
+<pre class="prettyprint source lang-javascript"><code>import { Header } from 'kambi-widget-components';
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+var header = React.createElement(
+   Header,
+   { collapsable: false },
+   'This is the Header title'
+)
+
+ReactDOM.render(header,
+   document.getElementById('root')
+);</code></pre><h3>Creating React Elements with JSX</h3><p>JSX is an extension of the normal JavaScript programming language, it adds syntatic sugar to transform HTML code into calls to React.createElement. The following example is equivalent to the previous example:</p>
+<pre class="prettyprint source lang-javascript"><code>import { Header } from 'kambi-widget-components';
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+ReactDOM.render(
+   &lt;Header collapsable={false}>
+      This is the Header title
+   &lt;/Header>
+, document.getElementById('header'))</code></pre><p>Note: JSX syntax works only in <code>.jsx</code> files, so <code>index.js</code> should import a <code>.jsx</code> for this syntax to work. The whole widget (except <code>index.js</code>) can be written in <code>.jsx</code> file if so desired.</p>
+<h3>Using React</h3><p>It is possible to use only the pre-made components available in <code>kambi-widget-components</code>, but that is not really recommended. Due to the fact that the widgets live inside iframes it is highly recommended to avoid big dependencies like software frameworks (there will be multiple copies, one for each iframe). It is recommend to either not use any frameworks/libraries (even jQuery is quite big) or use our React solution. Behind the scenes if (and only if) you use React components your project <a href="https://github.com/Lucifier129/react-lite">react-lite</a> will be bundled with the widgets code. This is a very small implementation of the React API and as such its performance impact is minimal.</p>
+<p>The widget can use React even without using including <code>kambi-widget-components</code>, widgets can be written completely as React components if desired, or they can only use the components from <code>kambi-widget-components</code> or not use React at all.</p>
+<h3>useRealReact flag</h3><p>By default the project uses <a href="https://github.com/Lucifier129/react-lite">react-lite</a> in production builds instead of the normal React. While in development mode though (<code>npm run start</code>) the project uses the real React because it provides more debug functionalities. This is handled by the <code>kambi-widget-build-tools</code> automatically.</p>
 <p>React Lite is an alternative implementation of React and as such it can have incompatibilities, although so far we haven't encountered any. If you want to override the default behavior of the build you can force the use of a specific React version by placing a <code>useRealReact</code> object in package.json. You can define different values for development and production environment.</p>
 <p>package.json:</p>
 <pre class="prettyprint source lang-javascript"><code>{
@@ -134,6 +148,7 @@ ReactDOM.render(
       &quot;production&quot;: [Boolean]
    }
 }</code></pre><p>By default <code>development</code> is <code>true</code> and <code>production</code> is <code>false</code></p>
+<p>React-lite performance suffers on fast-updating widgets (multiple times per second). Those are very uncommon edge cases, but in those cases it might be worth to sacrifice some load-time performance to gain run-time performance by using the real React in production as well.</p>
 </article>
 
 </section>

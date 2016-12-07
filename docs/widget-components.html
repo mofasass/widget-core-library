@@ -7,7 +7,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Kambi Widgets Source: Module/translationModule.js</title>
+	<title>Kambi Widgets Namespace: widget-components</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -40,9 +40,23 @@
 		<ul class="nav navbar-nav">
 			
 			<li class="dropdown">
+				<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="widget-components.html">widget-components</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
 				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
 					<li><a href="module-coreLibrary.html">coreLibrary</a></li><li><a href="module-eventsModule.html">eventsModule</a></li><li><a href="module-offeringModule.html">offeringModule</a></li><li><a href="module-statisticsModule.html">statisticsModule</a></li><li><a href="module-translationModule.html">translationModule</a></li><li><a href="module-utilModule.html">utilModule</a></li><li><a href="module-widgetModule.html">widgetModule</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="widget-components.DropdownButton.html">widget-components.DropdownButton</a></li><li><a href="widget-components.Header.html">widget-components.Header</a></li><li><a href="widget-components.OutcomeButton.html">widget-components.OutcomeButton</a></li><li><a href="widget-components.OutcomeButtonUI.html">widget-components.OutcomeButtonUI</a></li><li><a href="widget-components.TabBarScrolled.html">widget-components.TabBarScrolled</a></li><li><a href="widget-components.TabPagination.html">widget-components.TabPagination</a></li>
 				</ul>
 			</li>
 			
@@ -76,91 +90,162 @@
 <div class="row">
 
 	
-	<div class="col-md-12">
+	<div class="col-md-8">
 	
 		<div id="main">
 			
 
-		<h1 class="page-title">Source: Module/translationModule.js</h1>
-    
+	<h1 class="page-title">Namespace: widget-components</h1>
 <section>
-    <article>
-        <pre
-            class="sunlight-highlight-javascript linenums">import coreLibrary from '../coreLibrary';
 
-/**
- * Module with internationalization methods
- * Provides a very simple internationalization mechanism
- * that is not relient in any library.
- * The loading of the right internationalization JSON file is handled automatically
- * @module translationModule
- */
-export default {
-   /**
-    * fetched from the i18n folder JSON files. Only the current
-    * locale strings are fetched
-    * @type {Object}
-    */
-   i18nStrings: {},
+<header>
+    
+        <h2>
+        widget-components
+        </h2>
+        
+    
+</header>
 
-   /**
-    * Makes a request to fetch the provided locale strings
-    * @param {String} locale Locale string, eg: sv_SE
-    * @returns {Promise}
-    * @private
-    */
-   fetchTranslations (locale) {
-      if (locale == null) {
-         locale = 'en_GB';
-      }
-      var self = this;
-      var path = 'i18n/';
-      return new Promise((resolve, reject) => {
-         coreLibrary.getData(path + locale + '.json')
-            .then((response) => {
-               this.i18nStrings = response;
-               resolve();
-            })
-            .catch((error) => {
-               if (locale !== 'en_GB') {
-                  console.debug('Could not load translations for ' + locale + ' falling back to en_GB');
-                  self.fetchTranslations('en_GB').then(resolve);
-               } else {
-                  console.debug('Could not load translations for en_GB');
-                  console.trace(error);
-                  resolve();
-               }
-            });
-      });
-   },
 
-   /**
-    * Returns translated string based of a provided key.
-    * @param {String} key Key to fetch translation for
-    * @param {...String} args arguments to replace inside the translated string
-    * @example
-    * en_GB.json:
-    * { "welcomeUserToPlace": "Welcome {0} to {1}" }
-    * Javascript:
-    * getTranslation('welcomeUserToPlace', 'Daniel', 'Stadium') => 'Welcome Daniel to Stadium'
-    * @returns {String} the localized string
-    */
-   getTranslation: function (key, ...args) {
-      if (this.i18nStrings[key] != null) {
-         var str = this.i18nStrings[key];
-         for (var i = 0; i &lt; args.length; i++) {
-            var replacement = args[i] || '';
-            str = str.replace('{' + i + '}', replacement);
-         }
-         return str;
-      }
-      return key;
-   }
-};
-</pre>
-    </article>
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>Reusable React Components<br>It is not necessary to make the whole widget in React in order to use these components, they can be mixed with non React code as necessary.</p></div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="node_modules_kambi-widget-components_src_index.js.html">node_modules/kambi-widget-components/src/index.js</a>,
+				 <a href="node_modules_kambi-widget-components_src_index.js.html#sunlight-1-line-1">line 1</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+            <h3>Examples</h3>
+            
+    <pre class="sunlight-highlight-javascript">// this example shows how to use the Header component without using JSX
+
+import React from &#x27;react&#x27;;
+import ReactDOM from &#x27;react-dom&#x27;;
+import { Header } &#x27;kambi-widget-components&#x27;;
+
+// Basic React API: React.createElement(Component, props, children)
+
+// check widget-components.Header documentation for all the options
+const header = React.createElement(
+   Header,
+   { collapsable: false },
+   &#x27;This is the Header title&#x27;
+)
+
+// ReactDOM API: ReactDOM.render(reactElement, HTMLElement)
+// places the Header in the page:
+ReactDOM.render(header, document.getElementById(&#x27;header&#x27;))</pre>
+
+    <pre class="sunlight-highlight-javascript">// this example shows how to use the Header component using JSX
+// note that JSX only works in .jsx files
+
+import React from &#x27;react&#x27;;
+import ReactDOM from &#x27;react-dom&#x27;;
+import { Header } &#x27;kambi-widget-components&#x27;;
+ReactDOM.render(
+   &lt;Header collapsable={false}&gt;
+      This is the Header title
+   &lt;/Header&gt;
+, document.getElementById(&#x27;header&#x27;))</pre>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="widget-components.DropdownButton.html">DropdownButton</a></dt>
+            <dd></dd>
+        
+            <dt><a href="widget-components.Header.html">Header</a></dt>
+            <dd></dd>
+        
+            <dt><a href="widget-components.OutcomeButton.html">OutcomeButton</a></dt>
+            <dd></dd>
+        
+            <dt><a href="widget-components.OutcomeButtonUI.html">OutcomeButtonUI</a></dt>
+            <dd></dd>
+        
+            <dt><a href="widget-components.TabBarScrolled.html">TabBarScrolled</a></dt>
+            <dd></dd>
+        
+            <dt><a href="widget-components.TabPagination.html">TabPagination</a></dt>
+            <dd></dd>
+        </dl>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
 </section>
-
 
 
 
@@ -170,6 +255,10 @@ export default {
 
 	<div class="clearfix"></div>
 
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
 	
 
 </div>
