@@ -1,0 +1,9 @@
+// Chrome clipping bug: crbug.com/157218
+.KambiWidget-outcome__odds-wrapper {
+   transform: none!important;
+}
+// Address margins set differently in Firefox 4+, Safari, and Chrome
+input:matches([type="button"], [type="submit"], [type="reset"]),
+input[type="file"]::-webkit-file-upload-button, button {
+   margin: initial;
+}
