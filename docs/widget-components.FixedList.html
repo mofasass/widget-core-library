@@ -7,7 +7,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Kambi Widgets Source: src/Module/EventsModule/index.js</title>
+	<title>Kambi Widgets Class: FixedList</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -97,147 +97,424 @@
 <div class="row">
 
 	
-	<div class="col-md-12">
+	<div class="col-md-8">
 	
 		<div id="main">
 			
 
-		<h1 class="page-title">Source: src/Module/EventsModule/index.js</h1>
-    
+	<h1 class="page-title">Class: FixedList</h1>
 <section>
-    <article>
-        <pre
-            class="sunlight-highlight-javascript linenums">import liveEventsAdapter from './liveEventsAdapter';
 
-/**
- *
- * @type {object.&lt;string, function[]>}
- * @memberof module:eventsModule
- */
-const handlers = {};
-
-/**
- * Object in which you can add event listeners for Kambi Widget API events
- * Valid events listeners:
- *
- * 'WIDGET:HEIGHT': Widget height changed
- *
- * 'OUTCOME:REMOVED:{outcomeId}': Outcome with {outcomeId} removed
- *
- * 'OUTCOME:ADDED:{outcomeId}': Outcome with {outcomeId} added
- *
- * 'OUTCOME:UPDATE:{outcomeId}': Outcome with {outcomeId} updated
- *
- * 'WIDGET:ARGS': Widget args changed
- *
- * 'PAGE:INFO': Page info changed
- *
- * 'ODDS:FORMAT': Odds format changed
- *
- * 'CLIENT:CONFIG': Client config changed
- *
- * 'USER:LOGGED_IN': User logged in changed
- *
- * 'LIVE:EVENT:{eventId}': Live event statistics changed
- *
- * 'LIVE:EVENT:{eventId}:REMOVED': Not a live event anymore
- *
- * 'LIVE:EVENTDATA:{eventId}': Live event's statistics changed
- *
- * 'LIVE:EVENTDATA:{eventId}:REMOVED': Not a live event anymore
- *
- * 'LIVE:EVENTS': Live events list changed
- *
- * @example
- *
- * eventsModule
- *    .subscribe('OUTCOME:ADDED:' + outcome.id,
- *       ( data ) => {
- *          ...
- *       });
- *
- @module eventsModule
- */
-const EventsModule = {
-
-   /**
-    * Live services polling interval (in milliseconds)
-    */
-   set liveEventPollingInterval(value) {
-      if (typeof value !== 'number') {
-         throw new Error(`Invalid number: ${value}`);
-      }
-
-      liveEventsAdapter.pollingInterval = value;
-   },
+<header>
+    
+        <h2>
+            <span class="ancestors"><a href="widget-components.html">widget-components</a>.</span>
+        
+        FixedList
+        </h2>
+        
+            <div class="class-description"><p>Horizontal list component. Items will be stretched or shrunken to fit the container.</p></div>
+        
+    
+</header>
 
 
-   /**
-    * Subscribes a handler to given event.
-    * @param {string} event Event name
-    * @param {function} handler Handler function
-    */
-   subscribe(event, handler) {
-      if (handlers.hasOwnProperty(event)) {
-         handlers[event].push(handler);
-      } else {
-         handlers[event] = [handler];
+<article>
+    <div class="container-overview">
+    
+        
+<hr>
+<dt>
+    <h4 class="name" id="FixedList"><span class="type-signature"></span>new FixedList()</h4>
+    
+    
+</dt>
+<dd>
 
-         // start proper polling service when first listener of given LIVE:* event subscribes
-         liveEventsAdapter.subscribe(event, this.publish.bind(this));
-      }
-   },
+    
 
-   /**
-    * Unsubscribes handler/all handlers from given event.
-    * @param {string} event Event name
-    * @param {function?} handler Optional handler function pointer
-    */
-   unsubscribe(event, handler) {
-      if (!handlers.hasOwnProperty(event)) {
-         return;
-      }
+    
 
-      if (handler) {
-         // remove particular handler
-         const handlerIdx = handlers[event].indexOf(handler);
+    
 
-         if (handlerIdx > -1) {
-            handlers[event].splice(handlerIdx, 1);
-         }
-      } else {
-         // remove all handlers for given event
-         handlers[event] = [];
-      }
+    
+    
 
-      if (handlers[event].length == 0) {
-         delete handlers[event];
+    
+<dl class="details">
+    
 
-         // stop additional polling services on given event
-         liveEventsAdapter.unsubscribe(event);
-      }
-   },
+	
 
-   /**
-    * Emits an event with given arguments.
-    * @param {string} event Event name
-    * @param {...*} args Arguments for handlers
-    */
-   publish(event, ...args) {
-      if (!handlers.hasOwnProperty(event)) {
-         return;
-      }
+	
 
-      handlers[event].forEach(handler => handler.apply(undefined, args));
-   }
+	
 
-};
+    
 
-export default EventsModule;
-</pre>
-    </article>
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="node_modules_kambi-widget-components_src_List_FixedList_FixedList.jsx.html">node_modules/kambi-widget-components/src/List/FixedList/FixedList.jsx</a>,
+				 <a href="node_modules_kambi-widget-components_src_List_FixedList_FixedList.jsx.html#sunlight-1-line-9">line 9</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        <dl>
+            
+<hr>
+<dt class="name" id=".propTypes">
+    <h4 id=".propTypes"><span class="type-signature">&lt;static> </span>propTypes<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>children</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;ReactElement></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>Items list</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>onItemClick</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>Item click handler. Called with item index argument.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>selected</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
+
+            <td class="description last"><p>Initially selected item index</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>step</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    2
+                
+                </td>
+            
+
+            <td class="description last"><p>Scroll step (items count)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>renderItemContainer</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FixedList_RenderItemContainer">FixedList_RenderItemContainer</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>Function capable of rendering item container. Renders Kambi-styled item container by default.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="node_modules_kambi-widget-components_src_List_FixedList_FixedList.jsx.html">node_modules/kambi-widget-components/src/List/FixedList/FixedList.jsx</a>,
+				 <a href="node_modules_kambi-widget-components_src_List_FixedList_FixedList.jsx.html#sunlight-1-line-85">line 85</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        </dl>
+    
+
+    
+
+    
+
+    
+</article>
+
 </section>
-
 
 
 
@@ -247,6 +524,10 @@ export default EventsModule;
 
 	<div class="clearfix"></div>
 
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
 	
 
 </div>

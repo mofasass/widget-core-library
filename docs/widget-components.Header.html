@@ -56,7 +56,7 @@
 			<li class="dropdown">
 				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="widget-components.DropdownButton.html">widget-components.DropdownButton</a></li><li><a href="widget-components.Header.html">widget-components.Header</a></li><li><a href="widget-components.OutcomeButton.html">widget-components.OutcomeButton</a></li><li><a href="widget-components.OutcomeButtonUI.html">widget-components.OutcomeButtonUI</a></li><li><a href="widget-components.TabBarScrolled.html">widget-components.TabBarScrolled</a></li><li><a href="widget-components.TabPagination.html">widget-components.TabPagination</a></li>
+					<li><a href="widget-components.DropdownButton.html">widget-components.DropdownButton</a></li><li><a href="widget-components.FixedList.html">widget-components.FixedList</a></li><li><a href="widget-components.Header.html">widget-components.Header</a></li><li><a href="widget-components.OutcomeButton.html">widget-components.OutcomeButton</a></li><li><a href="widget-components.OutcomeButtonUI.html">widget-components.OutcomeButtonUI</a></li><li><a href="widget-components.ScrolledList.html">widget-components.ScrolledList</a></li><li><a href="widget-components.TabPagination.html">widget-components.TabPagination</a></li>
 				</ul>
 			</li>
 			
@@ -64,6 +64,13 @@
 				<a href="tutorials.list.html" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
 					<li><a href="tutorial-1 - Introduction.html">1 - Introduction</a></li><li><a href="tutorial-2 - Development.html">2 - Development</a></li><li><a href="tutorial-3 - Production Builds and Deployment.html">3 - Production Builds and Deployment</a></li><li><a href="tutorial-4 - Fetching Data.html">4 - Fetching Data</a></li><li><a href="tutorial-5 - Sportsbook Interaction.html">5 - Sportsbook Interaction</a></li><li><a href="tutorial-6 - Internationalization.html">6 - Internationalization</a></li><li><a href="tutorial-7 - Styling.html">7 - Styling</a></li><li><a href="tutorial-8 - Using React and widget-components.html">8 - Using React and widget-components</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="global.html#ALIGN_ITEMS">ALIGN_ITEMS</a></li><li><a href="global.html#FixedList_RenderItemContainerArgs">FixedList_RenderItemContainerArgs</a></li><li><a href="global.html#ScrolledList_RenderButtonArgs">ScrolledList_RenderButtonArgs</a></li><li><a href="global.html#ScrolledList_RenderItemContainerArgs">ScrolledList_RenderItemContainerArgs</a></li><li><a href="global.html#TabPagination_RenderTabListArgs">TabPagination_RenderTabListArgs</a></li>
 				</ul>
 			</li>
 			
@@ -217,87 +224,6 @@
         <dl>
             
 <hr>
-<dt class="name" id=".HEIGHT">
-    <h4 id=".HEIGHT"><span class="type-signature">&lt;static> </span>HEIGHT<span class="type-signature"> :number</span></h4>
-
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>Holds the height of the header in pixels</p>
-    </div>
-    
-
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
-<span class="param-type">number</span>
-
-
-
-            </li>
-        </ul>
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="node_modules_kambi-widget-components_src_Header_Header.jsx.html">node_modules/kambi-widget-components/src/Header/Header.jsx</a>,
-				 <a href="node_modules_kambi-widget-components_src_Header_Header.jsx.html#sunlight-1-line-102">line 102</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-</dd>
-
-        
-            
-<hr>
 <dt class="name" id=".propTypes">
     <h4 id=".propTypes"><span class="type-signature">&lt;static> </span>propTypes<span class="type-signature"></span></h4>
 
@@ -395,7 +321,7 @@
 
             
 
-            <td class="description last"><p>Sets header as collapsable</p></td>
+            <td class="description last"><p>Sets header as collapsable. If not provided will be collapsable if coreLibrary.pageInfo.pageType !== 'home'</p></td>
         </tr>
 
     
@@ -505,9 +431,6 @@
             
                 
 <span class="param-type">string</span>
-|
-
-<span class="param-type">boolean</span>
 
 
 
@@ -526,7 +449,7 @@
 
             
 
-            <td class="description last"><p>Defaults to false. If provided adds these CSS classes to the header instead of adding classes based on pageInfo</p></td>
+            <td class="description last"><p>Defaults to false. If provided adds these CSS classes to the header instead of adding classes based on coreLibrary.pageInfo.pageType (black header if pageType !== 'home')</p></td>
         </tr>
 
     
@@ -568,7 +491,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="node_modules_kambi-widget-components_src_Header_Header.jsx.html">node_modules/kambi-widget-components/src/Header/Header.jsx</a>,
-				 <a href="node_modules_kambi-widget-components_src_Header_Header.jsx.html#sunlight-1-line-89">line 89</a>
+				 <a href="node_modules_kambi-widget-components_src_Header_Header.jsx.html#sunlight-1-line-108">line 108</a>
 			</li>
 		</ul>
 	</dd>

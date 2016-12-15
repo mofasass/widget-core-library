@@ -4,6 +4,5 @@ node_modules
 .sass-cache/
 *.map
 bower_components
-/src/transpiled
 /.project
 .DS_Store

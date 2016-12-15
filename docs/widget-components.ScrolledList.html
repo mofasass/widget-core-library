@@ -7,7 +7,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Kambi Widgets Class: TabBarScrolled</title>
+	<title>Kambi Widgets Class: ScrolledList</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -56,7 +56,7 @@
 			<li class="dropdown">
 				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="widget-components.DropdownButton.html">widget-components.DropdownButton</a></li><li><a href="widget-components.Header.html">widget-components.Header</a></li><li><a href="widget-components.OutcomeButton.html">widget-components.OutcomeButton</a></li><li><a href="widget-components.OutcomeButtonUI.html">widget-components.OutcomeButtonUI</a></li><li><a href="widget-components.TabBarScrolled.html">widget-components.TabBarScrolled</a></li><li><a href="widget-components.TabPagination.html">widget-components.TabPagination</a></li>
+					<li><a href="widget-components.DropdownButton.html">widget-components.DropdownButton</a></li><li><a href="widget-components.FixedList.html">widget-components.FixedList</a></li><li><a href="widget-components.Header.html">widget-components.Header</a></li><li><a href="widget-components.OutcomeButton.html">widget-components.OutcomeButton</a></li><li><a href="widget-components.OutcomeButtonUI.html">widget-components.OutcomeButtonUI</a></li><li><a href="widget-components.ScrolledList.html">widget-components.ScrolledList</a></li><li><a href="widget-components.TabPagination.html">widget-components.TabPagination</a></li>
 				</ul>
 			</li>
 			
@@ -64,6 +64,13 @@
 				<a href="tutorials.list.html" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
 					<li><a href="tutorial-1 - Introduction.html">1 - Introduction</a></li><li><a href="tutorial-2 - Development.html">2 - Development</a></li><li><a href="tutorial-3 - Production Builds and Deployment.html">3 - Production Builds and Deployment</a></li><li><a href="tutorial-4 - Fetching Data.html">4 - Fetching Data</a></li><li><a href="tutorial-5 - Sportsbook Interaction.html">5 - Sportsbook Interaction</a></li><li><a href="tutorial-6 - Internationalization.html">6 - Internationalization</a></li><li><a href="tutorial-7 - Styling.html">7 - Styling</a></li><li><a href="tutorial-8 - Using React and widget-components.html">8 - Using React and widget-components</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="global.html#ALIGN_ITEMS">ALIGN_ITEMS</a></li><li><a href="global.html#FixedList_RenderItemContainerArgs">FixedList_RenderItemContainerArgs</a></li><li><a href="global.html#ScrolledList_RenderButtonArgs">ScrolledList_RenderButtonArgs</a></li><li><a href="global.html#ScrolledList_RenderItemContainerArgs">ScrolledList_RenderItemContainerArgs</a></li><li><a href="global.html#TabPagination_RenderTabListArgs">TabPagination_RenderTabListArgs</a></li>
 				</ul>
 			</li>
 			
@@ -95,7 +102,7 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: TabBarScrolled</h1>
+	<h1 class="page-title">Class: ScrolledList</h1>
 <section>
 
 <header>
@@ -103,10 +110,10 @@
         <h2>
             <span class="ancestors"><a href="widget-components.html">widget-components</a>.</span>
         
-        TabBarScrolled
+        ScrolledList
         </h2>
         
-            <div class="class-description"><p>Scrolled Tab Bar component</p></div>
+            <div class="class-description"><p>Horizontal scrolled list component.<br>If items won't fit the container the list will be scrolled. Otherwise if items take less space<br>than the container they will be aligned according to <a href="widget-components.ScrolledList.html#.propTypes">alignItems</a> property.</p></div>
         
     
 </header>
@@ -118,7 +125,7 @@
         
 <hr>
 <dt>
-    <h4 class="name" id="TabBarScrolled"><span class="type-signature"></span>new TabBarScrolled()</h4>
+    <h4 class="name" id="ScrolledList"><span class="type-signature"></span>new ScrolledList()</h4>
     
     
 </dt>
@@ -168,8 +175,8 @@
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="node_modules_kambi-widget-components_src_TabPagination_TabBarScrolled.jsx.html">node_modules/kambi-widget-components/src/TabPagination/TabBarScrolled.jsx</a>,
-				 <a href="node_modules_kambi-widget-components_src_TabPagination_TabBarScrolled.jsx.html#sunlight-1-line-28">line 28</a>
+				<a href="node_modules_kambi-widget-components_src_List_ScrolledList_ScrolledList.jsx.html">node_modules/kambi-widget-components/src/List/ScrolledList/ScrolledList.jsx</a>,
+				 <a href="node_modules_kambi-widget-components_src_List_ScrolledList_ScrolledList.jsx.html#sunlight-1-line-30">line 30</a>
 			</li>
 		</ul>
 	</dd>
@@ -249,6 +256,8 @@
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -265,7 +274,7 @@
             <td class="type">
             
                 
-<span class="param-type">ReactElement</span>
+<span class="param-type">Array.&lt;ReactElement></span>
 
 
 
@@ -283,15 +292,19 @@
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
-            <td class="description last"><p>Tab element</p></td>
+            <td class="description last"><p>Items list</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>onTabSwitch</code></td>
+                <td class="name"><code>onItemClick</code></td>
             
 
             <td class="type">
@@ -315,8 +328,12 @@
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
-            <td class="description last"><p>Tab clicked handler</p></td>
+            <td class="description last"><p>Item click handler. Called with item index argument.</p></td>
         </tr>
 
     
@@ -347,8 +364,14 @@
             
 
             
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
 
-            <td class="description last"><p>Selected tab index</p></td>
+            <td class="description last"><p>Initially selected item index</p></td>
         </tr>
 
     
@@ -379,8 +402,52 @@
             
 
             
+                <td class="default">
+                
+                    2
+                
+                </td>
+            
 
             <td class="description last"><p>Scroll step (items count)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>alignItems</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#ALIGN_ITEMS">ALIGN_ITEMS</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    CENTER
+                
+                </td>
+            
+
+            <td class="description last"><p>Method of aligning items when they take less width than the container has</p></td>
         </tr>
 
     
@@ -393,7 +460,7 @@
             <td class="type">
             
                 
-<span class="param-type">function</span>
+<span class="param-type"><a href="global.html#ScrolledList_RenderButton">ScrolledList_RenderButton</a></span>
 
 
 
@@ -411,8 +478,12 @@
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
-            <td class="description last"><p>Function capable of rendering button responsible for scrolling right</p></td>
+            <td class="description last"><p>Function capable of rendering button responsible for scrolling left. Renders left arrow button by default.</p></td>
         </tr>
 
     
@@ -425,7 +496,7 @@
             <td class="type">
             
                 
-<span class="param-type">function</span>
+<span class="param-type"><a href="global.html#ScrolledList_RenderButton">ScrolledList_RenderButton</a></span>
 
 
 
@@ -443,21 +514,25 @@
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
-            <td class="description last"><p>Function capable of rendering button responsible for scrolling right</p></td>
+            <td class="description last"><p>Function capable of rendering button responsible for scrolling right. Renders right arrow button by default.</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>renderTabContainer</code></td>
+                <td class="name"><code>renderItemContainer</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">function</span>
+<span class="param-type"><a href="global.html#ScrolledList_RenderItemContainer">ScrolledList_RenderItemContainer</a></span>
 
 
 
@@ -475,8 +550,12 @@
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
-            <td class="description last"><p>Function capable of rendering tab container</p></td>
+            <td class="description last"><p>Function capable of rendering item container. Renders Kambi-styled item container by default.</p></td>
         </tr>
 
     
@@ -517,8 +596,8 @@
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="node_modules_kambi-widget-components_src_TabPagination_TabBarScrolled.jsx.html">node_modules/kambi-widget-components/src/TabPagination/TabBarScrolled.jsx</a>,
-				 <a href="node_modules_kambi-widget-components_src_TabPagination_TabBarScrolled.jsx.html#sunlight-1-line-282">line 282</a>
+				<a href="node_modules_kambi-widget-components_src_List_ScrolledList_ScrolledList.jsx.html">node_modules/kambi-widget-components/src/List/ScrolledList/ScrolledList.jsx</a>,
+				 <a href="node_modules_kambi-widget-components_src_List_ScrolledList_ScrolledList.jsx.html#sunlight-1-line-397">line 397</a>
 			</li>
 		</ul>
 	</dd>
