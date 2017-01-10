@@ -8,21 +8,22 @@ import 'es6-symbol/implement'; // the '/implement' activates the polyfill automa
 
 // enables Symbol.iterator on arrays
 // this enables "for of" statements (babel transpiles that use use iterators)
-Object.defineProperty(Array.prototype, Symbol.iterator, {
-   enumerable: false,
-   value: function() {
-      let nextIndex = 0;
-      const array = this;
-      return {
-         next: function() {
-            return nextIndex < array.length ?
-               { value: array[nextIndex++], done: false } :
-               { done: true };
+if (!Array.prototype[Symbol.iterator]) {
+   Object.defineProperty(Array.prototype, Symbol.iterator, {
+      enumerable: false,
+      value: function() {
+         let nextIndex = 0;
+         const array = this;
+         return {
+            next: function() {
+               return nextIndex < array.length ?
+                  { value: array[nextIndex++], done: false } :
+                  { done: true };
+            }
          }
       }
-   }
-});
-
+   });
+}
 
 /*
 File with polyfills we use in this project
