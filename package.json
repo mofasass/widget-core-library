@@ -33,6 +33,6 @@
   },
   "dependencies": {
     "compass-mixins": "^0.12.10",
-    "es6-promise": "^3.2.1"
+    "es6-promise": "^4.0.5"
   }
 }
