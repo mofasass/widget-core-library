@@ -34,7 +34,7 @@ promise = promise.then(function (response) {
 });
 
 promise = promise.catch(function (error) {
-   // only called if an error happened
+   // only called if an error happened, for example event not found
    console.log('error!');
    console.log(error);
 });

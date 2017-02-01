@@ -4,9 +4,9 @@
 
 `npm run start`
 
- - If the build was successful the widget will be running under `https://localhost:8080` after a few seconds. The server that hosts the widgets code runs under port 8080
+ - If the build was successful the widget will be running under `https://localhost:8080` after a few seconds. The server that hosts the widgets code runs under port 8080. That url can be opened directly but some widget features will not work (like changing the widget size or adding bets to the betslip), for all features to work the widget needs to be opened inside the Sportsbook
 
- - To open the widget inside the Sportsbook while in development configure the `widgetSettings` to point to to `https://localhost:8080/` The server runs under the HTTPS protocol, so in order to see the widget inside the sportsbook it is required to trust the self-signed certificate that the development server uses. See next section for more information.
+ - To open the widget inside the Sportsbook while in development configure a new widget in the `widgetSettings` to point to to `https://localhost:8080/`. The Sportsbook requires the widgets to run in HTTPS mode, so in order to see the widget inside the Sportsbook it is required to trust the self-signed certificate that the development server uses. See next section for more information.
 
 
 ### HTTPS certificate
@@ -24,6 +24,8 @@ For Microsoft Edge and Internet explorer you need to add the certificate on Wind
 - Select Trusted Root Certification Authorities
 - Clici import
 - Select the certificate from `project-folder\node_modules\webpack-dev-server\ssl\server.crt`
+
+This process needs to be done only once per machine.
 
 ### Project file structure
 
@@ -50,9 +52,9 @@ project
 
  Readme for the project
 
- - .eslintrc, .gitignore, .editorconfig
+ - .eslintrc, .gitignore, .editorconfig, postcss.config.js
 
- Configuration files for the project. These files are overwritten everytime the widget is built to make sure that all the widgets have the same files
+ Configuration files for the project. These files are overwritten everytime the widget is built to make sure that all the widgets have the same files.
 
  - LICENSE
 
@@ -60,7 +62,7 @@ project
 
  - package.json
 
-  NPM configuration file. This file lists metadata about the project as well as all external dependencies it uses
+  NPM configuration file. This file lists metadata about the project as well as all external dependencies (kambi-widget-core-library, kambi-widget-build-tools, kambi-widget-components and others) it uses. This file needs to be modified to update the dependencies versions
 
  - dist
 
@@ -93,21 +95,21 @@ project
  For more information check the API documentation for `coreLibrary.config`, `coreLibrary.args` and `coreLibrary.pageInfo`
 
  - src/i18n
- This folder holds all the internationalization JSON files of the widget, these are used by the `translationModule`, the use of these files are optional if no internationalization is required. If the user locale is not found in this folder it will fallback to `en_GB.json`. These are all the currently supported locales in the Sportsbook, although they can vary by operator:
+ This folder holds all the internationalization JSON files of the widget, these are used by the `translationModule`. The use of these files are optional if no internationalization is required. If the user locale is not found in this folder it will fallback to `en_GB.json`. These are all the currently supported locales in the Sportsbook, although they can vary by operator:
 
  cs_CZ.json, de_DE.json, es_ES.json, fr_CH.json, lt_LT.json, no_NO.json, ro_RO.json, da_DK.json, el_GR.json, et_EE.json, fr_FR.json, lv_LV.json, pl_PL.json, ru_RU.json, de_AT.json, en_AU.json, fi_FI.json, hu_HU.json, nl_BE.json, pt_BR.json, sv_SE.json, de_CH.json, en_GB.json, fr_BE.json, it_IT.json, nl_NL.json, pt_PT.json, tr_TR.json
 
 ### Core Library and Build Tools
 
-By default the a widget project uses these two dependencies:
+By default a widget project uses these two dependencies:
 
  - `kambi-widget-core-library`
 
- Has API methods for interacting with the Sportsbook and fetching data as well as methods for internationalization.
+Core package with wrappers around Kambi's Widget API (which allows interaction with the Sportsbook) and Offering API (with which you can fetch data from the server) as well as a internationalization API.
 
  - `kambi-widget-build-tools`
 
- Defines the build process of the widget as well as the built-in development server. Only used at build time.
+Package that contains the build process for the widget projects as well as a template for creating new widget projects. Includes a built-in web server with HTTPS support in order to be able to test widgets with
 
 These dependencies are external to the project and as such have their own specific versions, you can check their versions inside the `package.json` file.
 
@@ -159,7 +161,7 @@ The above code simply sets the header text of the widget to be `"Hello World"` u
 
 ### Adding an external Dependency
 
-With the basic setup you only have access to the `kambi-widget-core-library` in the project, which can make it hard to do complex widgets using plain Javascript. If we wanted to add a library to make our jobs easier we could do so by adding a `<script>` tag in the `<head>` section of the page and using it by accessing the global values it defines, but that is not the recommended way of doing this because it can be hard to keep track of all the dependencies the project will need. As an alternative you can also add dependencies using `npm`. For example to add jquery to the project all we need to do is run this in the command line:
+With the basic setup you only have access to the `kambi-widget-core-library` in the project, which can make it hard to do complex widgets using only plain Javascript. If we wanted to add a library to make our life easier we could do so by adding a `<script>` tag in the `<head>` section of the page and using it by accessing the global values it defines, but that is not the recommended way of doing this because it can be hard to keep track of all the dependencies the project will need. As an alternative you can also add dependencies using `npm`. For example to add jquery to the project all we need to do is run this in the command line:
 
 `npm install --save jquery`
 
@@ -195,12 +197,12 @@ The most important part of the coding style rules is that the default indentatio
 
 ### Common Build Architecture
 
- Since all webpack build configuration of the widgets is shared and localized in the `kambi-widget-build-tools` dependency it is not possible to add more items to the build architecture. For example replacing SCSS with LESS is not possible. We might add some scape hatches in the future to support customizing the webpack configuration to allow modifying the build process.
+ Since all webpack build configuration of the widgets is shared and localized in the `kambi-widget-build-tools` dependency it is not possible to add more items to the build architecture. For example replacing SCSS with LESS is not possible. We might add some scape hatches in the future to support customizing the webpack configuration to allow modifying the build process, but for now that is not possible.
 
 ### ES6 and JSX
 
-The project has babel [transpilation](https://babeljs.io/) step process set up during the build so it supports the full [ES6 syntax](https://babeljs.io/docs/learn-es2015/) and JSX for React development in all browsers. These new syntaxes are completely optional and can be ignored completely if so desired.
+The project has Babel [transpilation](https://babeljs.io/) step process set up during the build so it supports the full [ES6 syntax](https://babeljs.io/docs/learn-es2015/) and JSX for React development in all browsers. These new syntaxes are completely optional and can be ignored completely if so desired.
 
-Important: babel only transpiles ES6 syntax, but not ES6 features like [fetch API](https://developer.mozilla.org/en/docs/Web/API/Fetch_API). New ES6 features need to be polyfilled in to support old browsers (for example IE11 does not support fetch API), the `kambi-widget-core-library` polyfills ES6 `Promise`s so those can be safely used no matter the target browser.
+Important: Babel only transpiles ES6 syntax, but not ES6 features like [fetch API](https://developer.mozilla.org/en/docs/Web/API/Fetch_API). New ES6 features need to be polyfilled in to support old browsers (for example IE11 does not support fetch API), the `kambi-widget-core-library` polyfills ES6 `Promise`s so those can be safely used no matter the target browser.
 
 Besides ES6 the build process also supports JSX for React development. The only caveat is that JSX syntax is only supported in `.jsx` files. Since the entry point of the project is `src/index.js` that file needs to `import` another `.jsx` file in order to enable JSX. See more about this in section 8 - Using React and widget-components.
