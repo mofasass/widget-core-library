@@ -12,9 +12,9 @@ module.exports = {
 
    // version of the widget API to use
    // https://c3-static.kambi.com/sb-mobileclient/widget-api/{widgetApiVersion}/kambi-widget-api.js
-   widgetApiVersion: '1.0.0.17',
+   widgetApiVersion: '1.0.0.21',
 
    // version of widgets.css to use
    // https://c3-static.kambi.com/sb-mobileclient/widget-api/{widgetCssVersion}/resources/css/kambi/kambi/widgets.css
-   widgetCssVersion: '1.0.0.17'
+   widgetCssVersion: '1.0.0.21'
 };
