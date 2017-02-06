@@ -107,8 +107,42 @@
 <section>
     <article>
         <pre
-            class="sunlight-highlight-javascript linenums">import translationModule from './translationModule';
-import coreLibrary from '../coreLibrary';
+            class="sunlight-highlight-javascript linenums">import coreLibrary from '../coreLibrary';
+
+/* we are not using the translationModule.getTranslation
+because the translations files are set in the widgets, we don't want to force the widgets to include static labels for outcomes. If we need more labels than "draw" we might want to consider doing some build-time magic to not include all the locales values */
+const labelsTranslations = {
+   draw: {
+      cs_CZ: 'Remíza',
+      da_DK: 'Uafgjort',
+      de_AT: 'Unentschieden',
+      de_CH: 'Unentschieden',
+      de_DE: 'Unentschieden',
+      el_GR: 'Ισοπαλία',
+      en_AU: 'Draw',
+      en_GB: 'Draw',
+      es_ES: 'Empate',
+      et_EE: 'Viik',
+      fi_FI: 'Tasapeli',
+      fr_BE: 'Nul',
+      fr_CH: 'Nul',
+      fr_FR: 'Nul',
+      hu_HU: 'Döntetlen',
+      it_IT: 'Pareggio',
+      lt_LT: 'Lygiosios',
+      lv_LV: 'Neizšķirts',
+      nl_BE: 'Gelijkspel',
+      nl_NL: 'Gelijkspel',
+      no_NO: 'Uavgjort',
+      pl_PL: 'Remis',
+      pt_BR: 'Empate',
+      pt_PT: 'Empate',
+      ro_RO: 'Egalitate',
+      ru_RU: 'Ничья',
+      sv_SE: 'Oavgjort',
+      tr_TR: 'Draw',
+   }
+};
 
 /**
  * Module with utility functions
@@ -148,6 +182,7 @@ export default {
       if (x === y) return true;
       if ( !(x instanceof Object) || !(y instanceof Object)) return false;
       if (x.constructor !== y.constructor) return false;
+      /* eslint-disable no-continue */
       for (var p in x) {
          if (!x.hasOwnProperty(p)) continue;
          if (!y.hasOwnProperty(p)) return false;
@@ -155,6 +190,7 @@ export default {
          if (typeof x[p] !== 'object') return false;
          if (!this.equals(x[p], y[p])) return false;
       }
+      /* eslint-enable no-continue */
 
       for (p in y) {
          if (y.hasOwnProperty(p) &amp;&amp; !x.hasOwnProperty(p) ) return false;
@@ -214,7 +250,7 @@ export default {
          case 'OT_ONE': // Outcome has label 1. Applies to Threeway bet offers.
             return event.homeName;
          case 'OT_CROSS': // Outcome has label X. Applies to Threeway bet offers.
-            return translationModule.getTranslation('draw');
+            return labelsTranslations.draw[coreLibrary.config.locale];
          case 'OT_TWO': // Outcome has label 2. Applies to Threeway bet offers.
             return event.awayName;
          case 'OT_OVER': // The “Over” outcome in Over/Under bet offer.

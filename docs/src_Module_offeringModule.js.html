@@ -146,6 +146,7 @@ export default {
     */
    getEventsByFilter (filter, params) {
       // Todo: Update this method once documentation is available
+      filter = filter.replace(/^#?\/?/, ''); // removes #/ at the start of the string if present
       var requestPath = '/listView/' + filter;
       return this.doRequest(requestPath, params, 'v3');
    },

@@ -489,17 +489,13 @@ export default {
 
             const translationPromise = translationModule.fetchTranslations(setupData.clientConfig.locale);
 
-            const operatorCssPromise = this.injectOperatorCss(
+            this.injectOperatorCss(
                   this.config.customer,
                   this.config.offering);
 
-            const customCssPromise = this.injectCustomCss(
+            this.injectCustomCss(
                   this.args.customCssUrl,
                   this.args.customCssUrlFallback);
-
-            // most widgets don't need to wait for the CSS to be loaded
-            // so we keep a promise instead of waiting for it
-            this.cssLoadedPromise = Promise.all([operatorCssPromise, customCssPromise]);
 
             translationPromise
                .then(() => {
@@ -572,11 +568,10 @@ export default {
    },
 
    /**
-    * Injects operator specific CSS based on widget API version,
+    * Injects operator specific CSS based on version defined in constans.js,
     * customer and offering
     * @param customer {String}
     * @param offering {String}
-    * @returns {Promise} When resolved the stylesheet has been successfully added to the page
     * @private
     */
    injectOperatorCss (customer, offering) {
@@ -587,16 +582,10 @@ export default {
          '/' +
          offering +
          '/widgets.css';
-      return this.getFile(url)
-         .then((content) => {
-            const tag = this.createStyleTag('operator-css', url);
-            const head = document.getElementsByTagName('head')[0];
-            // opereator CSS should be the FIRST CSS in the page
-            head.insertBefore(tag, head.firstChild);
-         })
-         .catch((err) => {
-            console.warn('Could not inject Operator CSS');
-         });
+      const tag = this.createStyleTag('operator-css', url);
+      const head = document.getElementsByTagName('head')[0];
+      // opereator CSS should be the FIRST CSS in the page
+      head.insertBefore(tag, head.firstChild);
    },
 
    /**
@@ -622,7 +611,7 @@ export default {
    injectCustomCss (customCssUrl, customCssUrlFallback) {
 
       if (customCssUrl == null) {
-         return Promise.resolve('');
+         return;
       }
       if (customCssUrlFallback == null) {
          customCssUrlFallback = '';
@@ -638,22 +627,17 @@ export default {
          head.insertBefore(tag, null);
       };
 
-
+      // TODO instead of doing an extra request maybe try to add an
+      // event listener to the &lt;link> tag to see if the file exists or not
+      // see http://stackoverflow.com/questions/10537039/how-to-determine-if-css-has-been-loaded
       return this.getFile(customCssUrl)
          .then(( response ) => {
             appendToHead(customCssUrl);
             return response;
          }).catch(( error ) => {
             if (customCssUrlFallback !== '') {
-               console.debug('Error fetching custom css, trying fallback');
-               return this.getFile(customCssUrlFallback)
-                  .then(( response ) => {
-                     appendToHead(customCssUrlFallback);
-                     return response;
-                  }).catch(( error ) => {
-                     console.debug('Error fetching custom css fallback');
-                     return error;
-                  });
+               console.debug('Error fetching custom css, using fallback');
+               appendToHead(customCssUrlFallback);
             } else {
                console.debug('Error fetching custom css, no fallback present');
                return error;
