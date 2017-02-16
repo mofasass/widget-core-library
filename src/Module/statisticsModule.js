@@ -34,7 +34,7 @@ export default {
       if ( filter[0] === '/' ) {
          filter = filter.slice(1);
       }
-      return coreLibrary.getData(this.config.baseApiUrl + coreLibrary.config.offering + '/leaguetable/' + filter + '.json');
+      return this.doRequest('/leaguetable/' + filter + '.json');
    },
 
    /**
@@ -43,7 +43,7 @@ export default {
     * @returns {Promise}
     */
    getHeadToHeadStatistics (eventId) {
-      return coreLibrary.getData(this.config.baseApiUrl + coreLibrary.config.offering + '/h2h/event/' + eventId + '.json');
+      return this.doRequest('/h2h/event/' + eventId + '.json');
    },
 
    /**
@@ -52,6 +52,23 @@ export default {
     * @returns {Promise}
     */
    getTeamPerformanceStatistics (eventId) {
-      return coreLibrary.getData(this.config.baseApiUrl + coreLibrary.config.offering + '/tpi/event/' + eventId + '.json');
+      return this.doRequest('/tpi/event/' + eventId + '.json');
+   },
+
+   /**
+    * Performs the statistics API requests
+    * @param {String} path path of the desired resource, for example /leaguetable/football/england/premier_league.json'
+    * @returns {Promise}
+    */
+   doRequest (path) {
+      if (path.charAt(0) !== '/') {
+         path += '/';
+      }
+      return coreLibrary.getData(
+         this.config.baseApiUrl +
+         coreLibrary.config.offering +
+         path +
+         `?lang=${coreLibrary.config.locale}&market=${coreLibrary.config.market}`
+      );
    }
 };
