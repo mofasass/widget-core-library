@@ -11,6 +11,7 @@ import constants from './constants';
  * @module coreLibrary
  */
 
+// checks status of a HTTP response and throws error if appropriate
 function checkStatus(response) {
    if (response.status >= 200 && response.status < 300) {
       return response;
@@ -21,8 +22,8 @@ function checkStatus(response) {
    }
 }
 
+// checks browser type and version
 function checkBrowser() {
-
    var ua = window.navigator.userAgent;
 
    var getFirstMatch = function (regex) {
@@ -101,7 +102,44 @@ function download(url) {
    });
 }
 
+// calls Object.freeze() deeply in an object
+function deepFreeze (o) {
+   if (o == null) {
+      return;
+   }
+   Object.freeze(o);
+
+   Object.getOwnPropertyNames(o).forEach(function (prop) {
+      if (o.hasOwnProperty(prop)
+            && o[prop] !== null
+            && (
+               typeof o[prop] === 'object'
+               || typeof o[prop] === 'function'
+            )
+            && !Object.isFrozen(o[prop])) {
+         deepFreeze(o[prop]);
+      }
+   });
+
+   return o;
+}
+
 export default {
+   /**
+    * If true the coreLibrary has been initialized
+    * @type {Boolean}
+    */
+   initialized: false,
+
+   /** Throws error if the core has already been initialized
+    * @private
+    */
+   checkInit() {
+      if (this.initialized) {
+         throw new Error('Can not override property after initilization of the coreLibrary');
+      }
+   },
+
    /**
     * Name of the browser that is running the widget
     * @type {String}
@@ -113,6 +151,15 @@ export default {
     * @type {String}
     */
    browserVersion: checkBrowser().browserVersion,
+
+   /**
+    * An array with the default classes that should be added to HTML tag
+    */
+   kambiDefaultClasses: [
+      'KambiWidget-card-text-color',
+      'KambiWidget-card-background-color',
+      'KambiWidget-font',
+   ],
 
    /**
     * Config object. This data comes from the sportsbook and should not be manually changed. When in running the widget stand alone this values are retrieved from ./src/mockSetupData.json
@@ -150,20 +197,13 @@ export default {
       version: 'v2'
    },
 
-   /**
-    * An array with the default classes that should be added to HTML tag
-    */
-   kambiDefaultClasses: [
-      'KambiWidget-card-text-color',
-      'KambiWidget-card-background-color',
-      'KambiWidget-font',
-   ],
-
    get config () {
       return this._config; // eslint-disable-line no-underscore-dangle
    },
 
    set config (config) {
+      this.checkInit();
+      config = deepFreeze(config);
       /* eslint-disable no-underscore-dangle */
       for (var i in config) {
          if (config.hasOwnProperty(i) && this._config.hasOwnProperty(i)) {
@@ -182,13 +222,17 @@ export default {
    },
 
    /**
-    * Sets odds format. Calling this method changes config.oddsFormat
-    * @memberOf module:coreLibrary
-    * @param {String} oddsFormat
+    * The odds format for the bets shown in the widget
     * @private
     */
-   setOddsFormat (oddsFormat) {
-      this._config.oddsFormat = oddsFormat; // eslint-disable-line no-underscore-dangle
+   _oddsFormat: null,
+
+   set oddsFormat(format) {
+      this._oddsFormat = format;// eslint-disable-line no-underscore-dangle
+   },
+
+   get oddsFormat() {
+      return this._oddsFormat;// eslint-disable-line no-underscore-dangle
    },
 
    /**
@@ -202,11 +246,13 @@ export default {
    },
 
    set defaultArgs (defaultArgs) {
-      this._defaultArgs = defaultArgs; // eslint-disable-line no-underscore-dangle
+      this.checkInit();
+      this._defaultArgs = deepFreeze(defaultArgs); // eslint-disable-line no-underscore-dangle
    },
 
    /**
     * args object for the widget, merges the default args provided by coreLibrary.init() with the ones that come from the sportsbook. There are some pre-defined arguments that all widgets accept, but most of them are widget-defined.
+    * @property {String} widgetTrackingName Sets widget tracking name for analytics purposes. This tracking name is used for calls to add bets to the betslip
     * @property {String} customCssUrl URL to a CSS file to add to the page, expressions like "{customer}" are replaced with their values in coreLibrary.config. This is useful to load different stylesheets based on operator name.
     Example:
     Say coreLibrary.config.customer is 'kambi', then if this argument was set:
@@ -252,10 +298,8 @@ export default {
    },
 
    set args (args) {
+      this.checkInit();
       /* eslint-disable no-underscore-dangle */
-      if (this._args != null) {
-         throw Error('Do not override coreLibrary.args');
-      }
       args = Object.assign({}, this.defaultArgs, args);
 
       // Handling conditionalArgs
@@ -286,7 +330,7 @@ export default {
          });
       }
 
-      this._args = args
+      this._args = deepFreeze(args)
       /* eslint-enable no-underscore-dangle */
    },
 
@@ -311,12 +355,13 @@ export default {
    },
 
    set pageInfo (pageInfo) {
+      this.checkInit();
       /* eslint-disable no-underscore-dangle */
       // Check if the last character in the pageParam property is a slash, if not add it so we can use this property in filter requests
       if (pageInfo.pageType === 'filter' && pageInfo.pageParam.substr(-1) !== '/') {
          pageInfo.pageParam += '/';
       }
-      this._pageInfo = pageInfo;
+      this._pageInfo = deepFreeze(pageInfo);
       /* eslint-enable no-underscore-dangle */
    },
 
@@ -339,20 +384,31 @@ export default {
    },
 
    set apiVersions (versions) {
+      this.checkInit();
       /* eslint-disable no-underscore-dangle */
-      for (var i in versions) {
-         if (versions.hasOwnProperty(i) && this._apiVersions.hasOwnProperty(i)) {
-            this._apiVersions[i] = versions[i];
-         }
-      }
+      this._apiVersions = deepFreeze(versions);
       /* eslint-enable no-underscore-dangle */
    },
 
    /**
     * The name sent to Kambi API for analytics data collection
-    * @private
     */
-   widgetTrackingName: null,
+   _widgetTrackingName: null,
+
+   set widgetTrackingName(name) {
+      /* eslint-disable no-underscore-dangle */
+      if (name == null) {
+         name = null; // transforms undefined to null
+      }
+      this._widgetTrackingName = name;
+      /* eslint-enable no-underscore-dangle */
+   },
+
+   get widgetTrackingName() {
+      /* eslint-disable no-underscore-dangle */
+      return this._widgetTrackingName;
+      /* eslint-enable no-underscore-dangle */
+   },
 
    /**
     * Promise that is resolved when all the CSS has finished loading
@@ -372,6 +428,7 @@ export default {
       return new Promise((resolve, reject) => {
          // applies the setup data and sets up the CSS and translations
          var applySetupData = (setupData) => {
+            this.oddsFormat = setupData.clientConfig.oddsFormat;
             this.config = setupData.clientConfig;
             this.pageInfo = setupData.pageInfo;
             this.apiVersions = setupData.versions;
@@ -387,6 +444,10 @@ export default {
             this.injectCustomCss(
                   this.args.customCssUrl,
                   this.args.customCssUrlFallback);
+
+            this.widgetTrackingName = this.args.widgetTrackingName;
+
+            this.initialized = true;
 
             translationPromise
                .then(() => {
@@ -537,7 +598,7 @@ export default {
    },
 
    /**
-    * Makes a ajax request and parses its response as JSON
+    * Makes a AJAX request and parses its response as JSON
     * @param {String} url
     * @returns {Promise} resolved when the data fetching finishes. If an error happens during fetching the error can be catched in a .catch() function
     */
@@ -554,8 +615,8 @@ export default {
          });
    },
 
-   /**
-    * Makes an ajax request and returns the response body as text
+      /**
+    * Makes a AJAX request and parses its response as text
     * @param {String} url
     * @returns {Promise} resolved when the data fetching finishes. If an error happens during fetching the error can be catched in a .catch() function
     */
@@ -569,12 +630,4 @@ export default {
             throw error;
          });
    },
-
-   /**
-    * Sets widget tracking name for analytics purposes. This tracking name is used for calls to add bets to the betslip
-    * @param {String} name The name to use
-    */
-   setWidgetTrackingName (name) {
-      this.widgetTrackingName = name;
-   }
 };

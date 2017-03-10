@@ -137,7 +137,7 @@ export default {
             break;
          case this.api.CLIENT_ODDS_FORMAT:
             // Received odds format response
-            coreLibrary.setOddsFormat(response.data);
+            coreLibrary.oddsFormat = response.data;
             eventsModule.publish('ODDS:FORMAT', response.data);
             break;
          case this.api.CLIENT_CONFIG:
