@@ -16,7 +16,7 @@
   "license": "MIT",
   "homepage": "https://github.com/kambi-sportsbook-widgets/widget-core-library#readme",
   "devDependencies": {
-    "kambi-widget-components": "^1.13.2",
+    "kambi-widget-components": "^1.14.0",
     "babel-core": "^6.14.0",
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.14.0",
