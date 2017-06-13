@@ -289,55 +289,58 @@ export default {
       // wapi.createFilterUrl is very buggy, so we made our own implementation of it
       // return this.api.createFilterUrl(destination, coreLibrary.config.routeRoot);
 
-      var urlBase = coreLibrary.config.routeRoot;
+      const urlBase = coreLibrary.config.routeRoot;
 
-      var segments = terms.filter(term => term.indexOf('/') === 0)
+      const segments = terms
+         .filter(term => term.indexOf('/') === 0)
+         .sort()
          .reduce((segments, term) => {
-            var coords = [];
+            const coords = [];
 
-            term.replace(/\/+$/, '').split('/').slice(1).forEach((termKey, i) => {
-               if (!(i in segments)) {
-                  segments[i] = [];
-               }
+            term.replace(/\/+$/, '')
+               .split('/')
+               .slice(1)
+               .forEach((termKey, i) => {
+                  if (!(i in segments)) {
+                     segments[i] = [];
+                  }
 
-               var pointer = segments[i];
+                  let pointer = segments[i];
 
-               if (i > 0) {
-                  coords.forEach((coord) => {
-                     for (var j = 0; j &lt;= coord; j++) {
-                        if (pointer[j] == null) {
-                           pointer.push(j === coord ? [] : 'all');
+                  if (i > 0) {
+                     coords.forEach((coord) => {
+                        for (let j = 0; j &lt;= coord; j++) {
+                           if (pointer[j] == null) {
+                              pointer.push(j === coord ? [] : 'all');
+                           }
                         }
-                     }
-                     pointer = pointer[coord];
-                  });
-               }
+                        pointer = pointer[coord];
+                     });
+                  }
 
-               if (pointer.indexOf(termKey) === -1) {
-                  pointer.push(termKey);
-               }
+                  if (pointer.indexOf(termKey) === -1) {
+                     pointer.push(termKey);
+                  }
 
-               coords[i] = pointer.length - 1;
-
-               return coords[i];
-            });
+                  coords[i] = pointer.length - 1;
+               });
 
             return segments;
          }, []);
 
-      var route = '#' + urlBase.replace(/.*?#/, '').replace(/^\//, '');
+      let route = '#' + urlBase.replace(/.*?#/, '').replace(/^\//, '');
       route += segments.reduce((str, segment) => str + '/' + JSON.stringify(segment).slice(1, -1), '')
          .replace(/"/g, '')
          .replace(/(,all)+(\/|]|$)/g, '$2');
 
-      for (var i = 0; i &lt;= segments.length; i++) {
+      for (let i = 0; i &lt;= segments.length; i++) {
          route = route.replace(/\[([^,\]]*)]/g, '$1');
       }
 
-      var attributes = terms.filter(term => term.indexOf('/') !== 0).join(',');
+      const attributes = terms.filter(term => term.indexOf('/') !== 0).join(',');
 
       if (attributes) {
-         for (var j = 0; j &lt; 4 - segments.length; j++) {
+         for (let j = 0; j &lt; 4 - segments.length; j++) {
             route += '/all';
          }
 
