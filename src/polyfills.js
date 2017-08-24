@@ -4,7 +4,7 @@
 import es6Promise from 'es6-promise';
 
 // ES6 Symbol polyfill, this polyfill is required to use for (a of b)
-import Symbol from 'es6-symbol'; // the '/implement' activates the polyfill automatically
+import Symbol from 'es6-symbol'; // do not include with /implement as this crashes in iOS9
 
 if (window.Symbol == null) {
    window.Symbol = Symbol;
