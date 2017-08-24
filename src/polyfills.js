@@ -4,7 +4,11 @@
 import es6Promise from 'es6-promise';
 
 // ES6 Symbol polyfill, this polyfill is required to use for (a of b)
-import 'es6-symbol/implement'; // the '/implement' activates the polyfill automatically
+import Symbol from 'es6-symbol'; // the '/implement' activates the polyfill automatically
+
+if (window.Symbol == null) {
+   window.Symbol = Symbol;
+}
 
 // enables Symbol.iterator on arrays
 // this enables "for of" statements (babel transpiles that use use iterators)
