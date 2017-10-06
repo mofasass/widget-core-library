@@ -296,7 +296,7 @@ export default {
       var heights = [body.offsetHeight, html.offsetHeight];
       // scrollHeight is the property used to get the size of the content of the page when it is bigger than the viewport
       // on IE<=11 and firefox html.scrollHeight has the value of the viewport if the content is smaller than the viewport. On Edge, Chrome and others it is the other way around
-      if (coreLibrary.browser === 'firefox' || (coreLibrary.browser === 'internet-explorer' && parseInt(coreLibrary.browserVersion, 10) <= 11)) {
+      if (coreLibrary.browser === 'firefox' || coreLibrary.browser === 'chrome' || (coreLibrary.browser === 'internet-explorer' && parseInt(coreLibrary.browserVersion, 10) <= 11)) {
          heights.push(body.scrollHeight);
       } else {
          heights.push(html.scrollHeight);
