@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "jsdoc": "rm -rf ./docs && jsdoc -c jsdoc.conf.json",
-    "preversion": "npm run jsdoc",
+    "preversion": "",
     "postversion": "npm publish"
   },
   "repository": {
