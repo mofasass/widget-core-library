@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+
+
+
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Kambi Widgets Source: src/Module/utilModule.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+
+<style>
+    img {
+    	max-width: 100%;
+    }
+</style>
+
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Kambi Widgets</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="widget-components.html">widget-components</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-coreLibrary.html">coreLibrary</a></li><li><a href="module-eventsModule.html">eventsModule</a></li><li><a href="module-offeringModule.html">offeringModule</a></li><li><a href="module-statisticsModule.html">statisticsModule</a></li><li><a href="module-translationModule.html">translationModule</a></li><li><a href="module-utilModule.html">utilModule</a></li><li><a href="module-widgetModule.html">widgetModule</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="widget-components.DropdownButton.html">widget-components.DropdownButton</a></li><li><a href="widget-components.FixedList.html">widget-components.FixedList</a></li><li><a href="widget-components.Header.html">widget-components.Header</a></li><li><a href="widget-components.OutcomeButton.html">widget-components.OutcomeButton</a></li><li><a href="widget-components.OutcomeButtonUI.html">widget-components.OutcomeButtonUI</a></li><li><a href="widget-components.ScrolledList.html">widget-components.ScrolledList</a></li><li><a href="widget-components.TabPagination.html">widget-components.TabPagination</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="tutorials.list.html" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="tutorial-1 - Introduction.html">1 - Introduction</a></li><li><a href="tutorial-2 - Development.html">2 - Development</a></li><li><a href="tutorial-3 - Production Builds and Deployment.html">3 - Production Builds and Deployment</a></li><li><a href="tutorial-4 - Fetching Data.html">4 - Fetching Data</a></li><li><a href="tutorial-5 - Sportsbook Interaction.html">5 - Sportsbook Interaction</a></li><li><a href="tutorial-6 - Internationalization.html">6 - Internationalization</a></li><li><a href="tutorial-7 - Styling.html">7 - Styling</a></li><li><a href="tutorial-8 - Using React and widget-components.html">8 - Using React and widget-components</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="global.html#FixedList_RenderItemContainerArgs">FixedList_RenderItemContainerArgs</a></li><li><a href="global.html#ScrolledList_ALIGN_ITEMS">ScrolledList_ALIGN_ITEMS</a></li><li><a href="global.html#ScrolledList_RenderButtonArgs">ScrolledList_RenderButtonArgs</a></li><li><a href="global.html#ScrolledList_RenderItemContainerArgs">ScrolledList_RenderItemContainerArgs</a></li><li><a href="global.html#ScrolledList_SCROLL_TO_ITEM_MODE">ScrolledList_SCROLL_TO_ITEM_MODE</a></li><li><a href="global.html#TabPagination_RenderTabListArgs">TabPagination_RenderTabListArgs</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			
+
+		<h1 class="page-title">Source: src/Module/utilModule.js</h1>
+    
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">import coreLibrary from '../coreLibrary';
+
+/* we are not using the translationModule.getTranslation
+because the translations files are set in the widgets, we don't want to force the widgets to include static labels for outcomes. If we need more labels than "draw" we might want to consider doing some build-time magic to not include all the locales values */
+const labelsTranslations = {
+   draw: {
+      cs_CZ: 'Remíza',
+      da_DK: 'Uafgjort',
+      de_AT: 'Unentschieden',
+      de_CH: 'Unentschieden',
+      de_DE: 'Unentschieden',
+      el_GR: 'Ισοπαλία',
+      en_AU: 'Draw',
+      en_GB: 'Draw',
+      es_ES: 'Empate',
+      et_EE: 'Viik',
+      fi_FI: 'Tasapeli',
+      fr_BE: 'Nul',
+      fr_CH: 'Nul',
+      fr_FR: 'Nul',
+      hu_HU: 'Döntetlen',
+      it_IT: 'Pareggio',
+      lt_LT: 'Lygiosios',
+      lv_LV: 'Neizšķirts',
+      nl_BE: 'Gelijkspel',
+      nl_NL: 'Gelijkspel',
+      no_NO: 'Uavgjort',
+      pl_PL: 'Remis',
+      pt_BR: 'Empate',
+      pt_PT: 'Empate',
+      ro_RO: 'Egalitate',
+      ru_RU: 'Ничья',
+      sv_SE: 'Oavgjort',
+      tr_TR: 'Draw',
+   }
+};
+
+/**
+ * Module with utility functions
+ * @module utilModule
+ */
+export default {
+
+   /**
+    * Util method for return unique items between arrays
+    * @param {Array} A First array
+    * @param {Array} B Second array
+    * @returns {Array}
+    * @private
+    */
+   diffArray (A, B) {
+      var map = {}, C = [];
+
+      for (var i = B.length; i--;) {
+         map[B[i]] = null;
+      } // any other value would do
+
+      for (var i = A.length; i--;) {
+         if (!map.hasOwnProperty(A[i])) {
+            C.push(A[i]);
+         }
+      }
+      return C;
+   },
+
+   /**
+    * Checks deep equality of two object.
+    * @param {object} x First object
+    * @param {object} y Second object
+    * @returns {boolean}
+    */
+   equals (x, y) {
+      if (x === y) return true;
+      if ( !(x instanceof Object) || !(y instanceof Object)) return false;
+      if (x.constructor !== y.constructor) return false;
+      /* eslint-disable no-continue */
+      for (var p in x) {
+         if (!x.hasOwnProperty(p)) continue;
+         if (!y.hasOwnProperty(p)) return false;
+         if (x[p] === y[p]) continue;
+         if (typeof x[p] !== 'object') return false;
+         if (!this.equals(x[p], y[p])) return false;
+      }
+      /* eslint-enable no-continue */
+
+      for (p in y) {
+         if (y.hasOwnProperty(p) &amp;&amp; !x.hasOwnProperty(p) ) return false;
+      }
+
+      return true;
+   },
+
+   /**
+    * Returns deep copy of given object.
+    * @param {object} x Object to be cloned
+    */
+   clone (x) {
+      return JSON.parse(JSON.stringify(x));
+   },
+
+   /* Replaces expressions like "{customer}" from the provided string
+    * to the value the have in the coreLibrary.config object
+    * @param {String} str the string to replace the expressions in
+    */
+   replaceConfigParameters (str) {
+      if (str == null) {
+         return str;
+      }
+      const config = coreLibrary.config;
+      Object.keys(config).forEach((key) => {
+         var regex = new RegExp('{' + key + '}', 'g');
+         var value = config[key];
+         str = str.replace(regex, value);
+      });
+      return str;
+   },
+
+   /**
+    * Get decimal formatted odds.
+    * @param {Number} odds Odds number
+    * @returns {Number}
+    */
+   getOddsDecimalValue (odds) {
+      if (odds &lt; 100) {
+         return odds.toFixed(2);
+      } else if (odds &lt; 1000) {
+         return odds.toFixed(1);
+      } else {
+         return odds.toFixed(0);
+      }
+   },
+
+   /**
+    * Returns the outcome label translated.
+    * @param {Object} outcome A betoffer outcome object
+    * @param {Object} event Event object
+    * @returns {string}
+    */
+   getOutcomeLabel (outcome, event) {
+      switch (outcome.type) {
+         case 'OT_ONE': // Outcome has label 1. Applies to Threeway bet offers.
+            return event.homeName;
+         case 'OT_CROSS': // Outcome has label X. Applies to Threeway bet offers.
+            return labelsTranslations.draw[coreLibrary.config.locale];
+         case 'OT_TWO': // Outcome has label 2. Applies to Threeway bet offers.
+            return event.awayName;
+         case 'OT_OVER': // The “Over” outcome in Over/Under bet offer.
+            return outcome.label + ' ' + (outcome.line / 1000);
+         case 'OT_UNDER': // The “Under” outcome in Over/Under bet offer.
+            return outcome.label + ' ' + (outcome.line / 1000);
+         // Todo: Impelement these responses with translations
+         // case 'OT_ODD': //The “Odd” outcome in Odd/Even bet offer.
+         // break;
+         // case 'OT_EVEN': //The “Even” outcome in Odd/Even bet offer.
+         // break;
+         // case 'OT_ONE_ONE': //1-1 outcome in Halftime/fulltime bet offer.
+         // break;
+         // case 'OT_ONE_TWO': //1-2 outcome in Halftime/fulltime bet offer.
+         // break;
+         // case 'OT_ONE_CROSS': //1-X outcome in Halftime/fulltime bet offer.
+         // break;
+         // case 'OT_TWO_ONE': //2-1 outcome in Halftime/fulltime bet offer.
+         // break;
+         // case 'OT_TWO_TWO': //2-2 outcome in Halftime/fulltime bet offer.
+         // break;
+         // case 'OT_TWO_CROSS': //2-X outcome in Halftime/fulltime bet offer.
+         // break;
+         // case 'OT_CROSS_ONE': //X-1 outcome in Halftime/fulltime bet offer.
+         // break;
+         // case 'OT_CROSS_TWO': //X-2 outcome in Halftime/fulltime bet offer.
+         // break;
+         // case 'OT_CROSS_CROSS': //X-X outcome in Halftime/fulltime bet offer.
+         // break;
+         // case 'OT_ONE_OR_TWO': //1 or 2 outcome in Double Chance bet offer.
+         // break;
+         // case 'OT_ONE_OR_CROSS': //1 or X outcome in Double Chance bet offer.
+         // break;
+         // case 'OT_CROSS_OR_TWO': //X or 2 outcome in Double Chance bet offer.
+         // break;
+         // case 'OT_YES': //“Yes” outcome in Head To Head and Yes/No bet offer.
+         // break;
+         // case 'OT_NO': //“No” outcome in Head To Head and Yes/No bet offer.
+         // break;
+         // case 'OT_OTHER': //“Other results” outcome in Result bet offer.
+         // break;
+         // case 'OT_UNTYPED': //Outcome does not have type.
+         // break;
+         // case 'OT_WC_HOME': //Outcome has label Home Win. Applies to WinCast bet offers.
+         // break;
+         // case 'OT_WC_DRAW': //Outcome has label Draw. Applies to WinCast bet offers.
+         // break;
+         // case 'OT_WC_AWAY': //Outcome has label Away Win. Applies to WinCast bet offers.
+         // break;
+
+         default:
+            console.warn('Unhandled outcome type: ' + outcome.type, outcome);
+            return outcome.label;
+      }
+   }
+};
+</pre>
+    </article>
+</section>
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>

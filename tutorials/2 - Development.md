@@ -1,19 +1,31 @@
-### Running the widget
+## Running the widget
+
+#### Locally
 
  - Inside the project folder run:
 
 `npm run start`
 
- - If the build was successful the widget will be running under `https://localhost:8080` after a few seconds. The server that hosts the widgets code runs under port 8080. That url can be opened directly but some widget features will not work (like changing the widget size or adding bets to the betslip), for all features to work the widget needs to be opened inside the Sportsbook
+ - If the build was successful the widget will be running under `http://localhost:8080` and `http://<your-local-ip>:8080` after a few seconds. The server that hosts the widgets code runs under port 8080. That url can be opened directly but some widget features will not work (like changing the widget size or adding bets to the betslip), for all features to work the widget needs to be opened inside the Sportsbook.
 
- - To open the widget inside the Sportsbook while in development configure a new widget in the `widgetSettings` to point to to `https://localhost:8080/`. The Sportsbook requires the widgets to run in HTTPS mode, so in order to see the widget inside the Sportsbook it is required to trust the self-signed certificate that the development server uses. See next section for more information.
+#### Inside the Sportsbook
+
+In order to run the widget inside the Sportsbook it must be running with HTTPS.
+
+To setup HTTPS you will need to add the following flag to your widgets **package.json** file:
+
+```diff
+{
++   "useHttps": true
+}
+```
 
 
-### HTTPS certificate
+##### HTTPS certificate
 
 `npm run start` starts a built-in webserver (called WebpackDevServer) that hosts the widgets code for development mode. This servers runs under the HTTPS protocol because that is required by the Kambi Sportsbook, as such it has a self-signed certificate which needs to be manually trusted in order to be able to open the widget.
 
-In Chrome and Firefox you can trust the certificate by visiting `https://localhost:8080` and hitting advance to accept the certificate.
+In Chrome and Firefox you can trust the certificate by visiting `https://localhost:8080` and `https://<your-local-ip>:8080` and hitting advance to accept the certificate.
 
 For Microsoft Edge and Internet explorer you need to add the certificate on Windows:
 
@@ -26,6 +38,10 @@ For Microsoft Edge and Internet explorer you need to add the certificate on Wind
 - Select the certificate from `project-folder\node_modules\webpack-dev-server\ssl\server.crt`
 
 This process needs to be done only once per machine.
+ - To open the widget inside the Sportsbook while in development configure a new widget in the `widgetSettings` to point to to `https://localhost:8080/` or `https://<your-local-ip>:8080`. The Sportsbook requires the widgets to run in HTTPS mode, so in order to see the widget inside the Sportsbook it is required to trust the self-signed certificate that the development server uses. See next section for more information.
+
+
+
 
 ### Project file structure
 
