@@ -109,18 +109,19 @@
 </header>
 
 <article>
-    <h3>Running the widget</h3><ul>
+    <h2>Running the widget</h2><h4>Locally</h4><ul>
 <li>Inside the project folder run:</li>
 </ul>
 <p><code>npm run start</code></p>
 <ul>
-<li><p>If the build was successful the widget will be running under <code>https://localhost:8080</code> after a few seconds. The server that hosts the widgets code runs under port 8080. That url can be opened directly but some widget features will not work (like changing the widget size or adding bets to the betslip), for all features to work the widget needs to be opened inside the Sportsbook</p>
-</li>
-<li><p>To open the widget inside the Sportsbook while in development configure a new widget in the <code>widgetSettings</code> to point to to <code>https://localhost:8080/</code>. The Sportsbook requires the widgets to run in HTTPS mode, so in order to see the widget inside the Sportsbook it is required to trust the self-signed certificate that the development server uses. See next section for more information.</p>
-</li>
+<li>If the build was successful the widget will be running under <code>http://localhost:8080</code> and <code>http://&lt;your-local-ip&gt;:8080</code> after a few seconds. The server that hosts the widgets code runs under port 8080. That url can be opened directly but some widget features will not work (like changing the widget size or adding bets to the betslip), for all features to work the widget needs to be opened inside the Sportsbook.</li>
 </ul>
-<h3>HTTPS certificate</h3><p><code>npm run start</code> starts a built-in webserver (called WebpackDevServer) that hosts the widgets code for development mode. This servers runs under the HTTPS protocol because that is required by the Kambi Sportsbook, as such it has a self-signed certificate which needs to be manually trusted in order to be able to open the widget.</p>
-<p>In Chrome and Firefox you can trust the certificate by visiting <code>https://localhost:8080</code> and hitting advance to accept the certificate.</p>
+<h4>Inside the Sportsbook</h4><p>In order to run the widget inside the Sportsbook it must be running with HTTPS.</p>
+<p>To setup HTTPS you will need to add the following flag to your widgets <strong>package.json</strong> file:</p>
+<pre class="prettyprint source lang-diff"><code>{
++   &quot;useHttps&quot;: true
+}</code></pre><h5>HTTPS certificate</h5><p><code>npm run start</code> starts a built-in webserver (called WebpackDevServer) that hosts the widgets code for development mode. This servers runs under the HTTPS protocol because that is required by the Kambi Sportsbook, as such it has a self-signed certificate which needs to be manually trusted in order to be able to open the widget.</p>
+<p>In Chrome and Firefox you can trust the certificate by visiting <code>https://localhost:8080</code> and <code>https://&lt;your-local-ip&gt;:8080</code> and hitting advance to accept the certificate.</p>
 <p>For Microsoft Edge and Internet explorer you need to add the certificate on Windows:</p>
 <ul>
 <li>Open control panel</li>
@@ -132,6 +133,9 @@
 <li>Select the certificate from <code>project-folder\node_modules\webpack-dev-server\ssl\server.crt</code></li>
 </ul>
 <p>This process needs to be done only once per machine.</p>
+<ul>
+<li>To open the widget inside the Sportsbook while in development configure a new widget in the <code>widgetSettings</code> to point to to <code>https://localhost:8080/</code> or <code>https://&lt;your-local-ip&gt;:8080</code>. The Sportsbook requires the widgets to run in HTTPS mode, so in order to see the widget inside the Sportsbook it is required to trust the self-signed certificate that the development server uses. See next section for more information.</li>
+</ul>
 <h3>Project file structure</h3><pre class="prettyprint source"><code>project
    README.md
    .eslintrc
