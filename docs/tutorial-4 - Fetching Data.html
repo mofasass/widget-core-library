@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+
+
+
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Kambi Widgets Tutorial: 4 - Fetching Data</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+
+<style>
+    img {
+    	max-width: 100%;
+    }
+</style>
+
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Kambi Widgets</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="widget-components.html">widget-components</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-coreLibrary.html">coreLibrary</a></li><li><a href="module-eventsModule.html">eventsModule</a></li><li><a href="module-offeringModule.html">offeringModule</a></li><li><a href="module-statisticsModule.html">statisticsModule</a></li><li><a href="module-translationModule.html">translationModule</a></li><li><a href="module-utilModule.html">utilModule</a></li><li><a href="module-widgetModule.html">widgetModule</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="widget-components.DropdownButton.html">widget-components.DropdownButton</a></li><li><a href="widget-components.FixedList.html">widget-components.FixedList</a></li><li><a href="widget-components.Header.html">widget-components.Header</a></li><li><a href="widget-components.OutcomeButton.html">widget-components.OutcomeButton</a></li><li><a href="widget-components.OutcomeButtonUI.html">widget-components.OutcomeButtonUI</a></li><li><a href="widget-components.ScrolledList.html">widget-components.ScrolledList</a></li><li><a href="widget-components.TabPagination.html">widget-components.TabPagination</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="tutorials.list.html" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="tutorial-1 - Introduction.html">1 - Introduction</a></li><li><a href="tutorial-2 - Development.html">2 - Development</a></li><li><a href="tutorial-3 - Production Builds and Deployment.html">3 - Production Builds and Deployment</a></li><li><a href="tutorial-4 - Fetching Data.html">4 - Fetching Data</a></li><li><a href="tutorial-5 - Sportsbook Interaction.html">5 - Sportsbook Interaction</a></li><li><a href="tutorial-6 - Internationalization.html">6 - Internationalization</a></li><li><a href="tutorial-7 - Styling.html">7 - Styling</a></li><li><a href="tutorial-8 - Using React and widget-components.html">8 - Using React and widget-components</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="global.html#FixedList_RenderItemContainerArgs">FixedList_RenderItemContainerArgs</a></li><li><a href="global.html#ScrolledList_ALIGN_ITEMS">ScrolledList_ALIGN_ITEMS</a></li><li><a href="global.html#ScrolledList_RenderButtonArgs">ScrolledList_RenderButtonArgs</a></li><li><a href="global.html#ScrolledList_RenderItemContainerArgs">ScrolledList_RenderItemContainerArgs</a></li><li><a href="global.html#ScrolledList_SCROLL_TO_ITEM_MODE">ScrolledList_SCROLL_TO_ITEM_MODE</a></li><li><a href="global.html#TabPagination_RenderTabListArgs">TabPagination_RenderTabListArgs</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			<section class="tutorial-section">
+
+<header>
+    
+
+    <h2>4 - Fetching Data</h2>
+</header>
+
+<article>
+    <p>Fetching data is done through the Kambi's Offering API and the Kambi's Statistics API. The <code>kambi-widget-core-library</code> offers a wrapper around these API through the <code>offeringModule</code> and the <code>statisticsModule</code>. These modules take care of setting all the appropriate values in the request URLs as well as abstracting the endpoints of the APIs as functions that return <code>Promise</code>s.</p>
+<p>Note that it is only possible to fetch data after the <code>coreLibrary.init()</code> call has been finished. That means inside its <code>.then()</code> callback.</p>
+<h3>Using Promises</h3><p><code>Promise</code> is a way to deal with asynchronous (AJAX) requests, it allows for easier chaining and error handling of requests than callbacks. All asynchronous methods of the <code>kambi-widget-core-library</code> return <code>Promise</code>s.</p>
+<p><code>Promise</code>s are Javascript objects and as such they have methods, these methods are <code>then(fn)</code> and <code>catch(fn)</code>. Both receive a function as an argument:</p>
+<ul>
+<li><p><code>then(fn)</code></p>
+<p><code>fn</code> called when the <code>Promise</code> is resolved, ie the request has finished successfully. Returns a new <code>Promise</code></p>
+</li>
+<li><p><code>catch(fn)</code></p>
+<p><code>fn</code> called when the <code>Promise</code> is reject, ie the request has finished unsuccessfully. Returns a new <code>Promise</code></p>
+</li>
+</ul>
+<p>Both these functions return a new <code>Promise</code> object in a way that allows chaining these methods together</p>
+<p>Example</p>
+<pre class="prettyprint source lang-javascript"><code>
+import { offeringModule } from 'kambi-widget-core-library';
+
+...
+
+var promise = offeringModule.getEvent(someEventId);
+
+promise = promise.then(function (response) {
+   console.log('success!');
+   console.log(response);
+});
+
+promise = promise.catch(function (error) {
+   // only called if an error happened, for example event not found
+   console.log('error!');
+   console.log(error);
+});
+
+
+// same thing as above, but in a more concise way
+offeringModule.getEvent(someEventId)
+   .then(function (response) {
+      console.log('success!');
+      console.log(response);
+   })
+   .catch(function (error) {
+      // only called if an error happened, for example event not found
+      console.log('error!');
+      console.log(error);
+   });</code></pre><ul>
+<li><p>Error Handling</p>
+<p><code>catch(fn)</code> also catches errors that happen inside previous <code>then(fn)</code> blocks. It is a good practice for Kambi Widget development to make the widget remove itself when an error happens. That means it fails gracefully and does not show in a broken state in the Sportsbook.</p>
+<p>Example</p>
+</li>
+</ul>
+<pre class="prettyprint source lang-javascript"><code>import { offeringModule, widgetModule } from 'kambi-widget-core-library';
+
+offeringModule.getLiveEvents()
+   .then(function (response) {
+      if (response.liveEvents.length === 0) {
+         throw new Error('No live events!');
+      }
+      console.log('success!');
+      console.log(response);
+   })
+   .catch(function (error) {
+      // only called if an error happened
+      console.log('error!');
+      console.log(error);
+      widgetModule.removeWidget(); // widget is removed from the Sportsbook
+   });</code></pre><ul>
+<li><p>Chaining Promises</p>
+<p>It is possible to chain <code>Promise</code>s by returning a new <code>Promise</code> inside a <code>then(fn)</code> function, the subsequent <code>then(fn)</code> call will be invoked when this returned <code>Promise</code> is resolved.</p>
+<p><code>catch(fn)</code> blocks in the chain will catch any errors that happen before it in the chain.</p>
+</li>
+</ul>
+<pre class="prettyprint source lang-javascript"><code>import { offeringModule, widgetModule } from 'kambi-widget-core-library';
+
+offeringModule.getLiveEvents()
+   .then(function (response) {
+      if (response.events.length === 0) {
+         throw new Error('No live events!');
+      }
+      // getting the first event betOffers
+      var id = response.events[0].event.id;
+      return offeringModule.getLiveEvent(id); // this returns a Promise
+   })
+   .then(function (response) {
+      console.log(response.betOffers);
+   })
+   .catch(function (error) {
+      // only called if an error happened in ANY request of the chain
+      console.log('error!');
+      console.log(error);
+      widgetModule.removeWidget(); // widget is removed from the Sportsbook
+   });</code></pre><ul>
+<li><p>Parallel Promises</p>
+<p>Sometimes we want to execute asynchronous calls in parallel for faster data-fetching, to do that we can use <code>Promise.all(promiseArray)</code>. It returns a new <code>Promise</code> that is resolved when all <code>Promise</code>s inside <code>promiseArray</code> resolve.</p>
+<p>Example</p>
+<pre class="prettyprint source lang-javascript"><code>import { offeringModule, widgetModule } from 'kambi-widget-core-library';
+
+offeringModule.getLiveEvents()
+ .then(function (response) {
+    if (response.events.length === 0) {
+       throw new Error('No live events!');
+    }
+
+    // getting the first event betOffers
+    var promises = [];
+    for (var i = 0; i &lt; response.events; i++) {
+       var id = response.events[i].event.id;
+       var promise = offeringModule.getLiveEvent(id);
+       promises.push(promise);
+    }
+    return Promise.all(promises);
+ })
+ .then(function (response) {
+    // will have all the betoffers for all live events
+    console.log(response);
+ })
+ .catch(function (error) {
+    // only called if an error happened in ANY request of the chain
+    console.log('error!');
+    console.log(error);
+    widgetModule.removeWidget(); // widget is removed from the Sportsbook
+ });</code></pre></li>
+</ul>
+<p>More about <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promises</a></p>
+<h3>Offering Module</h3><p>The <code>offeringModule</code> provides data about events, their statuses and their betOffers. It also provides information about the live data for live events.</p>
+<ul>
+<li>Example getting all live events</li>
+</ul>
+<pre class="prettyprint source lang-javascript"><code>import { offeringModule } from 'kambi-widget-core-library';
+
+...
+
+offeringModule.getLiveEvents()
+   .then(function(data) {
+      console.log(data);
+   });</code></pre><ul>
+<li>Getting all betOffers of a single event</li>
+</ul>
+<pre class="prettyprint source lang-javascript"><code>import { offeringModule } from 'kambi-widget-core-library';
+
+...
+
+// if it is a pre-live event
+offeringModule.getEvent(eventId)
+    .then(function(data) {
+       console.log(data);
+    });
+
+// if it is a live event
+offeringModule.getLiveEvent(eventId)
+   .then(function(data) {
+    console.log(data);
+   });</code></pre><ul>
+<li><p>Making a filter request</p>
+<p>Filter request are a way to get all the events associated with a filter, filters are strings that define a subset of events. A few examples:</p>
+<p><code>football</code>: all football events</p>
+<p><code>football/england</code>: all football events from england</p>
+<p><code>football/england/premier_league</code>: all football events from the english premier_league tournament</p>
+<p><code>football/england/premier_league/arsenal</code>: all football events from the english premier_league in which the Arsenal team is playing</p>
+<p><code>football/england/premier_league/all/competitions</code>: all events of type ET_COMPETITON from the premier_league. This excludes actual matches, returning only the overall competition data. For example &quot;Premier League Group A&quot;, &quot;Premier League Group B&quot;, &quot;Premier League&quot; (the overall tournament).</p>
+<p><code>football/england/premier_league/all/matches</code>: all events of type ET_MATCH from the premier_league tournament. This excludes competitions and returns only actual matches. For example: &quot;Sunderland - Arsenal&quot;, &quot;Manchester United - Burnley&quot;.</p>
+<p>Filters also accept a wildcard called <code>all</code> that allows you to skip a certain part of the filter. For example <code>football/all/all</code> is the same as <code>football</code>.</p>
+<p>Examples</p>
+</li>
+</ul>
+<pre class="prettyprint source lang-javascript"><code>import { offeringModule, widgetModule } from 'kambi-widget-core-library';
+
+...
+
+offeringModule.getEventsByFilter('football')
+   .then(function(data) {
+      console.log(data.events);
+   })
+
+offeringModule.getEventsByFilter('football/england/premier_league')
+   .then(function(data) {
+      console.log(data.events);
+   })
+
+// combining two filters
+offeringModule.getEventsByFilter('football/england,germany')
+   .then(function(data) {
+      console.log(data.events);
+   })</code></pre><ul>
+<li><p>Notes</p>
+<p>All offering calls that return multiple events (<code>getEventsByFilter</code> for example) also return its main betOffer if it exists. To get ALL betOffers of an event you need to use <code>getEvent(eventId)</code> or <code>getLiveEvent(eventId)</code> depending if the event is live or not.</p>
+<p><code>getEventsByFilter</code> returns both live and pre-live matches, it is possible to differentiate between them using <code>eventData.event.openForLiveBetting</code>. If it is true then it the match is live and to get all its betoffers one should use <code>getLiveEvent(eventId)</code> instead of <code>getEvent(eventId)</code></p>
+<p>See the <code>offeringModule</code> documentation for a list of all the methods.</p>
+</li>
+</ul>
+</article>
+
+</section>
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>

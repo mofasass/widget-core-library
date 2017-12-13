@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+
+
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Kambi Widgets Tutorial: 6 - Internationalization</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+
+<style>
+    img {
+    	max-width: 100%;
+    }
+</style>
+
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Kambi Widgets</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="widget-components.html">widget-components</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-coreLibrary.html">coreLibrary</a></li><li><a href="module-eventsModule.html">eventsModule</a></li><li><a href="module-offeringModule.html">offeringModule</a></li><li><a href="module-statisticsModule.html">statisticsModule</a></li><li><a href="module-translationModule.html">translationModule</a></li><li><a href="module-utilModule.html">utilModule</a></li><li><a href="module-widgetModule.html">widgetModule</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="widget-components.DropdownButton.html">widget-components.DropdownButton</a></li><li><a href="widget-components.FixedList.html">widget-components.FixedList</a></li><li><a href="widget-components.Header.html">widget-components.Header</a></li><li><a href="widget-components.OutcomeButton.html">widget-components.OutcomeButton</a></li><li><a href="widget-components.OutcomeButtonUI.html">widget-components.OutcomeButtonUI</a></li><li><a href="widget-components.ScrolledList.html">widget-components.ScrolledList</a></li><li><a href="widget-components.TabPagination.html">widget-components.TabPagination</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="tutorials.list.html" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="tutorial-1 - Introduction.html">1 - Introduction</a></li><li><a href="tutorial-2 - Development.html">2 - Development</a></li><li><a href="tutorial-3 - Production Builds and Deployment.html">3 - Production Builds and Deployment</a></li><li><a href="tutorial-4 - Fetching Data.html">4 - Fetching Data</a></li><li><a href="tutorial-5 - Sportsbook Interaction.html">5 - Sportsbook Interaction</a></li><li><a href="tutorial-6 - Internationalization.html">6 - Internationalization</a></li><li><a href="tutorial-7 - Styling.html">7 - Styling</a></li><li><a href="tutorial-8 - Using React and widget-components.html">8 - Using React and widget-components</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="global.html#FixedList_RenderItemContainerArgs">FixedList_RenderItemContainerArgs</a></li><li><a href="global.html#ScrolledList_ALIGN_ITEMS">ScrolledList_ALIGN_ITEMS</a></li><li><a href="global.html#ScrolledList_RenderButtonArgs">ScrolledList_RenderButtonArgs</a></li><li><a href="global.html#ScrolledList_RenderItemContainerArgs">ScrolledList_RenderItemContainerArgs</a></li><li><a href="global.html#ScrolledList_SCROLL_TO_ITEM_MODE">ScrolledList_SCROLL_TO_ITEM_MODE</a></li><li><a href="global.html#TabPagination_RenderTabListArgs">TabPagination_RenderTabListArgs</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			<section class="tutorial-section">
+
+<header>
+    
+
+    <h2>6 - Internationalization</h2>
+</header>
+
+<article>
+    <p>Translations are handled by the <code>translationModule</code> module which is part of the <code>kambi-widget-core-library</code>. The module fetches the corresponding translations from JSON files inside the <code>src/i18n</code> folder.</p>
+<p>The use of these files are optional if no internationalization is required. If the user's locale is not found in this folder it will fallback to <code>en_GB.json</code>.</p>
+<p>These are all the currently supported locales in the Sportsbook, although they can vary by operator:</p>
+<p>cs_CZ.json, de_DE.json, es_ES.json, fr_CH.json, lt_LT.json, no_NO.json, ro_RO.json, da_DK.json, el_GR.json, et_EE.json, fr_FR.json, lv_LV.json, pl_PL.json, ru_RU.json, de_AT.json, en_AU.json, fi_FI.json, hu_HU.json, nl_BE.json, pt_BR.json, sv_SE.json, de_CH.json, en_GB.json, fr_BE.json, it_IT.json, nl_NL.json, pt_PT.json, tr_TR.json</p>
+<p>We can test translations by changing the <code>locale</code> parameter in <code>modkSetupData.json</code>. This only works when testing the widget in stand-alone mode (outside of the Kambi Sportsbook).</p>
+<pre class="prettyprint source lang-json"><code>{
+   ...
+   &quot;clientConfig&quot;: {
+      ...
+      &quot;locale&quot;: &quot;en_GB&quot;,
+      ...
+   }
+}</code></pre><h3>Translating strings</h3><p>To translate a string we use the <code>getTranslation()</code> method of the <code>translationModule</code></p>
+<pre class="prettyprint source lang-javascript"><code>
+import {
+   translationModule
+} from 'kambi-widget-core-library';
+
+// Translate stadium string
+document.getElementById('title').innerText(translationModule.getTranslation('Stadium'));</code></pre><p>On our json files we would have for example <code>sv_SE.json</code></p>
+<pre class="prettyprint source lang-json"><code>{
+   &quot;Stadium&quot;: &quot;Stadion&quot;
+}</code></pre><h3>Translation with extra arguments</h3><p> We can also provide arguments when translating. In our json files we can define the number of arguments, so for example:</p>
+<p> <code>en_GB.json</code>:</p>
+<pre class="prettyprint source lang-json"><code> {
+    &quot;WelcomeTo&quot;: &quot;Welcome {0} to {1}&quot;
+ }</code></pre><p> <code>sv_SE.json</code>:</p>
+<pre class="prettyprint source lang-json"><code> {
+    &quot;WelcomeTo&quot;: &quot;Välkommen {0} till {1}&quot;
+ }</code></pre><p> And the translation would be called like so:</p>
+<pre class="prettyprint source lang-javascript"><code>
+import {
+   translationModule
+} from 'kambi-widget-core-library';
+
+var user = 'Jim',
+    place = 'Sportsbook';
+
+// Translate welcome message
+$('#welcome').text(translationModule.getTranslation('WelcomeTo', user, place));</code></pre><p>That would result to <strong>Welcome Jim to Sportsbook</strong> for 'en_GB' locale and <strong>Välkommen Jim till Sportsbook</strong> for 'sv_SE'</p>
+</article>
+
+</section>
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>
