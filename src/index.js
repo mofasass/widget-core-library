@@ -1,4 +1,3 @@
-import './polyfills';
 import coreLibrary from './coreLibrary';
 import offeringModule from './Module/offeringModule';
 import statisticsModule from './Module/statisticsModule';
