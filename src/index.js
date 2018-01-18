@@ -1,4 +1,5 @@
 import './polyfills';
+import './widget-api';
 import coreLibrary from './coreLibrary';
 import offeringModule from './Module/offeringModule';
 import statisticsModule from './Module/statisticsModule';
