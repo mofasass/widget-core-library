@@ -1,43 +1,43 @@
 * {
-   -webkit-tap-highlight-color: transparent;
-   -webkit-text-size-adjust: 100%;
-   -webkit-touch-callout: none;
-   -moz-user-select: none;
-   -ms-user-select: none;
-   -o-user-select: none;
-   -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  -webkit-user-select: none;
 }
 
 *,
 *::after,
 *::before {
-   @include box-sizing(border-box);
+  @include box-sizing(border-box);
 }
 
 body,
 html,
 * {
-   font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
-   font-size: 12px;
-   line-height: 24px;
+  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  line-height: 24px;
 }
 
 body,
 html {
-   margin: 0;
-   padding: 0;
-   width: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 html {
-   min-width: 100%;
-   width: 1px;
+  min-width: 100%;
+  width: 1px;
 }
 
 a {
-   text-decoration: none;
+  text-decoration: none;
 }
 
 strong {
-   font-weight: bold;
+  font-weight: bold;
 }

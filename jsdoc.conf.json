@@ -1,52 +1,45 @@
 {
-   "tags": {
-      "allowUnknownTags": true
-   },
-   "plugins": [
-      "plugins/markdown"
-   ],
-   "source": {
-      "include": [
-         "./src/",
-         "./node_modules/kambi-widget-components/src/"
-      ]
-   },
-   "opts": {
-      "readme": "./README.md",
-      "template": "./node_modules/ink-docstrap/template",
-      "tutorials": "./tutorials",
-      "recurse": true,
-      "destination": "./docs/"
-   },
-   "templates": {
-      "default": {
-         "layoutFile": "./jsdoc-layout.tmpl",
-         "staticFiles": {
-            "include": [
-               "./tutorials/"
-            ],
-            "includePattern": "\\.(jpg|png|gif)"
-         }
-      },
-      "logoFile": "",
-      "cleverLinks": false,
-      "monospaceLinks": false,
-      "dateFormat": "ddd MMM Do YYYY",
-      "outputSourceFiles": true,
-      "outputSourcePath": true,
-      "systemName": "Kambi Widgets",
-      "footer": "",
-      "copyright": "",
-      "navType": "vertical",
-      "theme": "cerulean",
-      "linenums": true,
-      "collapseSymbols": false,
-      "inverseNav": true,
-      "protocol": "html://",
-      "methodHeadingReturns": false
-   },
-   "markdown": {
-      "parser": "gfm",
-      "hardwrap": true
-   }
+  "tags": {
+    "allowUnknownTags": true
+  },
+  "plugins": ["plugins/markdown"],
+  "source": {
+    "include": ["./src/", "./node_modules/kambi-widget-components/src/"]
+  },
+  "opts": {
+    "readme": "./README.md",
+    "template": "./node_modules/ink-docstrap/template",
+    "tutorials": "./tutorials",
+    "recurse": true,
+    "destination": "./docs/"
+  },
+  "templates": {
+    "default": {
+      "layoutFile": "./jsdoc-layout.tmpl",
+      "staticFiles": {
+        "include": ["./tutorials/"],
+        "includePattern": "\\.(jpg|png|gif)"
+      }
+    },
+    "logoFile": "",
+    "cleverLinks": false,
+    "monospaceLinks": false,
+    "dateFormat": "ddd MMM Do YYYY",
+    "outputSourceFiles": true,
+    "outputSourcePath": true,
+    "systemName": "Kambi Widgets",
+    "footer": "",
+    "copyright": "",
+    "navType": "vertical",
+    "theme": "cerulean",
+    "linenums": true,
+    "collapseSymbols": false,
+    "inverseNav": true,
+    "protocol": "html://",
+    "methodHeadingReturns": false
+  },
+  "markdown": {
+    "parser": "gfm",
+    "hardwrap": true
+  }
 }

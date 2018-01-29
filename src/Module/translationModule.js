@@ -1,4 +1,4 @@
-import coreLibrary from "../coreLibrary";
+import coreLibrary from '../coreLibrary'
 
 /**
  * Module with internationalization methods
@@ -8,26 +8,26 @@ import coreLibrary from "../coreLibrary";
  * @module translationModule
  */
 export default {
-   /**
-    * Returns translated string based of a provided key.
-    * @param {String} key Key to fetch translation for
-    * @param {...String} args arguments to replace inside the translated string
-    * @example
-    * en_GB.json:
-    * { "welcomeUserToPlace": "Welcome {0} to {1}" }
-    * Javascript:
-    * getTranslation('welcomeUserToPlace', 'Daniel', 'Stadium') => 'Welcome Daniel to Stadium'
-    * @returns {String} the localized string
-    */
-   getTranslation: function(key, ...args) {
-      var str = window.kambiI18n[coreLibrary.config.locale][key];
-      if (str == null) {
-         return key;
-      }
-      for (var i = 0; i < args.length; i++) {
-         var replacement = args[i] || "";
-         str = str.replace("{" + i + "}", replacement);
-      }
-      return str;
-   }
-};
+  /**
+   * Returns translated string based of a provided key.
+   * @param {String} key Key to fetch translation for
+   * @param {...String} args arguments to replace inside the translated string
+   * @example
+   * en_GB.json:
+   * { "welcomeUserToPlace": "Welcome {0} to {1}" }
+   * Javascript:
+   * getTranslation('welcomeUserToPlace', 'Daniel', 'Stadium') => 'Welcome Daniel to Stadium'
+   * @returns {String} the localized string
+   */
+  getTranslation: function(key, ...args) {
+    var str = window.kambiI18n[coreLibrary.config.locale][key]
+    if (str == null) {
+      return key
+    }
+    for (var i = 0; i < args.length; i++) {
+      var replacement = args[i] || ''
+      str = str.replace('{' + i + '}', replacement)
+    }
+    return str
+  },
+}
