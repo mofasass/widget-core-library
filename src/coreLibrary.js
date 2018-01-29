@@ -1,9 +1,9 @@
-import offeringModule from './Module/offeringModule';
-import statisticsModule from './Module/statisticsModule';
-import translationModule from './Module/translationModule';
-import utilModule from './Module/utilModule';
-import widgetModule from './Module/widgetModule';
-import constants from './constants';
+import offeringModule from "./Module/offeringModule";
+import statisticsModule from "./Module/statisticsModule";
+import translationModule from "./Module/translationModule";
+import utilModule from "./Module/utilModule";
+import widgetModule from "./Module/widgetModule";
+import constants from "./constants";
 
 /**
  * Main module that holds the other modules as well as widget
@@ -26,47 +26,49 @@ function checkStatus(response) {
 function checkBrowser() {
    var ua = window.navigator.userAgent;
 
-   var getFirstMatch = function (regex) {
+   var getFirstMatch = function(regex) {
       var match = ua.match(regex);
-      return (match && match.length > 1 && match[1]) || '';
+      return (match && match.length > 1 && match[1]) || "";
    };
 
    var versionIdentifier = getFirstMatch(/version\/(\d+(\.\d+)?)/i);
 
    if (/android/i.test(ua)) {
       return {
-         browser: 'android',
+         browser: "android",
          browserVersion: versionIdentifier
       };
    } else if (/(ipod|iphone|ipad)/i.test(ua)) {
       return {
-         browser: 'ios',
+         browser: "ios",
          browserVersion: getFirstMatch(/(?:mxios)[\s/](\d+(?:\.\d+)+)/i)
       };
    } else if (/msie|trident/i.test(ua)) {
       return {
-         browser: 'internet-explorer',
+         browser: "internet-explorer",
          browserVersion: getFirstMatch(/(?:msie |rv:)(\d+(\.\d+)?)/i)
       };
    } else if (/chrome|crios|crmo/i.test(ua)) {
       return {
-         browser: 'chrome',
+         browser: "chrome",
          browserVersion: getFirstMatch(/(?:chrome|crios|crmo)\/(\d+(\.\d+)?)/i)
       };
    } else if (/safari|applewebkit/i.test(ua)) {
       return {
-         browser: 'safari',
+         browser: "safari",
          browserVersion: versionIdentifier
       };
    } else if (/chrome.+? edge/i.test(ua)) {
       return {
-         browser: 'microsoft-edge',
+         browser: "microsoft-edge",
          browserVersion: getFirstMatch(/edge\/(\d+(\.\d+)?)/i)
       };
    } else if (/firefox|iceweasel|fxios/i.test(ua)) {
       return {
-         browser: 'firefox',
-         browserVersion: getFirstMatch(/(?:firefox|iceweasel|fxios)[ /](\d+(\.\d+)?)/i)
+         browser: "firefox",
+         browserVersion: getFirstMatch(
+            /(?:firefox|iceweasel|fxios)[ /](\d+(\.\d+)?)/i
+         )
       };
    }
 }
@@ -82,41 +84,40 @@ function download(url) {
       // old-school XMLHttpRequest
       const xhr = new XMLHttpRequest();
 
-      xhr.open('GET', url, true);
+      xhr.open("GET", url, true);
 
       xhr.onload = function() {
          const response = {
             status: xhr.status,
             statusText: xhr.statusText,
-            body: 'response' in xhr ? xhr.response : xhr.responseText,
+            body: "response" in xhr ? xhr.response : xhr.responseText
          };
 
          resolve(response);
       };
 
-      xhr.onerror = () => reject(new TypeError('Network request failed'));
+      xhr.onerror = () => reject(new TypeError("Network request failed"));
 
-      xhr.ontimeout = () => reject(new TypeError('Network request failed'));
+      xhr.ontimeout = () => reject(new TypeError("Network request failed"));
 
       xhr.send();
    });
 }
 
 // calls Object.freeze() deeply in an object
-function deepFreeze (o) {
+function deepFreeze(o) {
    if (o == null) {
       return;
    }
    Object.freeze(o);
 
-   Object.getOwnPropertyNames(o).forEach(function (prop) {
-      if (o.hasOwnProperty(prop)
-            && o[prop] !== null
-            && (
-               typeof o[prop] === 'object'
-               || typeof o[prop] === 'function'
-            )
-            && !Object.isFrozen(o[prop])) {
+   Object.getOwnPropertyNames(o).forEach(function(prop) {
+      if (
+         o.hasOwnProperty(prop) &&
+         o[prop] !== null &&
+         (typeof o[prop] === "object" || typeof o[prop] === "function") &&
+         !Object.isFrozen(o[prop])
+      ) {
          deepFreeze(o[prop]);
       }
    });
@@ -136,7 +137,9 @@ export default {
     */
    checkInit() {
       if (this.initialized) {
-         throw new Error('Can not override property after initilization of the coreLibrary');
+         throw new Error(
+            "Can not override property after initilization of the coreLibrary"
+         );
       }
    },
 
@@ -156,9 +159,9 @@ export default {
     * An array with the default classes that should be added to HTML tag
     */
    kambiDefaultClasses: [
-      'KambiWidget-card-text-color',
-      'KambiWidget-card-background-color',
-      'KambiWidget-font',
+      "KambiWidget-card-text-color",
+      "KambiWidget-card-background-color",
+      "KambiWidget-font"
    ],
 
    /**
@@ -181,27 +184,27 @@ export default {
     * @property {String} version
     */
    _config: {
-      apiBaseUrl: '',
+      apiBaseUrl: "",
       auth: false,
       channelId: 1,
-      currency: 'EUR',
-      customer: '',
-      device: 'desktop',
-      locale: 'en_GB',
-      market: 'GB',
-      oddsFormat: 'decimal',
-      offering: '',
-      routeRoot: '',
+      currency: "EUR",
+      customer: "",
+      device: "desktop",
+      locale: "en_GB",
+      market: "GB",
+      oddsFormat: "decimal",
+      offering: "",
+      routeRoot: "",
       streamingAllowedForPlayer: true,
       client_id: 2,
-      version: 'v2'
+      version: "v2"
    },
 
-   get config () {
+   get config() {
       return this._config; // eslint-disable-line no-underscore-dangle
    },
 
-   set config (config) {
+   set config(config) {
       this.checkInit();
       config = deepFreeze(config);
       /* eslint-disable no-underscore-dangle */
@@ -212,11 +215,13 @@ export default {
       }
       // Make sure that the routeRoot is not null or undefined
       if (this._config.routeRoot == null) {
-         this._config.routeRoot = '';
-      } else if (this._config.routeRoot.length > 0 &&
-            this._config.routeRoot.slice(-1) !== '/') {
+         this._config.routeRoot = "";
+      } else if (
+         this._config.routeRoot.length > 0 &&
+         this._config.routeRoot.slice(-1) !== "/"
+      ) {
          // If the routeRoot is not empty we need to make sure it has a trailing slash
-         this._config.routeRoot += '/';
+         this._config.routeRoot += "/";
       }
       /* eslint-enable no-underscore-dangle */
    },
@@ -228,11 +233,11 @@ export default {
    _oddsFormat: null,
 
    set oddsFormat(format) {
-      this._oddsFormat = format;// eslint-disable-line no-underscore-dangle
+      this._oddsFormat = format; // eslint-disable-line no-underscore-dangle
    },
 
    get oddsFormat() {
-      return this._oddsFormat;// eslint-disable-line no-underscore-dangle
+      return this._oddsFormat; // eslint-disable-line no-underscore-dangle
    },
 
    /**
@@ -241,11 +246,11 @@ export default {
     */
    _defaultArgs: {},
 
-   get defaultArgs () {
+   get defaultArgs() {
       return this._defaultArgs; // eslint-disable-line no-underscore-dangle
    },
 
-   set defaultArgs (defaultArgs) {
+   set defaultArgs(defaultArgs) {
       this.checkInit();
       this._defaultArgs = deepFreeze(defaultArgs); // eslint-disable-line no-underscore-dangle
    },
@@ -293,21 +298,21 @@ export default {
     */
    _args: null,
 
-   get args () {
+   get args() {
       return this._args; // eslint-disable-line no-underscore-dangle
    },
 
-   set args (args) {
+   set args(args) {
       this.checkInit();
       /* eslint-disable no-underscore-dangle */
       args = Object.assign({}, this.defaultArgs, args);
 
       // Handling conditionalArgs
       if (args.conditionalArgs != null) {
-         args.conditionalArgs.forEach((carg) => {
+         args.conditionalArgs.forEach(carg => {
             var apply = true;
             if (carg.clientConfig != null) {
-               Object.keys(carg.clientConfig).forEach((key) => {
+               Object.keys(carg.clientConfig).forEach(key => {
                   if (this.config[key] !== carg.clientConfig[key]) {
                      apply = false;
                   }
@@ -315,7 +320,7 @@ export default {
             }
 
             if (carg.pageInfo != null) {
-               Object.keys(carg.pageInfo).forEach((key) => {
+               Object.keys(carg.pageInfo).forEach(key => {
                   if (this.pageInfo[key] !== carg.pageInfo[key]) {
                      apply = false;
                   }
@@ -323,14 +328,14 @@ export default {
             }
 
             if (apply) {
-               console.log('Applying conditional arguments:');
+               console.log("Applying conditional arguments:");
                console.log(carg.args);
                args = Object.assign(args, carg.args);
             }
          });
       }
 
-      this._args = deepFreeze(args)
+      this._args = deepFreeze(args);
       /* eslint-enable no-underscore-dangle */
    },
 
@@ -345,21 +350,24 @@ export default {
     */
    _pageInfo: {
       leaguePaths: [],
-      pageParam: '',
-      pageTrackingPath: '',
-      pageType: ''
+      pageParam: "",
+      pageTrackingPath: "",
+      pageType: ""
    },
 
-   get pageInfo () {
+   get pageInfo() {
       return this._pageInfo; // eslint-disable-line no-underscore-dangle
    },
 
-   set pageInfo (pageInfo) {
+   set pageInfo(pageInfo) {
       this.checkInit();
       /* eslint-disable no-underscore-dangle */
       // Check if the last character in the pageParam property is a slash, if not add it so we can use this property in filter requests
-      if (pageInfo.pageType === 'filter' && pageInfo.pageParam.substr(-1) !== '/') {
-         pageInfo.pageParam += '/';
+      if (
+         pageInfo.pageType === "filter" &&
+         pageInfo.pageParam.substr(-1) !== "/"
+      ) {
+         pageInfo.pageParam += "/";
       }
       this._pageInfo = deepFreeze(pageInfo);
       /* eslint-enable no-underscore-dangle */
@@ -374,16 +382,16 @@ export default {
     * @property {String} wapi
     */
    _apiVersions: {
-      client: '',
-      libs: '',
-      wapi: ''
+      client: "",
+      libs: "",
+      wapi: ""
    },
 
-   get apiVersions () {
+   get apiVersions() {
       return this._apiVersions; // eslint-disable-line no-underscore-dangle
    },
 
-   set apiVersions (versions) {
+   set apiVersions(versions) {
       this.checkInit();
       /* eslint-disable no-underscore-dangle */
       this._apiVersions = deepFreeze(versions);
@@ -422,12 +430,12 @@ export default {
     * @param {Object} defaultArgs arguments to be used if they are not provided by the sportsbook
     * @returns {Promise} resolved when everything is ready. If an error happens during fetching the error can be catched in a .catch() function
     */
-   init (defaultArgs) {
+   init(defaultArgs) {
       this.defaultArgs = defaultArgs;
 
       return new Promise((resolve, reject) => {
          // applies the setup data and sets up the CSS and translations
-         var applySetupData = (setupData) => {
+         var applySetupData = setupData => {
             this.oddsFormat = setupData.clientConfig.oddsFormat;
             this.config = setupData.clientConfig;
             this.pageInfo = setupData.pageInfo;
@@ -435,53 +443,47 @@ export default {
             this.args = setupData.arguments;
             this.addClasses(this.kambiDefaultClasses);
 
-            const translationPromise = translationModule.fetchTranslations(setupData.clientConfig.locale);
-
-            this.injectOperatorCss(
-                  this.config.customer,
-                  this.config.offering);
+            this.injectOperatorCss(this.config.customer, this.config.offering);
 
             this.injectCustomCss(
-                  this.args.customCssUrl,
-                  this.args.customCssUrlFallback);
+               this.args.customCssUrl,
+               this.args.customCssUrlFallback
+            );
 
             this.widgetTrackingName = this.args.widgetTrackingName;
 
             this.initialized = true;
-
-            translationPromise
-               .then(() => {
-                  resolve();
-               })
-               .catch((err) => {
-                  reject();
-               });
+            resolve();
          };
 
          if (window.KambiWidget) {
             // For development purposes we might want to load a widget on it's own so we check if we are in an iframe, if not then load some fake data
             if (window.self === window.top) {
-               console.warn(window.location.host + window.location.pathname + ' is being loaded as stand-alone');
+               console.warn(
+                  window.location.host +
+                     window.location.pathname +
+                     " is being loaded as stand-alone"
+               );
                // Load the mock config data
-               this.getData('mockSetupData.json')
-                  .then((mockSetupData) => {
+               this.getData("mockSetupData.json")
+                  .then(mockSetupData => {
                      // Output some debug info that could be helpful
-                     console.debug('Loaded mock setup data');
+                     console.debug("Loaded mock setup data");
                      console.debug(mockSetupData);
                      // Apply the mock config data to the core
                      applySetupData(mockSetupData);
                   })
-                  .catch((error) => {
-                     console.debug('Failed to fetch mockSetupData');
+                  .catch(error => {
+                     console.debug("Failed to fetch mockSetupData");
                      console.trace(error);
                      reject();
                   });
             } else {
-               window.KambiWidget.apiReady = (api) => {
+               window.KambiWidget.apiReady = api => {
                   widgetModule.api = api;
 
                   // Request the setup info from the widget api
-                  widgetModule.requestSetup((setupData) => {
+                  widgetModule.requestSetup(setupData => {
                      // Request the outcomes from the betslip so we can update our widget, also sets up a subscription for future betslip updates
                      widgetModule.requestBetslipOutcomes();
                      // Request the odds format that is set in the sportsbook, this also sets up a subscription for future odds format changes
@@ -492,12 +494,12 @@ export default {
                   });
                };
                // Setup the response handler for the widget api
-               window.KambiWidget.receiveResponse = (dataObject) => {
+               window.KambiWidget.receiveResponse = dataObject => {
                   widgetModule.handleResponse(dataObject);
                };
             }
          } else {
-            console.warn('Kambi widget API not loaded');
+            console.warn("Kambi widget API not loaded");
             reject();
          }
       });
@@ -510,12 +512,12 @@ export default {
     * @returns HTMLElement the tag created
     * @private
     */
-   createStyleTag (id, url) {
-      const tag = document.createElement('link');
-      tag.setAttribute('id', id);
-      tag.setAttribute('rel', 'stylesheet');
-      tag.setAttribute('type', 'text/css');
-      tag.setAttribute('href', url);
+   createStyleTag(id, url) {
+      const tag = document.createElement("link");
+      tag.setAttribute("id", id);
+      tag.setAttribute("rel", "stylesheet");
+      tag.setAttribute("type", "text/css");
+      tag.setAttribute("href", url);
       return tag;
    },
 
@@ -526,16 +528,17 @@ export default {
     * @param offering {String}
     * @private
     */
-   injectOperatorCss (customer, offering) {
-      const url = '//c3-static.kambi.com/sb-mobileclient/widget-api/' +
+   injectOperatorCss(customer, offering) {
+      const url =
+         "//c3-static.kambi.com/sb-mobileclient/widget-api/" +
          constants.widgetCssVersion +
-         '/resources/css/' +
+         "/resources/css/" +
          customer +
-         '/' +
+         "/" +
          offering +
-         '/widgets.css';
-      const tag = this.createStyleTag('operator-css', url);
-      const head = document.getElementsByTagName('head')[0];
+         "/widgets.css";
+      const tag = this.createStyleTag("operator-css", url);
+      const head = document.getElementsByTagName("head")[0];
       // opereator CSS should be the FIRST CSS in the page
       head.insertBefore(tag, head.firstChild);
    },
@@ -544,10 +547,10 @@ export default {
     * Adds classes to to HTML tag
     * @param classes {Array} An array of strings with the classnames to be addes
     */
-   addClasses ( classes ) {
-      const body = document.getElementsByTagName('body')[0];
+   addClasses(classes) {
+      const body = document.getElementsByTagName("body")[0];
 
-      classes.map((cssClass) => {
+      classes.map(cssClass => {
          body.classList.add(cssClass);
       });
    },
@@ -560,21 +563,22 @@ export default {
     * @returns {Promise} when resolved the stylesheet has been successfully added to the page
     * @private
     */
-   injectCustomCss (customCssUrl, customCssUrlFallback) {
-
+   injectCustomCss(customCssUrl, customCssUrlFallback) {
       if (customCssUrl == null) {
          return;
       }
       if (customCssUrlFallback == null) {
-         customCssUrlFallback = '';
+         customCssUrlFallback = "";
       }
 
       customCssUrl = utilModule.replaceConfigParameters(customCssUrl);
-      customCssUrlFallback = utilModule.replaceConfigParameters(customCssUrlFallback);
+      customCssUrlFallback = utilModule.replaceConfigParameters(
+         customCssUrlFallback
+      );
 
-      const appendToHead = (url) => {
-         const tag = this.createStyleTag('custom-css', url);
-         const head = document.getElementsByTagName('head')[0];
+      const appendToHead = url => {
+         const tag = this.createStyleTag("custom-css", url);
+         const head = document.getElementsByTagName("head")[0];
          // custom CSS should be the LAST CSS in the page
          head.insertBefore(tag, null);
       };
@@ -583,15 +587,16 @@ export default {
       // event listener to the <link> tag to see if the file exists or not
       // see http://stackoverflow.com/questions/10537039/how-to-determine-if-css-has-been-loaded
       return this.getFile(customCssUrl)
-         .then(( response ) => {
+         .then(response => {
             appendToHead(customCssUrl);
             return response;
-         }).catch(( error ) => {
-            if (customCssUrlFallback !== '') {
-               console.debug('Error fetching custom css, using fallback');
+         })
+         .catch(error => {
+            if (customCssUrlFallback !== "") {
+               console.debug("Error fetching custom css, using fallback");
                appendToHead(customCssUrlFallback);
             } else {
-               console.debug('Error fetching custom css, no fallback present');
+               console.debug("Error fetching custom css, no fallback present");
                return error;
             }
          });
@@ -602,32 +607,32 @@ export default {
     * @param {String} url
     * @returns {Promise} resolved when the data fetching finishes. If an error happens during fetching the error can be catched in a .catch() function
     */
-   getData (url) {
+   getData(url) {
       return download(url)
          .then(checkStatus)
-         .then((response) => {
-            return JSON.parse(response.body)
+         .then(response => {
+            return JSON.parse(response.body);
          })
-         .catch((error) => {
-            console.debug('Error fetching data');
+         .catch(error => {
+            console.debug("Error fetching data");
             console.trace(error);
             throw error;
          });
    },
 
-      /**
+   /**
     * Makes a AJAX request and parses its response as text
     * @param {String} url
     * @returns {Promise} resolved when the data fetching finishes. If an error happens during fetching the error can be catched in a .catch() function
     */
-   getFile (url) {
+   getFile(url) {
       return download(url)
          .then(checkStatus)
          .then(response => response.body)
-         .catch((error) => {
-            console.debug('Error fetching file');
+         .catch(error => {
+            console.debug("Error fetching file");
             console.trace(error);
             throw error;
          });
-   },
+   }
 };
