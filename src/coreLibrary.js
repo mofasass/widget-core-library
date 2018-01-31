@@ -185,6 +185,8 @@ export default {
    */
   _config: {
     apiBaseUrl: '',
+    apiBaseUrls: {},
+    apiStatisticsBaseUrl: '',
     auth: false,
     channelId: 1,
     currency: 'EUR',

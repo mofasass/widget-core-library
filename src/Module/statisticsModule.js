@@ -9,15 +9,6 @@ import coreLibrary from '../coreLibrary'
 
 export default {
   /**
-   * Configuration
-   * @type {Object}
-   * @property {String} baseApiUrl the baseURL for statistics API requests
-   */
-  config: {
-    baseApiUrl: 'https://api.kambi.com/statistics/api/',
-  },
-
-  /**
    * Requests league table statistics data from api.
    * @param {String} filter a filter string to a competition. Example 'football/england/premier_league'
    * @returns {Promise}
@@ -64,7 +55,7 @@ export default {
       path += '/'
     }
     return coreLibrary.getData(
-      this.config.baseApiUrl +
+      coreLibrary.config.apiStatisticsBaseUrl +
         coreLibrary.config.offering +
         path +
         `?lang=${coreLibrary.config.locale}&market=${coreLibrary.config.market}`
