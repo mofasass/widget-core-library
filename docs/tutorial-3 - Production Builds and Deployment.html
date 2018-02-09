@@ -118,6 +118,7 @@
 </ul>
 <h3>Deployment</h3><p>Copy the files from the <code>/dist/</code> folder to whatever Content Delivery Network (CDN) you use. When configuring the sportsbook the url should point to the <code>index.html</code> inside this <code>/dist/</code> folder in your CDN of choice. Information about configuring the widgets inside the Sportsbook can be found in the <a href="https://kambiservices.atlassian.net/wiki/display/Kambi/Widgets">Kambi Documentation</a></p>
 <p>This <code>/dist/</code> folder contain all files that the widget requires to run and they should all be deployed to your CDN of choice. The core-library is bundled together with your widget's code into this folder.</p>
+<h3>Performance</h3><p>The build process also produces a <code>dist/report.html</code> which contains a visualization of the bundle size split by dependency. You can see what dependencies are consuming the most space in the final bundle and optmize your build by eliminating the biggest offenders.</p>
 </article>
 
 </section>
