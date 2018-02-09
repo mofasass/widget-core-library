@@ -219,3 +219,15 @@ The project has Babel [transpilation](https://babeljs.io/) step process set up d
 Important: Babel only transpiles ES6 syntax, but not ES6 features like [fetch API](https://developer.mozilla.org/en/docs/Web/API/Fetch_API). New ES6 features need to be polyfilled in to support old browsers (for example IE11 does not support fetch API), the `kambi-widget-core-library` polyfills ES6 `Promise`s so those can be safely used no matter the target browser. Other polyfills are NOT included to keep file size small.
 
 Besides ES6 the build process also supports JSX for React development. The only caveat is that JSX syntax is only supported in `.jsx` files. Since the entry point of the project is `src/index.js` that file needs to `import` another `.jsx` file in order to enable JSX. See more about this in section 8 - Using React and widget-components.
+
+### Automated testing
+
+The build process also contains an automated testing setup using [Jest](https://facebook.github.io/jest/). Tests files need to be placed under `projectRoot/test/` folder and should have the extension of `.test.js` or `.test.jsx`
+
+To run the tests in the widget folder run:
+
+`npm run test`
+
+It is possible can send custom command line flags to Jest by using the `--` operator. For example to pass the watch flag to Jest (-w):
+
+`npm run test -- -w`

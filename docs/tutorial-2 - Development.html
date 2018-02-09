@@ -263,6 +263,11 @@ coreLibrary
 <h3>ES6 and JSX</h3><p>The project has Babel <a href="https://babeljs.io/">transpilation</a> step process set up during the build so it supports the full <a href="https://babeljs.io/docs/learn-es2015/">ES6 syntax</a> and JSX for React development in all browsers. These new syntaxes are completely optional and can be ignored completely if so desired.</p>
 <p>Important: Babel only transpiles ES6 syntax, but not ES6 features like <a href="https://developer.mozilla.org/en/docs/Web/API/Fetch_API">fetch API</a>. New ES6 features need to be polyfilled in to support old browsers (for example IE11 does not support fetch API), the <code>kambi-widget-core-library</code> polyfills ES6 <code>Promise</code>s so those can be safely used no matter the target browser. Other polyfills are NOT included to keep file size small.</p>
 <p>Besides ES6 the build process also supports JSX for React development. The only caveat is that JSX syntax is only supported in <code>.jsx</code> files. Since the entry point of the project is <code>src/index.js</code> that file needs to <code>import</code> another <code>.jsx</code> file in order to enable JSX. See more about this in section 8 - Using React and widget-components.</p>
+<h3>Automated testing</h3><p>The build process also contains an automated testing setup using <a href="https://facebook.github.io/jest/">Jest</a>. Tests files need to be placed under <code>projectRoot/test/</code> folder and should have the extension of <code>.test.js</code> or <code>.test.jsx</code></p>
+<p>To run the tests in the widget folder run:</p>
+<p><code>npm run test</code></p>
+<p>It is possible can send custom command line flags to Jest by using the <code>--</code> operator. For example to pass the watch flag to Jest (-w):</p>
+<p><code>npm run test -- -w</code></p>
 </article>
 
 </section>
