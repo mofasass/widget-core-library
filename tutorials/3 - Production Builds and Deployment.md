@@ -1,15 +1,13 @@
 ### Production Build
 
-- Inside the project folder run:
+* Inside the project folder run:
 
- `npm run build`
+`npm run build`
 
- - If the build was successful after a few seconds the widgets code will be bundled inside the `/dist/` folder. All files of this folder should be deployed to whatever hosting solution you use. The sportsbook needs to point to the `index.html` file from this folder.
-
- - Code style errors (linting) do not break the build and can be ignored if so desired.
+* If the build was successful after a few seconds the widgets code will be bundled inside the `/dist/` folder. All files of this folder should be deployed to whatever hosting solution you use. The sportsbook needs to point to the `index.html` file from this folder.
 
 ### Deployment
 
- Copy the files from the `/dist/` folder to whatever Content Delivery Network (CDN) you use. When configuring the sportsbook the url should point to the `index.html` inside this `/dist/` folder in your CDN of choice. Information about configuring the widgets inside the Sportsbook can be found in the [Kambi Documentation](https://kambiservices.atlassian.net/wiki/display/Kambi/Widgets)
+Copy the files from the `/dist/` folder to whatever Content Delivery Network (CDN) you use. When configuring the sportsbook the url should point to the `index.html` inside this `/dist/` folder in your CDN of choice. Information about configuring the widgets inside the Sportsbook can be found in the [Kambi Documentation](https://kambiservices.atlassian.net/wiki/display/Kambi/Widgets)
 
- This `/dist/` folder contain all files that the widget requires to run and they should all be deployed to your CDN of choice. The core-library is bundled together with your widget's code into this folder.
+This `/dist/` folder contain all files that the widget requires to run and they should all be deployed to your CDN of choice. The core-library is bundled together with your widget's code into this folder.

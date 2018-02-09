@@ -110,7 +110,7 @@
 
 <article>
     <p>Styling should preferably be done by using Kambi classes whenever it is possible possible to keep the style consistent with the rest of the client.</p>
-<p>Kambi client will load a <code>widgets.css</code> file which will have most of the classes needed to style a widget, matching the operator theme.</p>
+<p>Kambi client will load a <code>widgets.css</code> file automatically which will have most of the classes needed to style a widget, matching the operator's theme. These classes have different values depending on the operator or brand, so to make a widget that adapts itself to the operator style these classes should be used exclusively. If the widget is supposed to run in just one operator these classes can be ignored.</p>
 <blockquote>
 <p>Note: Kambi uses <a href="http://getbem.com/">BEM</a> CSS naming convention</p>
 </blockquote>
@@ -125,8 +125,8 @@
 <li><code>KambiWidget-card-background-color--clickable</code> color for when the user clicks (or taps) on the element</li>
 </ul>
 </li>
-<li><code>KambiWidget-card-text-color</code>  Default font color for text inside cards</li>
-<li><code>KambiWidget-card-support-text-color</code>  Alternative (secondary) font color for text inside cards</li>
+<li><code>KambiWidget-card-text-color</code> Default font color for text inside cards</li>
+<li><code>KambiWidget-card-support-text-color</code> Alternative (secondary) font color for text inside cards</li>
 <li><code>KambiWidget-header</code> Default styling (background color, text color and font) used for headers</li>
 </ul>
 <blockquote>

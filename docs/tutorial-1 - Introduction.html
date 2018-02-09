@@ -110,53 +110,57 @@
 
 <article>
     <p>Widgets are self-contained content that can be added to various places in the Kambi client. It provides the possibility for the operator to differentiate the client, to add unique features or content, and to tailor the client to a group of players, or even to individuals.</p>
-<p>The widget is an html-page loaded inside an iframe. By configuration using JavaScript the operator controls what widgets to load, where to place them and when to display them.</p>
+<p>The widget is an html-page loaded inside an iframe inside an operator's sportsbook. Using JavaScript the operator can control what widgets to load in the sportsbook and where/when to display them.</p>
 <h3>Pre-requisites</h3><ul>
 <li><p>Install <a href="https://nodejs.org/en/">Nodejs latest version</a></p>
 </li>
 <li><p>Run:</p>
-<p><code>npm install -g kambi-widget-build-tools</code></p>
-</li>
-<li><p>By running this command you will now have a new command line tool called <code>kambi-widgets-cli</code> which is used for creating new projects</p>
 </li>
 </ul>
+<p><code>npm install -g kambi-widget-build-tools</code></p>
+<ul>
+<li>By running this command you will now have a new command line tool called <code>kambi-widgets-cli</code> which is used for creating new projects</li>
+</ul>
 <p>Notes:</p>
-<p>By installing Nodejs you should have the <code>npm</code> command line tool installed. Make sure that the version of npm you have is <code>3.0.0</code> or higher by running:</p>
+<p>When installing Nodejs you also install the <code>npm</code> command line tool. Make sure that the version of npm you have is <code>3.0.0</code> or higher by running:</p>
 <p><code>npm --version</code></p>
 <p>Version 3.0.0 of npm is included in Nodejs versions 5.0.0 or higher.</p>
 <h3>Creating a New Project</h3><ul>
-<li><p>Run:</p>
+<li>Run again to update the kambi-widgets-cli to the latest version (this is necessary only when creating a new project):</li>
+</ul>
+<p><code>npm install -g kambi-widget-build-tools</code></p>
+<ul>
+<li>Run:</li>
+</ul>
 <p><code>kambi-widgets-cli init project-name</code></p>
-</li>
-<li><p>Or if you are planning to use React run:</p>
+<ul>
+<li>Or if you are planning to use React run:</li>
+</ul>
 <p><code>kambi-widgets-cli init-react project-name</code></p>
 <p>This process can take a few minutes to download all the dependencies.</p>
 <p>A new project will be created inside the <code>project-name</code> folder. This project has a very simple example on how to build a widget.</p>
-</li>
-</ul>
 <h3>Setup an Existing Project</h3><ul>
 <li><p>Clone the project repository</p>
 </li>
 <li><p>Inside the project folder run:</p>
-<p><code>npm install</code></p>
-<p>This process can take a few minutes to download all the dependencies.</p>
 </li>
 </ul>
+<p><code>npm install</code></p>
+<p>This process can take a few minutes to download all the dependencies.</p>
 <h3>Running the Project in Development Mode</h3><ul>
-<li><p>Inside the project folder run:</p>
+<li>Inside the project folder run:</li>
+</ul>
 <p><code>npm run start</code></p>
-</li>
-<li><p>If the build was successful the widget will be running under <code>https://localhost:8080</code> after a few seconds. The server that hosts the widgets code runs under port 8080 and under the HTTPS protocol with a self-signed certificate, which means you might get an HTTPS certificate error unless you trust the certificate.</p>
-</li>
+<ul>
+<li>If the build was successful the widget will be running under <code>https://localhost:8080</code> or <code>http://localhost:8080</code> depending on your <code>package.json</code> <code>useHttps</code> value (the default is true).</li>
 </ul>
 <p>See the section 2 - Development for more information.</p>
 <h3>Building a Project for Production</h3><ul>
-<li><p>Inside the project folder run:</p>
+<li>Inside the project folder run:</li>
+</ul>
 <p><code>npm run build</code></p>
 <ul>
 <li>If the build was successful after a few seconds the widgets code will be bundled inside the <code>/dist/</code> folder. All files of this folder should be deployed to whatever hosting solution you use. The sportsbook needs to point to the <code>index.html</code> file from this folder.</li>
-</ul>
-</li>
 </ul>
 <p>See section 3 - Production Builds and Deployment for more information</p>
 </article>

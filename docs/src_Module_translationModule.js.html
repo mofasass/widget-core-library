@@ -129,7 +129,11 @@ export default {
    * @returns {String} the localized string
    */
   getTranslation: function(key, ...args) {
-    var str = window.kambiI18n[coreLibrary.config.locale][key]
+    const locale = coreLibrary.config.locale
+    if (window.kambiI18n == null || window.kambiI18n == null) {
+      return key
+    }
+    var str = window.kambiI18n[locale][key]
     if (str == null) {
       return key
     }
