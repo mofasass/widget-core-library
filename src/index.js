@@ -8,6 +8,8 @@ import utilModule from './Module/utilModule'
 import widgetModule from './Module/widgetModule'
 import eventsModule from './Module/EventsModule/index'
 
+console.log('Hello World')
+
 if (window != null) {
   window.WidgetCoreLibrary = {
     coreLibrary,
