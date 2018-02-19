@@ -21,14 +21,44 @@ export default {
    */
   getTranslation: function(key, ...args) {
     const locale = coreLibrary.config.locale
-    if (window.kambiI18n == null || window.kambiI18n == null) {
+    const kambiI18n = window.kambiI18n
+    if (kambiI18n == null || locale == null || locale.length != 5) {
       return key
     }
-    var str = window.kambiI18n[locale][key]
+    let strings = null
+    if (kambiI18n[locale] == null) {
+      // falling back to another locale, trying one that matches the first language name, then falling back to en_GB
+      const language = locale.split('_')[0]
+      if (language.length !== 2) {
+        return key
+      }
+      if (language === 'en' && kambiI18n.en_GB != null) {
+        strings = kambiI18n.en_GB
+      } else {
+        const locales = Object.keys(kambiI18n).sort()
+        for (let i = 0; i < locales.length; i++) {
+          if (locales[i].split('_')[0] === language) {
+            strings = kambiI18n[locales[i]]
+            break
+          }
+        }
+      }
+    } else {
+      strings = kambiI18n[locale]
+    }
+
+    if (strings == null) {
+      if (kambiI18n.en_GB != null) {
+        strings = kambiI18n.en_GB
+      } else {
+        return key
+      }
+    }
+    var str = strings[key]
     if (str == null) {
       return key
     }
-    for (var i = 0; i < args.length; i++) {
+    for (let i = 0; i < args.length; i++) {
       var replacement = args[i] || ''
       str = str.replace('{' + i + '}', replacement)
     }
