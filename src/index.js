@@ -1,14 +1,14 @@
 import './polyfills'
 import './widget-api'
 import coreLibrary from './coreLibrary'
-import offeringModule from './Module/offeringModule'
 import statisticsModule from './Module/statisticsModule'
 import translationModule from './Module/translationModule'
 import utilModule from './Module/utilModule'
 import widgetModule from './Module/widgetModule'
 import eventsModule from './Module/EventsModule/index'
+import offeringModule from 'kambi-widget-offering-module'
 
-console.log('Hello World')
+console.log(offeringModule)
 
 if (window != null) {
   window.WidgetCoreLibrary = {
