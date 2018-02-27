@@ -147,11 +147,6 @@ export default {
       case 'Setup':
         eventsModule.publish('Setup response', response.data)
         break
-      default:
-        // Unhandled response
-        console.info('Unhandled response type: ' + response.type)
-        console.info(response)
-        break
     }
   },
 

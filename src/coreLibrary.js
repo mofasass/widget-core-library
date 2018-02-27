@@ -3,6 +3,7 @@ import statisticsModule from './Module/statisticsModule'
 import translationModule from './Module/translationModule'
 import utilModule from './Module/utilModule'
 import widgetModule from './Module/widgetModule'
+import eventUpdatesModule from './Module/eventUpdatesModule'
 import constants from './constants'
 
 /**
@@ -483,6 +484,7 @@ export default {
         } else {
           window.KambiWidget.apiReady = api => {
             widgetModule.api = api
+            eventUpdatesModule.api = api
 
             // Request the setup info from the widget api
             widgetModule.requestSetup(setupData => {
@@ -498,6 +500,7 @@ export default {
           // Setup the response handler for the widget api
           window.KambiWidget.receiveResponse = dataObject => {
             widgetModule.handleResponse(dataObject)
+            eventUpdatesModule.handleResponse(dataObject)
           }
         }
       } else {
