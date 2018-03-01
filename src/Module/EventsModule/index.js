@@ -1,14 +1,14 @@
 import liveEventsAdapter from './liveEventsAdapter'
 
-/**
+/*
  *
  * @type {object.<string, function[]>}
  * @memberof module:eventsModule
  */
 const handlers = {}
 
-/**
- * Object in which you can add event listeners for Kambi Widget API events
+/*
+ * Object in which you can add event listeners for Kambi Widget API events. This module has been deprecated, use eventUpdatesModule instead
  * Valid events listeners:
  *
  * 'WIDGET:HEIGHT': Widget height changed
@@ -47,10 +47,11 @@ const handlers = {}
  *          ...
  *       });
  *
+ * @deprecated Use eventUpdatesModule instead
  @module eventsModule
  */
 const EventsModule = {
-  /**
+  /*
    * Live services polling interval (in milliseconds)
    */
   set liveEventPollingInterval(value) {
@@ -61,7 +62,7 @@ const EventsModule = {
     liveEventsAdapter.pollingInterval = value
   },
 
-  /**
+  /*
    * Subscribes a handler to given event.
    * @param {string} event Event name
    * @param {function} handler Handler function
@@ -77,7 +78,7 @@ const EventsModule = {
     }
   },
 
-  /**
+  /*
    * Unsubscribes handler/all handlers from given event.
    * @param {string} event Event name
    * @param {function?} handler Optional handler function pointer
@@ -107,7 +108,7 @@ const EventsModule = {
     }
   },
 
-  /**
+  /*
    * Emits an event with given arguments.
    * @param {string} event Event name
    * @param {...*} args Arguments for handlers

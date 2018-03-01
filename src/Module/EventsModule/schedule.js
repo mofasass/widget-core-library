@@ -1,17 +1,17 @@
 import utilModule from '../utilModule'
 
-/**
+/*
  * Utility for running tasks periodically with equality check.
  * @memberof module:eventsModule
  */
 const Schedule = {
-  /**
+  /*
    * Currently running tasks map
    * @type {object.<string, {interval: number, lastResult: object|null}>}
    */
   tasks: {},
 
-  /**
+  /*
    * Runs given task function periodically.
    * @param {string} key Unique task key
    * @param {function():Promise} taskFunc Task function
@@ -54,7 +54,7 @@ const Schedule = {
     }
   },
 
-  /**
+  /*
    * Stops given task.
    * @param {string} key Task key
    */

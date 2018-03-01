@@ -1,14 +1,14 @@
 import offeringModule from '../offeringModule'
 import schedule from './schedule'
 
-/**
+/*
  * Default interval for polling live events
  * @type {number}
  * @memberof module:eventsModule
  */
 const DEFAULT_POLLING_INTERVAL = 30000
 
-/**
+/*
  * Starts polling given live event.
  * @param {number} eventId Event identifier
  * @param {function(string, ...args)} publishFunc Used for publishing event updates
@@ -30,7 +30,7 @@ const pollLiveEvent = function(eventId, publishFunc) {
   )
 }
 
-/**
+/*
  * Starts pooling given live event statistics.
  * @param {number} eventId Event identifier
  * @param {function(string, ...args)} publishFunc Used for publishing event statistics updates
@@ -52,7 +52,7 @@ const pollLiveEventData = function(eventId, publishFunc) {
   )
 }
 
-/**
+/*
  * Starts polling live events list.
  * @param {function(string, ...args)} publishFunc Used for publishing live event list updates
  * @memberof module:eventsModule
@@ -71,7 +71,7 @@ const pollLiveEvents = function(publishFunc) {
   )
 }
 
-/**
+/*
  * Starts polling when event becomes live event.
  * @param {number} eventId Event identifier
  * @param {function(string, ...args)} publishFunc Used for publishing live event start
@@ -97,13 +97,13 @@ const pollLiveEventStart = function(eventId, publishFunc) {
 }
 
 export default {
-  /**
+  /*
    * Current polling interval
    * @type number
    */
   pollingInterval: DEFAULT_POLLING_INTERVAL,
 
-  /**
+  /*
    * Starts internal polling services on given event (once it's supported).
    * @param {string} event Event name
    * @param {function(string, ...args)} publishFunc Used for publishing events
@@ -122,7 +122,7 @@ export default {
     }
   },
 
-  /**
+  /*
    * Stops polling on given event (once it's supported).
    * @param {string} event Event name
    */

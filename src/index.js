@@ -7,7 +7,7 @@ import translationModule from './Module/translationModule'
 import utilModule from './Module/utilModule'
 import widgetModule from './Module/widgetModule'
 import eventsModule from './Module/EventsModule/index'
-import eventUpdatesModule from './Module/eventUpdatesModule'
+import updatesModule from './Module/updatesModule'
 
 if (window != null) {
   window.WidgetCoreLibrary = {
@@ -18,7 +18,7 @@ if (window != null) {
     utilModule,
     widgetModule,
     eventsModule,
-    eventUpdatesModule,
+    updatesModule,
   }
 }
 
@@ -30,5 +30,5 @@ export {
   utilModule,
   widgetModule,
   eventsModule,
-  eventUpdatesModule,
+  updatesModule,
 }
