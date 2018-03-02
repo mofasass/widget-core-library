@@ -49,7 +49,7 @@
 			<li class="dropdown">
 				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="module-coreLibrary.html">coreLibrary</a></li><li><a href="module-eventsModule.html">eventsModule</a></li><li><a href="module-offeringModule.html">offeringModule</a></li><li><a href="module-statisticsModule.html">statisticsModule</a></li><li><a href="module-translationModule.html">translationModule</a></li><li><a href="module-utilModule.html">utilModule</a></li><li><a href="module-widgetModule.html">widgetModule</a></li>
+					<li><a href="module-coreLibrary.html">coreLibrary</a></li><li><a href="module-offeringModule.html">offeringModule</a></li><li><a href="module-statisticsModule.html">statisticsModule</a></li><li><a href="module-translationModule.html">translationModule</a></li><li><a href="module-updatesModule.html">updatesModule</a></li><li><a href="module-utilModule.html">utilModule</a></li><li><a href="module-widgetModule.html">widgetModule</a></li>
 				</ul>
 			</li>
 			
@@ -109,18 +109,18 @@
         <pre
             class="sunlight-highlight-javascript linenums">import utilModule from '../utilModule'
 
-/**
+/*
  * Utility for running tasks periodically with equality check.
  * @memberof module:eventsModule
  */
 const Schedule = {
-  /**
+  /*
    * Currently running tasks map
    * @type {object.&lt;string, {interval: number, lastResult: object|null}>}
    */
   tasks: {},
 
-  /**
+  /*
    * Runs given task function periodically.
    * @param {string} key Unique task key
    * @param {function():Promise} taskFunc Task function
@@ -163,7 +163,7 @@ const Schedule = {
     }
   },
 
-  /**
+  /*
    * Stops given task.
    * @param {string} key Task key
    */

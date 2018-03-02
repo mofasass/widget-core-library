@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+
+
+
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Kambi Widgets Source: src/Module/updatesModule.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+
+<style>
+    img {
+    	max-width: 100%;
+    }
+</style>
+
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Kambi Widgets</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="widget-components.html">widget-components</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-coreLibrary.html">coreLibrary</a></li><li><a href="module-offeringModule.html">offeringModule</a></li><li><a href="module-statisticsModule.html">statisticsModule</a></li><li><a href="module-translationModule.html">translationModule</a></li><li><a href="module-updatesModule.html">updatesModule</a></li><li><a href="module-utilModule.html">utilModule</a></li><li><a href="module-widgetModule.html">widgetModule</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="widget-components.DropdownButton.html">widget-components.DropdownButton</a></li><li><a href="widget-components.FixedList.html">widget-components.FixedList</a></li><li><a href="widget-components.Header.html">widget-components.Header</a></li><li><a href="widget-components.OutcomeButton.html">widget-components.OutcomeButton</a></li><li><a href="widget-components.OutcomeButtonUI.html">widget-components.OutcomeButtonUI</a></li><li><a href="widget-components.ScrolledList.html">widget-components.ScrolledList</a></li><li><a href="widget-components.TabPagination.html">widget-components.TabPagination</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="tutorials.list.html" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="tutorial-1 - Introduction.html">1 - Introduction</a></li><li><a href="tutorial-2 - Development.html">2 - Development</a></li><li><a href="tutorial-3 - Production Builds and Deployment.html">3 - Production Builds and Deployment</a></li><li><a href="tutorial-4 - Fetching Data.html">4 - Fetching Data</a></li><li><a href="tutorial-5 - Sportsbook Interaction.html">5 - Sportsbook Interaction</a></li><li><a href="tutorial-6 - Internationalization.html">6 - Internationalization</a></li><li><a href="tutorial-7 - Styling.html">7 - Styling</a></li><li><a href="tutorial-8 - Using React and widget-components.html">8 - Using React and widget-components</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="global.html#FixedList_RenderItemContainerArgs">FixedList_RenderItemContainerArgs</a></li><li><a href="global.html#ScrolledList_ALIGN_ITEMS">ScrolledList_ALIGN_ITEMS</a></li><li><a href="global.html#ScrolledList_RenderButtonArgs">ScrolledList_RenderButtonArgs</a></li><li><a href="global.html#ScrolledList_RenderItemContainerArgs">ScrolledList_RenderItemContainerArgs</a></li><li><a href="global.html#ScrolledList_SCROLL_TO_ITEM_MODE">ScrolledList_SCROLL_TO_ITEM_MODE</a></li><li><a href="global.html#TabPagination_RenderTabListArgs">TabPagination_RenderTabListArgs</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			
+
+		<h1 class="page-title">Source: src/Module/updatesModule.js</h1>
+    
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">const customTypeSeparator = '-'
+
+/**
+ * Module with methods to set up subscription for different kinds of updates (betoffer data, odds format change and so on)
+ * @module updatesModule
+ */
+const updatesModule = {
+  api: {
+    request() {},
+    EVENT_INFO: 'EventInfo',
+    EVENT_INFO_UNSUBSCRIBE: 'EventInfoUnSubscribe',
+    EVENT_INFO_TYPES: {
+      BASIC: 'BASIC',
+      SCORE: 'SCORE',
+      BET_OFFERS: 'BET_OFFERS',
+    },
+    EVENT_INFO_CONTEXT: {
+      LIVE: 'LIVE',
+      PRE_MATCH: 'PRE-MATCH',
+    },
+    BETSLIP_OUTCOMES: 'BetslipOutcomes',
+  },
+
+  /* The final callbacks object structure should look like this:
+{
+  BetslipOutcomes: [cb1, cb2, cb3, ...]
+  ODDS_FORMAT: [cb1, cb2, cb3, ...]
+  BASIC: {
+    [eventId]: [cb1, cb2, cb3, ...],
+    ...
+  },
+  SCORE: {
+    [eventId]: [cb1, cb2, cb3, ...],
+    ...
+  },
+  BET_OFFERS-LIVE-ALL: {
+    [eventId]: [cb1, cb2, cb3, ...]
+    }
+  },
+  BET_OFFERS-PRE_MATCH-ALL: {
+    [eventId]: [cb1, cb2, cb3, ...]
+  },
+  BET_OFFERS-LIVE-MAIN: {
+    [eventId]: [cb1, cb2, cb3, ...]
+    }
+  },
+  BET_OFFERS-PRE_MATCH-MAIN: {
+    [eventId]: [cb1, cb2, cb3, ...]
+  },
+}
+*/
+
+  callbacks: {},
+
+  _getCallbackType(type, context, mainOnly) {
+    if (type === this.api.EVENT_INFO_TYPES.BET_OFFERS) {
+      return (
+        type +
+        customTypeSeparator +
+        context +
+        customTypeSeparator +
+        (mainOnly ? 'MAIN' : 'ALL')
+      )
+    } else {
+      return type
+    }
+  },
+
+  /* 
+   * Handles responses from the Widget API and calls the correct callbacks
+   */
+  handleResponse(response) {
+    const data = response.data
+    if (response.type === this.api.BETSLIP_OUTCOMES) {
+      if (this.callbacks[this.api.BETSLIP_OUTCOMES] == null) {
+        this.callbacks[this.api.BETSLIP_OUTCOMES] = []
+      }
+      this.callbacks[this.api.BETSLIP_OUTCOMES].forEach(cb => {
+        cb(data)
+      })
+      return
+    } else if (response.type === this.api.CLIENT_ODDS_FORMAT) {
+      if (this.callbacks[this.api.CLIENT_ODDS_FORMAT] == null) {
+        this.callbacks[this.api.CLIENT_ODDS_FORMAT] = []
+      }
+      this.callbacks[this.api.CLIENT_ODDS_FORMAT].forEach(cb => {
+        cb(data)
+      })
+      return
+    } else if (response.type === this.api.EVENT_INFO) {
+      let cbs = this.callbacks[
+        this._getCallbackType(data.info, data.context, data.mainOnly)
+      ]
+      if (cbs != null &amp;&amp; cbs[data.id] != null) {
+        cbs[data.id].forEach(cb => {
+          cb(data)
+        })
+      }
+    }
+  },
+
+  /*
+   * Adds a callback to the callbacks object
+   */
+  _addCallback(type, eventId, cb, context, mainOnly = false) {
+    const cbs = updatesModule.callbacks
+    if (cb == null || eventId == null || type == null) {
+      console.error('Missing argument for subscription')
+      return
+    }
+    if (
+      context != null &amp;&amp;
+      context !== this.api.EVENT_INFO_CONTEXT.LIVE &amp;&amp;
+      context !== this.api.EVENT_INFO_CONTEXT.PRE_MATCH
+    ) {
+      console.error('eventUpdatesModule invalid context value')
+      return
+    }
+    type = this._getCallbackType(type, context, mainOnly)
+    if (cbs[type] == null) {
+      cbs[type] = {}
+    }
+    if (cbs[type][eventId] == null) {
+      cbs[type][eventId] = []
+    }
+    cbs[type][eventId].push(cb)
+  },
+
+  subscribe: {
+    get api() {
+      return updatesModule.api
+    },
+
+    /**
+     * Subscription that is triggered when there is any change to the betslip
+     * @param {Function} callback Callback to be called when receiving new data
+     */
+    betslipOutcomes(callback) {
+      const cbs = updatesModule.callbacks
+      if (cbs[this.api.BETSLIP_OUTCOMES] == null) {
+        cbs[this.api.BETSLIP_OUTCOMES] = []
+      }
+      cbs[this.api.BETSLIP_OUTCOMES].push(callback)
+      this.api.request(this.api.BETSLIP_OUTCOMES)
+    },
+
+    /**
+     * Subscription that is triggered when the odds format (decimal, fractional, american) changes
+     * @param {Function} callback Callback to be called when receiving new data
+     */
+    oddsFormat(callback) {
+      const cbs = updatesModule.callbacks
+      if (cbs[this.api.CLIENT_ODDS_FORMAT] == null) {
+        cbs[this.api.CLIENT_ODDS_FORMAT] = []
+      }
+      cbs[this.api.CLIENT_ODDS_FORMAT].push(callback)
+      this.api.request(this.api.CLIENT_ODDS_FORMAT)
+    },
+
+    /**
+     * Subscription that is triggered when the basic information about an event changes
+     * @param {Number} eventId the id of the event to listen for updates
+     * @param {Function} callback Callback to be called when receiving new data
+     */
+    basicInfo(eventId, callback) {
+      const info = this.api.EVENT_INFO_TYPES.BASIC
+      this.api.request(this.api.EVENT_INFO, {
+        id: eventId,
+        info,
+      })
+      updatesModule._addCallback(info, eventId, callback)
+    },
+
+    /**
+     * Subscription that is triggered when the scoreboard information about an event changes
+     * @param {Number} eventId the id of the event to listen for updates
+     * @param {Function} callback Callback to be called when receiving new data
+     */
+    score(eventId, callback) {
+      const info = this.api.EVENT_INFO_TYPES.SCORE
+      this.api.request(this.api.EVENT_INFO, {
+        id: eventId,
+        info,
+      })
+      updatesModule._addCallback(info, eventId, callback)
+    },
+
+    /**
+     * Subscription that is triggered when the any of the prematch betoffers of an event change. This can be triggered several times per second
+     * @param {Number} eventId the id of the event to listen for updates
+     * @param {Function} callback Callback to be called when receiving new data
+     */
+    allPreMatchBetoffers(eventId, callback) {
+      const info = this.api.EVENT_INFO_TYPES.BET_OFFERS
+      const context = this.api.EVENT_INFO_CONTEXT.PRE_MATCH
+      this.api.request(this.api.EVENT_INFO, {
+        id: eventId,
+        info,
+        context,
+      })
+      updatesModule._addCallback(info, eventId, callback, context, false)
+    },
+
+    /**
+     * Subscription that is triggered when the any of the prematch live of an event change. This can be triggered several times per second
+     * @param {Number} eventId the id of the event to listen for updates
+     * @param {Function} callback Callback to be called when receiving new data
+     */
+    allLiveBetoffers(eventId, callback) {
+      const info = this.api.EVENT_INFO_TYPES.BET_OFFERS
+      const context = this.api.EVENT_INFO_CONTEXT.LIVE
+      this.api.request(this.api.EVENT_INFO, {
+        id: eventId,
+        info,
+        context,
+      })
+      updatesModule._addCallback(info, eventId, callback, context, false)
+    },
+
+    /**
+     * Subscription that is triggered when the any of the main (betoffer.main === true) prematch betoffers of an event change. This can be triggered several times per second
+     * @param {Number} eventId the id of the event to listen for updates
+     * @param {Function} callback Callback to be called when receiving new data
+     */
+    mainPreMatchBetoffers(eventId, callback) {
+      const info = this.api.EVENT_INFO_TYPES.BET_OFFERS
+      const context = this.api.EVENT_INFO_CONTEXT.PRE_MATCH
+      this.api.request(this.api.EVENT_INFO, {
+        id: eventId,
+        info,
+        context,
+        mainOnly: true,
+      })
+      updatesModule._addCallback(info, eventId, callback, context, true)
+    },
+
+    /**
+     * Subscription that is triggered when the any of the main (betoffer.main === true) live betoffers of an event change. This can be triggered several times per second
+     * @param {Number} eventId the id of the event to listen for updates
+     * @param {Function} callback Callback to be called when receiving new data
+     */
+    mainLiveBetoffers(eventId, callback) {
+      const info = this.api.EVENT_INFO_TYPES.BET_OFFERS
+      const context = this.api.EVENT_INFO_CONTEXT.LIVE
+      this.api.request(this.api.EVENT_INFO, {
+        id: eventId,
+        info,
+        context,
+        mainOnly: true,
+      })
+      updatesModule._addCallback(info, eventId, callback, context, true)
+    },
+  },
+
+  /**
+   * Unsubscribes the callback passed. The function will be unsubscribed from all its subscriptions in case the same callback was passed to more than one subscribe call
+   * @param {Function} callback callback to be unsubscribed
+   * @returns {Boolean} returns true if the function was unsubscribed from at least one subscription
+   */
+  unsubscribe(callback) {
+    let unsubscribed = false
+    const cbs = updatesModule.callbacks
+    Object.keys(cbs).forEach(type => {
+      if (Array.isArray(cbs[type])) {
+        const idx = cbs[type].indexOf(callback)
+        if (idx !== -1) {
+          cbs[type].splice(idx, 1)
+          unsubscribed = true
+        }
+      } else {
+        Object.keys(cbs[type]).forEach(eventId => {
+          const idx = cbs[type][eventId].indexOf(callback)
+          if (idx !== -1) {
+            cbs[type][eventId].splice(idx, 1)
+            unsubscribed = true
+          }
+          if (cbs[type][eventId].length === 0) {
+            const [realType, context, main] = type.split(customTypeSeparator)
+            const mainOnly = main === 'MAIN'
+            const unsubObj = {
+              id: eventId,
+              info: type,
+            }
+            if (context != null) {
+              unsubObj.context = context
+            }
+            if (mainOnly) {
+              unsubObj.mainOnly = true
+            }
+            this.api.request(this.api.EVENT_INFO_UNSUBSCRIBE, unsubObj)
+            delete cbs[type][eventId]
+          }
+        })
+      }
+    })
+    return unsubscribed
+  },
+}
+
+export default updatesModule
+
+//  code to test this module
+
+// coreLibrary.init({}).then(() => {
+//   widgetModule.setWidgetHeight(300)
+//   const eventId = 1004530932
+//   eventUpdatesModule.subscribe.mainLiveBetoffers(eventId, data => {
+//     console.log('mainLiveBetoffers')
+//     console.log(data)
+//   })
+//   eventUpdatesModule.subscribe.allLiveBetoffers(eventId, data => {
+//     console.log('allLiveBetoffers')
+//     console.log(data)
+//   })
+//   eventUpdatesModule.subscribe.mainPreMatchBetoffers(eventId, data => {
+//     console.log('mainPreMatchBetoffers')
+//     console.log(data)
+//   })
+//   eventUpdatesModule.subscribe.allPreMatchBetoffers(eventId, data => {
+//     console.log('allPreMatchBetoffers')
+//     console.log(data)
+//   })
+//   eventUpdatesModule.subscribe.score(eventId, data => {
+//     console.log('score')
+//     console.log(data)
+//   })
+//   eventUpdatesModule.subscribe.basicInfo(eventId, data => {
+//     console.log('basicInfo')
+//     console.log(data)
+//   })
+//   offeringModule
+//     .getLiveEvent(eventId)
+//     .catch(() => {
+//       return offeringModule.getEvent(eventId)
+//     })
+//     .then(data => {
+//       let ev = data.event
+//       let bo = data.betOffers.find(bo => bo.main)
+//       ReactDOM.render(
+//         &lt;div>
+//           &lt;OutcomeButton outcome={bo.outcomes[0]} event={ev} />
+//           {/* &lt;OutcomeButton outcome={bo.outcomes[1]} event={ev} /> */}
+//           &lt;/div>,
+//           document.getElementById('root')
+//         )
+//       })
+//   })
+</pre>
+    </article>
+</section>
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>

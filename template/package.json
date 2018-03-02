@@ -1,0 +1,15 @@
+{
+  "name": "${projectName}",
+  "description": "${projectDescription}",
+  "version": "${projectVersion}",
+  "main": "dist/index.html",
+  "scripts": {
+    "clean": "kambi-widgets-cli clean",
+    "start": "kambi-widgets-cli start",
+    "build": "kambi-widgets-cli build",
+    "test": "kambi-widgets-cli test"
+  },
+  "dependencies": {
+    "kambi-widget-core-library": ""
+  }
+}

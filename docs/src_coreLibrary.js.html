@@ -49,7 +49,7 @@
 			<li class="dropdown">
 				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="module-coreLibrary.html">coreLibrary</a></li><li><a href="module-eventsModule.html">eventsModule</a></li><li><a href="module-offeringModule.html">offeringModule</a></li><li><a href="module-statisticsModule.html">statisticsModule</a></li><li><a href="module-translationModule.html">translationModule</a></li><li><a href="module-utilModule.html">utilModule</a></li><li><a href="module-widgetModule.html">widgetModule</a></li>
+					<li><a href="module-coreLibrary.html">coreLibrary</a></li><li><a href="module-offeringModule.html">offeringModule</a></li><li><a href="module-statisticsModule.html">statisticsModule</a></li><li><a href="module-translationModule.html">translationModule</a></li><li><a href="module-updatesModule.html">updatesModule</a></li><li><a href="module-utilModule.html">utilModule</a></li><li><a href="module-widgetModule.html">widgetModule</a></li>
 				</ul>
 			</li>
 			
@@ -112,6 +112,7 @@ import statisticsModule from './Module/statisticsModule'
 import translationModule from './Module/translationModule'
 import utilModule from './Module/utilModule'
 import widgetModule from './Module/widgetModule'
+import updatesModule from './Module/updatesModule'
 import constants from './constants'
 
 /**
@@ -592,6 +593,7 @@ export default {
         } else {
           window.KambiWidget.apiReady = api => {
             widgetModule.api = api
+            updatesModule.api = api
 
             // Request the setup info from the widget api
             widgetModule.requestSetup(setupData => {
@@ -607,6 +609,7 @@ export default {
           // Setup the response handler for the widget api
           window.KambiWidget.receiveResponse = dataObject => {
             widgetModule.handleResponse(dataObject)
+            updatesModule.handleResponse(dataObject)
           }
         }
       } else {
