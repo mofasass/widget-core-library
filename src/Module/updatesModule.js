@@ -144,6 +144,7 @@ const updatesModule = {
       this.api.request(this.api.BETSLIP_OUTCOMES)
     },
 
+    oddsFormatSubscribedTo: false,
     /**
      * Subscription that is triggered when the odds format (decimal, fractional, american) changes
      * @param {Function} callback Callback to be called when receiving new data
@@ -154,7 +155,11 @@ const updatesModule = {
         cbs[this.api.CLIENT_ODDS_FORMAT] = []
       }
       cbs[this.api.CLIENT_ODDS_FORMAT].push(callback)
-      this.api.request(this.api.CLIENT_ODDS_FORMAT)
+      // we can only subscribe to odds format once as each subscription triggers one more call to handleResponse
+      if (this.oddsFormatSubscribedTo === false) {
+        this.api.request(this.api.CLIENT_ODDS_FORMAT)
+      }
+      this.oddsFormatSubscribedTo = true
     },
 
     /**
