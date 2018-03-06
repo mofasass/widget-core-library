@@ -28,6 +28,10 @@ const test = ({ options }) => {
     transform: {
       '\\.jsx?$': path.resolve(coreLibraryPath, './jest/transform.js'),
     },
+    setupTestFrameworkScriptFile: path.resolve(
+      coreLibraryPath,
+      './jest/setupTests.js'
+    ),
     transformIgnorePatterns: [
       '/node_modules/(?!(kambi-widget-core-library|kambi-widget-components)/)', // transforms core-library and widget-components as well but ignores the rest of /node_modules/
     ],
