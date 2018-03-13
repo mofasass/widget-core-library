@@ -7,7 +7,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Kambi Widgets Source: node_modules/kambi-widget-components/src/components.js</title>
+	<title>Kambi Widgets Class: BlendedBackground</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -97,70 +97,282 @@
 <div class="row">
 
 	
-	<div class="col-md-12">
+	<div class="col-md-8">
 	
 		<div id="main">
 			
 
-		<h1 class="page-title">Source: node_modules/kambi-widget-components/src/components.js</h1>
-    
+	<h1 class="page-title">Class: BlendedBackground</h1>
 <section>
-    <article>
-        <pre
-            class="sunlight-highlight-javascript linenums">/**
- * Reusable React Components
- * It is not necessary to make the whole widget in React in order to use these components, they can be mixed with non React code as necessary.
- * @example
-// this example shows how to use the Header component without using JSX
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Header } 'kambi-widget-components';
+<header>
+    
+        <h2>
+        BlendedBackground
+        </h2>
+        
+            <div class="class-description"><p>Displays a background image which is blended with actual operator's color theme.</p></div>
+        
+    
+</header>
 
-// Basic React API: React.createElement(Component, props, children)
 
-// check widget-components.Header documentation for all the options
-const header = React.createElement(
-   Header,
-   { collapsable: false },
-   'This is the Header title'
-)
+<article>
+    <div class="container-overview">
+    
+        
+<hr>
+<dt>
+    <h4 class="name" id="BlendedBackground"><span class="type-signature"></span>new BlendedBackground()</h4>
+    
+    
+</dt>
+<dd>
 
-// ReactDOM API: ReactDOM.render(reactElement, HTMLElement)
-// places the Header in the page:
-ReactDOM.render(header, document.getElementById('header'))
+    
 
- * @example
-// this example shows how to use the Header component using JSX
-// note that JSX only works in .jsx files
+    
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Header } 'kambi-widget-components';
-ReactDOM.render(
-   &lt;Header collapsable={false}>
-      This is the Header title
-   &lt;/Header>
-, document.getElementById('header'))
+    
 
- * @namespace widget-components
- */
+    
+    
 
-export { default as OutcomeButton } from './OutcomeButton/OutcomeButton';
-export { default as OutcomeButtonUI } from './OutcomeButton/OutcomeButtonUI';
-export { default as TabPagination } from './TabPagination/TabPagination';
-export { default as FixedList } from './List/FixedList/FixedList';
-export { default as ScrolledList } from './List/ScrolledList/ScrolledList';
-export { default as DropdownButton } from './DropdownButton/DropdownButton';
-export { default as Header } from './Header/Header';
-export { default as ActionButton } from './ActionButton/ActionButton';
-export { default as IconHeader } from './IconHeader/IconHeader';
-export { default as Carousel } from './Carousel/Carousel';
-export { default as BlendedBackground } from './BlendedBackground/BlendedBackground';
-</pre>
-    </article>
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="node_modules_kambi-widget-components_src_BlendedBackground_BlendedBackground.jsx.html">node_modules/kambi-widget-components/src/BlendedBackground/BlendedBackground.jsx</a>,
+				 <a href="node_modules_kambi-widget-components_src_BlendedBackground_BlendedBackground.jsx.html#sunlight-1-line-10">line 10</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        <dl>
+            
+<hr>
+<dt class="name" id=".propTypes">
+    <h4 id=".propTypes"><span class="type-signature">&lt;static> </span>propTypes<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>backgroundUrl</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>provides path to backgroundImage</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>blendWidthOperatorColor</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>determines if background should be blended with operator color. (Normally not wanted if providing own background image)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="node_modules_kambi-widget-components_src_BlendedBackground_BlendedBackground.jsx.html">node_modules/kambi-widget-components/src/BlendedBackground/BlendedBackground.jsx</a>,
+				 <a href="node_modules_kambi-widget-components_src_BlendedBackground_BlendedBackground.jsx.html#sunlight-1-line-90">line 90</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        </dl>
+    
+
+    
+
+    
+
+    
+</article>
+
 </section>
-
 
 
 
@@ -170,6 +382,10 @@ export { default as BlendedBackground } from './BlendedBackground/BlendedBackgro
 
 	<div class="clearfix"></div>
 
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
 	
 
 </div>

@@ -63,7 +63,7 @@ The widget can use React even without including `kambi-widget-components`, widge
 
 ### useRealReact flag
 
-By default the project replaces the normal version of React with [preact](https://github.com/Lucifier129/react-lite) in production builds only (`npm run build`). While in development mode though (`npm run start`) the project uses the real React because it provides more debug functionalities. This is handled by the `kambi-widget-build-tools` automatically.
+By default the project replaces the normal version of React with [preact](https://github.com/Lucifier129/react-lite) in production builds only (`npm run build`). While in development mode though (`npm run start`) the project uses the real React because it provides more debug functionalities. This is handled by the `kambi-widget-core-library` automatically.
 
 Preact is an alternative implementation of React and as such it can have incompatibilities, although so far we haven't encountered any. If you want to override the default behavior of the build you can force the use of a specific React version by placing a `useRealReact` object in package.json. You can define different values for development and production environment.
 

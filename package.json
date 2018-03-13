@@ -35,7 +35,7 @@
   "devDependencies": {
     "ink-docstrap": "^1.2.1",
     "jsdoc": "^3.4.2",
-    "kambi-widget-components": "^1.16.0",
+    "kambi-widget-components": "^1.18.2",
     "lint-staged": "^6.1.0",
     "prettier": "^1.10.2"
   },
