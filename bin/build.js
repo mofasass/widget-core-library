@@ -10,20 +10,10 @@ const chalk = require('chalk'),
  * @returns {Promise}
  */
 const copyConfigFiles = () => {
-  const fileNames = ['.editorconfig', '.eslintrc', 'postcss.config.js']
   const configFolder = path.join(
     process.cwd(),
     'node_modules/kambi-widget-core-library/widget_config/'
   )
-  const paths = fileNames.map(p => {
-    return path.join(configFolder, p)
-  })
-  paths.forEach((filePath, index) => {
-    if (fs.existsSync(filePath)) {
-      const fileDest = path.join(process.cwd(), fileNames[index])
-      fs.copySync(filePath, fileDest)
-    }
-  })
 
   // files with special handling
 

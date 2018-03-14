@@ -2,6 +2,7 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const autoprefixer = require('autoprefixer')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin
 const path = require('path')
@@ -23,6 +24,19 @@ module.exports = env => {
           : []
       ),
     },
+  }
+
+  const postCssOptions = {
+    plugins: () => [
+      autoprefixer({
+        browsers: [
+          'ie >= 11',
+          'ios_saf >= 7',
+          'and_chr >= 5',
+          'Last 1 versions',
+        ],
+      }),
+    ],
   }
 
   let plugins = [
@@ -98,7 +112,11 @@ module.exports = env => {
                 },
                 {
                   loader: 'postcss-loader',
-                  ...(isDev && { options: { sourceMap: true } }),
+                  ...(isDev
+                    ? {
+                        options: { sourceMap: true, ...postCssOptions },
+                      }
+                    : { options: postCssOptions }),
                 },
                 {
                   loader: 'sass-loader',
