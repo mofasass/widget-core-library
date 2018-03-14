@@ -1,6 +1,10 @@
-# Globalmouth Widget Platform
+# Glomo Widget Platform
 
 Platform for creating widgets using Kambi's Widget API for use in Kambi's Sportsbook applications. This platform is divided into 3 libraries, they are all available through NPM. See the Tutorials section to get started.
+
+[Documentation](http://kambi-sportsbook-widgets.github.io/widget-core-library/)
+
+[Issues/Questions](https://github.com/kambi-sportsbook-widgets/widget-core-library/issues)
 
 # Libraries
 
@@ -8,9 +12,7 @@ Platform for creating widgets using Kambi's Widget API for use in Kambi's Sports
 
 Core package with wrappers around Kambi's Widget API (which allows interaction with the Sportsbook) and Offering API (which you use to fetch data from the server) as well as an internationalization API.
 
-## kambi-widget-build-tools
-
-Package that contains the build process for the widget projects as well as a template for creating new widget projects. Includes a built-in web server with HTTPS support in order to be able to test widgets in the Sportsbook.
+This package also includes the build process for the widget projects and a built-in web server for local development.
 
 ## kambi-widget-components
 

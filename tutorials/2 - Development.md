@@ -35,26 +35,27 @@ For Microsoft Edge and Internet explorer you need to add the certificate on Wind
 * Clici import
 * Select the certificate from `project-folder\node_modules\webpack-dev-server\ssl\server.crt`
 
-* To open the widget inside the Sportsbook while in development configure a new widget in the `widgetSettings` to point to to `https://localhost:8080/` or `https://<your-local-ip>:8080`. If the Sportsbook is runing under HTTPS the widget need to also be running in HTTPS mode, so in order to see the widget inside the Sportsbook it is required to trust the self-signed certificate that the development server uses first.
+* To open the widget inside the Sportsbook while in development configure a new widget in the Sportsbook `widgetSettings` to point to to `https://localhost:8080/` or `https://<your-local-ip>:8080`. If the Sportsbook is runing under HTTPS the widget also needs be running in HTTPS mode, in order to see the widget inside the Sportsbook it is required to trust the self-signed certificate that the development server uses first.
 
 ### Project file structure
 
 ```
-project
+project/
    README.md
    .eslintrc
    .gitignore
    .editorconfig
    LICENSE
    package.json
-   dist
+   dist/
    node_modules
-   src
+   src/
+      assets/
       app.scss
       index.html
       index.js
       mockSetupData.json
-      i18n
+      i18n/
          en_GB.json
 ```
 
@@ -72,7 +73,7 @@ License file of the project
 
 * package.json
 
-NPM configuration file. This file lists metadata about the project as well as all external dependencies (kambi-widget-core-library, kambi-widget-build-tools, kambi-widget-components and others) it uses. This file needs to be modified to update the dependencies versions
+NPM configuration file. This file lists metadata about the project as well as all external dependencies (kambi-widget-core-library, kambi-widget-components and others) it uses. This file needs to be modified to update the dependencies versions
 
 * dist
 
@@ -88,7 +89,7 @@ This folder holds the source code for the widget
 
 * src/app.scss
 
-SCSS file with styling rules for this widget, this file is converted to regular CSS which is then included in the page during the build process. SCSS is a superset of CSS and as such all CSS is also valid SCSS, so normal CSS can be placed in this file. More information on SCSS [here](http://sass-lang.com/)
+SCSS file with styling rules for this widget, this file is converted to regular CSS which is then included in the page during the build process. SCSS is a superset of CSS and as such all CSS is also valid SCSS, meaning normal CSS can be placed in this file. More information on SCSS [here](http://sass-lang.com/)
 
 * src/index.html
 
@@ -100,32 +101,24 @@ This is the main javascript file of the project, see the following sections on h
 
 * src/mockSetupData.json
 
-This file is used ONLY when opening the widget OUTSIDE of the Kambi Sportsbook (that means accessing https://localhost:8080/ directly), it mocks values that would normally be passed by the Sportsbook to the widget. By changing values in this file you can test how the widget will look like and behave in different configurations, for example in another language.
+This file is used ONLY when opening the widget OUTSIDE of the Kambi Sportsbook (that means accessing https://localhost:8080/ directly), it mocks values that would normally be passed by the Sportsbook to the widget. By changing values in this file you can test how the widget will look and behave in different configurations, for example in another language.
 
 For more information check the API documentation for `coreLibrary.config`, `coreLibrary.args` and `coreLibrary.pageInfo`
 
 * src/i18n
   This folder holds all the internationalization JSON files of the widget, these are used by the `translationModule`. The use of these files are optional if no internationalization is required. If the user locale is not found in this folder it will fallback to `en_GB.json`. These are all the currently supported locales in the Sportsbook, although they can vary by operator:
 
-cs_CZ.json, de_DE.json, es_ES.json, fr_CH.json, lt_LT.json, no_NO.json, ro_RO.json, da_DK.json, el_GR.json, et_EE.json, fr_FR.json, lv_LV.json, pl_PL.json, ru_RU.json, de_AT.json, en_AU.json, fi_FI.json, hu_HU.json, nl_BE.json, pt_BR.json, sv_SE.json, de_CH.json, en_GB.json, fr_BE.json, it_IT.json, nl_NL.json, pt_PT.json, tr_TR.json
+bg_BG.json, cs_CZ.json, de_DE.json, es_ES.json, es_CO.json, fr_CH.json, lt_LT.json, no_NO.json, ro_RO.json, da_DK.json, el_GR.json, et_EE.json, fr_FR.json, lv_LV.json, pl_PL.json, ru_RU.json, de_AT.json, en_AU.json, fi_FI.json, hu_HU.json, nl_BE.json, pt_BR.json, sv_SE.json, de_CH.json, en_GB.json, fr_BE.json, it_IT.json, nl_NL.json, pt_PT.json, tr_TR.json
 
-### Core Library and Build Tools
+### Core Library
 
-By default a widget project uses these two dependencies `kambi-widget-core-library` and `kambi-widget-build-tools`. The version of these dependencies that your widget is using can be updated in the `package.json` file, it is recommended to periodiacally update to the latest versions.
+By default a widget project uses the `kambi-widget-core-library` dependency. The version of this dependencies that your widget is using can be updated in the `package.json` file, it is recommended to periodiacally update to the latest version. The latest version number can be seen in:
 
-* `kambi-widget-core-library`
-
-Core package with wrappers around Kambi's Widget API (which allows interaction with the Sportsbook) and Offering API (with which you can fetch data from the server) as well as a internationalization API.
-
-* `kambi-widget-build-tools`
-
-Package that contains the build process for the widget projects as well as a template for creating new widget projects. Includes a built-in web server with HTTPS support in order to be able to test widgets with
-
-These dependencies are external to the project and as such have their own specific versions, you can check their versions inside the `package.json` file.
+https://www.npmjs.com/package/kambi-widget-core-library
 
 ### Importing and Exporting Files
 
-The widget uses [webpack](https://webpack.github.io/) to transpile, minify, concatenate, bundle all the files and their dependencies together. This is all done automatically by the scripts `npm run start` (which also starts a webserver for development) and `npm run build`. All the webpack configuration is already done by those scripts and as such no configuration is required by the user. However the way that the files are bundled together requires them to be referenced in order for them to be included in the final bundle.
+The widget uses [webpack](https://webpack.github.io/) to transpile, minify, concatenate, bundle all the files and their dependencies together. This is all done automatically by the scripts `npm run start` (which also starts a webserver for development) and `npm run build`. All the webpack configuration is already done by those scripts and as such no configuration is required by the user. However the way that the files are bundled together requires them to be referenced in the code for them to be included in the final bundle.
 
 The `entry` point of the application is `src/index.js`, this file needs to reference (import) directly or indirectly all other files used, this means even HTML and CSS files. The template project that is generated by `kambi-widgets-cli init` shows this:
 
@@ -204,13 +197,13 @@ It is possible to remove or change the version of a dependency added in this man
 
 ### Performance considerations
 
-Dependencies, especially big ones like Angular and jQuery should be avoided. For example due to the nature of iFrames if a Sportsbook page includes 5 different widgets and each of them loads Angular2 (111 kilobytes minified and gziped) the widget will load all that code 5 times (for a total of 555 kilobytes of Javascript). Even though the Angular bundle can be cached by the browser and downloaded only once, actually parsing and executing running the Angular bundle can take a long time, especially in mobile phones
+Dependencies, especially big ones like Angular and jQuery should be avoided. For example due to the nature of iFrames if a Sportsbook page includes 5 different widgets and each of them loads Angular2 (111 kilobytes minified and gziped) the widget will load all that code 5 times (for a total of 555 kilobytes of Javascript). Even though the Angular bundle can be cached by the browser and downloaded only once, actually parsing and executing the Angular bundle can take a long time, especially in mobile phones
 
 The build process of the widget can perform some optimizations to reduce the final widget size when using the React framework (only 3 kilobyte impact). We highly recommend the use of vanilla Javascript or React. See section 8 - Using React and widget-components
 
 ### Common Build Architecture
 
-Since all webpack build configuration of the widgets is shared and integrated in the `kambi-widget-build-tools` dependency it is not possible to add more items to the build architecture. For example replacing SCSS with LESS is not possible. We might add some scape hatches in the future to support customizing the webpack configuration to allow modifying the build process, but for now that is not possible. If you need something extra please open an issue in the project's (github page)[https://github.com/kambi-sportsbook-widgets/widget-core-library/issues]
+Since all webpack build configuration of the widgets is shared and integrated in the `kambi-widget-core-library` dependency it is not possible to add more items to the build architecture. For example replacing SCSS with LESS is not possible. We might add some scape hatches in the future to support customizing the webpack configuration to allow modifying the build process, but for now that is not possible. If you need something extra please open an issue in the project's (github page)[https://github.com/kambi-sportsbook-widgets/widget-core-library/issues]
 
 ### ES6 and JSX
 
@@ -228,6 +221,6 @@ To run the tests in the widget folder run:
 
 `npm run test`
 
-It is possible can send custom command line flags to Jest by using the `--` operator. For example to pass the watch flag to Jest (-w):
+It is possible can send custom command line flags to Jest by using the `--` operator. For example to pass the watch flag to Jest (--watch):
 
-`npm run test -- -w`
+`npm run test -- --watch`

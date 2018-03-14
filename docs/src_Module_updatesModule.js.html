@@ -56,7 +56,7 @@
 			<li class="dropdown">
 				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="widget-components.DropdownButton.html">widget-components.DropdownButton</a></li><li><a href="widget-components.FixedList.html">widget-components.FixedList</a></li><li><a href="widget-components.Header.html">widget-components.Header</a></li><li><a href="widget-components.OutcomeButton.html">widget-components.OutcomeButton</a></li><li><a href="widget-components.OutcomeButtonUI.html">widget-components.OutcomeButtonUI</a></li><li><a href="widget-components.ScrolledList.html">widget-components.ScrolledList</a></li><li><a href="widget-components.TabPagination.html">widget-components.TabPagination</a></li>
+					<li><a href="BlendedBackground.html">BlendedBackground</a></li><li><a href="widget-components.DropdownButton.html">widget-components.DropdownButton</a></li><li><a href="widget-components.FixedList.html">widget-components.FixedList</a></li><li><a href="widget-components.Header.html">widget-components.Header</a></li><li><a href="widget-components.OutcomeButton.html">widget-components.OutcomeButton</a></li><li><a href="widget-components.OutcomeButtonUI.html">widget-components.OutcomeButtonUI</a></li><li><a href="widget-components.ScrolledList.html">widget-components.ScrolledList</a></li><li><a href="widget-components.TabPagination.html">widget-components.TabPagination</a></li>
 				</ul>
 			</li>
 			
@@ -253,6 +253,7 @@ const updatesModule = {
       this.api.request(this.api.BETSLIP_OUTCOMES)
     },
 
+    oddsFormatSubscribedTo: false,
     /**
      * Subscription that is triggered when the odds format (decimal, fractional, american) changes
      * @param {Function} callback Callback to be called when receiving new data
@@ -263,7 +264,11 @@ const updatesModule = {
         cbs[this.api.CLIENT_ODDS_FORMAT] = []
       }
       cbs[this.api.CLIENT_ODDS_FORMAT].push(callback)
-      this.api.request(this.api.CLIENT_ODDS_FORMAT)
+      // we can only subscribe to odds format once as each subscription triggers one more call to handleResponse
+      if (this.oddsFormatSubscribedTo === false) {
+        this.api.request(this.api.CLIENT_ODDS_FORMAT)
+      }
+      this.oddsFormatSubscribedTo = true
     },
 
     /**

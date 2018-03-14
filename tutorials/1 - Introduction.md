@@ -8,7 +8,7 @@ The widget is an html-page loaded inside an iframe inside an operator's sportsbo
 
 * Run:
 
-`npm install -g kambi-widget-build-tools`
+`npm install -g kambi-widget-core-library`
 
 * By running this command you will now have a new command line tool called `kambi-widgets-cli` which is used for creating new projects
 
@@ -24,7 +24,7 @@ Version 3.0.0 of npm is included in Nodejs versions 5.0.0 or higher.
 
 * Run again to update the kambi-widgets-cli to the latest version (this is necessary only when creating a new project):
 
-`npm install -g kambi-widget-build-tools`
+`npm install -g kambi-widget-core-library`
 
 * Run:
 
