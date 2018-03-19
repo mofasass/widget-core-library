@@ -131,6 +131,11 @@ const updatesModule = {
       return updatesModule.api
     },
 
+    /* IE11 is throwing erros when subscribing to EVENT_INFO in the widget api. This returns false for Edge */
+    _isIE11() {
+      return navigator.appName.indexOf('Trident') !== -1
+    },
+
     /**
      * Subscription that is triggered when there is any change to the betslip
      * @param {Function} callback Callback to be called when receiving new data
@@ -168,6 +173,9 @@ const updatesModule = {
      * @param {Function} callback Callback to be called when receiving new data
      */
     basicInfo(eventId, callback) {
+      if (this._isIE11()) {
+        return
+      }
       const info = this.api.EVENT_INFO_TYPES.BASIC
       this.api.request(this.api.EVENT_INFO, {
         id: eventId,
@@ -182,6 +190,9 @@ const updatesModule = {
      * @param {Function} callback Callback to be called when receiving new data
      */
     score(eventId, callback) {
+      if (this._isIE11()) {
+        return
+      }
       const info = this.api.EVENT_INFO_TYPES.SCORE
       this.api.request(this.api.EVENT_INFO, {
         id: eventId,
@@ -196,6 +207,9 @@ const updatesModule = {
      * @param {Function} callback Callback to be called when receiving new data
      */
     allPreMatchBetoffers(eventId, callback) {
+      if (this._isIE11()) {
+        return
+      }
       const info = this.api.EVENT_INFO_TYPES.BET_OFFERS
       const context = this.api.EVENT_INFO_CONTEXT.PRE_MATCH
       this.api.request(this.api.EVENT_INFO, {
@@ -212,6 +226,9 @@ const updatesModule = {
      * @param {Function} callback Callback to be called when receiving new data
      */
     allLiveBetoffers(eventId, callback) {
+      if (this._isIE11()) {
+        return
+      }
       const info = this.api.EVENT_INFO_TYPES.BET_OFFERS
       const context = this.api.EVENT_INFO_CONTEXT.LIVE
       this.api.request(this.api.EVENT_INFO, {
@@ -228,6 +245,9 @@ const updatesModule = {
      * @param {Function} callback Callback to be called when receiving new data
      */
     mainPreMatchBetoffers(eventId, callback) {
+      if (this._isIE11()) {
+        return
+      }
       const info = this.api.EVENT_INFO_TYPES.BET_OFFERS
       const context = this.api.EVENT_INFO_CONTEXT.PRE_MATCH
       this.api.request(this.api.EVENT_INFO, {
@@ -245,6 +265,9 @@ const updatesModule = {
      * @param {Function} callback Callback to be called when receiving new data
      */
     mainLiveBetoffers(eventId, callback) {
+      if (this._isIE11()) {
+        return
+      }
       const info = this.api.EVENT_INFO_TYPES.BET_OFFERS
       const context = this.api.EVENT_INFO_CONTEXT.LIVE
       this.api.request(this.api.EVENT_INFO, {

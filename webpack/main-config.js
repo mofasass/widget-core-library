@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const autoprefixer = require('autoprefixer')
+const babelOptions = require('./babel-options')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin
 const path = require('path')
@@ -13,17 +14,7 @@ module.exports = env => {
 
   const babelLoader = {
     loader: 'babel-loader',
-    options: {
-      presets: require('./babel-presets'),
-      plugins: [
-        require('babel-plugin-transform-class-properties'),
-        require('babel-plugin-transform-object-rest-spread'),
-      ].concat(
-        isProd
-          ? [require('babel-plugin-transform-react-remove-prop-types').default]
-          : []
-      ),
-    },
+    options: babelOptions(process.env.NODE_ENV),
   }
 
   const postCssOptions = {
