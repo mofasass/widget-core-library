@@ -114,13 +114,18 @@
 </ul>
 <p><code>npm run start</code></p>
 <ul>
-<li>If the build was successful the widget will be running under <code>https://localhost:8080</code> and <code>https://&lt;your-local-ip&gt;:8080</code> after a few seconds. The server that hosts the widgets code runs under port 8080. That url can be opened directly but some widget features will not work (like changing the widget size or adding bets to the betslip), for all features to work the widget needs to be opened inside the Sportsbook.</li>
+<li>If the build was successful the widget will be running under <code>http://localhost:8080</code> and <code>http://&lt;your-local-ip&gt;:8080</code> after a few seconds. The server that hosts the widgets code runs under port 8080. That url can be opened directly but some widget features will not work (like changing the widget size or adding bets to the betslip), for all features to work the widget needs to be opened inside the Sportsbook.</li>
 </ul>
-<h4>Inside the Sportsbook</h4><p>If the <code>package.json</code> <code>useHttps</code> value is <code>true</code> (it is <code>true</code> by default) the development server runs under port 8080 and under the HTTPS protocol with a self-signed certificate, which means you might get an HTTPS certificate error unless you manually trust the certificate. Running the development server in HTTPS is sometimes necessary because many test environments use HTTPS (if the sportsbook is running in HTTPS it will not be able to load iframes that run under HTTP), if you do not need HTTPS encryption and don't want to get certificate errors you can disable it by editing <code>package.json</code> and setting <code>useHttps</code> to false.</p>
-<pre class="prettyprint source lang-diff"><code>{
-...
-  &quot;useHttps&quot;: false
-}</code></pre><h5>HTTPS certificate</h5><p><code>npm run start</code> starts a built-in webserver (called WebpackDevServer) that hosts the widgets code for development mode. If HTTPS is enabled it will run with a self-signed certificate that needs to be manually trusted in order to be able to open the widget.</p>
+<h4>Development Server</h4><p>The build process comes with a built-in development server, when you run <code>npm run start</code> this server is used. It is possible to configure the server by changing the <code>package.json</code>, inside it add a <code>devServer</code> key with any options desired. For example to enable HTTPS:</p>
+<pre class="prettyprint source lang-javascript"><code>{
+  ...
+  &quot;devServer&quot;: {
+    &quot;https&quot;: true
+  }
+}</code></pre><p>All server options can be seen in the <a href="https://webpack.js.org/configuration/dev-server/#devserver-https">webpack dev-server documentation</a></p>
+<p>To open the widget inside the Sportsbook while in development configure a new widget in the Sportsbook <code>widgetSettings</code> to point to to <code>http://localhost:8080/</code> or <code>http://&lt;your-local-ip&gt;:8080</code></p>
+<h5>HTTPS certificate</h5><p><code>npm run start</code> starts a built-in webserver that hosts the widgets code for development mode. If HTTPS is enabled it will run with a self-signed certificate that needs to be manually trusted in order to be able to open the widget.</p>
+<p>Depending on your environment setup you might need to enable HTTPS for the widget because a sportsbook running in HTTPS needs the widgets to also be running in HTTPS.</p>
 <p>In Chrome and Firefox you can trust the certificate by visiting <code>https://localhost:8080</code> and <code>https://&lt;your-local-ip&gt;:8080</code> and hitting advance to accept the certificate.</p>
 <p>For Microsoft Edge and Internet explorer you need to add the certificate on Windows:</p>
 <ul>
@@ -130,10 +135,7 @@
 <li>Click on Certificates</li>
 <li>Select Trusted Root Certification Authorities</li>
 <li>Clici import</li>
-<li><p>Select the certificate from <code>project-folder\node_modules\webpack-dev-server\ssl\server.crt</code></p>
-</li>
-<li><p>To open the widget inside the Sportsbook while in development configure a new widget in the Sportsbook <code>widgetSettings</code> to point to to <code>https://localhost:8080/</code> or <code>https://&lt;your-local-ip&gt;:8080</code>. If the Sportsbook is runing under HTTPS the widget also needs be running in HTTPS mode, in order to see the widget inside the Sportsbook it is required to trust the self-signed certificate that the development server uses first.</p>
-</li>
+<li>Select the certificate from <code>project-folder\node_modules\webpack-dev-server\ssl\server.crt</code></li>
 </ul>
 <h3>Project file structure</h3><pre class="prettyprint source"><code>project/
    README.md
