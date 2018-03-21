@@ -9,7 +9,7 @@ if (['development', 'production'].indexOf(env) === -1) {
 }
 
 const mergedConfig = merge.smart([
-  require('./main-config')(env),
+  require('./main-config'),
   require(`./${env}`),
 ])
 

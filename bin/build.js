@@ -58,8 +58,11 @@ clean.config = {
 const start = opt => {
   process.env.NODE_ENV = 'development'
   console.log(chalk.cyan('Starting the development server...'))
-
-  const port = opt.options.port || 8080
+  const pkg = require(path.resolve(process.cwd(), 'package.json'))
+  let port = 8080
+  if (pkg.devServer && pkg.devServer.port) {
+    port = pkg.devServer.port
+  }
 
   return copyConfigFiles().then(() => {
     const compiler = webpack(require('../webpack/webpack.config.js')) // eslint-disable-line
@@ -84,7 +87,6 @@ const start = opt => {
 start.config = {
   name: 'start',
   description: 'Starts a development server',
-  options: [['p', 'port=ARG', 'Listening port (default 8080)']],
 }
 
 /**
@@ -134,4 +136,24 @@ build.config = {
   description: 'Builds widget for production',
 }
 
-module.exports = [clean, build, start]
+const buildEmbedded = () => {
+  process.env.EMBEDDED = 'true'
+  return build()
+}
+
+buildEmbedded.config = {
+  name: 'build-embedded',
+  description: 'Builds widget for production in embedded mode',
+}
+
+const startEmbedded = () => {
+  process.env.EMBEDDED = 'true'
+  return start()
+}
+
+startEmbedded.config = {
+  name: 'start-embedded',
+  description: 'Starts a development server for embedded widgets',
+}
+
+module.exports = [clean, build, start, buildEmbedded, startEmbedded]

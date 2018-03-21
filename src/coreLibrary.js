@@ -5,6 +5,7 @@ import utilModule from './Module/utilModule'
 import widgetModule from './Module/widgetModule'
 import updatesModule from './Module/updatesModule'
 import constants from './constants'
+import mockWidgetApi from './mockWidgetApi'
 
 /**
  * Main module that holds the other modules as well as widget
@@ -105,27 +106,6 @@ function download(url) {
   })
 }
 
-// calls Object.freeze() deeply in an object
-function deepFreeze(o) {
-  if (o == null) {
-    return
-  }
-  Object.freeze(o)
-
-  Object.getOwnPropertyNames(o).forEach(function(prop) {
-    if (
-      o.hasOwnProperty(prop) &&
-      o[prop] !== null &&
-      (typeof o[prop] === 'object' || typeof o[prop] === 'function') &&
-      !Object.isFrozen(o[prop])
-    ) {
-      deepFreeze(o[prop])
-    }
-  })
-
-  return o
-}
-
 export default {
   /**
    * If true the coreLibrary has been initialized
@@ -204,13 +184,11 @@ export default {
   },
 
   get config() {
-    return this._config // eslint-disable-line no-underscore-dangle
+    return this._config
   },
 
   set config(config) {
     this.checkInit()
-    config = deepFreeze(config)
-    /* eslint-disable no-underscore-dangle */
     for (var i in config) {
       if (config.hasOwnProperty(i) && this._config.hasOwnProperty(i)) {
         this._config[i] = config[i]
@@ -226,7 +204,6 @@ export default {
       // If the routeRoot is not empty we need to make sure it has a trailing slash
       this._config.routeRoot += '/'
     }
-    /* eslint-enable no-underscore-dangle */
   },
 
   /**
@@ -236,11 +213,11 @@ export default {
   _oddsFormat: null,
 
   set oddsFormat(format) {
-    this._oddsFormat = format // eslint-disable-line no-underscore-dangle
+    this._oddsFormat = format
   },
 
   get oddsFormat() {
-    return this._oddsFormat // eslint-disable-line no-underscore-dangle
+    return this._oddsFormat
   },
 
   /**
@@ -250,12 +227,12 @@ export default {
   _defaultArgs: {},
 
   get defaultArgs() {
-    return this._defaultArgs // eslint-disable-line no-underscore-dangle
+    return this._defaultArgs
   },
 
   set defaultArgs(defaultArgs) {
     this.checkInit()
-    this._defaultArgs = deepFreeze(defaultArgs) // eslint-disable-line no-underscore-dangle
+    this._defaultArgs = defaultArgs
   },
 
   /**
@@ -302,12 +279,11 @@ export default {
   _args: null,
 
   get args() {
-    return this._args // eslint-disable-line no-underscore-dangle
+    return this._args
   },
 
   set args(args) {
     this.checkInit()
-    /* eslint-disable no-underscore-dangle */
     args = Object.assign({}, this.defaultArgs, args)
 
     // Handling conditionalArgs
@@ -338,8 +314,7 @@ export default {
       })
     }
 
-    this._args = deepFreeze(args)
-    /* eslint-enable no-underscore-dangle */
+    this._args = args
   },
 
   /**
@@ -359,12 +334,11 @@ export default {
   },
 
   get pageInfo() {
-    return this._pageInfo // eslint-disable-line no-underscore-dangle
+    return this._pageInfo
   },
 
   set pageInfo(pageInfo) {
     this.checkInit()
-    /* eslint-disable no-underscore-dangle */
     // Check if the last character in the pageParam property is a slash, if not add it so we can use this property in filter requests
     if (
       pageInfo.pageType === 'filter' &&
@@ -372,9 +346,30 @@ export default {
     ) {
       pageInfo.pageParam += '/'
     }
-    this._pageInfo = deepFreeze(pageInfo)
-    /* eslint-enable no-underscore-dangle */
+    this._pageInfo = pageInfo
   },
+
+  /**
+   * Element that should be used as root to render the widget from. Widgets should render only inside this element
+   * @name rootElement
+   * @type {HTMLElement}
+   */
+  rootElement: null,
+
+  /**
+   * Element that the widget will be placed inside of when running in embedded mode
+   * @name rootElement
+   * @type {HTMLElement}
+   * @private
+   */
+  embeddedElement: null,
+
+  /**
+   * Options used only in when embedding this widget into another one
+   * @property {Function} onHeightChange Callback called when the embedded widget height changes (by calling either widgetModule.setWidgetHeight or widgetModule.adaptWidgetHeight)
+   * @private
+   */
+  embeddedOptions: null,
 
   /**
    * Versions of the API provided by the sportsbook
@@ -391,14 +386,12 @@ export default {
   },
 
   get apiVersions() {
-    return this._apiVersions // eslint-disable-line no-underscore-dangle
+    return this._apiVersions
   },
 
   set apiVersions(versions) {
     this.checkInit()
-    /* eslint-disable no-underscore-dangle */
-    this._apiVersions = deepFreeze(versions)
-    /* eslint-enable no-underscore-dangle */
+    this._apiVersions = versions
   },
 
   /**
@@ -407,18 +400,14 @@ export default {
   _widgetTrackingName: null,
 
   set widgetTrackingName(name) {
-    /* eslint-disable no-underscore-dangle */
     if (name == null) {
       name = null // transforms undefined to null
     }
     this._widgetTrackingName = name
-    /* eslint-enable no-underscore-dangle */
   },
 
   get widgetTrackingName() {
-    /* eslint-disable no-underscore-dangle */
     return this._widgetTrackingName
-    /* eslint-enable no-underscore-dangle */
   },
 
   /**
@@ -428,6 +417,12 @@ export default {
   cssLoadedPromise: null,
 
   /**
+   * @type Object
+   * a direct reference to the Kambi's WidgetApi (wapi)
+   */
+  widgetApi: null,
+
+  /**
    * Initializes the Kambi api
    * Uses ./src/mockSetupData.json as coreLibrary.configs if not loaded inside the sportsbook (ie opened the widget directly).
    * @param {Object} defaultArgs arguments to be used if they are not provided by the sportsbook
@@ -435,6 +430,7 @@ export default {
    */
   init(defaultArgs) {
     this.defaultArgs = defaultArgs
+    const EMBEDDED = process.env.EMBEDDED === 'true'
 
     return new Promise((resolve, reject) => {
       // applies the setup data and sets up the CSS and translations
@@ -444,10 +440,15 @@ export default {
         this.pageInfo = setupData.pageInfo
         this.apiVersions = setupData.versions
         this.args = setupData.arguments
-        this.addClasses(this.kambiDefaultClasses)
+        if (!EMBEDDED) {
+          // if embedded the widget will assume that operator CSS is included by whoever is embedding it
+          this.injectOperatorCss(this.config.customer, this.config.offering)
 
-        this.injectOperatorCss(this.config.customer, this.config.offering)
-
+          const body = document.getElementsByTagName('body')[0]
+          this.kambiDefaultClasses.map(cssClass => {
+            body.classList.add(cssClass)
+          })
+        }
         this.injectCustomCss(
           this.args.customCssUrl,
           this.args.customCssUrlFallback
@@ -459,53 +460,86 @@ export default {
         resolve()
       }
 
-      if (window.KambiWidget) {
-        // For development purposes we might want to load a widget on it's own so we check if we are in an iframe, if not then load some fake data
-        if (window.self === window.top) {
-          console.warn(
-            window.location.host +
-              window.location.pathname +
-              ' is being loaded as stand-alone'
-          )
-          // Load the mock config data
-          this.getData('mockSetupData.json')
-            .then(mockSetupData => {
-              // Output some debug info that could be helpful
-              console.debug('Loaded mock setup data')
-              console.debug(mockSetupData)
-              // Apply the mock config data to the core
-              applySetupData(mockSetupData)
-            })
-            .catch(error => {
-              console.debug('Failed to fetch mockSetupData')
-              console.trace(error)
-              reject()
-            })
-        } else {
-          window.KambiWidget.apiReady = api => {
-            widgetModule.api = api
-            updatesModule.api = api
-
-            // Request the setup info from the widget api
-            widgetModule.requestSetup(setupData => {
-              // Request the outcomes from the betslip so we can update our widget, also sets up a subscription for future betslip updates
-              widgetModule.requestBetslipOutcomes()
-              // Request the odds format that is set in the sportsbook, this also sets up a subscription for future odds format changes
-              widgetModule.requestOddsFormat()
-
-              // Apply the config data to the core
-              applySetupData(setupData)
-            })
+      if (EMBEDDED) {
+        if (!window.gmWidgets) {
+          window.gmWidgets = {}
+        }
+        window.gmWidgets[process.env.WIDGET_NAME] = (
+          container,
+          wapi,
+          clientConfig,
+          args,
+          options = {}
+        ) => {
+          this.embeddedOptions = options
+          this.widgetApi = wapi
+          this.embeddedElement = container
+          this.rootElement = document.createElement('div')
+          this.rootElement.style.boxSizing = 'border-box'
+          this.embeddedElement.style.boxSizing = 'border-box'
+          this.embeddedElement.style.height = 0
+          this.embeddedElement.style.overflowY = 'hidden'
+          this.embeddedElement.appendChild(this.rootElement)
+          if (window.KambiWidget.receiveResponse == null) {
+            window.KambiWidget.receiveResponse = function() {}
           }
-          // Setup the response handler for the widget api
+          const previousResponseHandler = window.KambiWidget.receiveResponse
           window.KambiWidget.receiveResponse = dataObject => {
+            previousResponseHandler(dataObject)
             widgetModule.handleResponse(dataObject)
             updatesModule.handleResponse(dataObject)
           }
+          applySetupData({
+            clientConfig: Object.assign({}, clientConfig),
+            arguments: Object.assign({}, args),
+            pageInfo: {},
+            versions: {},
+          })
         }
+      } else if (window.self === window.top) {
+        this.widgetApi = mockWidgetApi
+        this.rootElement = document.getElementById('body')
+        // For development purposes we might want to load a widget on it's own so we check if we are in an iframe, if not then load some fake data
+        console.warn(
+          window.location.host +
+            window.location.pathname +
+            ' is being loaded as stand-alone'
+        )
+        // Load the mock config data
+        this.getData('mockSetupData.json')
+          .then(mockSetupData => {
+            // Output some debug info that could be helpful
+            console.debug('Loaded mock setup data')
+            console.debug(mockSetupData)
+            // Apply the mock config data to the core
+            applySetupData(mockSetupData)
+          })
+          .catch(error => {
+            console.debug('Failed to fetch mockSetupData')
+            console.trace(error)
+            reject()
+          })
       } else {
-        console.warn('Kambi widget API not loaded')
-        reject()
+        this.rootElement = document.getElementById('body')
+        window.KambiWidget.apiReady = wapi => {
+          this.widgetApi = wapi
+
+          // Request the setup info from the widget api
+          widgetModule.requestSetup(setupData => {
+            // Request the outcomes from the betslip so we can update our widget, also sets up a subscription for future betslip updates
+            widgetModule.requestBetslipOutcomes()
+            // Request the odds format that is set in the sportsbook, this also sets up a subscription for future odds format changes
+            widgetModule.requestOddsFormat()
+
+            // Apply the config data to the core
+            applySetupData(setupData)
+          })
+        }
+        // Setup the response handler for the widget api
+        window.KambiWidget.receiveResponse = dataObject => {
+          widgetModule.handleResponse(dataObject)
+          updatesModule.handleResponse(dataObject)
+        }
       }
     })
   },
@@ -546,18 +580,6 @@ export default {
     const head = document.getElementsByTagName('head')[0]
     // opereator CSS should be the FIRST CSS in the page
     head.insertBefore(tag, head.firstChild)
-  },
-
-  /**
-   * Adds classes to to HTML tag
-   * @param classes {Array} An array of strings with the classnames to be addes
-   */
-  addClasses(classes) {
-    const body = document.getElementsByTagName('body')[0]
-
-    classes.map(cssClass => {
-      body.classList.add(cssClass)
-    })
   },
 
   /**

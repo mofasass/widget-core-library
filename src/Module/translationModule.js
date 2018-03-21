@@ -1,5 +1,7 @@
 import coreLibrary from '../coreLibrary'
 
+const widgetName = process.env.WIDGET_NAME
+
 /**
  * Module with internationalization methods
  * Provides a very simple internationalization mechanism
@@ -21,7 +23,7 @@ export default {
    */
   getTranslation: function(key, ...args) {
     const locale = coreLibrary.config.locale
-    const kambiI18n = window.kambiI18n
+    const kambiI18n = window.gmWidgetsI18n[widgetName]
     if (kambiI18n == null || locale == null || locale.length != 5) {
       return key
     }

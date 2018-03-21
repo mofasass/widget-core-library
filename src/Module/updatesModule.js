@@ -1,3 +1,4 @@
+import coreLibrary from '../coreLibrary'
 const customTypeSeparator = '-'
 
 /**
@@ -5,20 +6,8 @@ const customTypeSeparator = '-'
  * @module updatesModule
  */
 const updatesModule = {
-  api: {
-    request() {},
-    EVENT_INFO: 'EventInfo',
-    EVENT_INFO_UNSUBSCRIBE: 'EventInfoUnSubscribe',
-    EVENT_INFO_TYPES: {
-      BASIC: 'BASIC',
-      SCORE: 'SCORE',
-      BET_OFFERS: 'BET_OFFERS',
-    },
-    EVENT_INFO_CONTEXT: {
-      LIVE: 'LIVE',
-      PRE_MATCH: 'PRE-MATCH',
-    },
-    BETSLIP_OUTCOMES: 'BetslipOutcomes',
+  get api() {
+    return coreLibrary.widgetApi
   },
 
   /* The final callbacks object structure should look like this:
@@ -128,7 +117,7 @@ const updatesModule = {
 
   subscribe: {
     get api() {
-      return updatesModule.api
+      return coreLibrary.widgetApi
     },
 
     /* IE11 is throwing erros when subscribing to EVENT_INFO in the widget api. This returns false for Edge */
@@ -146,10 +135,8 @@ const updatesModule = {
         cbs[this.api.BETSLIP_OUTCOMES] = []
       }
       cbs[this.api.BETSLIP_OUTCOMES].push(callback)
-      this.api.request(this.api.BETSLIP_OUTCOMES)
     },
 
-    oddsFormatSubscribedTo: false,
     /**
      * Subscription that is triggered when the odds format (decimal, fractional, american) changes
      * @param {Function} callback Callback to be called when receiving new data
@@ -160,10 +147,6 @@ const updatesModule = {
         cbs[this.api.CLIENT_ODDS_FORMAT] = []
       }
       cbs[this.api.CLIENT_ODDS_FORMAT].push(callback)
-      // we can only subscribe to odds format once as each subscription triggers one more call to handleResponse
-      if (this.oddsFormatSubscribedTo === false) {
-        this.api.request(this.api.CLIENT_ODDS_FORMAT)
-      }
       this.oddsFormatSubscribedTo = true
     },
 

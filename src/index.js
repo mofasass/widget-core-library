@@ -1,5 +1,7 @@
 import './polyfills'
-import './widget-api'
+if (process.env.EMBEDDED !== 'true') {
+  require('./widget-api')
+}
 import coreLibrary from './coreLibrary'
 import offeringModule from './Module/offeringModule'
 import statisticsModule from './Module/statisticsModule'

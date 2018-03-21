@@ -6,6 +6,7 @@
 import utilModule from './utilModule'
 import coreLibrary from '../coreLibrary'
 import eventsModule from './EventsModule'
+const EMBEDDED = process.env.EMBEDDED === 'true'
 
 export default {
   /**
@@ -13,13 +14,8 @@ export default {
    * @type {object}
    * @private
    */
-  api: {
-    // placeholders for when running outside of the sportsbook
-    requestSetup() {},
-    request() {},
-    set() {},
-    remove() {},
-    createUrl() {},
+  get api() {
+    return coreLibrary.widgetApi
   },
 
   /**
@@ -277,6 +273,15 @@ export default {
    * @param {Number} height the height in pixels
    */
   setWidgetHeight(height) {
+    if (EMBEDDED) {
+      coreLibrary.embeddedElement.style.height = window.getComputedStyle(
+        coreLibrary.rootElement
+      ).height
+      if (coreLibrary.embeddedOptions.onHeightChange) {
+        coreLibrary.embeddedOptions.onHeightChange(height)
+      }
+      return
+    }
     this.api.set(this.api.WIDGET_HEIGHT, height)
   },
 
@@ -286,6 +291,15 @@ export default {
    * Only works if the html and body tags don't have height: 100% styling rule
    */
   adaptWidgetHeight() {
+    if (EMBEDDED) {
+      const core = coreLibrary
+      const newHeight = window.getComputedStyle(coreLibrary.rootElement).height
+      coreLibrary.embeddedElement.style.height = newHeight
+      if (coreLibrary.embeddedOptions.onHeightChange) {
+        coreLibrary.embeddedOptions.onHeightChange(newHeight)
+      }
+      return
+    }
     // tries to adapt the widget iframe height to match the content
     var body = document.body,
       html = document.documentElement
@@ -322,6 +336,14 @@ export default {
    * Call api to remove widget from the sportsbook
    */
   removeWidget() {
+    if (EMBEDDED) {
+      const rootElement = coreLibrary.rootElement
+      while (rootElement.firstChild) {
+        rootElement.removeChild(rootElement.firstChild)
+      }
+      coreLibrary.embeddedElement.style.display = 'none'
+      return
+    }
     this.api.remove()
   },
 

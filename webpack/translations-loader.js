@@ -5,6 +5,8 @@ const path = require('path')
 let kambiI18n = {}
 const i18nFolderPath = path.resolve(process.cwd(), 'src', 'i18n')
 
+const pkg = require(path.resolve(process.cwd(), 'package.json'))
+
 module.exports = function(source) {
   this.cacheable(true)
 
@@ -31,5 +33,7 @@ module.exports = function(source) {
       )
     }
   })
-  return source + 'window.kambiI18n=' + JSON.stringify(kambiI18n)
+  return `${source};
+  window.gmWidgetsI18n = window.gmWidgetsI18n ? window.gmWidgetsI18n : {};
+  window.gmWidgetsI18n["${pkg.name}"] = ${JSON.stringify(kambiI18n)};`
 }
