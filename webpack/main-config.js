@@ -44,6 +44,10 @@ let plugins = [
       from: './src/assets',
       to: 'assets',
     },
+    {
+      from: './package.json',
+      to: 'package.json',
+    },
   ]),
 ]
 
@@ -121,7 +125,7 @@ module.exports = {
             ],
           },
           {
-            test: /src(\/|\\)index\.js/,
+            test: /widget-core-library(\/|\\)src(\/|\\)index\.js$/,
             exclude: [path.resolve(process.cwd(), '/node_modules/')],
             use: [
               {
@@ -154,7 +158,7 @@ module.exports = {
     ],
   },
   output: {
-    path: path.resolve(process.cwd(), 'dist'),
+    path: path.resolve(process.cwd(), isEmbedded ? 'dist-embedded' : dist),
     filename: '[name].js',
   },
   resolve: {

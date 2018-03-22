@@ -277,8 +277,8 @@ export default {
       coreLibrary.embeddedElement.style.height = window.getComputedStyle(
         coreLibrary.rootElement
       ).height
-      if (coreLibrary.embeddedOptions.onHeightChange) {
-        coreLibrary.embeddedOptions.onHeightChange(height)
+      if (coreLibrary.args.onHeightChange) {
+        coreLibrary.args.onHeightChange(height)
       }
       return
     }
@@ -295,8 +295,8 @@ export default {
       const core = coreLibrary
       const newHeight = window.getComputedStyle(coreLibrary.rootElement).height
       coreLibrary.embeddedElement.style.height = newHeight
-      if (coreLibrary.embeddedOptions.onHeightChange) {
-        coreLibrary.embeddedOptions.onHeightChange(newHeight)
+      if (coreLibrary.args.onHeightChange) {
+        coreLibrary.args.onHeightChange(newHeight)
       }
       return
     }
@@ -342,6 +342,9 @@ export default {
         rootElement.removeChild(rootElement.firstChild)
       }
       coreLibrary.embeddedElement.style.display = 'none'
+      if (coreLibrary.args.onWidgetRemoved) {
+        coreLibrary.args.onWidgetRemoved()
+      }
       return
     }
     this.api.remove()

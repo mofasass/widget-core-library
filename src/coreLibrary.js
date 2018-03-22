@@ -248,6 +248,8 @@ export default {
     https://someurl.com/customcss/kambi/style.css
 
     * @property {String} customCssUrlFallback fallback if the fetching of customCssUrl fails
+    * @property {Function} onHeightChange Callback called when an embedded widget height changes (by calling either widgetModule.setWidgetHeight or widgetModule.adaptWidgetHeight)
+    * @property {Function} onWidgetRemoved Callback called when an embedded widget removes itself (by calling widgetModule.removeWidget)
     * @property {Array<Object>} conditionalArgs Optional, specify arguments to be applied based on some condition based in the values inside coreLibrary.config or coreLibrary.pageInfo
     example:
 
@@ -365,13 +367,6 @@ export default {
   embeddedElement: null,
 
   /**
-   * Options used only in when embedding this widget into another one
-   * @property {Function} onHeightChange Callback called when the embedded widget height changes (by calling either widgetModule.setWidgetHeight or widgetModule.adaptWidgetHeight)
-   * @private
-   */
-  embeddedOptions: null,
-
-  /**
    * Versions of the API provided by the sportsbook
    * @name apiVersions
    * @type {Object}
@@ -468,10 +463,8 @@ export default {
           container,
           wapi,
           clientConfig,
-          args,
-          options = {}
+          args
         ) => {
-          this.embeddedOptions = options
           this.widgetApi = wapi
           this.embeddedElement = container
           this.rootElement = document.createElement('div')
@@ -497,21 +490,19 @@ export default {
           })
         }
       } else if (window.self === window.top) {
+        // For development purposes we might want to load a widget on it's own so we check if we are in an iframe, if not then load a mocked version of the setupData
         this.widgetApi = mockWidgetApi
         this.rootElement = document.getElementById('body')
-        // For development purposes we might want to load a widget on it's own so we check if we are in an iframe, if not then load some fake data
         console.warn(
           window.location.host +
             window.location.pathname +
             ' is being loaded as stand-alone'
         )
-        // Load the mock config data
+
         this.getData('mockSetupData.json')
           .then(mockSetupData => {
-            // Output some debug info that could be helpful
             console.debug('Loaded mock setup data')
             console.debug(mockSetupData)
-            // Apply the mock config data to the core
             applySetupData(mockSetupData)
           })
           .catch(error => {
@@ -524,14 +515,13 @@ export default {
         window.KambiWidget.apiReady = wapi => {
           this.widgetApi = wapi
 
-          // Request the setup info from the widget api
+          // Request the setupData from the widget api
           widgetModule.requestSetup(setupData => {
             // Request the outcomes from the betslip so we can update our widget, also sets up a subscription for future betslip updates
             widgetModule.requestBetslipOutcomes()
             // Request the odds format that is set in the sportsbook, this also sets up a subscription for future odds format changes
             widgetModule.requestOddsFormat()
 
-            // Apply the config data to the core
             applySetupData(setupData)
           })
         }
