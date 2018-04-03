@@ -478,10 +478,13 @@ export default {
           }
           const previousResponseHandler = window.KambiWidget.receiveResponse
           window.KambiWidget.receiveResponse = dataObject => {
-            previousResponseHandler(dataObject)
+            previousResponseHandler(dataObject) // calls any handlers from other widgets or the main page
             widgetModule.handleResponse(dataObject)
             updatesModule.handleResponse(dataObject)
           }
+          widgetModule.requestBetslipOutcomes()
+          // we intentionally do not call requestOddsFormat here, this method should be called exactly once per page so it should be called by whoever is calling this widget.
+          //widgetModule.requestOddsFormat()
           applySetupData({
             clientConfig: Object.assign({}, clientConfig),
             arguments: Object.assign({}, args),
@@ -490,7 +493,7 @@ export default {
           })
         }
       } else if (window.self === window.top) {
-        // For development purposes we might want to load a widget on it's own so we check if we are in an iframe, if not then load a mocked version of the setupData
+        // For development purposes we might want to load a widget on its own so we check if we are in an iframe, if not then load a mocked version of the setupData
         this.widgetApi = mockWidgetApi
         this.rootElement = document.getElementById('body')
         console.warn(
