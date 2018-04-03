@@ -158,7 +158,7 @@ module.exports = {
     ],
   },
   output: {
-    path: path.resolve(process.cwd(), isEmbedded ? 'dist-embedded' : dist),
+    path: path.resolve(process.cwd(), isEmbedded ? 'dist-embedded' : 'dist'),
     filename: '[name].js',
   },
   resolve: {
