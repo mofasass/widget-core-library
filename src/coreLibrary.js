@@ -412,8 +412,8 @@ export default {
   cssLoadedPromise: null,
 
   /**
-   * @type Object
    * a direct reference to the Kambi's WidgetApi (wapi)
+   * @type Object
    */
   widgetApi: null,
 
