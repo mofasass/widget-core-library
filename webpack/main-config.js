@@ -60,7 +60,6 @@ if (!isEmbedded) {
         removeComments: true,
         collapseWhitespace: true,
       },
-      inject: 'head',
     }),
   ]
 }

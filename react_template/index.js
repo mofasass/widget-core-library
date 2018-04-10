@@ -61,7 +61,7 @@ coreLibrary
         event: event,
         title: coreLibrary.args.title,
       }),
-      document.getElementById('root')
+      coreLibrary.rootElement
     )
   })
   .catch(error => {

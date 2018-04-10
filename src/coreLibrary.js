@@ -495,7 +495,7 @@ export default {
       } else if (window.self === window.top) {
         // For development purposes we might want to load a widget on its own so we check if we are in an iframe, if not then load a mocked version of the setupData
         this.widgetApi = mockWidgetApi
-        this.rootElement = document.getElementById('body')
+        this.rootElement = document.getElementsByTagName('body')[0]
         console.warn(
           window.location.host +
             window.location.pathname +
@@ -514,7 +514,7 @@ export default {
             reject()
           })
       } else {
-        this.rootElement = document.getElementById('body')
+        this.rootElement = document.getElementsByTagName('body')[0]
         window.KambiWidget.apiReady = wapi => {
           this.widgetApi = wapi
 
