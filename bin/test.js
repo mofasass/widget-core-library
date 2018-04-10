@@ -21,12 +21,16 @@ const test = ({ options }) => {
       path.resolve(coreLibraryPath, 'node_modules'),
     ],
     moduleNameMapper: {
-      ['\\.(s?css|less|jpe?g|png|svg|gif|html)$']: 'identity-obj-proxy',
+      ['\\.(s?css|less|html)$']: 'identity-obj-proxy',
     },
     rootDir: subjectPath,
     testRegex: '(./tests/.*|(\\.|/)(test|spec))\\.jsx?$',
     transform: {
       '\\.jsx?$': path.resolve(coreLibraryPath, './jest/transform.js'),
+      '\\.(jpe?g|png|svg|gif)$': path.resolve(
+        coreLibraryPath,
+        './jest/fileTransform.js'
+      ),
     },
     setupTestFrameworkScriptFile: path.resolve(
       coreLibraryPath,
