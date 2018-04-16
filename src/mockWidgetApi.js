@@ -7,6 +7,12 @@ export default {
   remove() {},
   createUrl() {},
   navigateClient() {},
+  requestOddsAsAmerican(odds, cb) {
+    cb(odds)
+  },
+  requestOddsAsFractional(odds, cb) {
+    cb(odds)
+  },
   BETSLIP_OUTCOMES_ARGS: {
     UPDATE_REPLACE: 'replace',
     UPDATE_APPEND: 'append',
