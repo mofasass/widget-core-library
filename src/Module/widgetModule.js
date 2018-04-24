@@ -341,14 +341,14 @@ export default {
    */
   removeWidget() {
     if (EMBEDDED) {
+      if (coreLibrary.args.onWidgetRemoved) {
+        coreLibrary.args.onWidgetRemoved()
+      }
       const rootElement = coreLibrary.rootElement
       while (rootElement.firstChild) {
         rootElement.removeChild(rootElement.firstChild)
       }
       coreLibrary.embeddedElement.style.display = 'none'
-      if (coreLibrary.args.onWidgetRemoved) {
-        coreLibrary.args.onWidgetRemoved()
-      }
       return
     }
     this.api.remove()
