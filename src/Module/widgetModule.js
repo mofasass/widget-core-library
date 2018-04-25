@@ -342,6 +342,7 @@ export default {
   removeWidget() {
     if (EMBEDDED) {
       if (coreLibrary.args.onWidgetRemoved) {
+        // needs to run before the removing the elements from the page so the widget can unmount React components for example
         coreLibrary.args.onWidgetRemoved()
       }
       const rootElement = coreLibrary.rootElement
