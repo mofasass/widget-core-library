@@ -249,7 +249,7 @@ export default {
 
     * @property {String} customCssUrlFallback fallback if the fetching of customCssUrl fails
     * @property {Function} onHeightChange Callback called when an embedded widget height changes (by calling either widgetModule.setWidgetHeight or widgetModule.adaptWidgetHeight)
-    * @property {Function} onWidgetRemoved Callback called when an embedded widget removes itself (by calling widgetModule.removeWidget)
+    * @property {Function} onWidgetRemoved Callback called when an widget removes itself (by calling widgetModule.removeWidget)
     * @property {Array<Object>} conditionalArgs Optional, specify arguments to be applied based on some condition based in the values inside coreLibrary.config or coreLibrary.pageInfo
     example:
 
@@ -418,6 +418,14 @@ export default {
   widgetApi: null,
 
   /**
+   * Methods returned by the widget when it's function is called in Embedded mode
+   * by adding more methods here the widget can set up communication with the rest of the page
+   */
+  embeddedMethods: {
+    removeWidget: widgetModule.removeWidget.bind(widgetModule),
+  },
+
+  /**
    * Initializes the Kambi api
    * Uses ./src/mockSetupData.json as coreLibrary.configs if not loaded inside the sportsbook (ie opened the widget directly).
    * @param {Object} defaultArgs arguments to be used if they are not provided by the sportsbook
@@ -491,6 +499,7 @@ export default {
             pageInfo: {},
             versions: {},
           })
+          return this.embeddedMethods
         }
       } else if (window.self === window.top) {
         // For development purposes we might want to load a widget on its own so we check if we are in an iframe, if not then load a mocked version of the setupData

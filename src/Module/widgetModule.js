@@ -340,11 +340,10 @@ export default {
    * Call api to remove widget from the sportsbook
    */
   removeWidget() {
+    if (typeof coreLibrary.args.onWidgetRemoved === 'function') {
+      coreLibrary.args.onWidgetRemoved()
+    }
     if (EMBEDDED) {
-      if (coreLibrary.args.onWidgetRemoved) {
-        // needs to run before the removing the elements from the page so the widget can unmount React components for example
-        coreLibrary.args.onWidgetRemoved()
-      }
       const rootElement = coreLibrary.rootElement
       while (rootElement.firstChild) {
         rootElement.removeChild(rootElement.firstChild)
