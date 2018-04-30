@@ -314,7 +314,8 @@ export default {
       coreLibrary.browser === 'firefox' ||
       coreLibrary.browser === 'chrome' ||
       (coreLibrary.browser === 'internet-explorer' &&
-        parseInt(coreLibrary.browserVersion, 10) <= 11)
+        parseInt(coreLibrary.browserVersion, 10) <= 11) ||
+      coreLibrary.browser === 'ios'
     ) {
       heights.push(body.scrollHeight)
     } else {
