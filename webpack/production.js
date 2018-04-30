@@ -1,10 +1,16 @@
 const webpack = require('webpack')
 const path = require('path')
 
-const useRealReact = Object.assign(
-  { production: false },
+let useRealReact = Object.assign(
+  { development: true, production: false },
   require(path.resolve(process.cwd(), 'package.json')).useRealReact || {}
-).production
+)
+
+if (process.env.NODE_ENV === 'production') {
+  useRealReact = useRealReact.production
+} else {
+  useRealReact = useRealReact.development
+}
 
 module.exports = {
   resolve: Object.assign(
