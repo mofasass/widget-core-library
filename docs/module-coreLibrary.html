@@ -1172,10 +1172,16 @@
 
         <tr>
             
-                <td class="name"><code></code></td>
+                <td class="name"><code>Function</code></td>
             
 
             <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
             
             </td>
 
@@ -1183,7 +1189,29 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>@param destination , widgetTrackingName {String|null} navigateClient Optional, callback called when the widget tries to perform internal Kambi Sportsbook navigation<br>    example:</p>
+<pre class="prettyprint source"><code>conditionalArgs: [
+  // if coreLibrary.config.currency is 'EUR' apply { euro: true, dollars: false } to the arguments
+  {
+     config: {
+        currency: 'EUR'
+     },
+     args: {
+        euro: true,
+        dollars: false
+     }
+  },
+  // if market is 'IT' AND offering is 'IT' apply { italian: true } to the arguments
+  {
+     config: {
+        market: 'IT',
+        offering: 'IT'
+     },
+     args: {
+        italian: true
+     }
+  },
+]</code></pre></td>
         </tr>
 
     

@@ -362,7 +362,7 @@ export default {
     * @property {Function} onHeightChange Callback called when an embedded widget height changes (by calling either widgetModule.setWidgetHeight or widgetModule.adaptWidgetHeight)
     * @property {Function} onWidgetRemoved Callback called when an widget removes itself (by calling widgetModule.removeWidget)
     * @property {Array&lt;Object>} conditionalArgs Optional, specify arguments to be applied based on some condition based in the values inside coreLibrary.config or coreLibrary.pageInfo
-    * @property {Function(destination {String}, widgetTrackingName {String|null})} navigateClient Optional, callback called when the widget tries to perform internal Kambi Sportsbook navigation
+    * @property Function @param destination {String}, widgetTrackingName {String|null} navigateClient Optional, callback called when the widget tries to perform internal Kambi Sportsbook navigation
     example:
 
     conditionalArgs: [

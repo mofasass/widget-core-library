@@ -1,7 +1,7 @@
+@import '~compass-mixins';
+@import 'includes/variables';
+@import 'includes/general';
 .rootElement {
-   @import '~compass-mixins';
-   @import 'includes/variables';
-   @import 'includes/general';
    @import 'includes/overrides';
    position: relative;
    &Embedded {
