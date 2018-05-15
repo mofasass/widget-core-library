@@ -7,6 +7,8 @@ import updatesModule from './Module/updatesModule'
 import constants from './constants'
 import mockWidgetApi from './mockWidgetApi'
 
+import styles from './scss/core.scss'
+
 /**
  * Main module that holds the other modules as well as widget
  * related configurations
@@ -251,6 +253,7 @@ export default {
     * @property {Function} onHeightChange Callback called when an embedded widget height changes (by calling either widgetModule.setWidgetHeight or widgetModule.adaptWidgetHeight)
     * @property {Function} onWidgetRemoved Callback called when an widget removes itself (by calling widgetModule.removeWidget)
     * @property {Array<Object>} conditionalArgs Optional, specify arguments to be applied based on some condition based in the values inside coreLibrary.config or coreLibrary.pageInfo
+    * @property {Function(destination {String}, widgetTrackingName {String||null})} navigateClient Optional, callback called when the widget tries to perform internal Kambi Sportsbook navigation
     example:
 
     conditionalArgs: [
@@ -476,17 +479,17 @@ export default {
           this.widgetApi = wapi
           this.embeddedElement = container
           this.rootElement = document.createElement('div')
-          this.rootElement.style.boxSizing = 'border-box'
-          this.embeddedElement.style.boxSizing = 'border-box'
-          this.embeddedElement.style.height = 0
-          this.embeddedElement.style.overflowY = 'hidden'
+          this.rootElement.className += ` ${[
+            styles.rootElement,
+            styles.rootElementEmbedded,
+          ].join(' ')}`
           this.embeddedElement.appendChild(this.rootElement)
           if (window.KambiWidget.receiveResponse == null) {
             window.KambiWidget.receiveResponse = function() {}
           }
           const previousResponseHandler = window.KambiWidget.receiveResponse
-          window.KambiWidget.receiveResponse = dataObject => {
-            previousResponseHandler(dataObject) // calls any handlers from other widgets or the main page
+          window.KambiWidget.receiveResponse = (dataObject, wapi) => {
+            previousResponseHandler(dataObject, wapi) // calls any handlers from other widgets or the main page
             widgetModule.handleResponse(dataObject)
             updatesModule.handleResponse(dataObject)
           }
@@ -505,6 +508,7 @@ export default {
         // For development purposes we might want to load a widget on its own so we check if we are in an iframe, if not then load a mocked version of the setupData
         this.widgetApi = mockWidgetApi
         this.rootElement = document.createElement('div')
+        this.rootElement.className += ` ${styles.rootElement}`
         document.getElementsByTagName('body')[0].appendChild(this.rootElement)
         console.warn(
           window.location.host +
@@ -525,6 +529,7 @@ export default {
           })
       } else {
         this.rootElement = document.createElement('div')
+        this.rootElement.className += ` ${styles.rootElement}`
         document.getElementsByTagName('body')[0].appendChild(this.rootElement)
         window.KambiWidget.apiReady = wapi => {
           this.widgetApi = wapi

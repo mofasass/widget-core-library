@@ -1,4 +1,12 @@
-@import '~compass-mixins';
-@import 'includes/variables';
-@import 'includes/general';
-@import 'includes/overrides';
+.rootElement {
+   @import '~compass-mixins';
+   @import 'includes/variables';
+   @import 'includes/general';
+   @import 'includes/overrides';
+   position: relative;
+   &Embedded {
+      box-sizing: border-box;
+      height: 0;
+      overflow-y: hidden;
+   }
+}

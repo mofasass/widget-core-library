@@ -423,7 +423,8 @@ export default {
       coreLibrary.browser === 'firefox' ||
       coreLibrary.browser === 'chrome' ||
       (coreLibrary.browser === 'internet-explorer' &amp;&amp;
-        parseInt(coreLibrary.browserVersion, 10) &lt;= 11)
+        parseInt(coreLibrary.browserVersion, 10) &lt;= 11) ||
+      coreLibrary.browser === 'ios'
     ) {
       heights.push(body.scrollHeight)
     } else {
@@ -449,15 +450,15 @@ export default {
    * Call api to remove widget from the sportsbook
    */
   removeWidget() {
+    if (typeof coreLibrary.args.onWidgetRemoved === 'function') {
+      coreLibrary.args.onWidgetRemoved()
+    }
     if (EMBEDDED) {
       const rootElement = coreLibrary.rootElement
       while (rootElement.firstChild) {
         rootElement.removeChild(rootElement.firstChild)
       }
       coreLibrary.embeddedElement.style.display = 'none'
-      if (coreLibrary.args.onWidgetRemoved) {
-        coreLibrary.args.onWidgetRemoved()
-      }
       return
     }
     this.api.remove()

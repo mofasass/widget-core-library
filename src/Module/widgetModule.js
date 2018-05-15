@@ -542,11 +542,21 @@ export default {
         coreLibrary.config.routeRoot
       )
     }
-
-    if (coreLibrary.widgetTrackingName != null) {
-      this.api.navigateClient(finalTarget, coreLibrary.widgetTrackingName)
+    if (EMBEDDED) {
+      if (coreLibrary.args.hasOwnProperty('navigateClient')) {
+        coreLibrary.args.navigateClient(
+          finalTarget,
+          coreLibrary.widgetTrackingName != null
+            ? coreLibrary.widgetTrackingName
+            : null
+        )
+      }
     } else {
-      this.api.navigateClient(finalTarget)
+      if (coreLibrary.widgetTrackingName != null) {
+        this.api.navigateClient(finalTarget, coreLibrary.widgetTrackingName)
+      } else {
+        this.api.navigateClient(finalTarget)
+      }
     }
   },
 }
