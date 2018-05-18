@@ -115,17 +115,6 @@ export default {
    */
   initialized: false,
 
-  /** Throws error if the core has already been initialized
-   * @private
-   */
-  checkInit() {
-    if (this.initialized) {
-      throw new Error(
-        'Can not override property after initilization of the coreLibrary'
-      )
-    }
-  },
-
   /**
    * Name of the browser that is running the widget
    * @type {String}
@@ -190,7 +179,6 @@ export default {
   },
 
   set config(config) {
-    this.checkInit()
     for (var i in config) {
       if (config.hasOwnProperty(i) && this._config.hasOwnProperty(i)) {
         this._config[i] = config[i]
@@ -233,7 +221,6 @@ export default {
   },
 
   set defaultArgs(defaultArgs) {
-    this.checkInit()
     this._defaultArgs = Object.assign(defaultArgs, {
       onHeightChange: function() {},
       onWidgetRemoved: function() {},
@@ -294,7 +281,6 @@ export default {
   },
 
   set args(args) {
-    this.checkInit()
     args = Object.assign({}, this.defaultArgs, args)
 
     // Handling conditionalArgs
@@ -349,7 +335,6 @@ export default {
   },
 
   set pageInfo(pageInfo) {
-    this.checkInit()
     // Check if the last character in the pageParam property is a slash, if not add it so we can use this property in filter requests
     if (
       pageInfo.pageType === 'filter' &&
@@ -394,7 +379,6 @@ export default {
   },
 
   set apiVersions(versions) {
-    this.checkInit()
     this._apiVersions = versions
   },
 
