@@ -456,7 +456,7 @@ export default {
           // if embedded the widget will assume that operator CSS is included by whoever is embedding it
           this.injectOperatorCss(this.config.customer, this.config.offering)
 
-          const body = document.getElementsByTagName('body')[0]
+          const body = document.body
           this.kambiDefaultClasses.map(cssClass => {
             body.classList.add(cssClass)
           })
@@ -510,50 +510,51 @@ export default {
           })
           return this.embeddedMethods
         }
-      } else if (window.self === window.top) {
-        // For development purposes we might want to load a widget on its own so we check if we are in an iframe, if not then load a mocked version of the setupData
-        this.widgetApi = mockWidgetApi
-        this.rootElement = document.createElement('div')
-        this.rootElement.className += ` ${styles.rootElement}`
-        document.getElementsByTagName('body')[0].appendChild(this.rootElement)
-        console.warn(
-          window.location.host +
-            window.location.pathname +
-            ' is being loaded as stand-alone'
-        )
-
-        this.getData('mockSetupData.json')
-          .then(mockSetupData => {
-            console.debug('Loaded mock setup data')
-            console.debug(mockSetupData)
-            applySetupData(mockSetupData)
-          })
-          .catch(error => {
-            console.debug('Failed to fetch mockSetupData')
-            console.trace(error)
-            reject()
-          })
       } else {
+        document.documentElement.className += ` ${styles.notEmbedded}`
         this.rootElement = document.createElement('div')
         this.rootElement.className += ` ${styles.rootElement}`
-        document.getElementsByTagName('body')[0].appendChild(this.rootElement)
-        window.KambiWidget.apiReady = wapi => {
-          this.widgetApi = wapi
+        document.body.appendChild(this.rootElement)
 
-          // Request the setupData from the widget api
-          widgetModule.requestSetup(setupData => {
-            // Request the outcomes from the betslip so we can update our widget, also sets up a subscription for future betslip updates
-            widgetModule.requestBetslipOutcomes()
-            // Request the odds format that is set in the sportsbook, this also sets up a subscription for future odds format changes
-            widgetModule.requestOddsFormat()
+        if (window.self === window.top) {
+          // For development purposes we might want to load a widget on its own so we check if we are in an iframe, if not then load a mocked version of the setupData
+          this.widgetApi = mockWidgetApi
+          console.warn(
+            window.location.host +
+              window.location.pathname +
+              ' is being loaded as stand-alone'
+          )
 
-            applySetupData(setupData)
-          })
-        }
-        // Setup the response handler for the widget api
-        window.KambiWidget.receiveResponse = dataObject => {
-          widgetModule.handleResponse(dataObject)
-          updatesModule.handleResponse(dataObject)
+          this.getData('mockSetupData.json')
+            .then(mockSetupData => {
+              console.debug('Loaded mock setup data')
+              console.debug(mockSetupData)
+              applySetupData(mockSetupData)
+            })
+            .catch(error => {
+              console.debug('Failed to fetch mockSetupData')
+              console.trace(error)
+              reject()
+            })
+        } else {
+          window.KambiWidget.apiReady = wapi => {
+            this.widgetApi = wapi
+
+            // Request the setupData from the widget api
+            widgetModule.requestSetup(setupData => {
+              // Request the outcomes from the betslip so we can update our widget, also sets up a subscription for future betslip updates
+              widgetModule.requestBetslipOutcomes()
+              // Request the odds format that is set in the sportsbook, this also sets up a subscription for future odds format changes
+              widgetModule.requestOddsFormat()
+
+              applySetupData(setupData)
+            })
+          }
+          // Setup the response handler for the widget api
+          window.KambiWidget.receiveResponse = dataObject => {
+            widgetModule.handleResponse(dataObject)
+            updatesModule.handleResponse(dataObject)
+          }
         }
       }
     })
@@ -592,7 +593,7 @@ export default {
       offering +
       '/widgets.css'
     const tag = this.createStyleTag('operator-css', url)
-    const head = document.getElementsByTagName('head')[0]
+    const head = document.head
     // opereator CSS should be the FIRST CSS in the page
     head.insertBefore(tag, head.firstChild)
   },
@@ -620,7 +621,7 @@ export default {
 
     const appendToHead = url => {
       const tag = this.createStyleTag('custom-css', url)
-      const head = document.getElementsByTagName('head')[0]
+      const head = document.head
       // custom CSS should be the LAST CSS in the page
       head.insertBefore(tag, null)
     }
