@@ -133,7 +133,7 @@ export default {
         eventsModule.publish('ODDS:FORMAT', response.data)
         break
       case this.api.CLIENT_CONFIG:
-        coreLibrary.setConfig(response.data)
+        coreLibrary.config = response.data
         eventsModule.publish('CLIENT:CONFIG', response.data)
         break
       case this.api.USER_LOGGED_IN:
