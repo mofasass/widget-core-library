@@ -537,14 +537,12 @@ export default {
       )
     }
     if (EMBEDDED) {
-      if (coreLibrary.args.hasOwnProperty('navigateClient')) {
-        coreLibrary.args.navigateClient(
-          finalTarget,
-          coreLibrary.widgetTrackingName != null
-            ? coreLibrary.widgetTrackingName
-            : null
-        )
-      }
+      coreLibrary.args.onWidgetNavigateClient(
+        finalTarget,
+        coreLibrary.widgetTrackingName != null
+          ? coreLibrary.widgetTrackingName
+          : null
+      )
     } else {
       if (coreLibrary.widgetTrackingName != null) {
         this.api.navigateClient(finalTarget, coreLibrary.widgetTrackingName)

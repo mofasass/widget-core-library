@@ -257,6 +257,7 @@ export default {
     * @property {Function} onHeightChange Callback called when an embedded widget height changes (by calling either widgetModule.setWidgetHeight or widgetModule.adaptWidgetHeight)
     * @property {Function} onWidgetRemoved Callback called when an widget removes itself (by calling widgetModule.removeWidget)
     * @property {Function} onWidgetLoaded Callback called when an widget finishes loading. This needs to be called by the widget itself after rendering its content
+    * @property {Function} onWidgetNavigateClient Callback called when an widget wants to navigate to another page. In embedded mode the widget will NOT call the WidgetAPI.navigateClient, instead it will call this method with the path of the page. Second parameter is coreLibrary.args.widgetTrackingName
     * @property {Array<Object>} conditionalArgs Optional, specify arguments to be applied based on some condition based in the values inside coreLibrary.config or coreLibrary.pageInfo
     * @property {String|null} widgetTrackingName  navigateClient Optional, callback called when the widget tries to perform internal Kambi Sportsbook navigation
     example:
