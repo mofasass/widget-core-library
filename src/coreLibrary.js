@@ -234,7 +234,11 @@ export default {
 
   set defaultArgs(defaultArgs) {
     this.checkInit()
-    this._defaultArgs = defaultArgs
+    this._defaultArgs = Object.assign(defaultArgs, {
+      onHeightChange: function() {},
+      onWidgetRemoved: function() {},
+      onWidgetLoaded: function() {},
+    })
   },
 
   /**
@@ -252,8 +256,9 @@ export default {
     * @property {String} customCssUrlFallback fallback if the fetching of customCssUrl fails
     * @property {Function} onHeightChange Callback called when an embedded widget height changes (by calling either widgetModule.setWidgetHeight or widgetModule.adaptWidgetHeight)
     * @property {Function} onWidgetRemoved Callback called when an widget removes itself (by calling widgetModule.removeWidget)
+    * @property {Function} onWidgetLoaded Callback called when an widget finishes loading. This needs to be called by the widget itself after rendering its content
     * @property {Array<Object>} conditionalArgs Optional, specify arguments to be applied based on some condition based in the values inside coreLibrary.config or coreLibrary.pageInfo
-    * @property Function @param destination {String}, widgetTrackingName {String|null} navigateClient Optional, callback called when the widget tries to perform internal Kambi Sportsbook navigation
+    * @property {String|null} widgetTrackingName  navigateClient Optional, callback called when the widget tries to perform internal Kambi Sportsbook navigation
     example:
 
     conditionalArgs: [

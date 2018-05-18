@@ -277,9 +277,7 @@ export default {
       coreLibrary.embeddedElement.style.height = window.getComputedStyle(
         coreLibrary.rootElement
       ).height
-      if (coreLibrary.args.onHeightChange) {
-        coreLibrary.args.onHeightChange(height)
-      }
+      coreLibrary.args.onHeightChange(height)
       return
     }
     this.api.set(this.api.WIDGET_HEIGHT, height)
@@ -295,9 +293,7 @@ export default {
       const core = coreLibrary
       const newHeight = window.getComputedStyle(coreLibrary.rootElement).height
       coreLibrary.embeddedElement.style.height = newHeight
-      if (coreLibrary.args.onHeightChange) {
-        coreLibrary.args.onHeightChange(newHeight)
-      }
+      coreLibrary.args.onHeightChange(newHeight)
       return
     }
     // tries to adapt the widget iframe height to match the content
@@ -340,10 +336,8 @@ export default {
   /**
    * Call api to remove widget from the sportsbook
    */
-  removeWidget() {
-    if (typeof coreLibrary.args.onWidgetRemoved === 'function') {
-      coreLibrary.args.onWidgetRemoved()
-    }
+  removeWidget(err) {
+    coreLibrary.args.onWidgetRemoved(err)
     if (EMBEDDED) {
       const rootElement = coreLibrary.rootElement
       while (rootElement.firstChild) {
