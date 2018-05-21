@@ -383,9 +383,7 @@ export default {
    */
   setWidgetHeight(height) {
     if (EMBEDDED) {
-      coreLibrary.embeddedElement.style.height = window.getComputedStyle(
-        coreLibrary.rootElement
-      ).height
+      coreLibrary.embeddedElement.style.height = height + 'px'
       coreLibrary.args.onHeightChange(height)
       return
     }
