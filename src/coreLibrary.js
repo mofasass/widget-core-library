@@ -485,8 +485,8 @@ export default {
           this.widgetApi = wapi
           this.embeddedElement = container
           this.rootElement = document.createElement('div')
-          this.rootElement.className += ` ${[
-            styles.rootElement,
+          this.rootElement.className += ` ${[styles.rootElement].join(' ')}`
+          this.embeddedElement.className += ` ${[
             styles.rootElementEmbedded,
           ].join(' ')}`
           this.embeddedElement.appendChild(this.rootElement)
