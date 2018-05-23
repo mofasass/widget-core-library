@@ -466,6 +466,22 @@ export default {
           clientConfig,
           args
         ) => {
+          if (container == null) {
+            throw new Error('Container not provided. Please send a HTMLElement')
+          }
+
+          if (wapi == null) {
+            throw new Error(
+              'Wapi not provided. Please send a reference to the Kambi Widget API'
+            )
+          }
+
+          if (clientConfig == null) {
+            throw new Error(
+              'clientConfig not provided. Please send an object with client config data'
+            )
+          }
+
           this.widgetApi = wapi
           this.embeddedElement = container
           this.rootElement = document.createElement('div')
