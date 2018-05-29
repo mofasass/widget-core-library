@@ -7,6 +7,7 @@ const babelOptions = require('./babel-options')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin
 const path = require('path')
+const constants = require('./constants')
 
 const pkg = require(path.resolve(process.cwd(), 'package.json'))
 
@@ -33,6 +34,9 @@ let plugins = [
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       EMBEDDED: JSON.stringify(process.env.EMBEDDED),
       WIDGET_NAME: JSON.stringify(pkg.name),
+      WIDGET_CSS_VERSION: pkg.widgetCssVersion
+        ? JSON.stringify(pkg.widgetCssVersion)
+        : JSON.stringify(constants.widgetCssVersion),
     },
   }),
   new CopyWebpackPlugin([
