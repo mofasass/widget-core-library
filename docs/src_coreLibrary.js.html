@@ -113,7 +113,6 @@ import translationModule from './Module/translationModule'
 import utilModule from './Module/utilModule'
 import widgetModule from './Module/widgetModule'
 import updatesModule from './Module/updatesModule'
-import constants from './constants'
 import mockWidgetApi from './mockWidgetApi'
 
 import styles from './scss/core.scss'
@@ -695,7 +694,7 @@ export default {
   injectOperatorCss(customer, offering) {
     const url =
       '//c3-static.kambi.com/sb-mobileclient/widget-api/' +
-      constants.widgetCssVersion +
+      process.env.WIDGET_CSS_VERSION +
       '/resources/css/' +
       customer +
       '/' +

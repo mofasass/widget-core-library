@@ -524,29 +524,35 @@ export default {
               ' is being loaded as stand-alone'
           )
 
-          this.getData('mockSetupData.json')
-            .then(mockSetupData => {
-              console.debug('Loaded mock setup data')
-              console.debug(mockSetupData)
-              applySetupData(mockSetupData)
-            })
-            .catch(error => {
-              console.debug('Failed to fetch mockSetupData')
-              console.trace(error)
-              reject()
-            })
+          this.fetchMockSetupData()
+            .then(data => applySetupData(data))
+            .catch(err => reject(err))
         } else {
           window.KambiWidget.apiReady = wapi => {
             this.widgetApi = wapi
 
             // Request the setupData from the widget api
             widgetModule.requestSetup(setupData => {
+              const args = setupData.arguments
               // Request the outcomes from the betslip so we can update our widget, also sets up a subscription for future betslip updates
               widgetModule.requestBetslipOutcomes()
               // Request the odds format that is set in the sportsbook, this also sets up a subscription for future odds format changes
               widgetModule.requestOddsFormat()
 
-              applySetupData(setupData)
+              // Check if the args contains mockSetupData key
+              if (args.mockSetupData == null) {
+                applySetupData(setupData)
+              } else if (typeof args.mockSetupData === 'string') {
+                this.fetchMockSetupData(args.mockSetupData)
+                  .then(data => {
+                    delete args.mockSetupData
+                    data.arguments = Object.assign(data.arguments, args)
+                    applySetupData(data)
+                  })
+                  .catch(err => reject(err))
+              } else {
+                applySetupData(args.mockSetupData)
+              }
             })
           }
           // Setup the response handler for the widget api
@@ -557,6 +563,27 @@ export default {
         }
       }
     })
+  },
+
+  /**
+   * Fetches a mockSetupData.json file used to initialise a widget with specific configurations
+   *
+   * @param path {string} [path='mockSetupData.json']
+   * @returns {object} mockSetupData
+   * @private
+   */
+  fetchMockSetupData(path = 'mockSetupData.json') {
+    return this.getData(path)
+      .then(mockSetupData => {
+        console.debug('Loaded mock setup data')
+        console.debug(mockSetupData)
+        return mockSetupData
+      })
+      .catch(error => {
+        console.debug('Failed to fetch mockSetupData')
+        console.trace(error)
+        return error
+      })
   },
 
   /**
