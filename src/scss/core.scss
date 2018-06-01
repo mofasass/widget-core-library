@@ -2,7 +2,6 @@
 @import './variables';
 .rootElement {
   position: relative; // makes absolute position stuff relative to the coreLibrary.rootElement
-
   * {
     font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 12px;
@@ -15,35 +14,27 @@
     -o-user-select: none;
     -webkit-user-select: none;
   }
-
   *,
   *::after,
   *::before {
     @include box-sizing(border-box);
   }
-
   a {
     text-decoration: none;
   }
-
   strong {
     font-weight: bold;
   }
-
   &Embedded {
     box-sizing: border-box;
     height: 0;
     overflow-y: hidden;
-  }
-
-  // Chrome clipping bug: crbug.com/157218
+  } // Chrome clipping bug: crbug.com/157218
   .KambiWidget-outcome__odds-wrapper {
     transform: none !important;
-  }
-  // Address margins set differently in Firefox 4+, Safari, and Chrome
+  } // Address margins set differently in Firefox 4+, Safari, and Chrome
   input:matches([type='button'], [type='submit'], [type='reset']),
-  input[type='file']::-webkit-file-upload-button,
-  button {
+  input[type='file']::-webkit-file-upload-button {
     margin: initial;
   }
 }
