@@ -484,13 +484,18 @@ export default {
           this.widgetApi = wapi
           this.embeddedElement = container
           this.rootElement = document.createElement('div')
-          this.rootElement.className += ` ${[
-            styles.rootElement,
-            'glomo-' + process.env.WIDGET_NAME,
-          ].join(' ')}`
-          this.embeddedElement.className += ` ${[
-            styles.rootElementEmbedded,
-          ].join(' ')}`
+          this.rootElement.className += ` ${styles.rootElement}`
+          this.embeddedElement.className += ` ${'glomo-' +
+            process.env.WIDGET_NAME}`
+          const embeddedStyle = {
+            boxSizing: 'border-box',
+            height: '0px',
+            overflowY: 'hidden',
+          }
+          Object.keys(embeddedStyle).forEach(key => {
+            this.embeddedElement.style[key] = embeddedStyle[key]
+          })
+
           this.embeddedElement.appendChild(this.rootElement)
           if (window.KambiWidget.receiveResponse == null) {
             window.KambiWidget.receiveResponse = function() {}
@@ -513,12 +518,28 @@ export default {
           return this.embeddedMethods
         }
       } else {
-        document.documentElement.className += ` ${styles.notEmbedded}`
+        const htmlStyle = {
+          minWidth: '100%',
+          width: '100%',
+          margin: '0px',
+          padding: '0px',
+        }
+        const bodyStyle = {
+          margin: '0px',
+          padding: '0px',
+          width: '100%',
+        }
+        const html = document.documentElement
+        const body = document.body
+        Object.keys(htmlStyle).forEach(key => {
+          html.style[key] = htmlStyle[key]
+        })
+        Object.keys(bodyStyle).forEach(key => {
+          body.style[key] = bodyStyle[key]
+        })
+        body.className += 'glomo-' + process.env.WIDGET_NAME
         this.rootElement = document.createElement('div')
-        this.rootElement.className += ` ${[
-          styles.rootElement,
-          'glomo-' + process.env.WIDGET_NAME,
-        ].join(' ')}`
+        this.rootElement.className += ` ${styles.rootElement}`
         document.body.appendChild(this.rootElement)
 
         if (window.self === window.top) {
