@@ -6,6 +6,7 @@ const autoprefixer = require('autoprefixer')
 const babelOptions = require('./babel-options')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin
+const postCssPrefixer = require('postcss-prefix-selector')
 const path = require('path')
 const constants = require('./constants')
 
@@ -22,6 +23,12 @@ const babelLoader = {
 
 const postCssOptions = {
   plugins: () => [
+    postCssPrefixer({
+      prefix: '.glomo-' + pkg.name,
+      transform: function(prefix, selector, prefixedSelector) {
+        return ':global(' + prefix + ') ' + selector
+      },
+    }),
     autoprefixer({
       browsers: ['ie >= 11', 'ios_saf >= 7', 'and_chr >= 5', 'Last 1 versions'],
     }),

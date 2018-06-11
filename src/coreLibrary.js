@@ -484,7 +484,10 @@ export default {
           this.widgetApi = wapi
           this.embeddedElement = container
           this.rootElement = document.createElement('div')
-          this.rootElement.className += ` ${[styles.rootElement].join(' ')}`
+          this.rootElement.className += ` ${[
+            styles.rootElement,
+            'glomo-' + process.env.WIDGET_NAME,
+          ].join(' ')}`
           this.embeddedElement.className += ` ${[
             styles.rootElementEmbedded,
           ].join(' ')}`
@@ -512,7 +515,10 @@ export default {
       } else {
         document.documentElement.className += ` ${styles.notEmbedded}`
         this.rootElement = document.createElement('div')
-        this.rootElement.className += ` ${styles.rootElement}`
+        this.rootElement.className += ` ${[
+          styles.rootElement,
+          'glomo-' + process.env.WIDGET_NAME,
+        ].join(' ')}`
         document.body.appendChild(this.rootElement)
 
         if (window.self === window.top) {

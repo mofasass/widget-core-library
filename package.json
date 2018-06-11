@@ -68,6 +68,7 @@
     "node-sass": "^4.7.2",
     "opn": "^4.0.2",
     "postcss-loader": "^2.1.0",
+    "postcss-prefix-selector": "^1.6.0",
     "preact": "^8.2.7",
     "preact-compat": "^3.18.0",
     "prop-types": "^15.6.1",
