@@ -486,7 +486,7 @@ export default {
           this.rootElement = document.createElement('div')
           this.rootElement.className += ` ${styles.rootElement}`
           this.embeddedElement.className += ` ${'glomo-' +
-            process.env.WIDGET_NAME}`
+            process.env.WIDGET_NAME} ${'glomo2-' + process.env.WIDGET_NAME}`
           const embeddedStyle = {
             boxSizing: 'border-box',
             height: '0px',
@@ -537,7 +537,9 @@ export default {
         Object.keys(bodyStyle).forEach(key => {
           body.style[key] = bodyStyle[key]
         })
-        body.className += 'glomo-' + process.env.WIDGET_NAME
+        body.className += ` glomo-${process.env.WIDGET_NAME} glomo2-${
+          process.env.WIDGET_NAME
+        }`
         this.rootElement = document.createElement('div')
         this.rootElement.className += ` ${styles.rootElement}`
         document.body.appendChild(this.rootElement)

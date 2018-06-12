@@ -24,7 +24,7 @@ const babelLoader = {
 const postCssOptions = {
   plugins: () => [
     postCssPrefixer({
-      prefix: '.glomo-' + pkg.name,
+      prefix: '.glomo-' + pkg.name + '.glomo2-' + pkg.name,
       transform: function(prefix, selector, prefixedSelector) {
         return ':global(' + prefix + ') ' + selector
       },
