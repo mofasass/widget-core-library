@@ -1,6 +1,6 @@
 {
   "name": "kambi-widget-core-library",
-  "version": "4.10.1",
+  "version": "mrgreen-4.10.2",
   "description": "",
   "main": "src/index.js",
   "bin": {
