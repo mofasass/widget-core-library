@@ -228,6 +228,13 @@ export default {
   },
 
   /**
+   * Function that is called before widgetModule.removeWidget() runs
+   * By overriding this the widget can set up its own cleanup method to unmount any DOM and clear any timeouts when the widget is removed from the page. Useful in Embedded mode
+   * @type {Function|null}
+   */
+  cleanupWidget: null,
+
+  /**
     * args object for the widget, merges the default args provided by coreLibrary.init() with the ones that come from the sportsbook. There are some pre-defined arguments that all widgets accept, but most of them are widget-defined.
     * @property {String} widgetTrackingName Sets widget tracking name for analytics purposes. This tracking name is used for calls to add bets to the betslip
     * @property {String} customCssUrl URL to a CSS file to add to the page, expressions like "{customer}" are replaced with their values in coreLibrary.config. This is useful to load different stylesheets based on operator name.

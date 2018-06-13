@@ -335,15 +335,18 @@ export default {
    * Call api to remove widget from the sportsbook
    */
   removeWidget(err) {
-    coreLibrary.args.onWidgetRemoved(err)
+    if (coreLibrary.cleanupWidget) {
+      coreLibrary.cleanupWidget()
+    }
     if (EMBEDDED) {
-      const rootElement = coreLibrary.rootElement
-      while (rootElement.firstChild) {
-        rootElement.removeChild(rootElement.firstChild)
+      const embeddedElement = coreLibrary.embeddedElement
+      while (embeddedElement.firstChild) {
+        embeddedElement.removeChild(embeddedElement.firstChild)
       }
-      coreLibrary.embeddedElement.style.display = 'none'
+      embeddedElement.style.cssText = '' // clears all inline styles
       return
     }
+    coreLibrary.args.onWidgetRemoved(err)
     this.api.remove()
   },
 
