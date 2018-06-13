@@ -177,7 +177,14 @@ export default {
     return this._config
   },
 
+  /**
+   * Config value received by the gmWidgets[widgetName] call, these take precedence over any sent by the Kambi API (thourgh wapi.CLIENT_CONFIG)
+   * @private
+   */
+  _embeddedConfig: {},
+
   set config(config) {
+    config = Object.assign({}, config, this._embeddedConfig)
     for (var i in config) {
       if (config.hasOwnProperty(i) && this._config.hasOwnProperty(i)) {
         this._config[i] = config[i]
@@ -487,7 +494,7 @@ export default {
               'clientConfig not provided. Please send an object with client config data'
             )
           }
-
+          this._embeddedConfig = Object.assign({}, clientConfig)
           this.widgetApi = wapi
           this.embeddedElement = container
           this.rootElement = document.createElement('div')
@@ -517,7 +524,7 @@ export default {
           // we intentionally do not call requestOddsFormat here, this method should be called exactly once per page so it should be called by whoever is calling this widget.
           //widgetModule.requestOddsFormat()
           applySetupData({
-            clientConfig: Object.assign({}, clientConfig),
+            clientConfig: this._embeddedConfig,
             arguments: Object.assign({}, args),
             pageInfo: {},
             versions: {},
