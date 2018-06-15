@@ -346,10 +346,11 @@ export default {
       embeddedElement.style.cssText = '' // clears all inline styles
       embeddedElement.classList.remove('glomo-' + process.env.WIDGET_NAME)
       embeddedElement.classList.remove('glomo2-' + process.env.WIDGET_NAME)
-      return
+      coreLibrary.args.onWidgetRemoved(err)
+    } else {
+      coreLibrary.args.onWidgetRemoved(err)
+      this.api.remove()
     }
-    coreLibrary.args.onWidgetRemoved(err)
-    this.api.remove()
   },
 
   /**
