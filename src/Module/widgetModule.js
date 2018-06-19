@@ -275,7 +275,7 @@ export default {
   setWidgetHeight(height) {
     if (EMBEDDED) {
       coreLibrary.embeddedElement.style.height = height + 'px'
-      coreLibrary.args.onHeightChange(height)
+      coreLibrary.args.onWidgetHeightChange(height)
       return
     }
     this.api.set(this.api.WIDGET_HEIGHT, height)
@@ -291,7 +291,7 @@ export default {
       const core = coreLibrary
       const newHeight = window.getComputedStyle(coreLibrary.rootElement).height
       coreLibrary.embeddedElement.style.height = newHeight
-      coreLibrary.args.onHeightChange(newHeight)
+      coreLibrary.args.onWidgetHeightChange(newHeight)
       return
     }
     // tries to adapt the widget iframe height to match the content
@@ -348,7 +348,6 @@ export default {
       embeddedElement.classList.remove('glomo2-' + process.env.WIDGET_NAME)
       coreLibrary.args.onWidgetRemoved(err)
     } else {
-      coreLibrary.args.onWidgetRemoved(err)
       this.api.remove()
     }
   },
@@ -441,7 +440,11 @@ export default {
     }
 
     // Send the data to the widget this.api
-    this.api.set(this.api.BETSLIP_OUTCOMES, data)
+    if (EMBEDDED && coreLibrary.args.onWidgetAddOutcomeToBetslip) {
+      coreLibrary.args.onWidgetAddOutcomeToBetslip(data)
+    } else {
+      this.api.set(this.api.BETSLIP_OUTCOMES, data)
+    }
   },
 
   /**
@@ -540,7 +543,7 @@ export default {
         coreLibrary.config.routeRoot
       )
     }
-    if (EMBEDDED) {
+    if (EMBEDDED && coreLibrary.args.onWidgetNavigateClient) {
       coreLibrary.args.onWidgetNavigateClient(
         finalTarget,
         coreLibrary.widgetTrackingName != null

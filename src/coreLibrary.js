@@ -230,7 +230,7 @@ export default {
 
   set defaultArgs(defaultArgs) {
     this._defaultArgs = Object.assign(defaultArgs, {
-      onHeightChange: function() {},
+      onWidgetHeightChange: function() {},
       onWidgetRemoved: function() {},
       onWidgetLoaded: function() {},
     })
@@ -256,10 +256,11 @@ export default {
     https://someurl.com/customcss/kambi/style.css
 
     * @property {String} customCssUrlFallback fallback if the fetching of customCssUrl fails
-    * @property {Function} onHeightChange Callback called when an embedded widget height changes (by calling either widgetModule.setWidgetHeight or widgetModule.adaptWidgetHeight)
-    * @property {Function} onWidgetRemoved Callback called when an widget removes itself (by calling widgetModule.removeWidget)
-    * @property {Function} onWidgetLoaded Callback called when an widget finishes loading. This needs to be called by the widget itself after rendering its content
-    * @property {Function} onWidgetNavigateClient Callback called when an widget wants to navigate to another page. In embedded mode the widget will NOT call the WidgetAPI.navigateClient, instead it will call this method with the path of the page. Second parameter is coreLibrary.args.widgetTrackingName
+    * @property {Function} onWidgetHeightChange Callback called when an embedded widget height changes (by calling either widgetModule.setWidgetHeight or widgetModule.adaptWidgetHeight). Only used in embedded mode.
+    * @property {Function} onWidgetRemoved Callback called when an widget removes itself (by calling widgetModule.removeWidget), Only used in embedded mode.
+    * @property {Function} onWidgetLoaded Callback called when an widget finishes loading. This needs to be called by the widget itself after rendering its content. Only used in embedded mode.
+    * @property {Function} [onWidgetNavigateClient=null] Callback called when an widget wants to navigate to another page. In embedded mode the widget will NOT call the WidgetAPI.navigateClient, instead it will call this method with the path of the page. Second parameter is coreLibrary.args.widgetTrackingName. If not provided will call the Widget API directly. Only used in embedded mode.
+    * @property {Function} [onWidgetAddOutcomeToBetslip=null] Callback called when an widget wants to add a bet to the betslip. The widget receives as a parameter the data object that is to be sent to the Widget API through wapi.set(wapi.BETSLIP_OUTCOMES, data). If not provided will call the Widget API directly. Only used in embedded mode.
     * @property {Array<Object>} conditionalArgs Optional, specify arguments to be applied based on some condition based in the values inside coreLibrary.config or coreLibrary.pageInfo
     * @property {String|null} widgetTrackingName  navigateClient Optional, callback called when the widget tries to perform internal Kambi Sportsbook navigation
     example:
