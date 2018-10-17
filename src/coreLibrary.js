@@ -533,6 +533,9 @@ export default {
 
             // Request the setupData from the widget api
             widgetModule.requestSetup(setupData => {
+              setupData.arguments = setupData.arguments
+                ? setupData.arguments
+                : {}
               const args = setupData.arguments
               // Request the outcomes from the betslip so we can update our widget, also sets up a subscription for future betslip updates
               widgetModule.requestBetslipOutcomes()
