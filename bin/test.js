@@ -8,7 +8,9 @@ process.env.NODE_ENV = 'test'
  * Deletes distribution folder recursively
  * @returns {Promise}
  */
-const test = ({ options }) => {
+const test = ({
+  options
+}) => {
   const coreLibraryPath = path.resolve(__dirname, '../')
   const subjectPath = process.cwd()
   const config = {
@@ -39,6 +41,7 @@ const test = ({ options }) => {
     transformIgnorePatterns: [
       '/node_modules/(?!(kambi-widget-core-library|kambi-widget-components)/)', // transforms core-library and widget-components as well but ignores the rest of /node_modules/
     ],
+    testUrl: 'https://localhost/'
   }
 
   const nodeParams = []
@@ -63,19 +66,20 @@ const test = ({ options }) => {
   // return exec('npm',)
 
   const params =
-    process.platform === 'win32'
-      ? nodeParams
-          .concat(['./node_modules/jest/bin/jest.js'])
-          .concat(jestParams)
-      : nodeParams.concat(['./node_modules/.bin/jest']).concat(jestParams)
+    process.platform === 'win32' ?
+    nodeParams
+    .concat(['./node_modules/jest/bin/jest.js'])
+    .concat(jestParams) :
+    nodeParams.concat(['./node_modules/.bin/jest']).concat(jestParams)
 
-  return exec('node', params, { cwd: subjectPath })
+  return exec('node', params, {
+    cwd: subjectPath
+  })
 }
 
 test.config = {
   name: 'test',
-  description:
-    'Runs test suite. All options except --debug are passed to directly to jest. Jest options can be found here: https://facebook.github.io/jest/docs/cli.html',
+  description: 'Runs test suite. All options except --debug are passed to directly to jest. Jest options can be found here: https://facebook.github.io/jest/docs/cli.html',
   options: [
     [
       '',
