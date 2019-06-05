@@ -34,7 +34,7 @@
   "homepage": "https://github.com/kambi-sportsbook-widgets/widget-core-library#readme",
   "devDependencies": {
     "ink-docstrap": "^1.2.1",
-    "jsdoc": "^3.6.2",
+    "jsdoc": "^3.4.2",
     "kambi-widget-components": "^1.18.2",
     "lint-staged": "^6.1.0",
     "prettier": "^1.10.2"
@@ -42,7 +42,7 @@
   "dependencies": {
     "autoprefixer": "^7.2.5",
     "babel-core": "^6.26.0",
-    "babel-jest": "^24.8.0",
+    "babel-jest": "^22.2.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -52,7 +52,7 @@
     "chalk": "^1.1.3",
     "compass-mixins": "^0.12.10",
     "copy-webpack-plugin": "^4.4.1",
-    "css-loader": "^2.1.1",
+    "css-loader": "^0.28.9",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.3",
@@ -63,7 +63,7 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^2.30.1",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^24.8.0",
+    "jest": "^22.2.1",
     "node-getopt": "^0.2.3",
     "node-sass": "^4.7.2",
     "opn": "^4.0.2",
@@ -81,8 +81,8 @@
     "uglifyjs-webpack-plugin": "^1.1.8",
     "url-loader": "^0.6.2",
     "webpack": "^3.10.0",
-    "webpack-bundle-analyzer": "^3.3.2",
-    "webpack-dev-server": "^3.6.0",
+    "webpack-bundle-analyzer": "^2.10.0",
+    "webpack-dev-server": "^2.11.1",
     "webpack-merge": "^4.1.1"
   }
 }
