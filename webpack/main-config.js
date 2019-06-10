@@ -1,7 +1,7 @@
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const autoprefixer = require('autoprefixer')
 const babelOptions = require('./babel-options')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
@@ -71,15 +71,6 @@ if (!isEmbedded) {
 if (isProd) {
   plugins = [
     ...plugins,
-    new UglifyJsPlugin({
-      uglifyOptions: {
-        ie8: false,
-        compress: {
-          drop_console: true, // Kambi informed us they want the widgets to fail silently in production
-        },
-      },
-    }),
-    new webpack.optimize.AggressiveMergingPlugin(),
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
       openAnalyzer: false,
@@ -88,6 +79,7 @@ if (isProd) {
 }
 
 module.exports = {
+  mode: process.env.NODE_ENV,
   entry: {
     main: './src/index.js',
   },
@@ -176,6 +168,21 @@ module.exports = {
     alias: {
       'translations-loader': path.resolve(__dirname, 'translations-loader'),
     },
+  },
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        extractComments: true,
+        cache: true,
+        parallel: true,
+        terserOptions: {
+          extractComments: 'all',
+          compress: {
+            drop_console: true,
+          },
+        },
+      }),
+    ],
   },
   plugins,
 }
