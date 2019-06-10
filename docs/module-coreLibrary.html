@@ -114,7 +114,8 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>Main module that holds the other modules as well as widget<br>related configurations</p></div>
+            <div class="description"><p>Main module that holds the other modules as well as widget<br>
+related configurations</p></div>
         
 
         
@@ -508,7 +509,8 @@
 <dd>
     
     <div class="description">
-        <p>Methods returned by the widget when it's function is called in Embedded mode<br>by adding more methods here the widget can set up communication with the rest of the page</p>
+        <p>Methods returned by the widget when it's function is called in Embedded mode<br>
+by adding more methods here the widget can set up communication with the rest of the page</p>
     </div>
     
 
@@ -1069,7 +1071,14 @@
 
             
 
-            <td class="description last"><p>URL to a CSS file to add to the page, expressions like &quot;{customer}&quot; are replaced with their values in coreLibrary.config. This is useful to load different stylesheets based on operator name.<br>    Example:<br>    Say coreLibrary.config.customer is 'kambi', then if this argument was set:<br>    {<br>      customCssUrl: &quot;https://someurl.com/customcss/{customer}/style.css&quot;<br>    }<br>    It would load this CSS file and add it to the page:<br>    https://someurl.com/customcss/kambi/style.css</p></td>
+            <td class="description last"><p>URL to a CSS file to add to the page, expressions like &quot;{customer}&quot; are replaced with their values in coreLibrary.config. This is useful to load different stylesheets based on operator name.<br>
+Example:<br>
+Say coreLibrary.config.customer is 'kambi', then if this argument was set:<br>
+{<br>
+customCssUrl: &quot;https://someurl.com/customcss/{customer}/style.css&quot;<br>
+}<br>
+It would load this CSS file and add it to the page:<br>
+https://someurl.com/customcss/kambi/style.css</p></td>
         </tr>
 
     
@@ -1240,8 +1249,9 @@
 
             
 
-            <td class="description last"><p>navigateClient Optional, callback called when the widget tries to perform internal Kambi Sportsbook navigation<br>    example:</p>
-<pre class="prettyprint source"><code>conditionalArgs: [
+            <td class="description last"><p>navigateClient Optional, callback called when the widget tries to perform internal Kambi Sportsbook navigation<br>
+example:</p>
+<pre><code>conditionalArgs: [
   // if coreLibrary.config.currency is 'EUR' apply { euro: true, dollars: false } to the arguments
   {
      config: {
@@ -2396,7 +2406,8 @@
 
     
     <div class="description">
-        <p>Initializes the Kambi api<br>Uses ./src/mockSetupData.json as coreLibrary.configs if not loaded inside the sportsbook (ie opened the widget directly).</p>
+        <p>Initializes the Kambi api<br>
+Uses ./src/mockSetupData.json as coreLibrary.configs if not loaded inside the sportsbook (ie opened the widget directly).</p>
     </div>
     
 

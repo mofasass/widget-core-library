@@ -109,22 +109,28 @@
 </header>
 
 <article>
-    <h2>Running the widget</h2><h4>Locally</h4><ul>
+    <h2>Running the widget</h2>
+<h4>Locally</h4>
+<ul>
 <li>Inside the project folder run:</li>
 </ul>
 <p><code>npm run start</code></p>
 <ul>
 <li>If the build was successful the widget will be running under <code>http://localhost:8080</code> and <code>http://&lt;your-local-ip&gt;:8080</code> after a few seconds. The server that hosts the widgets code runs under port 8080. That url can be opened directly but some widget features will not work (like changing the widget size or adding bets to the betslip), for all features to work the widget needs to be opened inside the Sportsbook.</li>
 </ul>
-<h4>Development Server</h4><p>The build process comes with a built-in development server, when you run <code>npm run start</code> this server is used. It is possible to configure the server by changing the <code>package.json</code>, inside it add a <code>devServer</code> key with any options desired. For example to enable HTTPS:</p>
+<h4>Development Server</h4>
+<p>The build process comes with a built-in development server, when you run <code>npm run start</code> this server is used. It is possible to configure the server by changing the <code>package.json</code>, inside it add a <code>devServer</code> key with any options desired. For example to enable HTTPS:</p>
 <pre class="prettyprint source lang-javascript"><code>{
   ...
   &quot;devServer&quot;: {
     &quot;https&quot;: true
   }
-}</code></pre><p>All server options can be seen in the <a href="https://webpack.js.org/configuration/dev-server/#devserver-https">webpack dev-server documentation</a></p>
+}
+</code></pre>
+<p>All server options can be seen in the <a href="https://webpack.js.org/configuration/dev-server/#devserver-https">webpack dev-server documentation</a></p>
 <p>To open the widget inside the Sportsbook while in development configure a new widget in the Sportsbook <code>widgetSettings</code> to point to to <code>http://localhost:8080/</code> or <code>http://&lt;your-local-ip&gt;:8080</code></p>
-<h5>HTTPS certificate</h5><p><code>npm run start</code> starts a built-in webserver that hosts the widgets code for development mode. If HTTPS is enabled it will run with a self-signed certificate that needs to be manually trusted in order to be able to open the widget.</p>
+<h5>HTTPS certificate</h5>
+<p><code>npm run start</code> starts a built-in webserver that hosts the widgets code for development mode. If HTTPS is enabled it will run with a self-signed certificate that needs to be manually trusted in order to be able to open the widget.</p>
 <p>Depending on your environment setup you might need to enable HTTPS for the widget because a sportsbook running in HTTPS needs the widgets to also be running in HTTPS.</p>
 <p>In Chrome and Firefox you can trust the certificate by visiting <code>https://localhost:8080</code> and <code>https://&lt;your-local-ip&gt;:8080</code> and hitting advance to accept the certificate.</p>
 <p>For Microsoft Edge and Internet explorer you need to add the certificate on Windows:</p>
@@ -137,7 +143,8 @@
 <li>Clici import</li>
 <li>Select the certificate from <code>project-folder\node_modules\webpack-dev-server\ssl\server.crt</code></li>
 </ul>
-<h3>Project file structure</h3><pre class="prettyprint source"><code>project/
+<h3>Project file structure</h3>
+<pre class="prettyprint source"><code>project/
    README.md
    .eslintrc
    .gitignore
@@ -153,7 +160,9 @@
       index.js
       mockSetupData.json
       i18n/
-         en_GB.json</code></pre><ul>
+         en_GB.json
+</code></pre>
+<ul>
 <li>README.md</li>
 </ul>
 <p>Readme for the project</p>
@@ -199,12 +208,15 @@
 <p>This file is used ONLY when opening the widget OUTSIDE of the Kambi Sportsbook (that means accessing https://localhost:8080/ directly), it mocks values that would normally be passed by the Sportsbook to the widget. By changing values in this file you can test how the widget will look and behave in different configurations, for example in another language.</p>
 <p>For more information check the API documentation for <code>coreLibrary.config</code>, <code>coreLibrary.args</code> and <code>coreLibrary.pageInfo</code></p>
 <ul>
-<li>src/i18n<br>This folder holds all the internationalization JSON files of the widget, these are used by the <code>translationModule</code>. The use of these files are optional if no internationalization is required. If the user locale is not found in this folder it will fallback to <code>en_GB.json</code>. These are all the currently supported locales in the Sportsbook, although they can vary by operator:</li>
+<li>src/i18n<br>
+This folder holds all the internationalization JSON files of the widget, these are used by the <code>translationModule</code>. The use of these files are optional if no internationalization is required. If the user locale is not found in this folder it will fallback to <code>en_GB.json</code>. These are all the currently supported locales in the Sportsbook, although they can vary by operator:</li>
 </ul>
 <p>bg_BG.json, cs_CZ.json, de_DE.json, es_ES.json, es_CO.json, fr_CH.json, lt_LT.json, no_NO.json, ro_RO.json, da_DK.json, el_GR.json, et_EE.json, fr_FR.json, lv_LV.json, pl_PL.json, ru_RU.json, de_AT.json, en_AU.json, fi_FI.json, hu_HU.json, nl_BE.json, pt_BR.json, sv_SE.json, de_CH.json, en_GB.json, fr_BE.json, it_IT.json, nl_NL.json, pt_PT.json, tr_TR.json</p>
-<h3>Core Library</h3><p>By default a widget project uses the <code>kambi-widget-core-library</code> dependency. The version of this dependencies that your widget is using can be updated in the <code>package.json</code> file, it is recommended to periodiacally update to the latest version. The latest version number can be seen in:</p>
-<p>https://<a href="http://www.npmjs.com/package/kambi-widget-core-library">www.npmjs.com/package/kambi-widget-core-library</a></p>
-<h3>Importing and Exporting Files</h3><p>The widget uses <a href="https://webpack.github.io/">webpack</a> to transpile, minify, concatenate, bundle all the files and their dependencies together. This is all done automatically by the scripts <code>npm run start</code> (which also starts a webserver for development) and <code>npm run build</code>. All the webpack configuration is already done by those scripts and as such no configuration is required by the user. However the way that the files are bundled together requires them to be referenced in the code for them to be included in the final bundle.</p>
+<h3>Core Library</h3>
+<p>By default a widget project uses the <code>kambi-widget-core-library</code> dependency. The version of this dependencies that your widget is using can be updated in the <code>package.json</code> file, it is recommended to periodiacally update to the latest version. The latest version number can be seen in:</p>
+<p>https://www.npmjs.com/package/kambi-widget-core-library</p>
+<h3>Importing and Exporting Files</h3>
+<p>The widget uses <a href="https://webpack.github.io/">webpack</a> to transpile, minify, concatenate, bundle all the files and their dependencies together. This is all done automatically by the scripts <code>npm run start</code> (which also starts a webserver for development) and <code>npm run build</code>. All the webpack configuration is already done by those scripts and as such no configuration is required by the user. However the way that the files are bundled together requires them to be referenced in the code for them to be included in the final bundle.</p>
 <p>The <code>entry</code> point of the application is <code>src/index.js</code>, this file needs to reference (import) directly or indirectly all other files used, this means even HTML and CSS files. The template project that is generated by <code>kambi-widgets-cli init</code> shows this:</p>
 <pre class="prettyprint source lang-javascript"><code>import {
    coreLibrary,
@@ -214,10 +226,13 @@
 import './index.html';
 import './app.scss';
 
-...</code></pre><p>As can be seen here, that file imports <code>coreLibrary</code>, <code>widgetModule</code> and <code>offeringModule</code> from <code>kambi-widget-core-library</code> as well as importing the <code>./index.html</code> and <code>./app.scss</code>. If those files were not imported they would not be included in the final bundled version (<code>index.html</code> would be missing in the <code>dist</code> folder for example).</p>
+...
+</code></pre>
+<p>As can be seen here, that file imports <code>coreLibrary</code>, <code>widgetModule</code> and <code>offeringModule</code> from <code>kambi-widget-core-library</code> as well as importing the <code>./index.html</code> and <code>./app.scss</code>. If those files were not imported they would not be included in the final bundled version (<code>index.html</code> would be missing in the <code>dist</code> folder for example).</p>
 <p>Imports that start with <code>./</code> or <code>../</code> mean that they are importing other files in the same project, while those without <code>./</code> or <code>../</code> are importing files that are dependencies of the project (see next few sections for more information). So it is possible to split the widgets code in multiple javascript files.</p>
 <p>More information about exports and imports can be seen <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Statements/import">here</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export">here</a></p>
-<h3>Basic Code Setup</h3><p>All widgets need to start by calling <code>coreLibrary.init()</code> and passing it the default arguments that the widget receives. These arguments can be overwritten by the Sportsbook (or inside <code>src/mockSetupData.json</code> arguments attribute when running the widget outside the sportsbook). <code>coreLibrary.init()</code> returns a <code>Promise</code> object which is a way to deal with asynchronous requests (all calls to fetch data in <code>kambi-widget-core-library</code> return <code>Promise</code>s).</p>
+<h3>Basic Code Setup</h3>
+<p>All widgets need to start by calling <code>coreLibrary.init()</code> and passing it the default arguments that the widget receives. These arguments can be overwritten by the Sportsbook (or inside <code>src/mockSetupData.json</code> arguments attribute when running the widget outside the sportsbook). <code>coreLibrary.init()</code> returns a <code>Promise</code> object which is a way to deal with asynchronous requests (all calls to fetch data in <code>kambi-widget-core-library</code> return <code>Promise</code>s).</p>
 <p>You can learn more about <code>Promise</code>s <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise">here</a>. Examples about <code>Promise</code>s can also be seen in section <code>4 - Fetching Data</code>.</p>
 <pre class="prettyprint source lang-javascript"><code>coreLibrary
   .init({
@@ -230,8 +245,11 @@ import './app.scss';
 
     // receiving the title through this widget arguments
     document.getElementById('title').innerText = args.title
-  })</code></pre><p>The above code simply sets the header text of the widget to be <code>&quot;Hello World&quot;</code> unless it was defined by the Sportsbook (through the args passed to the widget) to be something else.</p>
-<h3>Adding an external Dependency</h3><p>With the basic setup you only have access to the <code>kambi-widget-core-library</code> in the project, which can make it hard to do complex widgets using only plain Javascript. If we wanted to add a library to make our life easier we could do so by adding a <code>&lt;script&gt;</code> tag in the <code>&lt;head&gt;</code> section of the page and using it by accessing the global values it defines, but that is not the recommended way of doing this because it can be hard to keep track of all the dependencies the project will need. As an alternative you can also add dependencies using <code>npm</code>. For example to add jquery to the project all we need to do is run this in the command line:</p>
+  })
+</code></pre>
+<p>The above code simply sets the header text of the widget to be <code>&quot;Hello World&quot;</code> unless it was defined by the Sportsbook (through the args passed to the widget) to be something else.</p>
+<h3>Adding an external Dependency</h3>
+<p>With the basic setup you only have access to the <code>kambi-widget-core-library</code> in the project, which can make it hard to do complex widgets using only plain Javascript. If we wanted to add a library to make our life easier we could do so by adding a <code>&lt;script&gt;</code> tag in the <code>&lt;head&gt;</code> section of the page and using it by accessing the global values it defines, but that is not the recommended way of doing this because it can be hard to keep track of all the dependencies the project will need. As an alternative you can also add dependencies using <code>npm</code>. For example to add jquery to the project all we need to do is run this in the command line:</p>
 <p><code>npm install --save jquery</code></p>
 <p>and start using it by <code>import</code>ing it in the javascript:</p>
 <pre class="prettyprint source lang-javascript"><code>import { coreLibrary } from 'kambi-widget-core-library'
@@ -250,15 +268,21 @@ coreLibrary
 
     // receiving the title through this widget arguments
     $('#title').text(args.title)
-  })</code></pre><p>In this manner it is not necessary change <code>index.html</code> to add javascript libraries and stylesheets. You can see a list of all available libraries in the <a href="https://www.npmjs.com/">npm registry</a></p>
+  })
+</code></pre>
+<p>In this manner it is not necessary change <code>index.html</code> to add javascript libraries and stylesheets. You can see a list of all available libraries in the <a href="https://www.npmjs.com/">npm registry</a></p>
 <p>It is possible to remove or change the version of a dependency added in this manner by editing <code>package.json</code></p>
-<h3>Performance considerations</h3><p>Dependencies, especially big ones like Angular and jQuery should be avoided. For example due to the nature of iFrames if a Sportsbook page includes 5 different widgets and each of them loads Angular2 (111 kilobytes minified and gziped) the widget will load all that code 5 times (for a total of 555 kilobytes of Javascript). Even though the Angular bundle can be cached by the browser and downloaded only once, actually parsing and executing the Angular bundle can take a long time, especially in mobile phones</p>
+<h3>Performance considerations</h3>
+<p>Dependencies, especially big ones like Angular and jQuery should be avoided. For example due to the nature of iFrames if a Sportsbook page includes 5 different widgets and each of them loads Angular2 (111 kilobytes minified and gziped) the widget will load all that code 5 times (for a total of 555 kilobytes of Javascript). Even though the Angular bundle can be cached by the browser and downloaded only once, actually parsing and executing the Angular bundle can take a long time, especially in mobile phones</p>
 <p>The build process of the widget can perform some optimizations to reduce the final widget size when using the React framework (only 3 kilobyte impact). We highly recommend the use of vanilla Javascript or React. See section 8 - Using React and widget-components</p>
-<h3>Common Build Architecture</h3><p>Since all webpack build configuration of the widgets is shared and integrated in the <code>kambi-widget-core-library</code> dependency it is not possible to add more items to the build architecture. For example replacing SCSS with LESS is not possible. We might add some scape hatches in the future to support customizing the webpack configuration to allow modifying the build process, but for now that is not possible. If you need something extra please open an issue in the project's (github page)[https://github.com/kambi-sportsbook-widgets/widget-core-library/issues]</p>
-<h3>ES6 and JSX</h3><p>The project has Babel <a href="https://babeljs.io/">transpilation</a> step process set up during the build so it supports the full <a href="https://babeljs.io/docs/learn-es2015/">ES6 syntax</a> and JSX for React development in all browsers. These new syntaxes are completely optional and can be ignored completely if so desired.</p>
+<h3>Common Build Architecture</h3>
+<p>Since all webpack build configuration of the widgets is shared and integrated in the <code>kambi-widget-core-library</code> dependency it is not possible to add more items to the build architecture. For example replacing SCSS with LESS is not possible. We might add some scape hatches in the future to support customizing the webpack configuration to allow modifying the build process, but for now that is not possible. If you need something extra please open an issue in the project's (github page)[https://github.com/kambi-sportsbook-widgets/widget-core-library/issues]</p>
+<h3>ES6 and JSX</h3>
+<p>The project has Babel <a href="https://babeljs.io/">transpilation</a> step process set up during the build so it supports the full <a href="https://babeljs.io/docs/learn-es2015/">ES6 syntax</a> and JSX for React development in all browsers. These new syntaxes are completely optional and can be ignored completely if so desired.</p>
 <p>Important: Babel only transpiles ES6 syntax, but not ES6 features like <a href="https://developer.mozilla.org/en/docs/Web/API/Fetch_API">fetch API</a>. New ES6 features need to be polyfilled in to support old browsers (for example IE11 does not support fetch API), the <code>kambi-widget-core-library</code> polyfills ES6 <code>Promise</code>s so those can be safely used no matter the target browser. Other polyfills are NOT included to keep file size small.</p>
 <p>Besides ES6 the build process also supports JSX for React development. The only caveat is that JSX syntax is only supported in <code>.jsx</code> files. Since the entry point of the project is <code>src/index.js</code> that file needs to <code>import</code> another <code>.jsx</code> file in order to enable JSX. See more about this in section 8 - Using React and widget-components.</p>
-<h3>Automated testing</h3><p>The build process also contains an automated testing setup using <a href="https://facebook.github.io/jest/">Jest</a>. Tests files need to be placed under <code>projectRoot/test/</code> folder and should have the extension of <code>.test.js</code> or <code>.test.jsx</code></p>
+<h3>Automated testing</h3>
+<p>The build process also contains an automated testing setup using <a href="https://facebook.github.io/jest/">Jest</a>. Tests files need to be placed under <code>projectRoot/test/</code> folder and should have the extension of <code>.test.js</code> or <code>.test.jsx</code></p>
 <p>To run the tests in the widget folder run:</p>
 <p><code>npm run test</code></p>
 <p>It is possible can send custom command line flags to Jest by using the <code>--</code> operator. For example to pass the watch flag to Jest (--watch):</p>

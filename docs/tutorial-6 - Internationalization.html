@@ -121,7 +121,10 @@
       &quot;locale&quot;: &quot;en_GB&quot;,
       ...
    }
-}</code></pre><h3>Translating strings</h3><p>To translate a string we use the <code>getTranslation()</code> method of the <code>translationModule</code></p>
+}
+</code></pre>
+<h3>Translating strings</h3>
+<p>To translate a string we use the <code>getTranslation()</code> method of the <code>translationModule</code></p>
 <pre class="prettyprint source lang-javascript"><code>
 import {
    translationModule
@@ -129,17 +132,26 @@ import {
 
 // Translate stadium string
 document.getElementById('title').innerText(translationModule.getTranslation('Stadium'));
-</code></pre><p>On our json files we would have for example <code>sv_SE.json</code></p>
+
+</code></pre>
+<p>On our json files we would have for example <code>sv_SE.json</code></p>
 <pre class="prettyprint source lang-json"><code>{
    &quot;Stadium&quot;: &quot;Stadion&quot;
-}</code></pre><h3>Translation with extra arguments</h3><p> We can also provide arguments when translating. In our json files we can define the number of arguments, so for example:</p>
-<p> <code>en_GB.json</code>:</p>
-<pre class="prettyprint source lang-json"><code> {
-    &quot;WelcomeTo&quot;: &quot;Welcome {0} to {1}&quot;
- }</code></pre><p> <code>sv_SE.json</code>:</p>
-<pre class="prettyprint source lang-json"><code> {
-    &quot;WelcomeTo&quot;: &quot;Välkommen {0} till {1}&quot;
- }</code></pre><p> And the translation would be called like so:</p>
+}
+</code></pre>
+<h3>Translation with extra arguments</h3>
+<p>We can also provide arguments when translating. In our json files we can define the number of arguments, so for example:</p>
+<p><code>en_GB.json</code>:</p>
+<pre class="prettyprint source lang-json"><code>{
+   &quot;WelcomeTo&quot;: &quot;Welcome {0} to {1}&quot;
+}
+</code></pre>
+<p><code>sv_SE.json</code>:</p>
+<pre class="prettyprint source lang-json"><code>{
+   &quot;WelcomeTo&quot;: &quot;Välkommen {0} till {1}&quot;
+}
+</code></pre>
+<p>And the translation would be called like so:</p>
 <pre class="prettyprint source lang-javascript"><code>
 import {
    translationModule
@@ -150,7 +162,9 @@ var user = 'Jim',
 
 // Translate welcome message
 $('#welcome').text(translationModule.getTranslation('WelcomeTo', user, place));
-</code></pre><p>That would result to <strong>Welcome Jim to Sportsbook</strong> for 'en_GB' locale and <strong>Välkommen Jim till Sportsbook</strong> for 'sv_SE'</p>
+
+</code></pre>
+<p>That would result to <strong>Welcome Jim to Sportsbook</strong> for 'en_GB' locale and <strong>Välkommen Jim till Sportsbook</strong> for 'sv_SE'</p>
 </article>
 
 </section>

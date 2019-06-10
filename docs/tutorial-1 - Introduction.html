@@ -111,10 +111,13 @@
 <article>
     <p>Widgets are self-contained content that can be added to various places in the Kambi client. It provides the possibility for the operator to differentiate the client, to add unique features or content, and to tailor the client to a group of players, or even to individuals.</p>
 <p>The widget is an html-page loaded inside an iframe inside an operator's sportsbook. Using JavaScript the operator can control what widgets to load in the sportsbook and where/when to display them.</p>
-<h3>Pre-requisites</h3><ul>
-<li><p>Install <a href="https://nodejs.org/en/">Nodejs latest version</a></p>
+<h3>Pre-requisites</h3>
+<ul>
+<li>
+<p>Install <a href="https://nodejs.org/en/">Nodejs latest version</a></p>
 </li>
-<li><p>Run:</p>
+<li>
+<p>Run:</p>
 </li>
 </ul>
 <p><code>npm install -g kambi-widget-core-library</code></p>
@@ -125,7 +128,8 @@
 <p>When installing Nodejs you also install the <code>npm</code> command line tool. Make sure that the version of npm you have is <code>3.0.0</code> or higher by running:</p>
 <p><code>npm --version</code></p>
 <p>Version 3.0.0 of npm is included in Nodejs versions 5.0.0 or higher.</p>
-<h3>Creating a New Project</h3><ul>
+<h3>Creating a New Project</h3>
+<ul>
 <li>Run again to update the kambi-widgets-cli to the latest version (this is necessary only when creating a new project):</li>
 </ul>
 <p><code>npm install -g kambi-widget-core-library</code></p>
@@ -139,15 +143,19 @@
 <p><code>kambi-widgets-cli init-react project-name</code></p>
 <p>This process can take a few minutes to download all the dependencies.</p>
 <p>A new project will be created inside the <code>project-name</code> folder. This project has a very simple example on how to build a widget.</p>
-<h3>Setup an Existing Project</h3><ul>
-<li><p>Clone the project repository</p>
+<h3>Setup an Existing Project</h3>
+<ul>
+<li>
+<p>Clone the project repository</p>
 </li>
-<li><p>Inside the project folder run:</p>
+<li>
+<p>Inside the project folder run:</p>
 </li>
 </ul>
 <p><code>npm install</code></p>
 <p>This process can take a few minutes to download all the dependencies.</p>
-<h3>Running the Project in Development Mode</h3><ul>
+<h3>Running the Project in Development Mode</h3>
+<ul>
 <li>Inside the project folder run:</li>
 </ul>
 <p><code>npm run start</code></p>
@@ -155,7 +163,8 @@
 <li>If the build was successful the widget will be running under <code>https://localhost:8080</code> or <code>http://localhost:8080</code> depending on your <code>package.json</code> <code>useHttps</code> value (the default is true).</li>
 </ul>
 <p>See the section 2 - Development for more information.</p>
-<h3>Building a Project for Production</h3><ul>
+<h3>Building a Project for Production</h3>
+<ul>
 <li>Inside the project folder run:</li>
 </ul>
 <p><code>npm run build</code></p>

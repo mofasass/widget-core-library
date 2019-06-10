@@ -114,7 +114,9 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>Module with methods to request data from the offering API<br>The offering API has information concerning events (matches, competations) and their respective betoffers as well as live data if available<br>All methods in this module return Promises that are resolved when the data is ready and throws errors (that can be handled with .catch()) on failure</p></div>
+            <div class="description"><p>Module with methods to request data from the offering API<br>
+The offering API has information concerning events (matches, competations) and their respective betoffers as well as live data if available<br>
+All methods in this module return Promises that are resolved when the data is ready and throws errors (that can be handled with .catch()) on failure</p></div>
         
 
         
@@ -198,8 +200,13 @@
 
     
     <div class="description">
-        <p>Makes a request to provided path setting the appropriated URL parameters. Usually this method should not be called directly, unless you want to access an endpoint that is not available in the other methods<br>    The final url looks like:<br>    coreLibrary.config.apiBaseUrl + version + coreLibrary.config.offering + requestPath<br>    Example (same as calling offeringModule.getLiveEvents() but forcing to use Portugal Portuguese locale)<br>    doRequest('/event/live/open.json' { lang: 'pt_PT' });<br>    this call would fetch this url:</p>
-<pre class="prettyprint source"><code>https://api.kambi.com/offering/api/v2/kambi/event/live/open.json?lang=pt_PT&market=kambi&client_id=2&include=&betOffers=COMBINED&categoryGroup=COMBINED&displayDefault=true&nocache=1476973932524</code></pre>
+        <p>Makes a request to provided path setting the appropriated URL parameters. Usually this method should not be called directly, unless you want to access an endpoint that is not available in the other methods<br>
+The final url looks like:<br>
+coreLibrary.config.apiBaseUrl + version + coreLibrary.config.offering + requestPath<br>
+Example (same as calling offeringModule.getLiveEvents() but forcing to use Portugal Portuguese locale)<br>
+doRequest('/event/live/open.json' { lang: 'pt_PT' });<br>
+this call would fetch this url:</p>
+<pre><code>https://api.kambi.com/offering/api/v2/kambi/event/live/open.json?lang=pt_PT&amp;market=kambi&amp;client_id=2&amp;include=&amp;betOffers=COMBINED&amp;categoryGroup=COMBINED&amp;displayDefault=true&amp;nocache=1476973932524</code></pre>
     </div>
     
 

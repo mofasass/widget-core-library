@@ -111,7 +111,8 @@
 <article>
     <p>Fetching data is done through the Kambi's Offering API and the Kambi's Statistics API. The <code>kambi-widget-core-library</code> offers a wrapper around these API through the <code>offeringModule</code> and the <code>statisticsModule</code>. These modules take care of setting all the appropriate values in the request URLs as well as abstracting the endpoints of the APIs as functions that return <code>Promise</code>s.</p>
 <p>Note that it is only possible to fetch data after the <code>coreLibrary.init()</code> call has been finished. That means inside its <code>.then()</code> callback.</p>
-<h3>Using Promises</h3><p><code>Promise</code> is a way to deal with asynchronous (AJAX) requests, it allows for easier chaining and error handling of requests than callbacks. All asynchronous methods of the <code>kambi-widget-core-library</code> return <code>Promise</code>s.</p>
+<h3>Using Promises</h3>
+<p><code>Promise</code> is a way to deal with asynchronous (AJAX) requests, it allows for easier chaining and error handling of requests than callbacks. All asynchronous methods of the <code>kambi-widget-core-library</code> return <code>Promise</code>s.</p>
 <p><code>Promise</code>s are Javascript objects and as such they have methods, these methods are <code>then(fn)</code> and <code>catch(fn)</code>. Both receive a function as an argument:</p>
 <ul>
 <li><code>then(fn)</code></li>
@@ -151,7 +152,9 @@ offeringModule.getEvent(someEventId)
       // only called if an error happened, for example event not found
       console.log('error!');
       console.log(error);
-   });</code></pre><ul>
+   });
+</code></pre>
+<ul>
 <li>Error Handling</li>
 </ul>
 <p><code>catch(fn)</code> also catches errors that happen inside previous <code>then(fn)</code> blocks. It is a good practice for Kambi Widget development to make the widget remove itself when an error happens. That means it fails gracefully and does not show in a broken state in the Sportsbook.</p>
@@ -172,7 +175,9 @@ offeringModule
     console.log('error!')
     console.log(error)
     widgetModule.removeWidget() // widget is removed from the Sportsbook
-  })</code></pre><ul>
+  })
+</code></pre>
+<ul>
 <li>Chaining Promises</li>
 </ul>
 <p>It is possible to chain <code>Promise</code>s by returning a new <code>Promise</code> inside a <code>then(fn)</code> function, the subsequent <code>then(fn)</code> call will be invoked when this returned <code>Promise</code> is resolved.</p>
@@ -197,7 +202,9 @@ offeringModule
     console.log('error!')
     console.log(error)
     widgetModule.removeWidget() // widget is removed from the Sportsbook
-  })</code></pre><ul>
+  })
+</code></pre>
+<ul>
 <li>Parallel Promises</li>
 </ul>
 <p>Sometimes we want to execute asynchronous calls in parallel for faster data-fetching, to do that we can use <code>Promise.all(promiseArray)</code>. It returns a new <code>Promise</code> that is resolved when all <code>Promise</code>s inside <code>promiseArray</code> resolve.</p>
@@ -229,8 +236,11 @@ offeringModule
     console.log('error!')
     console.log(error)
     widgetModule.removeWidget() // widget is removed from the Sportsbook
-  })</code></pre><p>More about <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promises</a></p>
-<h3>Offering Module</h3><p>The <code>offeringModule</code> provides data about events, their statuses and their betOffers. It also provides information about the live data for live events.</p>
+  })
+</code></pre>
+<p>More about <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promises</a></p>
+<h3>Offering Module</h3>
+<p>The <code>offeringModule</code> provides data about events, their statuses and their betOffers. It also provides information about the live data for live events.</p>
 <ul>
 <li>Example getting all live events</li>
 </ul>
@@ -241,7 +251,9 @@ offeringModule
 offeringModule.getLiveEvents()
    .then(function(data) {
       console.log(data);
-   });</code></pre><ul>
+   });
+</code></pre>
+<ul>
 <li>Getting all betOffers of a single event</li>
 </ul>
 <pre class="prettyprint source lang-javascript"><code>import { offeringModule } from 'kambi-widget-core-library';
@@ -258,7 +270,9 @@ offeringModule.getEvent(eventId)
 offeringModule.getLiveEvent(eventId)
    .then(function(data) {
     console.log(data);
-   });</code></pre><ul>
+   });
+</code></pre>
+<ul>
 <li>Making a filter request</li>
 </ul>
 <p>Filter request are a way to get all the events associated with a filter, filters are strings that define a subset of events. A few examples:</p>
@@ -288,7 +302,9 @@ offeringModule.getEventsByFilter('football/england/premier_league')
 offeringModule.getEventsByFilter('football/england,germany')
    .then(function(data) {
       console.log(data.events);
-   })</code></pre><ul>
+   })
+</code></pre>
+<ul>
 <li>Notes</li>
 </ul>
 <p>All offering calls that return multiple events (<code>getEventsByFilter</code> for example) also return its main betOffer if it exists. To get ALL betOffers of an event you need to use <code>getEvent(eventId)</code> or <code>getLiveEvent(eventId)</code> depending if the event is live or not.</p>
