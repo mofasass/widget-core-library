@@ -25,7 +25,6 @@ const init = function(opt) {
   // map of what files need to be copied where
   const files = {
     'app.scss': 'src/',
-    'index.html': 'src/',
     'index.js': 'src/',
     'en_GB.json': 'src/i18n/',
     'package.json': '',

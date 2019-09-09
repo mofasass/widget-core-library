@@ -4,10 +4,10 @@ Widget-components is a collection of reusable components written with [React](ht
 
 You can start using widget-components by installing it as a dependency to the project by running:
 
-`npm install kambi-widget-components`
+`npm install kamb-wc-widget-components`
 
 ```javascript
-import { ComponentName } from 'kambi-widget-components';
+import { ComponentName } from 'kamb-wc-widget-components';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -22,10 +22,10 @@ You can also make your own components and have the whole widget be a React compo
 
 ### Creating React Elements
 
-To render one of the reusable components from `kambi-widget-components`
+To render one of the reusable components from `kamb-wc-widget-components`
 
 ```javascript
-import { Header } from 'kambi-widget-components'
+import { Header } from 'kamb-wc-widget-components'
 import React from 'react'
 import ReactDOM from 'react-dom'
 
@@ -43,7 +43,7 @@ ReactDOM.render(header, document.getElementById('root'))
 JSX is an extension of the normal JavaScript programming language, it adds syntatic sugar to transform HTML code into calls to React.createElement. The following example is equivalent to the previous example:
 
 ```javascript
-import { Header } from 'kambi-widget-components'
+import { Header } from 'kamb-wc-widget-components'
 import React from 'react'
 import ReactDOM from 'react-dom'
 
@@ -57,9 +57,9 @@ Note: JSX syntax works only in `.jsx` files, so `index.js` should import a `.jsx
 
 ### Using React
 
-It is possible to use only the pre-made components available in `kambi-widget-components`, but that is not really recommended. Due to the fact that the widgets live inside iframes it is highly recommended to avoid big dependencies like software frameworks (there will be multiple copies, one for each iframe). It is recommend to either not use any frameworks/libraries (even jQuery is quite big) or use our React solution. Behind the scenes if (and only if) you use React components your project [preact](https://preactjs.com/) will be bundled with the widgets code. This is a very small implementation of the React API (~3 kilobytes vs React ~32kb) and as such its performance impact is minimal.
+It is possible to use only the pre-made components available in `kamb-wc-widget-components`, but that is not really recommended. Due to the fact that the widgets live inside iframes it is highly recommended to avoid big dependencies like software frameworks (there will be multiple copies, one for each iframe). It is recommend to either not use any frameworks/libraries (even jQuery is quite big) or use our React solution. Behind the scenes if (and only if) you use React components your project [preact](https://preactjs.com/) will be bundled with the widgets code. This is a very small implementation of the React API (~3 kilobytes vs React ~32kb) and as such its performance impact is minimal.
 
-The widget can use React even without including `kambi-widget-components`, widgets can be written completely as React components if desired, or they can only use the components from `kambi-widget-components` or not use React at all.
+The widget can use React even without including `kamb-wc-widget-components`, widgets can be written completely as React components if desired, or they can only use the components from `kamb-wc-widget-components` or not use React at all.
 
 ### useRealReact flag
 

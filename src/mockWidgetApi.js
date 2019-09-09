@@ -1,7 +1,6 @@
 // this is a mock widget api that is used when opening the widget standalone
 
 export default {
-  requestSetup() {},
   request() {},
   set() {},
   remove() {},

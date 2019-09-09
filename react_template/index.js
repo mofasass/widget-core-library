@@ -6,8 +6,7 @@ import {
   offeringModule,
 } from 'kambi-widget-core-library'
 import EventWidget from './js/Components/EventWidget'
-import './scss/app.scss'
-import './index.html'
+//import './scss/app.scss'
 
 // Initialize kambi's api
 // http://kambi-sportsbook-widgets.github.io/widget-core-library/module-coreLibrary.html#.init__anchor

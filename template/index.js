@@ -3,8 +3,7 @@ import {
   widgetModule,
   offeringModule,
 } from 'kambi-widget-core-library'
-import './index.html'
-import './app.scss'
+//import './app.scss'
 
 coreLibrary
   .init({

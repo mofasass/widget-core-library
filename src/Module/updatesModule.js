@@ -131,6 +131,7 @@ const updatesModule = {
      */
     betslipOutcomes(callback) {
       const cbs = updatesModule.callbacks
+
       if (cbs[this.api.BETSLIP_OUTCOMES] == null) {
         cbs[this.api.BETSLIP_OUTCOMES] = []
       }

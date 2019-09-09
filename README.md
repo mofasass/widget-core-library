@@ -14,6 +14,6 @@ Core package with wrappers around Kambi's Widget API (which allows interaction w
 
 This package also includes the build process for the widget projects and a built-in web server for local development.
 
-## kambi-widget-components
+## kamb-wc-widget-components
 
 Reusable UI components that follow Kambi's design. This package is optional.

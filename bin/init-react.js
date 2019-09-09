@@ -25,7 +25,6 @@ const init = function(opt) {
   // map of what needs to be copied where
   const files = {
     'app.scss': 'src/scss',
-    'index.html': 'src/',
     'index.js': 'src/',
     'en_GB.json': 'src/i18n/',
     'sv_SE.json': 'src/i18n/',
@@ -122,7 +121,7 @@ const init = function(opt) {
           ),
           exec(
             'npm',
-            ['show', 'kambi-widget-components', 'version'],
+            ['show', 'kamb-wc-widget-components', 'version'],
             { shell: true },
             false
           ),
@@ -132,7 +131,7 @@ const init = function(opt) {
 
           packageJson.dependencies['kambi-widget-core-library'] =
             '^' + coreLibraryVersion.replace('\n', '')
-          packageJson.dependencies['kambi-widget-components'] =
+          packageJson.dependencies['kamb-wc-widget-components'] =
             '^' + componentsVersion.replace('\n', '')
 
           return fs.writeFileAsync(

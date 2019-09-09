@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header } from 'kambi-widget-components'
+import { Header } from 'kamb-wc-widget-components'
 import { widgetModule, translationModule } from 'kambi-widget-core-library'
 import Participants from './Participants'
 import BetOffers from './BetOffers'

@@ -1,10 +1,6 @@
-import offeringModule from './Module/offeringModule'
-import statisticsModule from './Module/statisticsModule'
-import translationModule from './Module/translationModule'
 import utilModule from './Module/utilModule'
 import widgetModule from './Module/widgetModule'
 import updatesModule from './Module/updatesModule'
-import mockWidgetApi from './mockWidgetApi'
 
 import styles from './scss/core.scss'
 
@@ -221,7 +217,6 @@ export default {
 
   set defaultArgs(defaultArgs) {
     this._defaultArgs = Object.assign(defaultArgs, {
-      onHeightChange: function() {},
       onWidgetRemoved: function() {},
       onWidgetLoaded: function() {},
     })
@@ -240,10 +235,8 @@ export default {
     https://someurl.com/customcss/kambi/style.css
 
     * @property {String} customCssUrlFallback fallback if the fetching of customCssUrl fails
-    * @property {Function} onHeightChange Callback called when an embedded widget height changes (by calling either widgetModule.setWidgetHeight or widgetModule.adaptWidgetHeight)
     * @property {Function} onWidgetRemoved Callback called when an widget removes itself (by calling widgetModule.removeWidget)
     * @property {Function} onWidgetLoaded Callback called when an widget finishes loading. This needs to be called by the widget itself after rendering its content
-    * @property {Function} onWidgetNavigateClient Callback called when an widget wants to navigate to another page. In embedded mode the widget will NOT call the WidgetAPI.navigateClient, instead it will call this method with the path of the page. Second parameter is coreLibrary.args.widgetTrackingName
     * @property {Array<Object>} conditionalArgs Optional, specify arguments to be applied based on some condition based in the values inside coreLibrary.config or coreLibrary.pageInfo
     * @property {String|null} widgetTrackingName  navigateClient Optional, callback called when the widget tries to perform internal Kambi Sportsbook navigation
     example:
@@ -345,21 +338,6 @@ export default {
   },
 
   /**
-   * Element that should be used as root to render the widget from. Widgets should render only inside this element
-   * @name rootElement
-   * @type {HTMLElement}
-   */
-  rootElement: null,
-
-  /**
-   * Element that the widget will be placed inside of when running in embedded mode
-   * @name rootElement
-   * @type {HTMLElement}
-   * @private
-   */
-  embeddedElement: null,
-
-  /**
    * Versions of the API provided by the sportsbook
    * @name apiVersions
    * @type {Object}
@@ -410,14 +388,6 @@ export default {
   widgetApi: null,
 
   /**
-   * Methods returned by the widget when it's function is called in Embedded mode
-   * by adding more methods here the widget can set up communication with the rest of the page
-   */
-  embeddedMethods: {
-    removeWidget: widgetModule.removeWidget.bind(widgetModule),
-  },
-
-  /**
    * Initializes the Kambi api
    * Uses ./src/mockSetupData.json as coreLibrary.configs if not loaded inside the sportsbook (ie opened the widget directly).
    * @param {Object} defaultArgs arguments to be used if they are not provided by the sportsbook
@@ -425,9 +395,9 @@ export default {
    */
   init(defaultArgs) {
     this.defaultArgs = defaultArgs
-    const EMBEDDED = process.env.EMBEDDED === 'true'
 
     return new Promise((resolve, reject) => {
+      
       // applies the setup data and sets up the CSS and translations
       var applySetupData = setupData => {
         this.oddsFormat = setupData.clientConfig.oddsFormat
@@ -435,15 +405,14 @@ export default {
         this.pageInfo = setupData.pageInfo
         this.apiVersions = setupData.versions
         this.args = setupData.arguments
-        if (!EMBEDDED) {
-          // if embedded the widget will assume that operator CSS is included by whoever is embedding it
-          this.injectOperatorCss(this.config.customer, this.config.offering)
 
-          const body = document.body
-          this.kambiDefaultClasses.map(cssClass => {
-            body.classList.add(cssClass)
-          })
-        }
+        this.injectOperatorCss(this.config.customer, this.config.offering)
+
+        const body = document.body
+        this.kambiDefaultClasses.map(cssClass => {
+          body.classList.add(cssClass)
+        })
+
         this.injectCustomCss(
           this.args.customCssUrl,
           this.args.customCssUrlFallback
@@ -455,116 +424,51 @@ export default {
         resolve()
       }
 
-      if (EMBEDDED) {
-        if (!window.gmWidgets) {
-          window.gmWidgets = {}
-        }
-        window.gmWidgets[process.env.WIDGET_NAME] = (
-          container,
-          wapi,
-          clientConfig,
-          args
-        ) => {
-          if (container == null) {
-            throw new Error('Container not provided. Please send a HTMLElement')
-          }
 
-          if (wapi == null) {
-            throw new Error(
-              'Wapi not provided. Please send a reference to the Kambi Widget API'
-            )
-          }
+      document.documentElement.className += ` ${styles.notEmbedded}`
+      this.rootElement = document.createElement('div')
+      this.rootElement.className += ` ${styles.rootElement}`
+      this.defaultArgs.shadowRoot.appendChild(this.rootElement)
 
-          if (clientConfig == null) {
-            throw new Error(
-              'clientConfig not provided. Please send an object with client config data'
-            )
-          }
+      window.KambiWidget.ready.then(wapi => {
 
-          this.widgetApi = wapi
-          this.embeddedElement = container
-          this.rootElement = document.createElement('div')
-          this.rootElement.className += ` ${[styles.rootElement].join(' ')}`
-          this.embeddedElement.className += ` ${[
-            styles.rootElementEmbedded,
-          ].join(' ')}`
-          this.embeddedElement.appendChild(this.rootElement)
-          if (window.KambiWidget.receiveResponse == null) {
-            window.KambiWidget.receiveResponse = function() {}
-          }
-          const previousResponseHandler = window.KambiWidget.receiveResponse
-          window.KambiWidget.receiveResponse = (dataObject, wapi) => {
-            previousResponseHandler(dataObject, wapi) // calls any handlers from other widgets or the main page
-            widgetModule.handleResponse(dataObject)
-            updatesModule.handleResponse(dataObject)
-          }
+        this.widgetApi = wapi
+        // Request the setupData from the widget api
+        
+        this.widgetApi.requestSetup(setupData => {
+          setupData.arguments = setupData.arguments
+            ? setupData.arguments
+            : {}
+          const args = setupData.arguments
+          // Request the outcomes from the betslip so we can update our widget, also sets up a subscription for future betslip updates
           widgetModule.requestBetslipOutcomes()
-          // we intentionally do not call requestOddsFormat here, this method should be called exactly once per page so it should be called by whoever is calling this widget.
-          //widgetModule.requestOddsFormat()
-          applySetupData({
-            clientConfig: Object.assign({}, clientConfig),
-            arguments: Object.assign({}, args),
-            pageInfo: {},
-            versions: {},
-          })
-          return this.embeddedMethods
-        }
-      } else {
-        document.documentElement.className += ` ${styles.notEmbedded}`
-        this.rootElement = document.createElement('div')
-        this.rootElement.className += ` ${styles.rootElement}`
-        document.body.appendChild(this.rootElement)
+          // Request the odds format that is set in the sportsbook, this also sets up a subscription for future odds format changes
+          widgetModule.requestOddsFormat()
 
-        if (window.self === window.top) {
-          // For development purposes we might want to load a widget on its own so we check if we are in an iframe, if not then load a mocked version of the setupData
-          this.widgetApi = mockWidgetApi
-          console.warn(
-            window.location.host +
-              window.location.pathname +
-              ' is being loaded as stand-alone'
-          )
-
-          this.fetchMockSetupData()
-            .then(data => applySetupData(data))
-            .catch(err => reject(err))
-        } else {
-          window.KambiWidget.apiReady = wapi => {
-            this.widgetApi = wapi
-
-            // Request the setupData from the widget api
-            widgetModule.requestSetup(setupData => {
-              setupData.arguments = setupData.arguments
-                ? setupData.arguments
-                : {}
-              const args = setupData.arguments
-              // Request the outcomes from the betslip so we can update our widget, also sets up a subscription for future betslip updates
-              widgetModule.requestBetslipOutcomes()
-              // Request the odds format that is set in the sportsbook, this also sets up a subscription for future odds format changes
-              widgetModule.requestOddsFormat()
-
-              // Check if the args contains mockSetupData key
-              if (args.mockSetupData == null) {
-                applySetupData(setupData)
-              } else if (typeof args.mockSetupData === 'string') {
-                this.fetchMockSetupData(args.mockSetupData)
-                  .then(data => {
-                    delete args.mockSetupData
-                    data.arguments = Object.assign(data.arguments, args)
-                    applySetupData(data)
-                  })
-                  .catch(err => reject(err))
-              } else {
-                applySetupData(args.mockSetupData)
-              }
-            })
+          // Check if the args contains mockSetupData key
+          if (args.mockSetupData == null) {
+            applySetupData(setupData)
+          } else if (typeof args.mockSetupData === 'string') {
+            this.fetchMockSetupData(args.mockSetupData)
+              .then(data => {
+                delete args.mockSetupData
+                data.arguments = Object.assign(data.arguments, args)
+                applySetupData(data)
+              })
+              .catch(err => reject(err))
+          } else {
+            applySetupData(args.mockSetupData)
           }
-          // Setup the response handler for the widget api
-          window.KambiWidget.receiveResponse = dataObject => {
-            widgetModule.handleResponse(dataObject)
-            updatesModule.handleResponse(dataObject)
-          }
-        }
+        })
+      })
+
+      // Setup the response handler for the widget api
+      window.KambiWidget.receiveResponse = dataObject => {
+        widgetModule.handleResponse(dataObject)
+        updatesModule.handleResponse(dataObject)
       }
+      
+
     })
   },
 

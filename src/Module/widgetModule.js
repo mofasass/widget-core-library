@@ -6,7 +6,6 @@
 import utilModule from './utilModule'
 import coreLibrary from '../coreLibrary'
 import eventsModule from './EventsModule'
-const EMBEDDED = process.env.EMBEDDED === 'true'
 
 export default {
   /**
@@ -84,39 +83,7 @@ export default {
         // We've received a height response
         eventsModule.publish('WIDGET:HEIGHT', response.data)
         break
-      case this.api.BETSLIP_OUTCOMES:
-        // We've received a response with the outcomes currently in the betslip
 
-        var i = 0,
-          len = response.data.outcomes.length
-        var updateIds = []
-        // Gather all the ids in the betslip in one array
-        for (; i < len; ++i) {
-          updateIds.push(response.data.outcomes[i].id)
-        }
-        // Diff against what the coreLibrary already has stored so we know what was added and what was removed
-        var removedIds = utilModule.diffArray(this.betslipIds, updateIds)
-        var addedIds = utilModule.diffArray(updateIds, this.betslipIds)
-        // Save the updated ids
-        this.betslipIds = updateIds
-
-        // Emit events for each removed id
-        i = 0
-        len = removedIds.length
-        for (; i < len; ++i) {
-          eventsModule.publish('OUTCOME:REMOVED:' + removedIds[i])
-        }
-
-        // Emit events for each added id
-        i = 0
-        len = addedIds.length
-        for (; i < len; ++i) {
-          eventsModule.publish('OUTCOME:ADDED:' + addedIds[i])
-        }
-
-        // Emit a generic update in case we want to use that
-        eventsModule.publish('OUTCOMES:UPDATE', response.data)
-        break
       case this.api.WIDGET_ARGS:
         // We've received a response with the arguments set in the
         coreLibrary.args = response.data
@@ -273,11 +240,6 @@ export default {
    * @param {Number} height the height in pixels
    */
   setWidgetHeight(height) {
-    if (EMBEDDED) {
-      coreLibrary.embeddedElement.style.height = height + 'px'
-      coreLibrary.args.onHeightChange(height)
-      return
-    }
     this.api.set(this.api.WIDGET_HEIGHT, height)
   },
 
@@ -287,13 +249,6 @@ export default {
    * Only works if the html and body tags don't have height: 100% styling rule
    */
   adaptWidgetHeight() {
-    if (EMBEDDED) {
-      const core = coreLibrary
-      const newHeight = window.getComputedStyle(coreLibrary.rootElement).height
-      coreLibrary.embeddedElement.style.height = newHeight
-      coreLibrary.args.onHeightChange(newHeight)
-      return
-    }
     // tries to adapt the widget iframe height to match the content
     var body = document.body,
       html = document.documentElement
@@ -336,14 +291,6 @@ export default {
    */
   removeWidget(err) {
     coreLibrary.args.onWidgetRemoved(err)
-    if (EMBEDDED) {
-      const rootElement = coreLibrary.rootElement
-      while (rootElement.firstChild) {
-        rootElement.removeChild(rootElement.firstChild)
-      }
-      coreLibrary.embeddedElement.style.display = 'none'
-      return
-    }
     this.api.remove()
   },
 
@@ -455,7 +402,6 @@ export default {
     if (coreLibrary.widgetTrackingName != null) {
       data.name = coreLibrary.widgetTrackingName
     }
-
     this.api.set(this.api.BETSLIP_OUTCOMES_REMOVE, data)
   },
 
@@ -534,19 +480,12 @@ export default {
         coreLibrary.config.routeRoot
       )
     }
-    if (EMBEDDED) {
-      coreLibrary.args.onWidgetNavigateClient(
-        finalTarget,
-        coreLibrary.widgetTrackingName != null
-          ? coreLibrary.widgetTrackingName
-          : null
-      )
+
+    if (coreLibrary.widgetTrackingName != null) {
+      this.api.navigateClient(finalTarget, coreLibrary.widgetTrackingName)
     } else {
-      if (coreLibrary.widgetTrackingName != null) {
-        this.api.navigateClient(finalTarget, coreLibrary.widgetTrackingName)
-      } else {
-        this.api.navigateClient(finalTarget)
-      }
+      this.api.navigateClient(finalTarget)
     }
+    
   },
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { OutcomeButton } from 'kambi-widget-components'
+import { OutcomeButton } from 'kamb-wc-widget-components'
 import styles from './BetOffers.scss'
 
 const BetOffers = ({ event, betOffers }) => {

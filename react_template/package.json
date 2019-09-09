@@ -2,7 +2,7 @@
   "name": "${projectName}",
   "description": "${projectDescription}",
   "version": "${projectVersion}",
-  "main": "dist/index.html",
+  "main": "dist/main.js",
   "scripts": {
     "clean": "kambi-widgets-cli clean",
     "start": "kambi-widgets-cli start",
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "kambi-widget-core-library": "",
-    "kambi-widget-components": ""
+    "kamb-wc-widget-components": ""
   },
   "peerDependencies": {
     "react": "x",

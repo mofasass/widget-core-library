@@ -4,7 +4,7 @@
   },
   "plugins": ["plugins/markdown"],
   "source": {
-    "include": ["./src/", "./node_modules/kambi-widget-components/src/"]
+    "include": ["./src/", "./node_modules/kamb-wc-widget-components/src/"]
   },
   "opts": {
     "readme": "./README.md",

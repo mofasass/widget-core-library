@@ -112,8 +112,8 @@
     <p>Widget-components is a collection of reusable components written with <a href="https://facebook.github.io/react/">React</a> framework. The use of React and these widget-components is completely optional, but they help a lot in the development and with keeping the style of the widget consistent with the style of the Sportsbook.</p>
 <h3>Pre-requisites</h3>
 <p>You can start using widget-components by installing it as a dependency to the project by running:</p>
-<p><code>npm install kambi-widget-components</code></p>
-<pre class="prettyprint source lang-javascript"><code>import { ComponentName } from 'kambi-widget-components';
+<p><code>npm install kamb-wc-widget-components</code></p>
+<pre class="prettyprint source lang-javascript"><code>import { ComponentName } from 'kamb-wc-widget-components';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -124,8 +124,8 @@ ReactDOM.render(reactElement, document.getElementById('root'));
 <p>ReactDOM.render should only be called after <code>coreLibrary.init()</code> is resolved.</p>
 <p>You can also make your own components and have the whole widget be a React component if desired, but the components can also be used without using React for the main part of the application.</p>
 <h3>Creating React Elements</h3>
-<p>To render one of the reusable components from <code>kambi-widget-components</code></p>
-<pre class="prettyprint source lang-javascript"><code>import { Header } from 'kambi-widget-components'
+<p>To render one of the reusable components from <code>kamb-wc-widget-components</code></p>
+<pre class="prettyprint source lang-javascript"><code>import { Header } from 'kamb-wc-widget-components'
 import React from 'react'
 import ReactDOM from 'react-dom'
 
@@ -139,7 +139,7 @@ ReactDOM.render(header, document.getElementById('root'))
 </code></pre>
 <h3>Creating React Elements with JSX</h3>
 <p>JSX is an extension of the normal JavaScript programming language, it adds syntatic sugar to transform HTML code into calls to React.createElement. The following example is equivalent to the previous example:</p>
-<pre class="prettyprint source lang-javascript"><code>import { Header } from 'kambi-widget-components'
+<pre class="prettyprint source lang-javascript"><code>import { Header } from 'kamb-wc-widget-components'
 import React from 'react'
 import ReactDOM from 'react-dom'
 
@@ -150,8 +150,8 @@ ReactDOM.render(
 </code></pre>
 <p>Note: JSX syntax works only in <code>.jsx</code> files, so <code>index.js</code> should import a <code>.jsx</code> for this syntax to work. The whole widget (except <code>index.js</code>) can be written in <code>.jsx</code> file if so desired.</p>
 <h3>Using React</h3>
-<p>It is possible to use only the pre-made components available in <code>kambi-widget-components</code>, but that is not really recommended. Due to the fact that the widgets live inside iframes it is highly recommended to avoid big dependencies like software frameworks (there will be multiple copies, one for each iframe). It is recommend to either not use any frameworks/libraries (even jQuery is quite big) or use our React solution. Behind the scenes if (and only if) you use React components your project <a href="https://preactjs.com/">preact</a> will be bundled with the widgets code. This is a very small implementation of the React API (~3 kilobytes vs React ~32kb) and as such its performance impact is minimal.</p>
-<p>The widget can use React even without including <code>kambi-widget-components</code>, widgets can be written completely as React components if desired, or they can only use the components from <code>kambi-widget-components</code> or not use React at all.</p>
+<p>It is possible to use only the pre-made components available in <code>kamb-wc-widget-components</code>, but that is not really recommended. Due to the fact that the widgets live inside iframes it is highly recommended to avoid big dependencies like software frameworks (there will be multiple copies, one for each iframe). It is recommend to either not use any frameworks/libraries (even jQuery is quite big) or use our React solution. Behind the scenes if (and only if) you use React components your project <a href="https://preactjs.com/">preact</a> will be bundled with the widgets code. This is a very small implementation of the React API (~3 kilobytes vs React ~32kb) and as such its performance impact is minimal.</p>
+<p>The widget can use React even without including <code>kamb-wc-widget-components</code>, widgets can be written completely as React components if desired, or they can only use the components from <code>kamb-wc-widget-components</code> or not use React at all.</p>
 <h3>useRealReact flag</h3>
 <p>By default the project replaces the normal version of React with <a href="https://github.com/Lucifier129/react-lite">preact</a> in production builds only (<code>npm run build</code>). While in development mode though (<code>npm run start</code>) the project uses the real React because it provides more debug functionalities. This is handled by the <code>kambi-widget-core-library</code> automatically.</p>
 <p>Preact is an alternative implementation of React and as such it can have incompatibilities, although so far we haven't encountered any. If you want to override the default behavior of the build you can force the use of a specific React version by placing a <code>useRealReact</code> object in package.json. You can define different values for development and production environment.</p>

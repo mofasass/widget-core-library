@@ -79,7 +79,7 @@ License file of the project
 
 * package.json
 
-NPM configuration file. This file lists metadata about the project as well as all external dependencies (kambi-widget-core-library, kambi-widget-components and others) it uses. This file needs to be modified to update the dependencies versions
+NPM configuration file. This file lists metadata about the project as well as all external dependencies (kambi-widget-core-library, kamb-wc-widget-components and others) it uses. This file needs to be modified to update the dependencies versions
 
 * dist
 

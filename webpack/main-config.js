@@ -1,5 +1,5 @@
 const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const autoprefixer = require('autoprefixer')
@@ -13,7 +13,6 @@ const pkg = require(path.resolve(process.cwd(), 'package.json'))
 
 const isDev = process.env.NODE_ENV === 'development'
 const isProd = process.env.NODE_ENV === 'production'
-const isEmbedded = process.env.EMBEDDED === 'true'
 
 const babelLoader = {
   loader: 'babel-loader',
@@ -32,7 +31,6 @@ let plugins = [
   new webpack.DefinePlugin({
     'process.env': {
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-      EMBEDDED: JSON.stringify(process.env.EMBEDDED),
       WIDGET_NAME: JSON.stringify(pkg.name),
       WIDGET_CSS_VERSION: pkg.widgetCssVersion
         ? JSON.stringify(pkg.widgetCssVersion)
@@ -55,18 +53,8 @@ let plugins = [
   ]),
 ]
 
-if (!isEmbedded) {
-  plugins = [
-    ...plugins,
-    new HtmlWebpackPlugin({
-      template: 'src/index.html',
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-      },
-    }),
-  ]
-}
+
+plugins = []
 
 if (isProd) {
   plugins = [
@@ -77,6 +65,14 @@ if (isProd) {
     }),
   ]
 }
+
+plugins.push(
+  new MiniCssExtractPlugin({
+    filename: '[name].css',
+    chunkFilename: '[id].css',
+    ignoreOrder: false,
+  })
+)
 
 module.exports = {
   mode: process.env.NODE_ENV,
@@ -93,16 +89,18 @@ module.exports = {
             test: /\.scss$/,
             use: [
               {
-                loader: 'style-loader',
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                  publicPath: 'localhost:8080/assets/',
+                  filename: "[name].css",
+                }
               },
               {
                 loader: 'css-loader',
                 options: {
                   modules: true,
-                  ...(isDev && {
-                    sourceMap: true,
-                    localIdentName: '[name]__[local]___[hash:base64:5]',
-                  }),
+                  localIdentName: 'MOW_[name]__[local]___[hash:base64:5]',
+                  ...(isDev && { sourceMap: true }),
                 },
               },
               {
@@ -121,7 +119,9 @@ module.exports = {
           },
           {
             test: /widget-core-library(\/|\\)src(\/|\\)index\.js$/,
-            exclude: [path.resolve(process.cwd(), '/node_modules/')],
+            exclude: [
+              path.resolve(process.cwd(), '/node_modules/')
+            ],
             use: [
               {
                 loader: 'translations-loader',
@@ -136,10 +136,6 @@ module.exports = {
           {
             test: /(\.png|\.jpe?g)$/,
             use: 'url-loader',
-          },
-          {
-            test: /\.html$/,
-            use: 'html-loader',
           },
           {
             // if no other loader matches, it will fallback to this loader
@@ -157,7 +153,7 @@ module.exports = {
     filename: '[name].js',
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.json', '.scss', '.html'],
+    extensions: ['.js', '.jsx', '.json', '.scss'],
     modules: [
       path.resolve(__dirname, 'node_modules'),
       path.resolve(process.cwd(), 'node_modules'),
@@ -170,6 +166,7 @@ module.exports = {
     },
   },
   optimization: {
+    minimize: false,
     minimizer: [
       new TerserPlugin({
         extractComments: true,
@@ -178,7 +175,7 @@ module.exports = {
         terserOptions: {
           extractComments: 'all',
           compress: {
-            drop_console: true,
+            drop_console: false,
           },
         },
       }),

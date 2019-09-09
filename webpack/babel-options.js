@@ -27,6 +27,7 @@ module.exports = function(environment) {
       require('babel-preset-react'),
     ],
     plugins: [
+      require('babel-plugin-transform-custom-element-classes'),
       require('babel-plugin-transform-class-properties'),
       require('babel-plugin-transform-object-rest-spread'),
     ].concat(
